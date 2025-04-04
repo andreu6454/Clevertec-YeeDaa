@@ -1,4 +1,4 @@
-import { Avatar, Box, Image } from '@chakra-ui/icons';
+import { Avatar, Box, IconButton, Image } from '@chakra-ui/icons';
 
 import FooterButton from '~/components/footer/FooterButton';
 
@@ -12,7 +12,7 @@ const Footer = () => (
         <Box
             display='flex'
             alignItems='center'
-            justifyContent='space-between'
+            justifyContent='space-evenly'
             position='absolute'
             bottom={0}
             left={0}
@@ -23,7 +23,11 @@ const Footer = () => (
             <FooterButton
                 isActive={true}
                 title='Главная'
-                icon={<Image marginY='4px' src={HomeIcon} />}
+                icon={
+                    <IconButton variant='ghost' aria-label='Главная'>
+                        <Image marginY='4px' src={HomeIcon} />
+                    </IconButton>
+                }
             />
             <FooterButton title='Поиск' icon={<Image src={SearchIcon} />} />
             <FooterButton title='Записать' icon={<Image src={EditIcon} />} />

@@ -10,25 +10,40 @@ interface FooterButtonProps {
 
 const FooterButton = (props: FooterButtonProps) => {
     const { icon, title, isActive } = props;
+
+    const backgroundGradient = isActive
+        ? {
+              background:
+                  'radial-gradient(50% 50% at 50% 50%, #c4ff61 0%, rgba(255, 255, 255, 0) 100%)',
+          }
+        : '';
     return (
-        <Box display='flex' flexDirection='column' alignItems='center'>
-            {icon}
+        <Box
+            sx={backgroundGradient}
+            height='80px'
+            width='90px'
+            display='flex'
+            flexDirection='column'
+            alignItems='center'
+            justifyContent='center'
+        >
+            <Box>{icon}</Box>
             {isActive ? (
                 <Text
-                    font-weight={500}
-                    font-size='12px'
-                    line-height='133%'
-                    text-align='center'
+                    fontWeight={500}
+                    fontSize='12px'
+                    lineHeight='133%'
+                    textAlign='center'
                     color='#000'
                 >
                     {title}
                 </Text>
             ) : (
                 <Text
-                    font-weight={400}
-                    font-size='12px'
-                    line-height='133%'
-                    text-align='center'
+                    fontWeight={400}
+                    fontSize='12px'
+                    lineHeight='133%'
+                    textAlign='center'
                     color='rgba(0, 0, 0, 0.64)'
                 >
                     {title}
