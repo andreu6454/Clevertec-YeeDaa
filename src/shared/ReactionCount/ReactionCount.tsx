@@ -8,10 +8,11 @@ import Peoples from '../../assets/peoples.svg';
 interface ReactionCountProps {
     variant: 'bookmark' | 'people' | 'emoji';
     count: number;
+    size: 'small' | 'large';
 }
 
 export const ReactionCount = (props: ReactionCountProps) => {
-    const { variant, count } = props;
+    const { variant, count, size } = props;
 
     const image = {
         bookmark: Bookmark,
@@ -19,17 +20,52 @@ export const ReactionCount = (props: ReactionCountProps) => {
         emoji: Emoji,
     };
 
+    const sizes = {
+        small: {
+            h: '24px',
+            w: '56px',
+            imageW: '12px',
+            fWeight: '600',
+            fSize: '12px',
+            lHeight: '133%',
+            pg: '6px 8px',
+            mr: '2px',
+            jsc: 'space-between',
+        },
+        large: {
+            h: '40px',
+            w: '85px',
+            imageW: '16px',
+            fWeight: '600',
+            fSize: '16px',
+            lHeight: '150%',
+            pg: '6px 8px',
+            mr: '4px',
+            jsc: 'center',
+        },
+    };
+
     return (
         <Box
             display='flex'
             alignItems='center'
-            justifyContent='space-between'
-            width='56px'
-            padding='6px 8px'
-            height='24px'
+            justifyContent={sizes[size].jsc}
+            width={sizes[size].w}
+            padding={sizes[size].pg}
+            height={sizes[size].h}
         >
-            <Image mr='2px' src={image[variant]} />
-            <Text fontWeight={600} fontSize='12px' lineHeight='133%' color='#2db100'>
+            <Image
+                width={sizes[size].imageW}
+                height={sizes[size].imageW}
+                mr={sizes[size].mr}
+                src={image[variant]}
+            />
+            <Text
+                fontWeight={sizes[size].fWeight}
+                fontSize={sizes[size].fSize}
+                lineHeight={sizes[size].lHeight}
+                color='#2db100'
+            >
                 {count}
             </Text>
         </Box>
