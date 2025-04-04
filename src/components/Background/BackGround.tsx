@@ -32,9 +32,9 @@ export const BackGround = () => {
 
     return (
         <Box position='fixed' top={0} left={0} w='100vw' h='100vh' zIndex={-1} display='flex'>
-            <Box bg='#FF9595' w='256px' h='100%' marginRight='24px' />
+            <Box bg='rgba(255, 149, 149, 0.2);' w='256px' h='100%' marginRight='24px' />
             <Image src={bg} flex={1} h='100%' objectFit='cover' marginRight='73px' />
-            <Box bg='#FF9595' w='208px' h='100%' />
+            <Box bg='rgba(255, 149, 149, 0.2);' w='208px' h='100%' />
         </Box>
     );
 };
