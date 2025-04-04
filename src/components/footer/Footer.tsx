@@ -14,7 +14,7 @@ const Footer = () => (
             display='flex'
             alignItems='center'
             justifyContent='space-evenly'
-            position='absolute'
+            position='fixed'
             bottom={0}
             left={0}
             width='100%'

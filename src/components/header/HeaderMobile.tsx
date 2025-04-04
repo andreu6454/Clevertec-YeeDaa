@@ -14,11 +14,12 @@ export const HeaderMobile = () => {
 
     return (
         <Box
+            position='fixed'
             display='flex'
             justifyContent='space-between'
             alignItems='center'
             padding='8px 16px'
-            width='100%'
+            width='100vw'
             backgroundColor='#ffffd3'
             height='64px'
         >

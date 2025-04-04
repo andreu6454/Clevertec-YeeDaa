@@ -6,11 +6,12 @@ import LogoLarge from '../../assets/LogoLarge.svg';
 
 export const HeaderDesktop = () => (
     <Box
+        position='fixed'
         display='flex'
         justifyContent='space-between'
         alignItems='center'
         padding='16px 54px 16px 16px'
-        width='100%'
+        width='100vw'
         backgroundColor='#ffffd3'
         height='80px'
     >
