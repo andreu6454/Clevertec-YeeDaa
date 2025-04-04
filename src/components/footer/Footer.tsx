@@ -1,6 +1,7 @@
-import { Avatar, Box, IconButton, Image } from '@chakra-ui/icons';
+import { Avatar, Box, IconButton } from '@chakra-ui/icons';
 
-import FooterButton from '~/components/footer/FooterButton';
+import FooterButton from '~/components/footer/FooterButton/FooterButton';
+import { FooterIcon } from '~/components/footer/FooterIcon/FooterIcon';
 
 import AvatarIcon from '../../assets/AvatarMobile.png';
 import EditIcon from '../../assets/EditIcon.svg';
@@ -23,17 +24,17 @@ const Footer = () => (
             <FooterButton
                 isActive={true}
                 title='Главная'
-                icon={
-                    <IconButton variant='ghost' aria-label='Главная'>
-                        <Image marginY='4px' src={HomeIcon} />
-                    </IconButton>
-                }
+                icon={<FooterIcon marginY='4px' image={HomeIcon} />}
             />
-            <FooterButton title='Поиск' icon={<Image src={SearchIcon} />} />
-            <FooterButton title='Записать' icon={<Image src={EditIcon} />} />
+            <FooterButton title='Поиск' icon={<FooterIcon marginY='4px' image={SearchIcon} />} />
+            <FooterButton title='Записать' icon={<FooterIcon marginY='4px' image={EditIcon} />} />
             <FooterButton
                 title='Мой профиль'
-                icon={<Avatar marginY='4px' boxSize='40px' src={AvatarIcon} />}
+                icon={
+                    <IconButton variant='ghost' aria-label='Главная'>
+                        <Avatar marginY='4px' boxSize='40px' src={AvatarIcon} />
+                    </IconButton>
+                }
             />
         </Box>
     </footer>
