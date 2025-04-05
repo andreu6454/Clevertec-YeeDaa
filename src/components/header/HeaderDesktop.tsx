@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/icons';
 import { Avatar, Image, Text } from '@chakra-ui/react';
 
 import AvatarDesktop from '../../assets/AvatarDesktop.png';
-import LogoLarge from '../../assets/LogoLarge.svg';
+import LogoLarge from '../../assets/svg/LogoLarge.svg';
 
 export const HeaderDesktop = () => (
     <Box

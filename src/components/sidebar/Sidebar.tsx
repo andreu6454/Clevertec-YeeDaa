@@ -3,7 +3,7 @@ import { Flex, Image, Text } from '@chakra-ui/react';
 
 import { ReactionsBar } from '~/components/ReactionsBar/ReactionsBar';
 
-import NoteIcon from '../../assets/noteIcon.svg';
+import NoteIcon from '../../assets/svg/noteIcon.svg';
 
 export const Sidebar = () => (
     <Flex

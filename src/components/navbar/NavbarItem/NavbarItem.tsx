@@ -1,7 +1,7 @@
 import { Box, IconButton, Image } from '@chakra-ui/icons';
 import { Text } from '@chakra-ui/react';
 
-import ArrowDown from '../../../assets/arrowDown.svg';
+import ArrowDown from '../../../assets/svg/arrowDown.svg';
 
 interface NavbarItemProps {
     title: string;

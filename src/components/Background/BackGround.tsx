@@ -1,9 +1,9 @@
 import { Box, Image, useMediaQuery } from '@chakra-ui/icons';
 
-import bg360 from '../../assets/bg360.svg';
-import bg768 from '../../assets/bg768.svg';
-import bg1440 from '../../assets/bg1440.svg';
-import bg1920 from '../../assets/bg1920.svg';
+import bg360 from '../../assets/svg/bg360.svg';
+import bg768 from '../../assets/svg/bg768.svg';
+import bg1440 from '../../assets/svg/bg1440.svg';
+import bg1920 from '../../assets/svg/bg1920.svg';
 
 export const BackGround = () => {
     const [isDesktop] = useMediaQuery('(min-width: 1920px)');

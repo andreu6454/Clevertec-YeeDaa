@@ -4,20 +4,20 @@ import { memo } from 'react';
 
 import { NavbarItem } from '~/components/navbar/NavbarItem/NavbarItem';
 
-import ChildrensIcon from '../../assets/childrens.svg';
-import DessertsIcon from '../../assets/desserts.svg';
-import DrinksIcon from '../../assets/drinks.svg';
-import FirstCoursesIcon from '../../assets/firstCourses.svg';
-import GrilledIcon from '../../assets/grilled.svg';
-import LeaveIcon from '../../assets/leaveIcon.svg';
-import NationalIcon from '../../assets/national.svg';
-import PreparationsIcon from '../../assets/preparations.svg';
-import SaladsIcon from '../../assets/salads.svg';
-import SaucesIcon from '../../assets/sauces.svg';
-import SecondCoursesIcon from '../../assets/secondCourses.svg';
-import SnacksIcon from '../../assets/snacks.svg';
-import TherapeuticNutritionIcon from '../../assets/therapeuticNutrition.svg';
-import VeganCuisineIcon from '../../assets/veganCuisine.svg';
+import ChildrensIcon from '../../assets/svg/childrens.svg';
+import DessertsIcon from '../../assets/svg/desserts.svg';
+import DrinksIcon from '../../assets/svg/drinks.svg';
+import FirstCoursesIcon from '../../assets/svg/firstCourses.svg';
+import GrilledIcon from '../../assets/svg/grilled.svg';
+import LeaveIcon from '../../assets/svg/leaveIcon.svg';
+import NationalIcon from '../../assets/svg/national.svg';
+import PreparationsIcon from '../../assets/svg/preparations.svg';
+import SaladsIcon from '../../assets/svg/salads.svg';
+import SaucesIcon from '../../assets/svg/sauces.svg';
+import SecondCoursesIcon from '../../assets/svg/secondCourses.svg';
+import SnacksIcon from '../../assets/svg/snacks.svg';
+import TherapeuticNutritionIcon from '../../assets/svg/therapeuticNutrition.svg';
+import VeganCuisineIcon from '../../assets/svg/veganCuisine.svg';
 
 export const Navbar = memo(() => {
     const navBarItems = [

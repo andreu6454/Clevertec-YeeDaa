@@ -3,8 +3,8 @@ import { Flex, Image, InputRightElement, Text } from '@chakra-ui/react';
 
 import { useScreenSize } from '~/hooks/useScreenSize';
 
-import SearchFilterIcon from '../../assets/searchFilters.svg';
-import SearchIcon from '../../assets/searchIcon.svg';
+import SearchFilterIcon from '../../assets/svg/searchFilters.svg';
+import SearchIcon from '../../assets/svg/searchIcon.svg';
 
 const Sizes = {
     Desktop: {

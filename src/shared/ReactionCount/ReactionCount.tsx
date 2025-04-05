@@ -1,9 +1,9 @@
 import { Box } from '@chakra-ui/icons';
 import { Image, Text } from '@chakra-ui/react';
 
-import Bookmark from '../../assets/bookmark.svg';
-import Emoji from '../../assets/emojiHeartEyes.svg';
-import Peoples from '../../assets/peoples.svg';
+import Bookmark from '../../assets/svg/bookmark.svg';
+import Emoji from '../../assets/svg/emojiHeartEyes.svg';
+import Peoples from '../../assets/svg/peoples.svg';
 
 interface ReactionCountProps {
     variant: 'bookmark' | 'people' | 'emoji';

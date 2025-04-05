@@ -1,8 +1,8 @@
 import { Box, HamburgerIcon, IconButton, useMediaQuery } from '@chakra-ui/icons';
 import { Image } from '@chakra-ui/react';
 
-import LogoLarge from '~/assets/LogoLarge.svg';
-import LogoSmall from '~/assets/LogoSmall.svg';
+import LogoLarge from '~/assets/svg/LogoLarge.svg';
+import LogoSmall from '~/assets/svg/LogoSmall.svg';
 import { ReactionsBar } from '~/components/ReactionsBar/ReactionsBar';
 
 export const HeaderMobile = () => {

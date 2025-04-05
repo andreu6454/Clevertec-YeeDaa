@@ -4,9 +4,9 @@ import FooterButton from '~/components/footer/FooterButton/FooterButton';
 import { FooterIcon } from '~/components/footer/FooterIcon/FooterIcon';
 
 import AvatarIcon from '../../assets/AvatarMobile.png';
-import EditIcon from '../../assets/EditIcon.svg';
-import HomeIcon from '../../assets/HomeIcon.svg';
-import SearchIcon from '../../assets/searchIcon.svg';
+import EditIcon from '../../assets/svg/EditIcon.svg';
+import HomeIcon from '../../assets/svg/HomeIcon.svg';
+import SearchIcon from '../../assets/svg/searchIcon.svg';
 
 const Footer = () => (
     <footer data-test-id='footer'>
