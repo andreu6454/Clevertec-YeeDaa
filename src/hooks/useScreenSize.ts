@@ -1,0 +1,19 @@
+import { useMediaQuery } from '@chakra-ui/react';
+
+export const useScreenSize = () => {
+    const [isMobile] = useMediaQuery('(max-width: 768px)');
+    const [isTablet] = useMediaQuery('(min-width: 769px) and (max-width: 1439px)');
+    const [isLaptop] = useMediaQuery('(min-width: 1440px) and (max-width: 1919px)');
+    const [isDesktop] = useMediaQuery('(min-width: 1920px)');
+
+    let screenSize: 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile' = 'Desktop';
+
+    if (isLaptop) {
+        screenSize = 'Laptop';
+    } else if (isTablet) {
+        screenSize = 'Tablet';
+    } else if (isMobile) {
+        screenSize = 'Mobile';
+    }
+    return { isMobile, isTablet, isLaptop, isDesktop, screenSize };
+};
