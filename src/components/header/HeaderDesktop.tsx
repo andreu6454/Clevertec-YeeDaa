@@ -6,6 +6,7 @@ import LogoLarge from '../../assets/svg/LogoLarge.svg';
 
 export const HeaderDesktop = () => (
     <Box
+        zIndex={10}
         position='fixed'
         display='flex'
         justifyContent='space-between'

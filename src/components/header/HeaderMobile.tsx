@@ -12,6 +12,7 @@ export const HeaderMobile = () => {
 
     return (
         <Box
+            zIndex={10}
             position='fixed'
             display='flex'
             justifyContent='space-between'
