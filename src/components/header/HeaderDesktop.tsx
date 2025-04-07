@@ -1,6 +1,9 @@
 import { Box } from '@chakra-ui/icons';
 import { Avatar, Image, Text } from '@chakra-ui/react';
 
+import { Breadcrumbs } from '~/components/Breadcrumbs/Breadcrumbs';
+import { pathNames } from '~/components/header/pathNames';
+
 import AvatarDesktop from '../../assets/AvatarDesktop.png';
 import LogoLarge from '../../assets/svg/LogoLarge.svg';
 
@@ -18,15 +21,7 @@ export const HeaderDesktop = () => (
     >
         <Image marginRight='128px' width='135.2px' height='32px' src={LogoLarge} alt='yee-daa' />
         <Box display='flex' justifyContent='flex-start' width='100%' height='24px'>
-            <Text
-                fontWeight='400'
-                lineHeight='150%'
-                fontSize='16px'
-                textAlign='center'
-                color='#2d3748'
-            >
-                Все рецепты
-            </Text>
+            <Breadcrumbs pathNames={pathNames} />
         </Box>
         <Box
             display='flex'
