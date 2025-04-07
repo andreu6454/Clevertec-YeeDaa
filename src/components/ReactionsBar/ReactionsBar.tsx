@@ -1,6 +1,6 @@
 import { Box, useMediaQuery } from '@chakra-ui/icons';
 
-import { ReactionCount } from '~/shared/ReactionCount/ReactionCount';
+import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 
 export const ReactionsBar = () => {
     const [isTablet] = useMediaQuery('(min-width: 768px)');
