@@ -11,8 +11,8 @@ const Sizes = {
         width: '898px',
         height: '248px',
         size: 'lg',
-        padding: '32px',
-        mb: '32px',
+        mbText: '32px',
+        mb: '16px',
         fSize: '48px',
         lHeight: '100%',
         inputWidth: '458px',
@@ -21,8 +21,8 @@ const Sizes = {
         width: '578px',
         height: '248px',
         size: 'lg',
-        padding: '32px',
-        mb: '32px',
+        mb: '16px',
+        mbText: '32px',
         fSize: '48px',
         lHeight: '100%',
         inputWidth: '458px',
@@ -31,8 +31,8 @@ const Sizes = {
         width: '727px',
         height: '80px',
         size: 'sm',
-        padding: '16px',
-        mb: '16px',
+        mb: '32px',
+        mbText: '16px',
         fSize: '24px',
         lHeight: '133%',
         inputWidth: '404px',
@@ -41,8 +41,8 @@ const Sizes = {
         width: '328px',
         height: '80px',
         size: 'sm',
-        padding: '16px',
-        mb: '16px',
+        mb: '32px',
+        mbText: '16px',
         fSize: '24px',
         lHeight: '133%',
         inputWidth: '284px',
@@ -57,7 +57,7 @@ export const FoodSearchCard = () => {
             width={Sizes[screenSize].width}
             height={Sizes[screenSize].height}
             flexDirection='column'
-            paddingTop={Sizes[screenSize].padding}
+            marginBottom={Sizes[screenSize].mb}
             alignItems='center'
         >
             <Text
@@ -65,7 +65,7 @@ export const FoodSearchCard = () => {
                 fontSize={Sizes[screenSize].fSize}
                 lineHeight={Sizes[screenSize].lHeight}
                 textAlign='center'
-                mb={Sizes[screenSize].mb}
+                mb={Sizes[screenSize].mbText}
             >
                 Приятного аппетита!
             </Text>
