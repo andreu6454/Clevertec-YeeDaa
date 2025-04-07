@@ -80,7 +80,16 @@ const sizes = {
 export const CardWithAvatar = memo((props: CardWithAvatarProps) => {
     const { avatar, text, username, name, size } = props;
     return (
-        <Card flexShrink={0} width={sizes[size].width} height={sizes[size].height}>
+        <Card
+            _hover={{
+                boxShadow:
+                    '0 4px 8px -2px rgba(32, 126, 0, 0.1), 0 6px 12px -2px rgba(32, 126, 0, 0.15)',
+                transition: 'all 0.3s ease',
+            }}
+            flexShrink={0}
+            width={sizes[size].width}
+            height={sizes[size].height}
+        >
             <Flex alignItems='center' width='100%' padding={sizes[size].paddingAvatar} gap='12px'>
                 <Avatar size={sizes[size].avatarSize} src={avatar} />
                 <Box width='100%' minWidth={0}>
