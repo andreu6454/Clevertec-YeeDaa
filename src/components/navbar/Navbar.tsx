@@ -8,9 +8,19 @@ import { navBarItems } from '~/shared/data/nav-items';
 import LeaveIcon from '../../assets/svg/leaveIcon.svg';
 
 export const Navbar = memo(() => {
-    const mappedItems = navBarItems.map((el) => (
-        <NavbarItem key={el.title} title={el.title} icon={el.icon} />
-    ));
+    const mappedItems = navBarItems.map((el) => {
+        if (el.title === 'Веганская кухня') {
+            return (
+                <NavbarItem
+                    data-test-id='vegan-cuisine'
+                    key={el.title}
+                    title={el.title}
+                    icon={el.icon}
+                />
+            );
+        }
+        return <NavbarItem key={el.title} title={el.title} icon={el.icon} />;
+    });
 
     return (
         <Box
