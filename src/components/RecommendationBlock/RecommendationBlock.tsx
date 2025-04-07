@@ -34,7 +34,7 @@ interface RecommendationBlockProps {
 export const RecommendationBlock = (props: RecommendationBlockProps) => {
     const { title, description } = props;
 
-    const { screenSize, isTablet } = useScreenSize();
+    const { screenSize, isTablet, isLaptop } = useScreenSize();
 
     const direction = screenSize === 'Mobile' || screenSize === 'Tablet' ? 'column' : 'row';
     return (
@@ -46,7 +46,13 @@ export const RecommendationBlock = (props: RecommendationBlockProps) => {
             paddingTop='24px'
         >
             <Flex width='100%' justifyContent='space-between' direction={direction}>
-                <Text fontWeight='500' fontSize='36px' lineHeight='111%' whiteSpace='pre-line'>
+                <Text
+                    width={isLaptop ? '270px' : ''}
+                    fontWeight='500'
+                    fontSize='36px'
+                    lineHeight='111%'
+                    whiteSpace='pre-line'
+                >
                     {title}
                 </Text>
                 <Text
