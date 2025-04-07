@@ -1,8 +1,8 @@
 import { useMediaQuery } from '@chakra-ui/react';
 
 export const useScreenSize = () => {
-    const [isMobile] = useMediaQuery('(max-width: 768px)');
-    const [isTablet] = useMediaQuery('(min-width: 769px) and (max-width: 1439px)');
+    const [isMobile] = useMediaQuery('(max-width: 767px)');
+    const [isTablet] = useMediaQuery('(min-width: 768px) and (max-width: 1439px)');
     const [isLaptop] = useMediaQuery('(min-width: 1440px) and (max-width: 1919px)');
     const [isDesktop] = useMediaQuery('(min-width: 1920px)');
 

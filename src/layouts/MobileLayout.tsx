@@ -15,7 +15,7 @@ export const MobileLayout = (props: MobileLayoutProps) => {
 
     const { isMobile } = useScreenSize();
 
-    const padding = isMobile ? '80px 16px 16px 16px' : '80px 21px 21px 21px';
+    const padding = isMobile ? '80px 16px 100px 16px' : '80px 20px 100px 20px';
 
     return (
         <Box width='100vw' minHeight='100vh'>
