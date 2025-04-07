@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
 import { useScreenSize } from '~/hooks/useScreenSize';
@@ -27,8 +27,22 @@ export const CardContainer = () => {
     };
 
     return (
-        <Flex gap={gap[screenSize]} width='100%' wrap='wrap' direction={direction}>
+        <Flex
+            gap={gap[screenSize]}
+            width='100%'
+            wrap='wrap'
+            direction={direction}
+            alignItems='center'
+            justifyContent='center'
+        >
             {mappedCards}
+            <Flex>
+                <Flex width='100%' justifyContent='center'>
+                    <Button backgroundColor='#b1ff2e' color='#000' size='md'>
+                        Загрузить еще
+                    </Button>
+                </Flex>
+            </Flex>
         </Flex>
     );
 };
