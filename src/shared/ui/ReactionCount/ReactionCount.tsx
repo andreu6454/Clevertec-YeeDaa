@@ -1,9 +1,9 @@
 import { Box } from '@chakra-ui/icons';
 import { Image, Text } from '@chakra-ui/react';
 
-import Bookmark from '../../assets/svg/bookmark.svg';
-import Emoji from '../../assets/svg/emojiHeartEyes.svg';
-import Peoples from '../../assets/svg/peoples.svg';
+import Bookmark from '../../../assets/svg/bookmark.svg';
+import Emoji from '../../../assets/svg/emojiHeartEyes.svg';
+import Peoples from '../../../assets/svg/peoples.svg';
 
 interface ReactionCountProps {
     variant: 'bookmark' | 'people' | 'emoji';
@@ -23,7 +23,6 @@ export const ReactionCount = (props: ReactionCountProps) => {
     const sizes = {
         small: {
             h: '24px',
-            w: '56px',
             imageW: '12px',
             fWeight: '600',
             fSize: '12px',
@@ -34,7 +33,6 @@ export const ReactionCount = (props: ReactionCountProps) => {
         },
         large: {
             h: '40px',
-            w: '85px',
             imageW: '16px',
             fWeight: '600',
             fSize: '16px',
@@ -50,7 +48,6 @@ export const ReactionCount = (props: ReactionCountProps) => {
             display='flex'
             alignItems='center'
             justifyContent={sizes[size].jsc}
-            width={sizes[size].w}
             padding={sizes[size].pg}
             height={sizes[size].h}
         >
