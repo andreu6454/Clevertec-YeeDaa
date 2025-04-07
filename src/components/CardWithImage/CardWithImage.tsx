@@ -15,59 +15,59 @@ interface CardWithImageProps {
     description: string;
 }
 
+const sizes = {
+    Mobile: {
+        width: '158px',
+        height: '220px',
+        imgHeight: '128px',
+        padding: '8px',
+        pdImage: '8px',
+        fontWeight: '500',
+        fontSize: '16px',
+        lineHeight: '150%',
+        textWidth: '142px',
+        textHeight: '48px',
+    },
+    Tablet: {
+        width: '158px',
+        height: '220px',
+        imgHeight: '128px',
+        padding: '8px',
+        pdImage: '8px',
+        fontWeight: '500',
+        fontSize: '16px',
+        lineHeight: '150%',
+        textWidth: '142px',
+        textHeight: '48px',
+    },
+    Laptop: {
+        width: '277px',
+        height: '402px',
+        imgHeight: '230px',
+        padding: '12px',
+        pdImage: '20px 24px',
+        fontWeight: '500',
+        fontSize: '20px',
+        lineHeight: '140%',
+        textWidth: '253px',
+        textHeight: '100px',
+    },
+    Desktop: {
+        width: '322px',
+        height: '414px',
+        imgHeight: '230px',
+        padding: '12px',
+        pdImage: '20px 24px',
+        fontWeight: '500',
+        fontSize: '20px',
+        lineHeight: '140%',
+        textWidth: '274px',
+        textHeight: '100px',
+    },
+};
+
 export const CardWithImage = memo((props: CardWithImageProps) => {
     const { title, image, dishType, size, description } = props;
-
-    const sizes = {
-        Mobile: {
-            width: '158px',
-            height: '220px',
-            imgHeight: '128px',
-            padding: '8px',
-            pdImage: '8px',
-            fontWeight: '500',
-            fontSize: '16px',
-            lineHeight: '150%',
-            textWidth: '142px',
-            textHeight: '48px',
-        },
-        Tablet: {
-            width: '158px',
-            height: '220px',
-            imgHeight: '128px',
-            padding: '8px',
-            pdImage: '8px',
-            fontWeight: '500',
-            fontSize: '16px',
-            lineHeight: '150%',
-            textWidth: '142px',
-            textHeight: '48px',
-        },
-        Laptop: {
-            width: '277px',
-            height: '402px',
-            imgHeight: '230px',
-            padding: '12px',
-            pdImage: '20px 24px',
-            fontWeight: '500',
-            fontSize: '20px',
-            lineHeight: '140%',
-            textWidth: '253px',
-            textHeight: '100px',
-        },
-        Desktop: {
-            width: '322px',
-            height: '414px',
-            imgHeight: '230px',
-            padding: '12px',
-            pdImage: '20px 24px',
-            fontWeight: '500',
-            fontSize: '20px',
-            lineHeight: '140%',
-            textWidth: '274px',
-            textHeight: '100px',
-        },
-    };
 
     return (
         <Card
