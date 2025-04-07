@@ -17,7 +17,7 @@ export const DesktopLaptopLayout = (props: DesktopLaptopLayoutProps) => {
             {header}
             <BackGround />
             <Box
-                padding='80px 281px 0 280px'
+                padding='80px 280px 0 280px'
                 min-height='100vh'
                 width='100vw'
                 display='flex'
