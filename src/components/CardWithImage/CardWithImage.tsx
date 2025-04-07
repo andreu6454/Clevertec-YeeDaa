@@ -79,6 +79,7 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
             flexShrink={0}
             width={sizes[size].width}
             height={sizes[size].height}
+            borderRadius='8px'
         >
             <Box
                 borderTopRadius='8px'
