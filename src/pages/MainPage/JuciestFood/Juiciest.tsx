@@ -85,7 +85,7 @@ export const Juiciest = () => {
             </Flex>
             <Flex
                 position={isMobile || isTablet ? 'static' : 'absolute'}
-                width='100%'
+                width={isMobile || isTablet ? '100%' : '0'}
                 justifyContent='center'
                 visibility={isMobile || isTablet ? 'visible' : 'hidden'}
             >
