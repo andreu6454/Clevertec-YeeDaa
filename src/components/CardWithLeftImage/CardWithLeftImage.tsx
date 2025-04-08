@@ -25,9 +25,9 @@ const sizes = {
         padding: '20px 24px',
         containerWidth: '322px',
         gap: '24px',
-        fontWeight: '400',
-        fontSize: '14px',
-        lineHeight: '143%',
+        fontWeight: '500',
+        fontSize: '20px',
+        lineHeight: '140%',
     },
     Laptop: {
         width: '880px',
@@ -37,9 +37,9 @@ const sizes = {
         padding: '20px 24px',
         containerWidth: '534px',
         gap: '24px',
-        fontWeight: '400',
-        fontSize: '14px',
-        lineHeight: '143%',
+        fontWeight: '500',
+        fontSize: '20px',
+        lineHeight: '140%',
     },
     Tablet: {
         width: '356px',
@@ -139,7 +139,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                         lineHeight={sizes[size].lineHeight}
                         overflow='hidden'
                         textOverflow='ellipsis'
-                        noOfLines={2}
+                        noOfLines={1}
                     >
                         {title}
                     </Text>
