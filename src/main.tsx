@@ -7,12 +7,13 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router';
 
 import App from '~/app/App.tsx';
+import { theme } from '~/shared/theme/theme';
 import { store } from '~/store/configure-store.ts';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
-            <ChakraProvider>
+            <ChakraProvider theme={theme}>
                 <Provider store={store}>
                     <App />
                 </Provider>

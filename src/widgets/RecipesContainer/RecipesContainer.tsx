@@ -43,12 +43,22 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
             gap={gap[screenSize]}
             width='100%'
             wrap='wrap'
-            direction={direction}
+            direction='column'
             alignItems='center'
             justifyContent='center'
             marginBottom={marginBottom[screenSize]}
         >
-            {mappedCards}
+            <Flex
+                gap={gap[screenSize]}
+                width='100%'
+                wrap='wrap'
+                direction={direction}
+                alignItems='center'
+                justifyContent='center'
+            >
+                {mappedCards}
+            </Flex>
+
             <Flex>
                 <Flex width='100%' justifyContent='center'>
                     <Button backgroundColor='#b1ff2e' color='#000' size='md'>

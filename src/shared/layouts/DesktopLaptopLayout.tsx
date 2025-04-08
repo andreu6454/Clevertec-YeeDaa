@@ -13,13 +13,14 @@ interface DesktopLaptopLayoutProps {
 export const DesktopLaptopLayout = (props: DesktopLaptopLayoutProps) => {
     const { header, content, sidebar, navbar } = props;
     return (
-        <Box width='100vw' min-height='100vh'>
+        <Box overflowX='hidden' width='100%' min-height='100vh'>
             {header}
             {/*<BackGround />*/}
             <Box
-                padding='112px 280px 0 280px'
+                overflowY='auto'
+                padding='112px 272px 0 280px'
                 min-height='100vh'
-                width='100vw'
+                width='100%'
                 display='flex'
                 justifyContent='space-between'
                 alignItems='center'
