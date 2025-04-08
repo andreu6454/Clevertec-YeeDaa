@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/icons';
 import { ReactNode } from 'react';
 
-import { BackGround } from '~/components/Background/BackGround';
+import { BackGround } from '~/widgets/Background/BackGround';
 
 interface DesktopLaptopLayoutProps {
     header: ReactNode;

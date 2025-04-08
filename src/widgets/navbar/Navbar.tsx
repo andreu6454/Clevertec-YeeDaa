@@ -2,8 +2,8 @@ import { Box } from '@chakra-ui/icons';
 import { Image, Text } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { NavbarItem } from '~/components/navbar/NavbarItem/NavbarItem';
 import { navBarItems } from '~/shared/data/nav-items';
+import { NavbarItem } from '~/widgets/navbar/NavbarItem/NavbarItem';
 
 import LeaveIcon from '../../assets/svg/leaveIcon.svg';
 

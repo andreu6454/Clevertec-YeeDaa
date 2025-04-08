@@ -1,7 +1,7 @@
 import { Avatar, Box, IconButton } from '@chakra-ui/icons';
 
-import FooterButton from '~/components/footer/FooterButton/FooterButton';
-import { FooterIcon } from '~/components/footer/FooterIcon/FooterIcon';
+import FooterButton from '~/widgets/footer/FooterButton/FooterButton';
+import { FooterIcon } from '~/widgets/footer/FooterIcon/FooterIcon';
 
 import AvatarIcon from '../../assets/AvatarMobile.png';
 import EditIcon from '../../assets/svg/EditIcon.svg';

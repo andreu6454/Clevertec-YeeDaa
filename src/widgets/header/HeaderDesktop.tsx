@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/icons';
 import { Avatar, Image, Text } from '@chakra-ui/react';
 
 import { Breadcrumbs } from '~/components/Breadcrumbs/Breadcrumbs';
-import { pathNames } from '~/components/header/pathNames';
+import { pathNames } from '~/widgets/header/pathNames';
 
 import AvatarDesktop from '../../assets/AvatarDesktop.png';
 import LogoLarge from '../../assets/svg/LogoLarge.svg';
