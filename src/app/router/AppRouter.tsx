@@ -9,9 +9,8 @@ export const AppRouter = () => (
     <Suspense fallback={<div>sdf</div>}>
         <Routes>
             <Route index element={<MainPage />} />
-            <Route path='/vegan'>
+            <Route path='/vegan/:id' element={<VeganPage />}>
                 <Route index element={<Navigate to='second-courses' replace />} />
-                <Route path='second-courses' element={<VeganPage />} />
             </Route>
             <Route path='/juiciest' element={<JuiciestFood />} />
         </Routes>
