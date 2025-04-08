@@ -3,7 +3,6 @@ import { Box, Image, useMediaQuery } from '@chakra-ui/icons';
 import bg360 from '../../assets/svg/bg360.svg';
 import bg768 from '../../assets/svg/bg768.svg';
 import bg1440 from '../../assets/svg/bg1440.svg';
-import bg1920 from '../../assets/svg/bg1920.svg';
 
 export const BackGround = () => {
     const [isDesktop] = useMediaQuery('(min-width: 1920px)');
@@ -13,7 +12,7 @@ export const BackGround = () => {
 
     let bg;
     if (isDesktop) {
-        bg = bg1920;
+        bg = bg1440;
     } else if (isLaptop) {
         bg = bg1440;
     } else if (isTablet) {

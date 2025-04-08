@@ -5,18 +5,22 @@ const sizes = {
     Desktop: {
         width: '668px',
         height: '56px',
+        textWidth: '525px',
     },
     Laptop: {
         width: '283px',
         height: '52px',
+        textWidth: '160px',
     },
     Tablet: {
-        width: '240px',
-        height: '52px',
+        width: '232px',
+        height: '48px',
+        textWidth: '112px',
     },
     Mobile: {
         width: '328px',
         height: '52px',
+        textWidth: '208px',
     },
 };
 
@@ -45,7 +49,7 @@ export const CardWithIcon = (props: CardWithIconProps) => {
             gap='8px'
             justifyContent='space-between'
         >
-            <HStack>
+            <HStack gap='8px' width={sizes[size].textWidth}>
                 <Image src={icon} />
                 <Text whiteSpace='nowrap' overflow='hidden' textOverflow='ellipsis'>
                     {title}

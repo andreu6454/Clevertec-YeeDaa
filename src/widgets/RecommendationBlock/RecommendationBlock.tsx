@@ -34,7 +34,7 @@ interface RecommendationBlockProps {
 export const RecommendationBlock = (props: RecommendationBlockProps) => {
     const { title, description } = props;
 
-    const { screenSize, isTablet, isLaptop } = useScreenSize();
+    const { screenSize, isLaptop } = useScreenSize();
 
     const direction = screenSize === 'Mobile' || screenSize === 'Tablet' ? 'column' : 'row';
     return (
@@ -82,11 +82,7 @@ export const RecommendationBlock = (props: RecommendationBlockProps) => {
                     description='Сливочно-сырным кремом можно украсить кексы, либо другую выпечку, а также этим кремом можно наполнить заварные пирожные.'
                     dishType='Детские блюда'
                 />
-                <Flex
-                    gap={isTablet ? '6px' : '12px'}
-                    justifyContent='space-between'
-                    direction='column'
-                >
+                <Flex gap='12px' justifyContent='space-between' direction='column'>
                     <CardWithIcon
                         size={screenSize}
                         icon={KitchenIcon}
