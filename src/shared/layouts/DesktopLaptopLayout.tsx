@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/icons';
 import { ReactNode } from 'react';
 
+import { ScrollToTop } from '~/components/ScrollToTop/ScrollToTop';
 import { BackGround } from '~/widgets/Background/BackGround';
 
 interface DesktopLaptopLayoutProps {
@@ -28,6 +29,7 @@ export const DesktopLaptopLayout = (props: DesktopLaptopLayoutProps) => {
                 {content}
                 {sidebar}
             </Box>
+            <ScrollToTop />
         </Box>
     );
 };

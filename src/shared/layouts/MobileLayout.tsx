@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/icons';
 import { ReactNode } from 'react';
 
+import { ScrollToTop } from '~/components/ScrollToTop/ScrollToTop';
 import { useScreenSize } from '~/hooks/useScreenSize';
 import { BackGround } from '~/widgets/Background/BackGround';
 
@@ -25,6 +26,7 @@ export const MobileLayout = (props: MobileLayoutProps) => {
                 {content}
             </Box>
             {footer}
+            <ScrollToTop />
         </Box>
     );
 };
