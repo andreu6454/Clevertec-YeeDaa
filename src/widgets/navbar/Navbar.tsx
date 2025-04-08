@@ -32,7 +32,6 @@ export const Navbar = memo(() => {
 
     return (
         <Box
-            overflowY='scroll'
             display='flex'
             flexDirection='column'
             alignItems='center'
@@ -50,6 +49,7 @@ export const Navbar = memo(() => {
                 alignItems='center'
                 width='256px'
                 allowToggle
+                overflowY='scroll'
             >
                 {mappedItems}
             </Accordion>
