@@ -1,25 +1,35 @@
 import { Box } from '@chakra-ui/icons';
-import { Image, Text } from '@chakra-ui/react';
+import { Accordion, Image, Text } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { navBarItems } from '~/shared/data/nav-items';
+import { NavBarData } from '~/shared/data/navBarData';
 import { NavbarItem } from '~/widgets/navbar/NavbarItem/NavbarItem';
 
 import LeaveIcon from '../../assets/svg/leaveIcon.svg';
 
 export const Navbar = memo(() => {
-    const mappedItems = navBarItems.map((el) => {
+    const mappedItems = NavBarData.map((el) => {
         if (el.title === 'Веганская кухня') {
             return (
                 <NavbarItem
-                    data-test-id='vegan-cuisine'
                     key={el.title}
+                    data-test-id='vegan-cuisine'
+                    general={el.general}
+                    links={el.links}
                     title={el.title}
                     icon={el.icon}
                 />
             );
         }
-        return <NavbarItem key={el.title} title={el.title} icon={el.icon} />;
+        return (
+            <NavbarItem
+                key={el.title}
+                title={el.title}
+                icon={el.icon}
+                general={el.general}
+                links={el.links}
+            />
+        );
     });
 
     return (
@@ -35,15 +45,15 @@ export const Navbar = memo(() => {
             width='256px'
             paddingTop='24px'
         >
-            <Box
+            <Accordion
                 display='flex'
                 flexDirection='column'
                 alignItems='center'
-                minHeight='644px'
                 width='256px'
+                allowToggle
             >
                 {mappedItems}
-            </Box>
+            </Accordion>
             <Box
                 width='256px'
                 height='144px'
