@@ -2,9 +2,9 @@ import './App.css';
 
 import { useMediaQuery } from '@chakra-ui/icons';
 
-import { DesktopLaptopLayout } from '~/layouts/DesktopLaptopLayout';
-import { MobileLayout } from '~/layouts/MobileLayout';
 import { AppRouter } from '~/router/AppRouter';
+import { DesktopLaptopLayout } from '~/shared/layouts/DesktopLaptopLayout';
+import { MobileLayout } from '~/shared/layouts/MobileLayout';
 import Footer from '~/widgets/footer/Footer';
 import Header from '~/widgets/header/Header';
 import { Navbar } from '~/widgets/navbar/Navbar';
