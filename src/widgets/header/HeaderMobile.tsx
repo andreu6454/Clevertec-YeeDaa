@@ -3,7 +3,7 @@ import { Image } from '@chakra-ui/react';
 
 import LogoLarge from '~/assets/svg/LogoLarge.svg';
 import LogoSmall from '~/assets/svg/LogoSmall.svg';
-import { ReactionsBar } from '~/components/ReactionsBar/ReactionsBar';
+import { ReactionsBar } from '~/widgets/ReactionsBar/ReactionsBar';
 
 export const HeaderMobile = () => {
     const [isTablet] = useMediaQuery('(min-width: 768px)');

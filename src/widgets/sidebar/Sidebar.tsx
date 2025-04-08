@@ -1,7 +1,7 @@
 import { IconButton } from '@chakra-ui/icons';
 import { Flex, Image, Text } from '@chakra-ui/react';
 
-import { ReactionsBar } from '~/components/ReactionsBar/ReactionsBar';
+import { ReactionsBar } from '~/widgets/ReactionsBar/ReactionsBar';
 
 import NoteIcon from '../../assets/svg/noteIcon.svg';
 

@@ -1,10 +1,10 @@
 import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { RecipesContainer } from '~/components/RecipesContainer/RecipesContainer';
-import { RecommendationBlock } from '~/components/RecommendationBlock/RecommendationBlock';
 import { SearchBlock } from '~/components/SearchBlock/SearchBlock';
 import { JuiciestPageData } from '~/shared/data/juiciestPageData';
+import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
+import { RecommendationBlock } from '~/widgets/RecommendationBlock/RecommendationBlock';
 
 export const JuiciestFood = memo(() => (
     <Flex width='100%' flexDirection='column' alignItems='center'>
