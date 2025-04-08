@@ -65,7 +65,11 @@ export const RecommendationBlock = (props: RecommendationBlockProps) => {
                     {description}
                 </Text>
             </Flex>
-            <Flex gap='16px' direction={direction} alignItems='center'>
+            <Flex
+                gap='16px'
+                direction={screenSize === 'Mobile' ? 'column' : 'row'}
+                alignItems='center'
+            >
                 <CardWithoutImage
                     size={screenSize}
                     title='Бананово-молочное желе'
