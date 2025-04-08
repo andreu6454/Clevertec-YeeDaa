@@ -58,7 +58,7 @@ interface FoodSearchCardProps {
     description?: string;
 }
 
-export const FoodSearchCard = (props: FoodSearchCardProps) => {
+export const SearchBlock = (props: FoodSearchCardProps) => {
     const { title, description } = props;
 
     const { screenSize, isDesktop, isLaptop } = useScreenSize();
