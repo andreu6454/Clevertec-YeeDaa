@@ -7,7 +7,10 @@ import { CardContainer } from '~/pages/VeganfoodPage/CardContainer/CardContainer
 
 export const VeganfoodPage = memo(() => (
     <Flex width='100%' flexDirection='column' alignItems='center'>
-        <FoodSearchCard />
+        <FoodSearchCard
+            title='Веганская кухня'
+            description='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
+        />
         <CardContainer />
         <RecommendationBlock
             title='Десерты, выпечка'

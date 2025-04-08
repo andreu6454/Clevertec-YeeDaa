@@ -12,63 +12,92 @@ const Sizes = {
         height: '248px',
         size: 'lg',
         mbText: '32px',
-        mb: '16px',
         fSize: '48px',
         lHeight: '100%',
         inputWidth: '458px',
+        fDescSize: '16px',
+        lDescHeight: '150%',
     },
     Laptop: {
         width: '578px',
         height: '248px',
         size: 'lg',
-        mb: '16px',
         mbText: '32px',
         fSize: '48px',
         lHeight: '100%',
         inputWidth: '458px',
+        fDescSize: '16px',
+        lDescHeight: '150%',
     },
     Tablet: {
         width: '727px',
         height: '80px',
         size: 'sm',
-        mb: '32px',
         mbText: '16px',
         fSize: '24px',
         lHeight: '133%',
         inputWidth: '404px',
+        fDescSize: '14px',
+        lDescHeight: '143%',
     },
     Mobile: {
         width: '328px',
         height: '80px',
         size: 'sm',
-        mb: '32px',
         mbText: '16px',
         fSize: '24px',
         lHeight: '133%',
         inputWidth: '284px',
+        fDescSize: '14px',
+        lDescHeight: '143%',
     },
 };
 
-export const FoodSearchCard = () => {
+interface FoodSearchCardProps {
+    title: string;
+    description?: string;
+}
+
+export const FoodSearchCard = (props: FoodSearchCardProps) => {
+    const { title, description } = props;
+
     const { screenSize, isDesktop, isLaptop } = useScreenSize();
 
     return (
         <Flex
             width={Sizes[screenSize].width}
-            height={Sizes[screenSize].height}
             flexDirection='column'
-            marginBottom={Sizes[screenSize].mb}
+            marginBottom='32px'
             alignItems='center'
         >
-            <Text
-                fontWeight='700'
-                fontSize={Sizes[screenSize].fSize}
-                lineHeight={Sizes[screenSize].lHeight}
+            <Flex
+                direction='column'
+                alignItems='center'
                 textAlign='center'
-                mb={Sizes[screenSize].mbText}
+                gap='12px'
+                marginBottom={Sizes[screenSize].mbText}
             >
-                Приятного аппетита!
-            </Text>
+                <Text
+                    fontWeight='700'
+                    fontSize={Sizes[screenSize].fSize}
+                    lineHeight={Sizes[screenSize].lHeight}
+                    textAlign='center'
+                >
+                    {title}
+                </Text>
+                {description && (
+                    <Text
+                        width={isDesktop || isLaptop ? '696px' : '100%'}
+                        color='rgba(0, 0, 0, 0.48)'
+                        fontWeight='500'
+                        fontSize={Sizes[screenSize].fDescSize}
+                        lineHeight={Sizes[screenSize].lDescHeight}
+                        textAlign='center'
+                    >
+                        {description}
+                    </Text>
+                )}
+            </Flex>
             <Flex gap='12px' marginBottom='12px'>
                 <IconButton
                     borderColor='rgba(0, 0, 0, 0.48)'

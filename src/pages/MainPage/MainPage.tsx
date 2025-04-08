@@ -9,7 +9,7 @@ import { NewRecipes } from '~/pages/MainPage/NewRecipes/NewRecipes';
 
 export const MainPage: FC = memo(() => (
     <Flex width='100%' flexDirection='column' alignItems='center'>
-        <FoodSearchCard />
+        <FoodSearchCard title='Приятного аппетита!' />
         <Flex overflowX='hidden' width='100%' flexDirection='column' alignItems='center' gap='40px'>
             <NewRecipes />
             <Juiciest />
