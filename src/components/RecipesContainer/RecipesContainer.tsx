@@ -2,12 +2,16 @@ import { Button, Flex } from '@chakra-ui/react';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
 import { useScreenSize } from '~/hooks/useScreenSize';
-import { VeganData } from '~/pages/VeganfoodPage/CardContainer/veganData';
 
-export const CardContainer = () => {
+interface RecipesContainerProps {
+    data: Array<{ title: string; image: string; description: string; dishType: string }>;
+}
+
+export const RecipesContainer = (props: RecipesContainerProps) => {
+    const { data } = props;
     const { screenSize, isTablet, isDesktop } = useScreenSize();
 
-    const mappedCards = VeganData.map((el) => (
+    const mappedCards = data.map((el) => (
         <CardWithLeftImage
             key={el.title}
             image={el.image}
@@ -19,11 +23,19 @@ export const CardContainer = () => {
     ));
 
     const direction = isDesktop || isTablet ? 'row' : 'column';
+
     const gap = {
         Desktop: '24px',
         Laptop: '24px',
         Tablet: '16px',
         Mobile: '16px',
+    };
+
+    const marginBottom = {
+        Desktop: '40px',
+        Laptop: '40px',
+        Tablet: '32px',
+        Mobile: '32px',
     };
 
     return (
@@ -34,6 +46,7 @@ export const CardContainer = () => {
             direction={direction}
             alignItems='center'
             justifyContent='center'
+            marginBottom={marginBottom[screenSize]}
         >
             {mappedCards}
             <Flex>

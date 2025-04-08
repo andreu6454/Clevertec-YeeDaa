@@ -1,12 +1,12 @@
-import GarlicPotato from '../../../assets/images/garlicPotato.png';
-import Lasagna from '../../../assets/images/lasagna.png';
-import MeatBalls from '../../../assets/images/meatballs.png';
-import Potato from '../../../assets/images/potato.png';
-import PotatoRolls from '../../../assets/images/potatoRolls.png';
-import Puri from '../../../assets/images/puri.png';
-import TomYam from '../../../assets/images/tomyam.png';
+import GarlicPotato from '../../assets/images/garlicPotato.png';
+import Lasagna from '../../assets/images/lasagna.png';
+import MeatBalls from '../../assets/images/meatballs.png';
+import Potato from '../../assets/images/potato.png';
+import PotatoRolls from '../../assets/images/potatoRolls.png';
+import Puri from '../../assets/images/puri.png';
+import TomYam from '../../assets/images/tomyam.png';
 
-export const VeganData = [
+export const VeganPageData = [
     {
         title: 'Картошка, тушенная с болгарским перцем и фасолью в томатном соусе',
         description:

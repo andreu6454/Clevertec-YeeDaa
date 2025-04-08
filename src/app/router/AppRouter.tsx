@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 
 import { JuiciestFood } from '~/pages/JuiciestFood/JuiciestFood';
 import { MainPage } from '~/pages/MainPage/MainPage.tsx';
@@ -9,7 +9,10 @@ export const AppRouter = () => (
     <Suspense fallback={<div>sdf</div>}>
         <Routes>
             <Route index element={<MainPage />} />
-            <Route path='/vegan' element={<VeganPage />} />
+            <Route path='/vegan'>
+                <Route index element={<Navigate to='second-courses' replace />} />
+                <Route path='second-courses' element={<VeganPage />} />
+            </Route>
             <Route path='/juiciest' element={<JuiciestFood />} />
         </Routes>
     </Suspense>
