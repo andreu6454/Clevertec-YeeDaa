@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/icons';
 import { Accordion, Image, Text } from '@chakra-ui/react';
 import { memo } from 'react';
+import { useLocation } from 'react-router';
 
 import { NavBarData } from '~/shared/data/navBarData';
 import { NavbarItem } from '~/widgets/navbar/NavbarItem/NavbarItem';
@@ -8,19 +9,16 @@ import { NavbarItem } from '~/widgets/navbar/NavbarItem/NavbarItem';
 import LeaveIcon from '../../assets/svg/leaveIcon.svg';
 
 export const Navbar = memo(() => {
-    const mappedItems = NavBarData.map((el) => {
-        if (el.title === 'Веганская кухня') {
-            return (
-                <NavbarItem
-                    key={el.title}
-                    data-test-id='vegan-cuisine'
-                    general={el.general}
-                    links={el.links}
-                    title={el.title}
-                    icon={el.icon}
-                />
-            );
+    const location = useLocation();
+
+    let index;
+    const path = location.pathname.split('/')[1];
+
+    const mappedItems = NavBarData.map((el, ind) => {
+        if (path === el.general) {
+            index = ind;
         }
+
         return (
             <NavbarItem
                 key={el.title}
@@ -46,6 +44,7 @@ export const Navbar = memo(() => {
             paddingTop='24px'
         >
             <Accordion
+                defaultIndex={index}
                 display='flex'
                 flexDirection='column'
                 alignItems='center'
