@@ -1,5 +1,5 @@
 import { Card } from '@chakra-ui/icons';
-import { Button, Image, Text } from '@chakra-ui/react';
+import { Button, HStack, Image, Text } from '@chakra-ui/react';
 
 const sizes = {
     Desktop: {
@@ -43,11 +43,14 @@ export const CardWithIcon = (props: CardWithIconProps) => {
             width={sizes[size].width}
             height={sizes[size].height}
             gap='8px'
+            justifyContent='space-between'
         >
-            <Image src={icon} />
-            <Text whiteSpace='nowrap' overflow='hidden' textOverflow='ellipsis'>
-                {title}
-            </Text>
+            <HStack>
+                <Image src={icon} />
+                <Text whiteSpace='nowrap' overflow='hidden' textOverflow='ellipsis'>
+                    {title}
+                </Text>
+            </HStack>
             <Button
                 flexShrink={0}
                 color='#2db100'

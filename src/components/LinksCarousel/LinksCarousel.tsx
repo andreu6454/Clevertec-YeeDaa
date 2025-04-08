@@ -49,7 +49,7 @@ export const LinksCarousel = (props: LinksCarouselProps) => {
             borderBottom='1px solid rgba(0, 0, 0, 0.08)'
             mb='12px'
         >
-            <Flex gap={4} px={6}>
+            <Flex gap={4} px={6} justify='center' alignItems='center'>
                 {links.map((link) => {
                     const isActive = currentPath === link.link;
 
