@@ -158,10 +158,14 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                 </Flex>
                 <Flex justifyContent='flex-end' gap='8px'>
                     <Button
+                        display='flex'
+                        padding={isSmall ? '6px 0 6px 6px' : ''}
                         leftIcon={<Image src={BookmarkIcon} />}
                         size={!isSmall ? 'sm' : 'xs'}
                         variant='outline'
                         colorScheme='black'
+                        alignItems='center'
+                        justifyContent='center'
                     >
                         {!isSmall && 'Сохранить'}
                     </Button>
