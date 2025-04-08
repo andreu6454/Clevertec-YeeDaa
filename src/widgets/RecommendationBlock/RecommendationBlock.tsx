@@ -11,18 +11,34 @@ const sizes = {
     Desktop: {
         width: '668px',
         gap: '24px',
+        fTitleSize: '48px',
+        lTitleHeight: '100%',
+        fDescSize: '16px',
+        lDescHeight: '150%',
     },
     Laptop: {
         width: '578px',
         gap: '24px',
+        fTitleSize: '48px',
+        lTitleHeight: '100%',
+        fDescSize: '16px',
+        lDescHeight: '150%',
     },
     Tablet: {
         width: '100%',
         gap: '16px',
+        fTitleSize: '24px',
+        lTitleHeight: '133%',
+        fDescSize: '14px',
+        lDescHeight: '143%',
     },
     Mobile: {
         width: '100%',
         gap: '16px',
+        fTitleSize: '24px',
+        lTitleHeight: '133%',
+        fDescSize: '14px',
+        lDescHeight: '143%',
     },
 };
 
@@ -45,12 +61,17 @@ export const RecommendationBlock = (props: RecommendationBlockProps) => {
             gap={sizes[screenSize].gap}
             paddingTop='24px'
         >
-            <Flex width='100%' justifyContent='space-between' direction={direction}>
+            <Flex
+                gap={screenSize === 'Mobile' || screenSize === 'Tablet' ? '12px' : ''}
+                width='100%'
+                justifyContent='space-between'
+                direction={direction}
+            >
                 <Text
                     width={isLaptop ? '270px' : ''}
                     fontWeight='500'
-                    fontSize='36px'
-                    lineHeight='111%'
+                    fontSize={sizes[screenSize].fTitleSize}
+                    lineHeight={sizes[screenSize].lTitleHeight}
                     whiteSpace='pre-line'
                 >
                     {title}
@@ -58,8 +79,8 @@ export const RecommendationBlock = (props: RecommendationBlockProps) => {
                 <Text
                     width={sizes[screenSize].width}
                     fontWeight='500'
-                    fontSize='16px'
-                    lineHeight='150%'
+                    fontSize={sizes[screenSize].fDescSize}
+                    lineHeight={sizes[screenSize].lDescHeight}
                     color='rgba(0, 0, 0, 0.64)'
                 >
                     {description}

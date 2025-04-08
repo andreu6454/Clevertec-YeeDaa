@@ -17,6 +17,25 @@ const gap = {
     Mobile: '12px',
 };
 
+const sizes = {
+    Desktop: {
+        fontSize: '48px',
+        lineHeight: '100%',
+    },
+    Laptop: {
+        fontSize: '36px',
+        lineHeight: '111%',
+    },
+    Tablet: {
+        fontSize: '24px',
+        lineHeight: '133%',
+    },
+    Mobile: {
+        fontSize: '24px',
+        lineHeight: '133%',
+    },
+};
+
 export const Juiciest = () => {
     const navigate = useNavigate();
 
@@ -31,7 +50,11 @@ export const Juiciest = () => {
     return (
         <Flex direction='column' gap={gap[screenSize]} width='100%'>
             <Flex width='100%' justifyContent='space-between' alignItems='center'>
-                <Text fontWeight='500' fontSize='36px' lineHeight='111%' marginBottom='16px'>
+                <Text
+                    fontWeight='500'
+                    fontSize={sizes[screenSize].fontSize}
+                    lineHeight={sizes[screenSize].lineHeight}
+                >
                     Самое сочное
                 </Text>
                 {(isDesktop || isLaptop) && (

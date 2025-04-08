@@ -48,7 +48,6 @@ export const Navbar = memo(() => {
                 flexDirection='column'
                 alignItems='center'
                 width='256px'
-                allowToggle
                 overflowY='scroll'
             >
                 {mappedItems}

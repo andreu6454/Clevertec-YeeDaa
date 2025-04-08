@@ -9,6 +9,29 @@ import Solyanka from '../../../assets/images/solynka.png';
 import LeftArrowIcon from '../../../assets/svg/leftArrowIcon.svg';
 import RightArrowIcon from '../../../assets/svg/rightArrowIcon.svg';
 
+const sizes = {
+    Desktop: {
+        fontSize: '48px',
+        lineHeight: '100%',
+        marginBottom: '24px',
+    },
+    Laptop: {
+        fontSize: '36px',
+        lineHeight: '111%',
+        marginBottom: '24px',
+    },
+    Tablet: {
+        fontSize: '24px',
+        lineHeight: '133%',
+        marginBottom: '12px',
+    },
+    Mobile: {
+        fontSize: '24px',
+        lineHeight: '133%',
+        marginBottom: '12px',
+    },
+};
+
 export const NewRecipes = memo(() => {
     const { screenSize } = useScreenSize();
 
@@ -28,10 +51,27 @@ export const NewRecipes = memo(() => {
 
     return (
         <Box width='100%'>
-            <Text fontWeight='500' fontSize='48px' lineHeight='100%' marginBottom='24px'>
+            <Text
+                fontWeight='500'
+                fontSize={sizes[screenSize].fontSize}
+                lineHeight={sizes[screenSize].lineHeight}
+                marginBottom={sizes[screenSize].marginBottom}
+            >
                 Новые рецепты
             </Text>
-            <Flex ref={scrollRef} gap='12px' width='100%' overflowX='scroll' paddingY='4px'>
+            <Flex
+                overflow='auto'
+                ref={scrollRef}
+                gap='12px'
+                width='100%'
+                sx={{
+                    scrollbarWidth: 'none', // Для Firefox
+                    '&::-webkit-scrollbar': {
+                        display: 'none', // Для Chrome/Safari
+                    },
+                }}
+                paddingY='4px'
+            >
                 {(screenSize === 'Desktop' || screenSize === 'Laptop') && (
                     <IconButton
                         zIndex={3}

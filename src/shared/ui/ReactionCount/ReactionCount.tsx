@@ -28,7 +28,7 @@ export const ReactionCount = (props: ReactionCountProps) => {
             fSize: '12px',
             lHeight: '133%',
             pg: '6px 8px',
-            mr: '2px',
+            mr: '6px',
             jsc: 'space-between',
         },
         large: {
@@ -38,7 +38,7 @@ export const ReactionCount = (props: ReactionCountProps) => {
             fSize: '16px',
             lHeight: '150%',
             pg: '6px 8px',
-            mr: '4px',
+            mr: '6px',
             jsc: 'center',
         },
     };

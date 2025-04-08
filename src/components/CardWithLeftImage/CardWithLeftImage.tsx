@@ -139,7 +139,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                         lineHeight={sizes[size].lineHeight}
                         overflow='hidden'
                         textOverflow='ellipsis'
-                        noOfLines={1}
+                        noOfLines={isSmall ? 2 : 1}
                     >
                         {title}
                     </Text>
