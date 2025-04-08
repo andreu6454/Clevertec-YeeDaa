@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 
 import { ScrollToTop } from '~/components/ScrollToTop/ScrollToTop';
 import { useScreenSize } from '~/hooks/useScreenSize';
-import { BackGround } from '~/widgets/Background/BackGround';
 
 interface MobileLayoutProps {
     header: ReactNode;
@@ -20,7 +19,7 @@ export const MobileLayout = (props: MobileLayoutProps) => {
 
     return (
         <Box width='100vw' minHeight='100vh'>
-            <BackGround />
+            {/*<BackGround />*/}
             {header}
             <Box width='100%' height='100%' padding={padding}>
                 {content}

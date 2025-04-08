@@ -2,7 +2,6 @@ import { Box } from '@chakra-ui/icons';
 import { ReactNode } from 'react';
 
 import { ScrollToTop } from '~/components/ScrollToTop/ScrollToTop';
-import { BackGround } from '~/widgets/Background/BackGround';
 
 interface DesktopLaptopLayoutProps {
     header: ReactNode;
@@ -16,7 +15,7 @@ export const DesktopLaptopLayout = (props: DesktopLaptopLayoutProps) => {
     return (
         <Box width='100vw' min-height='100vh'>
             {header}
-            <BackGround />
+            {/*<BackGround />*/}
             <Box
                 padding='112px 280px 0 280px'
                 min-height='100vh'
