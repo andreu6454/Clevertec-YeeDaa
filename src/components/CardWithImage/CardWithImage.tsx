@@ -1,9 +1,10 @@
-import { Box, Card, Text } from '@chakra-ui/icons';
+import { Box, Card } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
+import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 import AlexAvatar from '../../assets/images/alexAvatar.png';
 
@@ -22,9 +23,7 @@ const sizes = {
         imgHeight: '128px',
         padding: '8px',
         pdImage: '8px',
-        fontWeight: '500',
-        fontSize: '16px',
-        lineHeight: '150%',
+        textTitleSize: TypographySizes.md,
         textWidth: '142px',
         textHeight: '48px',
     },
@@ -34,9 +33,7 @@ const sizes = {
         imgHeight: '128px',
         padding: '8px',
         pdImage: '8px',
-        fontWeight: '500',
-        fontSize: '16px',
-        lineHeight: '150%',
+        textTitleSize: TypographySizes.md,
         textWidth: '142px',
         textHeight: '48px',
     },
@@ -46,9 +43,7 @@ const sizes = {
         imgHeight: '230px',
         padding: '12px',
         pdImage: '20px 24px',
-        fontWeight: '500',
-        fontSize: '20px',
-        lineHeight: '140%',
+        textTitleSize: TypographySizes.xl,
         textWidth: '253px',
         textHeight: '100px',
     },
@@ -58,9 +53,7 @@ const sizes = {
         imgHeight: '230px',
         padding: '12px',
         pdImage: '20px 24px',
-        fontWeight: '500',
-        fontSize: '20px',
-        lineHeight: '140%',
+        textTitleSize: TypographySizes.xl,
         textWidth: '274px',
         textHeight: '100px',
     },
@@ -108,25 +101,18 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                     height={sizes[size].textHeight}
                     marginBottom='24px'
                 >
-                    <Text
-                        fontWeight={sizes[size].fontWeight}
-                        fontSize={sizes[size].fontSize}
-                        lineHeight={sizes[size].lineHeight}
-                        overflowWrap='break-word'
-                    >
+                    <Typography Size={sizes[size].textTitleSize} overflowWrap='break-word'>
                         {title}
-                    </Text>
+                    </Typography>
                     {(size === 'Desktop' || size === 'Laptop') && (
-                        <Text
-                            fontWeight='400'
-                            fontSize='14px'
-                            lineHeight='143%'
+                        <Typography
+                            Size={TypographySizes.sm}
                             overflow='hidden'
                             textOverflow='ellipsis'
                             noOfLines={3}
                         >
                             {description}
-                        </Text>
+                        </Typography>
                     )}
                 </Box>
 

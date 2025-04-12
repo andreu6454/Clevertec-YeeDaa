@@ -1,9 +1,10 @@
-import { Card, Image, Text } from '@chakra-ui/icons';
+import { Card, Image } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
 import { memo, useEffect, useState } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
+import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 import ElenaAvatar from '../../assets/images/elenaAvatar.png';
 import BookmarkIcon from '../../assets/svg/bookmark.svg';
@@ -25,9 +26,7 @@ const sizes = {
         padding: '20px 24px',
         containerWidth: '322px',
         gap: '24px',
-        fontWeight: '500',
-        fontSize: '20px',
-        lineHeight: '140%',
+        textTitleSize: TypographySizes.xl,
     },
     Laptop: {
         width: '880px',
@@ -37,9 +36,7 @@ const sizes = {
         padding: '20px 24px',
         containerWidth: '534px',
         gap: '24px',
-        fontWeight: '500',
-        fontSize: '20px',
-        lineHeight: '140%',
+        textTitleSize: TypographySizes.xl,
     },
     Tablet: {
         width: '356px',
@@ -49,9 +46,7 @@ const sizes = {
         padding: '8px',
         containerWidth: '198px',
         gap: '0',
-        fontWeight: '500',
-        fontSize: '16px',
-        lineHeight: '150%',
+        textTitleSize: TypographySizes.md,
     },
     Mobile: {
         width: '328px',
@@ -61,9 +56,7 @@ const sizes = {
         padding: '8px',
         containerWidth: '170px',
         gap: '0',
-        fontWeight: '500',
-        fontSize: '16px',
-        lineHeight: '150%',
+        textTitleSize: TypographySizes.md,
     },
 };
 
@@ -133,27 +126,23 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                     </Flex>
                 </Flex>
                 <Flex direction='column' width={sizes[size].textWidth} height='100px' gap='8px'>
-                    <Text
-                        fontWeight={sizes[size].fontWeight}
-                        fontSize={sizes[size].fontSize}
-                        lineHeight={sizes[size].lineHeight}
+                    <Typography
+                        Size={sizes[size].textTitleSize}
                         overflow='hidden'
                         textOverflow='ellipsis'
                         noOfLines={isSmall ? 2 : 1}
                     >
                         {title}
-                    </Text>
+                    </Typography>
                     {!isSmall && (
-                        <Text
-                            fontWeight='400'
-                            fontSize='14px'
-                            lineHeight='143%'
+                        <Typography
+                            Size={TypographySizes.sm}
                             overflow='hidden'
                             textOverflow='ellipsis'
                             noOfLines={3}
                         >
                             {description}
-                        </Text>
+                        </Typography>
                     )}
                 </Flex>
                 <Flex justifyContent='flex-end' gap='8px'>

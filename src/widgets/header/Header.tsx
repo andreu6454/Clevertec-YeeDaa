@@ -1,14 +1,13 @@
-import { useMediaQuery } from '@chakra-ui/icons';
-
+import { useScreenSize } from '~/hooks/useScreenSize';
 import { HeaderDesktop } from '~/widgets/header/HeaderDesktop';
 import { HeaderMobile } from '~/widgets/header/HeaderMobile';
 
 const Header = () => {
-    const [isDesktopOrLaptop] = useMediaQuery('(min-width: 1440px)');
+    const { isDesktop, isLaptop } = useScreenSize();
 
     return (
         <header data-test-id='header'>
-            {isDesktopOrLaptop ? <HeaderDesktop /> : <HeaderMobile />}
+            {isDesktop || isLaptop ? <HeaderDesktop /> : <HeaderMobile />}
         </header>
     );
 };

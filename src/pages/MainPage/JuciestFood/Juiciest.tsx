@@ -1,8 +1,9 @@
-import { Button, Flex, Image, Text } from '@chakra-ui/react';
+import { Button, Flex, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
 import { useScreenSize } from '~/hooks/useScreenSize';
+import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
 
 import Kneli from '../../../assets/images/kneli.png';
 import Lapsha from '../../../assets/images/lapsha.png';
@@ -15,25 +16,6 @@ const gap = {
     Laptop: '16px',
     Tablet: '12px',
     Mobile: '12px',
-};
-
-const sizes = {
-    Desktop: {
-        fontSize: '48px',
-        lineHeight: '100%',
-    },
-    Laptop: {
-        fontSize: '36px',
-        lineHeight: '111%',
-    },
-    Tablet: {
-        fontSize: '24px',
-        lineHeight: '133%',
-    },
-    Mobile: {
-        fontSize: '24px',
-        lineHeight: '133%',
-    },
 };
 
 export const Juiciest = () => {
@@ -50,13 +32,8 @@ export const Juiciest = () => {
     return (
         <Flex direction='column' gap={gap[screenSize]} width='100%'>
             <Flex width='100%' justifyContent='space-between' alignItems='center'>
-                <Text
-                    fontWeight='500'
-                    fontSize={sizes[screenSize].fontSize}
-                    lineHeight={sizes[screenSize].lineHeight}
-                >
-                    Самое сочное
-                </Text>
+                <PageBlockTitle title='Самое сочное' />
+
                 {(isDesktop || isLaptop) && (
                     <Button
                         data-test-id='juiciest-link'

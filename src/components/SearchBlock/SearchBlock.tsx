@@ -2,6 +2,7 @@ import { IconButton, Input, InputGroup, Select, Switch } from '@chakra-ui/icons'
 import { Flex, Image, InputRightElement, Text } from '@chakra-ui/react';
 
 import { useScreenSize } from '~/hooks/useScreenSize';
+import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 import SearchFilterIcon from '../../assets/svg/searchFilters.svg';
 import SearchIcon from '../../assets/svg/searchIcon.svg';
@@ -15,8 +16,7 @@ const Sizes = {
         fSize: '48px',
         lHeight: '100%',
         inputWidth: '458px',
-        fDescSize: '16px',
-        lDescHeight: '150%',
+        textDescriptionSize: TypographySizes.md,
     },
     Laptop: {
         width: '578px',
@@ -26,8 +26,7 @@ const Sizes = {
         fSize: '48px',
         lHeight: '100%',
         inputWidth: '458px',
-        fDescSize: '16px',
-        lDescHeight: '150%',
+        textDescriptionSize: TypographySizes.md,
     },
     Tablet: {
         width: '727px',
@@ -37,8 +36,7 @@ const Sizes = {
         fSize: '24px',
         lHeight: '133%',
         inputWidth: '404px',
-        fDescSize: '14px',
-        lDescHeight: '143%',
+        textDescriptionSize: TypographySizes.sm,
     },
     Mobile: {
         width: '328px',
@@ -48,8 +46,7 @@ const Sizes = {
         fSize: '24px',
         lHeight: '133%',
         inputWidth: '284px',
-        fDescSize: '14px',
-        lDescHeight: '143%',
+        textDescriptionSize: TypographySizes.sm,
     },
 };
 
@@ -86,16 +83,14 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
                     {title}
                 </Text>
                 {description && (
-                    <Text
+                    <Typography
+                        Size={Sizes[screenSize].textDescriptionSize}
                         width={isDesktop || isLaptop ? '696px' : '100%'}
                         color='rgba(0, 0, 0, 0.48)'
-                        fontWeight='500'
-                        fontSize={Sizes[screenSize].fDescSize}
-                        lineHeight={Sizes[screenSize].lDescHeight}
                         textAlign='center'
                     >
                         {description}
-                    </Text>
+                    </Typography>
                 )}
             </Flex>
             <Flex gap='12px' marginBottom='12px'>
@@ -132,9 +127,7 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
             {(isDesktop || isLaptop) && (
                 <Flex width='518px' gap='16px'>
                     <Flex padding='6px 0 6px 8px' gap='12px' alignItems='center'>
-                        <Text fontWeight='500' fontSize='16px' lineHeight='150%'>
-                            Исключить мои аллергены
-                        </Text>
+                        <Typography Size={TypographySizes.md}>Исключить мои аллергены</Typography>
                         <Switch size='md' />
                     </Flex>
                     <Select width='234px' placeholder='Выберите из списка...'></Select>
