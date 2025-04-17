@@ -13,27 +13,23 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import { recipeData } from '~/shared/data/recipeData';
-
 interface RecipeIngredientsProps {
-    id: number;
+    ingredients: Array<{ title: string; count: string; measureUnit: string }>;
 }
 
 export const RecipeIngredients = (props: RecipeIngredientsProps) => {
-    const { id } = props;
-
-    const data = recipeData[id];
+    const { ingredients } = props;
 
     const [count, setCount] = useState<number>(1);
 
-    const mappedIngredients = data.ingredients.map((ingridients, index) => {
-        const resultCount = Number(count) * Number(ingridients?.count);
+    const mappedIngredients = ingredients.map((ingredient, index) => {
+        const resultCount = Number(count) * Number(ingredient?.count);
         return (
             <Tr background={(index + 1) % 2 ? 'rgba(0, 0, 0, 0.06)' : ''}>
-                <Td>{ingridients.title}</Td>
+                <Td>{ingredient.title}</Td>
                 <Td textAlign='right'>
                     {!!resultCount && resultCount}
-                    {' ' + ingridients.measureUnit}
+                    {' ' + ingredient.measureUnit}
                 </Td>
             </Tr>
         );

@@ -1,17 +1,19 @@
 import { Flex } from '@chakra-ui/react';
 
 import { CaloriesCard } from '~/components/CaloriesCard/CaloriesCard';
-import { recipeData } from '~/shared/data/recipeData';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 interface RecipeCaloriesProps {
-    id: number;
+    nutritionValue: {
+        calories: number;
+        proteins: number;
+        fats: number;
+        carbohydrates: number;
+    };
 }
 
 export const RecipeCalories = (props: RecipeCaloriesProps) => {
-    const { id } = props;
-
-    const data = recipeData[id];
+    const { nutritionValue } = props;
 
     return (
         <Flex width='578px' gap='20px' direction='column'>
@@ -19,18 +21,10 @@ export const RecipeCalories = (props: RecipeCaloriesProps) => {
                 * Калорийность на 1 порцию
             </Typography>
             <Flex width='100%' gap='12px'>
-                <CaloriesCard
-                    count={data.nutritionValue.calories}
-                    title='калорийность'
-                    units='ККАЛ'
-                />
-                <CaloriesCard count={data.nutritionValue.proteins} title='белки' units='ГРАММ' />
-                <CaloriesCard count={data.nutritionValue.fats} title='жиры' units='ГРАММ' />
-                <CaloriesCard
-                    count={data.nutritionValue.carbohydrates}
-                    title='углеводы'
-                    units='ГРАММ'
-                />
+                <CaloriesCard count={nutritionValue.calories} title='калорийность' units='ККАЛ' />
+                <CaloriesCard count={nutritionValue.proteins} title='белки' units='ГРАММ' />
+                <CaloriesCard count={nutritionValue.fats} title='жиры' units='ГРАММ' />
+                <CaloriesCard count={nutritionValue.carbohydrates} title='углеводы' units='ГРАММ' />
             </Flex>
         </Flex>
     );
