@@ -95,13 +95,13 @@ export const RecommendationBlock = (props: RecommendationBlockProps) => {
                     size={screenSize}
                     title='Бананово-молочное желе'
                     description='Молочное желе – это просто, вкусно и полезно, ведь для его приготовления в качестве основы используется молоко.'
-                    dishType='Детские блюда'
+                    dishType='child'
                 />
                 <CardWithoutImage
                     size={screenSize}
                     title='Нежный сливочно-сырный крем для кексов'
                     description='Сливочно-сырным кремом можно украсить кексы, либо другую выпечку, а также этим кремом можно наполнить заварные пирожные.'
-                    dishType='Детские блюда'
+                    dishType='child'
                 />
                 <Flex gap='12px' justifyContent='space-between' direction='column'>
                     <CardWithIcon

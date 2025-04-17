@@ -20,49 +20,49 @@ export const NewRecipes = memo(() => {
                     image={Solyanka}
                     title='Солянка с грибами'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Первые блюда'
+                    dishType='first-dish'
                 />
                 <CardWithImage
                     size={screenSize}
                     image={Solyanka}
                     title='Солянка с грибами'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Первые блюда'
+                    dishType='first-dish'
                 />
                 <CardWithImage
                     size={screenSize}
                     image={Solyanka}
                     title='Солянка с грибами'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Первые блюда'
+                    dishType='first-dish'
                 />
                 <CardWithImage
                     size={screenSize}
                     image={Solyanka}
                     title='Солянка с грибами'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Первые блюда'
+                    dishType='first-dish'
                 />
                 <CardWithImage
                     size={screenSize}
                     image={Solyanka}
                     title='Солянка с грибами'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Первые блюда'
+                    dishType='first-dish'
                 />
                 <CardWithImage
                     size={screenSize}
                     image={Solyanka}
                     title='Солянка с грибами'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Первые блюда'
+                    dishType='first-dish'
                 />
                 <CardWithImage
                     size={screenSize}
                     image={Solyanka}
                     title='Солянка с грибами'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Первые блюда'
+                    dishType='first-dish'
                 />
             </Carousel>
         </Box>

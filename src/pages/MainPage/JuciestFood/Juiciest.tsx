@@ -59,28 +59,28 @@ export const Juiciest = () => {
                     size={screenSize}
                     title='Кнели со спагетти'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Вторые блюда'
+                    dishType='second-dish'
                 />
                 <CardWithLeftImage
                     image={Vetchina}
                     size={screenSize}
                     title='Пряная ветчина по итальянски'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Вторые блюда'
+                    dishType='second-dish'
                 />
                 <CardWithLeftImage
                     image={Lapsha}
                     size={screenSize}
                     title='Лапша с курицей и шафраном'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Вторые блюда'
+                    dishType='second-dish'
                 />
                 <CardWithLeftImage
                     image={TomYam}
                     size={screenSize}
                     title='Том-ям с капустой кимчи'
                     description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Национальные'
+                    dishType='national'
                 />
             </Flex>
             <Flex

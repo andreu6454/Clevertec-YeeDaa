@@ -30,7 +30,8 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
         medium: '8px',
         large: '8px',
     };
-    const dishTypes = NavBarData.filter((item) => item.title === dishType);
+
+    const dishTypes = NavBarData.filter((item) => item.general === dishType);
 
     if (type === 'recommendation') {
         return (
@@ -58,6 +59,7 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
             padding={paddings[size]}
             textTransform='none'
             borderRadius='4px'
+            height='24px'
         >
             <Flex height='24px' gap={gap[size]} alignItems='center'>
                 <Image width='16px' height='16px' src={dishTypes[0].icon} alt='' />
