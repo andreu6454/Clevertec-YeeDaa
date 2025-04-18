@@ -3,7 +3,7 @@ import { AccordionButton, AccordionItem, Flex, Link, Text } from '@chakra-ui/rea
 import { memo } from 'react';
 import { useNavigate } from 'react-router';
 
-import { AccordionLink } from '~/components/AccordionLink/AccordionLink';
+import { AccordionLink } from '~/shared/ui/AccordionLink/AccordionLink';
 
 interface NavbarItemProps {
     title: string;
