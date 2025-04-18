@@ -1,4 +1,10 @@
 import Lapsha from '../../assets/recipe/lapsha.png';
+import step1 from '../../assets/steps/step1.png';
+import step2 from '../../assets/steps/step2.png';
+import step3 from '../../assets/steps/step3.png';
+import step4 from '../../assets/steps/step4.png';
+import step6 from '../../assets/steps/step6.png';
+import step8 from '../../assets/steps/step8.png';
 
 export const recipeData = [
     {
@@ -352,6 +358,87 @@ export const recipeData = [
                 stepNumber: 2,
                 description: 'Смешать с заправкой и подавать.',
                 image: 'url',
+            },
+        ],
+    },
+    {
+        id: '9',
+        title: 'Лапша с курицей и шафраном',
+        description: 'Ароматная лапша с курицей и шафраном, идеальное сочетание для сытного обеда.',
+        category: ['second-dish'],
+        subcategory: ['poultry-dish'],
+        image: Lapsha,
+        bookmarks: 258,
+        likes: 1342,
+        date: '2024-03-08T00:00:00Z',
+        time: '40 минут',
+        portions: 4,
+        nutritionValue: {
+            calories: 400,
+            proteins: 30,
+            fats: 15,
+            carbohydrates: 50,
+        },
+        ingredients: [
+            { title: 'зелёного лука', count: '1', measureUnit: 'пучок' },
+            { title: 'репчатого лука', count: '1', measureUnit: 'шт.' },
+            { title: 'чеснока', count: '1', measureUnit: 'зубчик' },
+            { title: 'куриного филе', count: '500', measureUnit: 'г' },
+            { title: 'масла или жира', count: '40', measureUnit: 'г' },
+            { title: 'спагетти', count: '250', measureUnit: 'г' },
+            { title: 'молотого шафрана', count: '1', measureUnit: 'щепотка' },
+            { title: 'молотой корицы', count: '1', measureUnit: 'щепотка' },
+            { title: 'муки', count: '1', measureUnit: 'ст л' },
+            { title: 'сливок', count: '250', measureUnit: 'мл' },
+            { title: 'куриного бульона из кубика', count: '200', measureUnit: 'мл' },
+            { title: 'нарезанной петрушки', count: '2', measureUnit: 'ст л' },
+        ],
+        steps: [
+            {
+                stepNumber: 1,
+                description:
+                    'Зелёный лук нарезать на 1 см. кружочки. Лук и чеснок на мелкие кубики.',
+                image: step1,
+            },
+            {
+                stepNumber: 2,
+                description:
+                    'Мясо помыть, высушить, нарезать на полосочки и обжарить на масле.  Посолить, поперчить и вынуть со сковороды.',
+                image: step2,
+            },
+            {
+                stepNumber: 3,
+                description: 'Спагетти отварить в течение  10 минут в подсоленной воде.',
+                image: step3,
+            },
+            {
+                stepNumber: 4,
+                description:
+                    'В сковороде, на оставшемся жире поджарить лук до золотистого цвета, добавить чеснок и прожарить ещё около 1 минуты.',
+                image: step4,
+            },
+            {
+                stepNumber: 5,
+                description: 'Всыпать шафран, корицу и муки, перемешать и коротко прожарить.',
+                image: '',
+            },
+            {
+                stepNumber: 6,
+                description:
+                    'В сковороде, на оставшемся жире поджарить лук до золотистого цвета, добавить чеснок и прожарить ещё около 1 минуты.',
+                image: step6,
+            },
+            {
+                stepNumber: 7,
+                description:
+                    'Сливки смешать с бульоном, влить к луку и протушить на среднем огне около 10 минут.',
+                image: '',
+            },
+            {
+                stepNumber: 8,
+                description:
+                    'Соус посолить, поперчить, вложить мясо, зелёный лук. Прогреть и осторожно смешать со спагетти. При подаче посыпать нарезанной петрушкой.',
+                image: step8,
             },
         ],
     },

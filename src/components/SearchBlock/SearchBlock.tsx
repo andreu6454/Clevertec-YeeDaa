@@ -13,6 +13,7 @@ const Sizes = {
         height: '248px',
         size: 'lg',
         mbText: '32px',
+        paddingY: '32px 0 32px 0',
         fSize: '48px',
         lHeight: '100%',
         inputWidth: '458px',
@@ -23,6 +24,7 @@ const Sizes = {
         height: '248px',
         size: 'lg',
         mbText: '32px',
+        paddingY: '32px 0 32px 0',
         fSize: '48px',
         lHeight: '100%',
         inputWidth: '458px',
@@ -33,6 +35,7 @@ const Sizes = {
         height: '80px',
         size: 'sm',
         mbText: '16px',
+        paddingY: '16px 0 32px 0',
         fSize: '24px',
         lHeight: '133%',
         inputWidth: '404px',
@@ -43,6 +46,7 @@ const Sizes = {
         height: '80px',
         size: 'sm',
         mbText: '16px',
+        paddingY: '16px 0 32px 0',
         fSize: '24px',
         lHeight: '133%',
         inputWidth: '284px',
@@ -64,7 +68,7 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
         <Flex
             width={Sizes[screenSize].width}
             flexDirection='column'
-            marginBottom='32px'
+            padding={Sizes[screenSize].paddingY}
             alignItems='center'
         >
             <Flex

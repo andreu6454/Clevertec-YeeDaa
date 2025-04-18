@@ -1,4 +1,5 @@
 import { Flex } from '@chakra-ui/react';
+import { memo } from 'react';
 
 import { CaloriesCard } from '~/components/CaloriesCard/CaloriesCard';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
@@ -12,7 +13,7 @@ interface RecipeCaloriesProps {
     };
 }
 
-export const RecipeCalories = (props: RecipeCaloriesProps) => {
+export const RecipeCalories = memo((props: RecipeCaloriesProps) => {
     const { nutritionValue } = props;
 
     return (
@@ -28,4 +29,4 @@ export const RecipeCalories = (props: RecipeCaloriesProps) => {
             </Flex>
         </Flex>
     );
-};
+});

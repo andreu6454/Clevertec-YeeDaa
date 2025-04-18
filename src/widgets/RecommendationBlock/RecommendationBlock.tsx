@@ -4,8 +4,8 @@ import { CardWithIcon } from '~/components/CardWithIcon/CardWithIcon';
 import { CardWithoutImage } from '~/components/CardWithoutImage/CardWithoutImage';
 import { useScreenSize } from '~/hooks/useScreenSize';
 
-import PotIcon from '../../assets/svg/firstCourses.svg';
-import KitchenIcon from '../../assets/svg/secondCourses.svg';
+import PotIcon from '../../assets/svg/navbarIcons/firstCourses.svg';
+import KitchenIcon from '../../assets/svg/navbarIcons/secondCourses.svg';
 
 const sizes = {
     Desktop: {

@@ -1,9 +1,12 @@
 import { Flex } from '@chakra-ui/react';
 import { useParams } from 'react-router';
 
-import { RecipeCalories } from '~/pages/RecipePage/RecipeCalories';
-import { RecipeIngredients } from '~/pages/RecipePage/RecipeIngredients';
-import { RecipeTitle } from '~/pages/RecipePage/RecipeTitle';
+import { NewRecipes } from '~/pages/MainPage/NewRecipes/NewRecipes';
+import { RecipeAuthor } from '~/pages/RecipePage/RecipeAuthor/RecipeAuthor';
+import { RecipeCalories } from '~/pages/RecipePage/RecipeCalories/RecipeCalories';
+import { RecipeIngredients } from '~/pages/RecipePage/RecipeIngredients/RecipeIngredients';
+import { RecipeSteps } from '~/pages/RecipePage/RecipeSteps/RecipeSteps';
+import { RecipeTitle } from '~/pages/RecipePage/RecipeTitle/RecipeTitle';
 import { recipeData } from '~/shared/data/recipeData';
 
 const RecipePage = () => {
@@ -24,6 +27,9 @@ const RecipePage = () => {
             />
             <RecipeCalories nutritionValue={data.nutritionValue} />
             <RecipeIngredients ingredients={data.ingredients} />
+            <RecipeSteps steps={data.steps} />
+            <RecipeAuthor />
+            <NewRecipes />
         </Flex>
     );
 };

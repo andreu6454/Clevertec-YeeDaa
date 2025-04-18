@@ -1,5 +1,6 @@
 import { Box, Image } from '@chakra-ui/icons';
 import { Button, Flex, Text } from '@chakra-ui/react';
+import { memo } from 'react';
 
 import Bookmark from '~/assets/svg/bookmark.svg';
 import Clock from '~/assets/svg/clock.svg';
@@ -18,7 +19,7 @@ interface RecipeTitleProps {
     description: string;
 }
 
-export const RecipeTitle = (props: RecipeTitleProps) => {
+export const RecipeTitle = memo((props: RecipeTitleProps) => {
     const { category, image, bookmarks, likes, title, description, time } = props;
 
     const mappedCategories = category.map((category) => (
@@ -88,4 +89,4 @@ export const RecipeTitle = (props: RecipeTitleProps) => {
             </Flex>
         </Flex>
     );
-};
+});

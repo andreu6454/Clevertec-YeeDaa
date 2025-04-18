@@ -1,16 +1,16 @@
-import ChildrensIcon from '~/assets/svg/childrens.svg';
-import DessertsIcon from '~/assets/svg/desserts.svg';
-import DrinksIcon from '~/assets/svg/drinks.svg';
-import FirstCoursesIcon from '~/assets/svg/firstCourses.svg';
-import GrilledIcon from '~/assets/svg/grilled.svg';
-import NationalIcon from '~/assets/svg/national.svg';
-import PreparationsIcon from '~/assets/svg/preparations.svg';
-import SaladsIcon from '~/assets/svg/salads.svg';
-import SaucesIcon from '~/assets/svg/sauces.svg';
-import SecondCoursesIcon from '~/assets/svg/secondCourses.svg';
-import SnacksIcon from '~/assets/svg/snacks.svg';
-import TherapeuticNutritionIcon from '~/assets/svg/therapeuticNutrition.svg';
-import VeganCuisineIcon from '~/assets/svg/veganCuisine.svg';
+import ChildrensIcon from '~/assets/svg/navbarIcons/childrens.svg';
+import DessertsIcon from '~/assets/svg/navbarIcons/desserts.svg';
+import DrinksIcon from '~/assets/svg/navbarIcons/drinks.svg';
+import FirstCoursesIcon from '~/assets/svg/navbarIcons/firstCourses.svg';
+import GrilledIcon from '~/assets/svg/navbarIcons/grilled.svg';
+import NationalIcon from '~/assets/svg/navbarIcons/national.svg';
+import PreparationsIcon from '~/assets/svg/navbarIcons/preparations.svg';
+import SaladsIcon from '~/assets/svg/navbarIcons/salads.svg';
+import SaucesIcon from '~/assets/svg/navbarIcons/sauces.svg';
+import SecondCoursesIcon from '~/assets/svg/navbarIcons/secondCourses.svg';
+import SnacksIcon from '~/assets/svg/navbarIcons/snacks.svg';
+import TherapeuticNutritionIcon from '~/assets/svg/navbarIcons/therapeuticNutrition.svg';
+import VeganCuisineIcon from '~/assets/svg/navbarIcons/veganCuisine.svg';
 
 export const NavBarData = [
     {

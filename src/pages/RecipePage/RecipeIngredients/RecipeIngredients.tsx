@@ -11,13 +11,13 @@ import {
     Td,
     Text,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 interface RecipeIngredientsProps {
     ingredients: Array<{ title: string; count: string; measureUnit: string }>;
 }
 
-export const RecipeIngredients = (props: RecipeIngredientsProps) => {
+export const RecipeIngredients = memo((props: RecipeIngredientsProps) => {
     const { ingredients } = props;
 
     const [count, setCount] = useState<number>(1);
@@ -25,7 +25,7 @@ export const RecipeIngredients = (props: RecipeIngredientsProps) => {
     const mappedIngredients = ingredients.map((ingredient, index) => {
         const resultCount = Number(count) * Number(ingredient?.count);
         return (
-            <Tr background={(index + 1) % 2 ? 'rgba(0, 0, 0, 0.06)' : ''}>
+            <Tr key={ingredient.title} background={(index + 1) % 2 ? 'rgba(0, 0, 0, 0.06)' : ''}>
                 <Td>{ingredient.title}</Td>
                 <Td textAlign='right'>
                     {!!resultCount && resultCount}
@@ -36,7 +36,7 @@ export const RecipeIngredients = (props: RecipeIngredientsProps) => {
     });
 
     return (
-        <TableContainer width='578px' height='680px'>
+        <TableContainer width='578px'>
             <Table variant='unstyled'>
                 <Thead>
                     <Tr>
@@ -86,4 +86,4 @@ export const RecipeIngredients = (props: RecipeIngredientsProps) => {
             </Table>
         </TableContainer>
     );
-};
+});
