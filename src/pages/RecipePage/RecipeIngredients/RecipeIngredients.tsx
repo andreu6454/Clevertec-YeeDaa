@@ -15,10 +15,26 @@ import { memo, useState } from 'react';
 
 interface RecipeIngredientsProps {
     ingredients: Array<{ title: string; count: string; measureUnit: string }>;
+    screenSize: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
 }
 
+const sizes = {
+    Desktop: {
+        width: '668px',
+    },
+    Laptop: {
+        width: '578px',
+    },
+    Tablet: {
+        width: '728px',
+    },
+    Mobile: {
+        width: '328px',
+    },
+};
+
 export const RecipeIngredients = memo((props: RecipeIngredientsProps) => {
-    const { ingredients } = props;
+    const { ingredients, screenSize } = props;
 
     const [count, setCount] = useState<number>(1);
 
@@ -36,8 +52,8 @@ export const RecipeIngredients = memo((props: RecipeIngredientsProps) => {
     });
 
     return (
-        <TableContainer width='578px'>
-            <Table variant='unstyled'>
+        <TableContainer width={sizes[screenSize].width}>
+            <Table variant='unstyled' width='100%' layout='fixed'>
                 <Thead>
                     <Tr>
                         <Td>
@@ -67,9 +83,10 @@ export const RecipeIngredients = memo((props: RecipeIngredientsProps) => {
                                         setCount(Number(e));
                                     }}
                                     width='90px'
+                                    minWidth='73px'
                                     height='40px'
                                     defaultValue={count.toString()}
-                                    min={0}
+                                    min={1}
                                     max={10}
                                 >
                                     <NumberInputField />

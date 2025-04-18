@@ -17,10 +17,70 @@ interface RecipeTitleProps {
     title: string;
     time: string;
     description: string;
+    screenSize: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
 }
 
+const sizes = {
+    Desktop: {
+        imgWidth: '553px',
+        imgHeight: '410px',
+        gap: '24px',
+        categoriesWidth: '600px',
+        width: '783px',
+        textWidth: '437px',
+        descWidth: '437px',
+        btnSize: 'lg',
+        titleFS: '48px',
+        titleLH: '100%',
+        titleMB: '24px',
+        descMB: '',
+    },
+    Laptop: {
+        imgWidth: '353px',
+        imgHeight: '410px',
+        gap: '24px',
+        categoriesWidth: '380px',
+        width: '503px',
+        textWidth: '437px',
+        descWidth: '437px',
+        btnSize: 'sm',
+        titleFS: '48px',
+        titleLH: '100%',
+        titleMB: '24px',
+        descMB: '',
+    },
+    Tablet: {
+        imgWidth: '232px',
+        imgHeight: '224px',
+        gap: '16px',
+        categoriesWidth: '370px',
+        width: '480px',
+        textWidth: '437px',
+        descWidth: '480px',
+        btnSize: 'xs',
+        titleFS: '24px',
+        titleLH: '133%',
+        titleMB: '16px',
+        descMB: '24px',
+    },
+    Mobile: {
+        imgWidth: '328px',
+        imgHeight: '224px',
+        gap: '16px',
+        categoriesWidth: '220px',
+        width: '328px',
+        textWidth: '328px',
+        descWidth: '328px',
+        btnSize: 'xs',
+        titleFS: '24px',
+        titleLH: '133%',
+        titleMB: '16px',
+        descMB: '24px',
+    },
+};
+
 export const RecipeTitle = memo((props: RecipeTitleProps) => {
-    const { category, image, bookmarks, likes, title, description, time } = props;
+    const { category, image, bookmarks, likes, title, description, time, screenSize } = props;
 
     const mappedCategories = category.map((category) => (
         <CardBadge
@@ -33,12 +93,22 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
     ));
 
     return (
-        <Flex gap='24px'>
-            <Image width='353px' height='410px' src={image} />
-            <Flex width='503px' direction='column' justifyContent='space-beetwen'>
+        <Flex direction={screenSize === 'Mobile' ? 'column' : 'row'} gap={sizes[screenSize].gap}>
+            <Image
+                width={sizes[screenSize].imgWidth}
+                height={sizes[screenSize].imgHeight}
+                src={image}
+            />
+            <Flex width={sizes[screenSize].width} direction='column' justifyContent='space-beetwen'>
                 <Flex height='100%' width='100%' direction='column' gap='32px'>
                     <Flex width='100%' justifyContent='space-between'>
-                        <Flex gap='8px'>{mappedCategories}</Flex>
+                        <Flex
+                            flexWrap='wrap'
+                            maxWidth={sizes[screenSize].categoriesWidth}
+                            gap='8px'
+                        >
+                            {mappedCategories}
+                        </Flex>
                         <Flex gap='8px'>
                             <ReactionCount size='small' count={bookmarks} variant='bookmark' />
                             <ReactionCount size='small' count={likes} variant='emoji' />
@@ -46,18 +116,29 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
                     </Flex>
                     <Box>
                         <Text
-                            width='437px'
+                            width={sizes[screenSize].textWidth}
                             fontWeight='700'
-                            fontSize='48px'
-                            lineHeight='100%'
-                            marginBottom='24px'
+                            fontSize={sizes[screenSize].titleFS}
+                            lineHeight={sizes[screenSize].titleLH}
+                            marginBottom={sizes[screenSize].titleMB}
                         >
                             {title}
                         </Text>
-                        <Typography Size={TypographySizes.sm}>{description}</Typography>
+                        <Typography
+                            width={sizes[screenSize].descWidth}
+                            Size={TypographySizes.sm}
+                            marginBottom={sizes[screenSize].descMB}
+                        >
+                            {description}
+                        </Typography>
                     </Box>
                 </Flex>
-                <Flex alignItems='flex-end' justifyContent='space-between'>
+                <Flex
+                    alignItems={screenSize === 'Mobile' ? 'flex-start' : 'flex-end'}
+                    justifyContent='space-between'
+                    direction={screenSize === 'Mobile' ? 'column' : 'row'}
+                    gap={screenSize === 'Mobile' ? '12px' : ''}
+                >
                     <Flex
                         padding='2px 8px'
                         backgroundColor='rgba(0, 0, 0, 0.06)'
@@ -70,7 +151,7 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
                     </Flex>
                     <Flex gap='12px'>
                         <Button
-                            size='sm'
+                            size={sizes[screenSize].btnSize}
                             border='1px solid rgba(0, 0, 0, 0.48)'
                             variant='outline'
                             leftIcon={<Image width='14px' src={Like} />}
@@ -79,7 +160,7 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
                         </Button>
                         <Button
                             leftIcon={<Image width='14px' src={Bookmark} />}
-                            size='sm'
+                            size={sizes[screenSize].btnSize}
                             backgroundColor='#b1ff2e'
                         >
                             Сохранить в закладки

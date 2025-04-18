@@ -365,7 +365,7 @@ export const recipeData = [
         id: '9',
         title: 'Лапша с курицей и шафраном',
         description: 'Ароматная лапша с курицей и шафраном, идеальное сочетание для сытного обеда.',
-        category: ['second-dish'],
+        category: ['second-dish', 'national', 'child'],
         subcategory: ['poultry-dish'],
         image: Lapsha,
         bookmarks: 258,

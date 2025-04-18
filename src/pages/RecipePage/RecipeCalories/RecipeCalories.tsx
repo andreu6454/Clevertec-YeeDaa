@@ -11,21 +11,57 @@ interface RecipeCaloriesProps {
         fats: number;
         carbohydrates: number;
     };
+    screenSize: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
 }
 
+const sizes = {
+    Desktop: {
+        width: '668px',
+    },
+    Laptop: {
+        width: '578px',
+    },
+    Tablet: {
+        width: '728px',
+    },
+    Mobile: {
+        width: '328px',
+    },
+};
+
 export const RecipeCalories = memo((props: RecipeCaloriesProps) => {
-    const { nutritionValue } = props;
+    const { nutritionValue, screenSize } = props;
 
     return (
-        <Flex width='578px' gap='20px' direction='column'>
+        <Flex width={sizes[screenSize].width} gap='20px' direction='column'>
             <Typography Size={TypographySizes.sm} color='rgba(0, 0, 0, 0.8)'>
                 * Калорийность на 1 порцию
             </Typography>
-            <Flex width='100%' gap='12px'>
-                <CaloriesCard count={nutritionValue.calories} title='калорийность' units='ККАЛ' />
-                <CaloriesCard count={nutritionValue.proteins} title='белки' units='ГРАММ' />
-                <CaloriesCard count={nutritionValue.fats} title='жиры' units='ГРАММ' />
-                <CaloriesCard count={nutritionValue.carbohydrates} title='углеводы' units='ГРАММ' />
+            <Flex width='100%' gap='12px' direction={screenSize === 'Mobile' ? 'column' : 'row'}>
+                <CaloriesCard
+                    screenSize={screenSize}
+                    count={nutritionValue.calories}
+                    title='калорийность'
+                    units='ККАЛ'
+                />
+                <CaloriesCard
+                    screenSize={screenSize}
+                    count={nutritionValue.proteins}
+                    title='белки'
+                    units='ГРАММ'
+                />
+                <CaloriesCard
+                    screenSize={screenSize}
+                    count={nutritionValue.fats}
+                    title='жиры'
+                    units='ГРАММ'
+                />
+                <CaloriesCard
+                    screenSize={screenSize}
+                    count={nutritionValue.carbohydrates}
+                    title='углеводы'
+                    units='ГРАММ'
+                />
             </Flex>
         </Flex>
     );

@@ -1,6 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { useParams } from 'react-router';
 
+import { useScreenSize } from '~/hooks/useScreenSize';
 import { NewRecipes } from '~/pages/MainPage/NewRecipes/NewRecipes';
 import { RecipeAuthor } from '~/pages/RecipePage/RecipeAuthor/RecipeAuthor';
 import { RecipeCalories } from '~/pages/RecipePage/RecipeCalories/RecipeCalories';
@@ -9,14 +10,36 @@ import { RecipeSteps } from '~/pages/RecipePage/RecipeSteps/RecipeSteps';
 import { RecipeTitle } from '~/pages/RecipePage/RecipeTitle/RecipeTitle';
 import { recipeData } from '~/shared/data/recipeData';
 
+const paddings = {
+    Desktop: '56px',
+    Laptop: '56px',
+    Tablet: '16px',
+    Mobile: '16px',
+};
+
+const gaps = {
+    Desktop: '40px',
+    Laptop: '40px',
+    Tablet: '24px',
+    Mobile: '24px',
+};
+
 const RecipePage = () => {
     const { recipeId } = useParams();
 
     const data = recipeData[Number(recipeId)];
+    const { screenSize, isMobile } = useScreenSize();
 
     return (
-        <Flex paddingTop='56px' width='100%' direction='column' alignItems='center' gap='40px'>
+        <Flex
+            paddingTop={paddings[screenSize]}
+            width='100%'
+            direction='column'
+            alignItems='center'
+            gap={gaps[screenSize]}
+        >
             <RecipeTitle
+                screenSize={screenSize}
                 title={data.title}
                 description={data.description}
                 time={data.time}
@@ -25,10 +48,10 @@ const RecipePage = () => {
                 image={data.image}
                 category={data.category}
             />
-            <RecipeCalories nutritionValue={data.nutritionValue} />
-            <RecipeIngredients ingredients={data.ingredients} />
-            <RecipeSteps steps={data.steps} />
-            <RecipeAuthor />
+            <RecipeCalories screenSize={screenSize} nutritionValue={data.nutritionValue} />
+            <RecipeIngredients screenSize={screenSize} ingredients={data.ingredients} />
+            <RecipeSteps screenSize={screenSize} steps={data.steps} />
+            <RecipeAuthor isMobile={isMobile} screenSize={screenSize} />
             <NewRecipes />
         </Flex>
     );

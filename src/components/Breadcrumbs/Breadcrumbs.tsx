@@ -3,6 +3,8 @@ import { Breadcrumb, BreadcrumbLink, BreadcrumbProps, Text } from '@chakra-ui/re
 import { FC, memo, ReactNode } from 'react';
 import { Link, useLocation } from 'react-router';
 
+import { recipeData } from '~/shared/data/recipeData';
+
 type PathNames = Record<string, string>;
 
 interface SmartBreadcrumbsProps extends BreadcrumbProps {
@@ -26,14 +28,12 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
                 {pathnames.map((path, index) => {
                     const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
                     const isLast = index === pathnames.length - 1;
-                    const displayName =
-                        pathNames[path] ||
-                        path
-                            .replace(/-/g, ' ')
-                            .replace(
-                                /\w\S*/g,
-                                (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(),
-                            );
+
+                    const isNumericPath = !isNaN(Number(path));
+
+                    const displayName = isNumericPath
+                        ? recipeData.find((el) => el.id === path)?.title || path
+                        : pathNames[path] || path;
 
                     return (
                         <BreadcrumbItem key={path} isCurrentPage={isLast}>
