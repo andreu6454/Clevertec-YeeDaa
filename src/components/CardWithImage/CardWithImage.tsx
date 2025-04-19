@@ -14,6 +14,9 @@ interface CardWithImageProps {
     dishType: string;
     size: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
     description: string;
+    bookMarks: number;
+    likes: number;
+    onClickHandler?: () => void;
 }
 
 const sizes = {
@@ -60,10 +63,11 @@ const sizes = {
 };
 
 export const CardWithImage = memo((props: CardWithImageProps) => {
-    const { title, image, dishType, size, description } = props;
+    const { title, image, dishType, size, description, onClickHandler, bookMarks, likes } = props;
 
     return (
         <Card
+            onClick={onClickHandler}
             _hover={{
                 boxShadow:
                     '0 4px 8px -2px rgba(32, 126, 0, 0.1), 0 6px 12px -2px rgba(32, 126, 0, 0.15)',
@@ -101,7 +105,13 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                     height={sizes[size].textHeight}
                     marginBottom='24px'
                 >
-                    <Typography Size={sizes[size].textTitleSize} overflowWrap='break-word'>
+                    <Typography
+                        overflow='hidden'
+                        textOverflow='ellipsis'
+                        noOfLines={2}
+                        Size={sizes[size].textTitleSize}
+                        overflowWrap='break-word'
+                    >
                         {title}
                     </Typography>
                     {(size === 'Desktop' || size === 'Laptop') && (
@@ -126,8 +136,8 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                         />
                     )}
                     <Flex width='max-content'>
-                        <ReactionCount size='small' count={15} variant='bookmark' />
-                        <ReactionCount size='small' count={5} variant='emoji' />
+                        <ReactionCount size='small' count={bookMarks} variant='bookmark' />
+                        <ReactionCount size='small' count={likes} variant='emoji' />
                     </Flex>
                 </Flex>
             </Box>

@@ -15,6 +15,9 @@ interface CardWithLeftImageProps {
     title: string;
     description: string;
     dishType: string;
+    bookMarks: number;
+    likes: number;
+    onClickHandler?: () => void;
 }
 
 const sizes = {
@@ -61,7 +64,7 @@ const sizes = {
 };
 
 export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
-    const { size, image, dishType, description, title } = props;
+    const { size, image, dishType, description, title, onClickHandler, bookMarks, likes } = props;
 
     const [isSmall, setIsSmall] = useState(size === 'Mobile' || size === 'Tablet');
 
@@ -121,8 +124,8 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                         />
                     )}
                     <Flex>
-                        <ReactionCount size='small' variant='bookmark' count={85} />
-                        <ReactionCount size='small' variant='emoji' count={152} />
+                        <ReactionCount size='small' variant='bookmark' count={bookMarks} />
+                        <ReactionCount size='small' variant='emoji' count={likes} />
                     </Flex>
                 </Flex>
                 <Flex direction='column' width={sizes[size].textWidth} height='100px' gap='8px'>
@@ -158,7 +161,12 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                     >
                         {!isSmall && 'Сохранить'}
                     </Button>
-                    <Button size={!isSmall ? 'sm' : 'xs'} backgroundColor='#000' color='#fff'>
+                    <Button
+                        onClick={onClickHandler}
+                        size={!isSmall ? 'sm' : 'xs'}
+                        backgroundColor='#000'
+                        color='#fff'
+                    >
                         Готовить
                     </Button>
                 </Flex>

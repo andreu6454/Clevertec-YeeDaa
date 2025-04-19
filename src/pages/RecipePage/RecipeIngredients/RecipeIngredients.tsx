@@ -16,6 +16,7 @@ import { memo, useState } from 'react';
 interface RecipeIngredientsProps {
     ingredients: Array<{ title: string; count: string; measureUnit: string }>;
     screenSize: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
+    portions: number;
 }
 
 const sizes = {
@@ -34,12 +35,12 @@ const sizes = {
 };
 
 export const RecipeIngredients = memo((props: RecipeIngredientsProps) => {
-    const { ingredients, screenSize } = props;
+    const { ingredients, screenSize, portions } = props;
 
-    const [count, setCount] = useState<number>(1);
+    const [count, setCount] = useState<number>(portions);
 
     const mappedIngredients = ingredients.map((ingredient, index) => {
-        const resultCount = Number(count) * Number(ingredient?.count);
+        const resultCount = (Number(count) * Number(ingredient?.count)) / portions;
         return (
             <Tr key={ingredient.title} background={(index + 1) % 2 ? 'rgba(0, 0, 0, 0.06)' : ''}>
                 <Td>{ingredient.title}</Td>

@@ -2,7 +2,7 @@ import { ComponentType } from 'react';
 import { Navigate, Route, useLocation } from 'react-router';
 
 import RecipePage from '~/pages/RecipePage/RecipePage';
-import { VeganPage } from '~/pages/VeganPage/VeganPage';
+import { RecipesListPage } from '~/pages/RecipesListPage/RecipesListPage';
 
 type NavItem = {
     icon: string;
@@ -23,19 +23,19 @@ interface CreateRoutesProps {
 }
 
 const pageComponents: PageComponents = {
-    // 'salads': SaladsPage,
-    // 'snacks': SnacksPage,
-    // 'first-courses': FirstCoursesPage,
-    // 'second-courses': SecondCoursesPage,
-    // 'desserts': DessertsPage,
-    // 'grilled': GrilledPage,
-    vegan: VeganPage,
-    // 'child': ChildPage,
-    // 'healthy': HealthyPage,
-    // 'national': NationalPage,
-    // 'sauces': SaucesPage,
-    // 'drinks': DrinksPage,
-    // 'preparations': PreparationsPage
+    salads: RecipesListPage,
+    snacks: RecipesListPage,
+    'first-dish': RecipesListPage,
+    'second-dish': RecipesListPage,
+    desserts: RecipesListPage,
+    grilled: RecipesListPage,
+    vegan: RecipesListPage,
+    child: RecipesListPage,
+    healthy: RecipesListPage,
+    national: RecipesListPage,
+    sauces: RecipesListPage,
+    drinks: RecipesListPage,
+    preparations: RecipesListPage,
 };
 
 const GetComponent = (general: string) => {

@@ -1,24 +1,37 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 import { LinksCarousel } from '~/components/LinksCarousel/LinksCarousel';
+import { useRouteSegments } from '~/hooks/useRouteSegments';
 import { useScreenSize } from '~/hooks/useScreenSize';
 import { NavBarData } from '~/shared/data/navBarData';
-import { VeganPageData } from '~/shared/data/veganPageData';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { filteredDataSelector, setFilteredData } from '~/store/recipesListPage-slice';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
-export const VeganPage = memo(() => {
+export const RecipesListPage = memo(() => {
     const { screenSize } = useScreenSize();
+
+    const dispatch = useAppDispatch();
+
+    const { category, subcategory } = useRouteSegments();
+    useEffect(() => {
+        dispatch(setFilteredData({ category, subcategory }));
+    }, [category, subcategory]);
+
+    const title = NavBarData.filter((el) => el.general === category)[0].title;
+
+    const recipes = useAppSelector(filteredDataSelector);
 
     return (
         <CuisinePageLayout
-            searchTitle='Веганская кухня'
+            searchTitle={title}
             searchDescription='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
             recTitle='Десерты, выпечка'
             recDescription='Без них невозможно представить себе ни современную, ни традиционную кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб — рецепты изделий из теста многообразны и невероятно популярны..'
         >
             <LinksCarousel size={screenSize} links={NavBarData[6].links} />
-            <RecipesContainer data={VeganPageData} />
+            <RecipesContainer data={recipes} />
         </CuisinePageLayout>
     );
 });
