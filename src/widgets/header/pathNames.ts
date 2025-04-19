@@ -1,4 +1,5 @@
 export const pathNames = {
+    juiciest: 'Самое сочное',
     // Салаты
     salads: 'Салаты',
     'meat-salads': 'Мясные салаты',
