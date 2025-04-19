@@ -1,3 +1,11 @@
+import GarlicPotato from '../../assets/images/garlicPotato.png';
+import Kapustniy from '../../assets/images/kapustniy.png';
+import Kneli from '../../assets/images/kneli.png';
+import Lasagna from '../../assets/images/lasagna.png';
+import MeatBalls from '../../assets/images/meatballs.png';
+import Potato from '../../assets/images/potato.png';
+import PotatoRolls from '../../assets/images/potatoRolls.png';
+import Salad from '../../assets/images/salad.png';
 import Lapsha from '../../assets/recipe/lapsha.png';
 import step1 from '../../assets/steps/step1.png';
 import step2 from '../../assets/steps/step2.png';
@@ -14,7 +22,7 @@ export const recipeData = [
             'Картошка, тушенная с болгарским перцем, фасолью, морковью и луком, - вариант сытного блюда на каждый день. Фасоль в данном случае заменяет мясо, делая рагу сытным и питательным. Чтобы сократить время приготовления, возьмём консервированную фасоль. Блюдо хоть и простое, но в полной мере наполнено ароматами и имеет выразительный вкус за счёт добавления томатной пасты.',
         category: ['vegan', 'second-dish'],
         subcategory: ['snacks', 'vegetables'],
-        image: 'url',
+        image: Potato,
         bookmarks: 85,
         likes: 152,
         date: '2025-02-28T00:00:00Z',
@@ -33,22 +41,22 @@ export const recipeData = [
             {
                 stepNumber: 1,
                 description: 'Нарезать картошку и перец.',
-                image: 'url',
+                image: step1,
             },
             {
                 stepNumber: 2,
                 description: 'Обжарить лук до золотистого цвета.',
-                image: 'url',
+                image: step2,
             },
             {
                 stepNumber: 3,
                 description: 'Добавить картошку, перец и фасоль, залить соусом.',
-                image: 'url',
+                image: '',
             },
             {
                 stepNumber: 4,
                 description: 'Тушить на медленном огне 30 минут.',
-                image: 'url',
+                image: step4,
             },
         ],
         meat: '',
@@ -61,7 +69,7 @@ export const recipeData = [
             'Рекомендую всем приготовить постное блюдо из картофеля и грибов. Готовится это блюдо без яиц, без мяса и без сыра, из самых простых ингредиентов, а получается очень вкусно и сытно. Постный рецепт картофельных рулетиков с грибами, в томатном соусе, - на обед, ужин и даже на праздничный стол!',
         category: ['vegan', 'snacks'],
         subcategory: ['snacks', 'warm-snacks'],
-        image: 'путь к изображению в вашем проекте',
+        image: PotatoRolls,
         bookmarks: 85,
         likes: 1152,
         date: '2024-02-20T00:00:00Z',
@@ -78,17 +86,17 @@ export const recipeData = [
             {
                 stepNumber: 1,
                 description: 'Отварить картошку и сделать пюре.',
-                image: 'url',
+                image: step1,
             },
             {
                 stepNumber: 2,
                 description: 'Обжарить грибы до готовности.',
-                image: 'url',
+                image: step2,
             },
             {
                 stepNumber: 3,
                 description: 'Сформировать рулетики и обжарить.',
-                image: 'url',
+                image: step3,
             },
         ],
         side: 'potatoes',
@@ -100,7 +108,7 @@ export const recipeData = [
             'Большое, сытное блюдо для ценителей блюд без мяса! Такая лазанья готовится с овощным соусом и соусом бешамель, а вместо листов для лазаньи используется тонкий лаваш.',
         category: ['vegan', 'second-dish', 'national'],
         subcategory: ['second-dish', 'vegetables', 'italian', 'snacks'],
-        image: 'путь к изображению в вашем проекте',
+        image: Lasagna,
         bookmarks: 85,
         likes: 152,
         date: '2023-01-25T00:00:00Z',
@@ -117,17 +125,17 @@ export const recipeData = [
             {
                 stepNumber: 1,
                 description: 'Приготовить соусы.',
-                image: 'url',
+                image: step1,
             },
             {
                 stepNumber: 2,
                 description: 'Сложить слои лазаньи.',
-                image: 'url',
+                image: step2,
             },
             {
                 stepNumber: 3,
                 description: 'Запекать 30 минут.',
-                image: 'url',
+                image: step3,
             },
         ],
     },
@@ -138,7 +146,7 @@ export const recipeData = [
             'Тефтели из булгура и чечевицы – яркие и питательные, отлично подходят для постного и вегетарианского меню. Тефтели получаются нежными, а также сочными и ароматными благодаря использованию томатного соуса и душистых пряностей.',
         category: ['vegan', 'second-dish'],
         subcategory: ['second-dish', 'poultry-dish'],
-        image: 'путь к изображению в вашем проекте',
+        image: MeatBalls,
         bookmarks: 85,
         likes: 152,
         date: '2023-02-15T00:00:00Z',
@@ -155,17 +163,17 @@ export const recipeData = [
             {
                 stepNumber: 1,
                 description: 'Смешать булгур и чечевицу.',
-                image: 'url',
+                image: step1,
             },
             {
                 stepNumber: 2,
                 description: 'Сформировать тефтели и запечь.',
-                image: 'url',
+                image: step3,
             },
             {
                 stepNumber: 3,
                 description: 'Подавать с соусом.',
-                image: 'url',
+                image: step6,
             },
         ],
     },
@@ -176,7 +184,7 @@ export const recipeData = [
             'Такая картошечка украсит любой семейный обед! Все будут в полном восторге, очень вкусно! Аромат чеснока, хрустящая корочка на картошечке - просто объедение! Отличная идея для обеда или ужина, готовится просто!',
         category: ['vegan', 'second-dish'],
         subcategory: ['side-dishes', 'second-dish', 'vegetables'],
-        image: 'путь к изображению в вашем проекте',
+        image: GarlicPotato,
         bookmarks: 124,
         likes: 342,
         date: '2024-03-01T00:00:00Z',
@@ -193,17 +201,17 @@ export const recipeData = [
             {
                 stepNumber: 1,
                 description: 'Очистить и нарезать картошку.',
-                image: 'url',
+                image: step3,
             },
             {
                 stepNumber: 2,
                 description: 'Обжарить с чесноком.',
-                image: 'url',
+                image: step6,
             },
             {
                 stepNumber: 3,
                 description: 'Подавать горячей.',
-                image: 'url',
+                image: step8,
             },
         ],
         side: 'potatoes',
@@ -215,7 +223,7 @@ export const recipeData = [
             'Капустные котлеты по этому рецепту получаются необычайно пышными и невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных блюд.',
         category: ['vegan'],
         subcategory: ['second-dish', 'snacks'],
-        image: 'путь к изображению в вашем проекте',
+        image: Kapustniy,
         bookmarks: 2,
         likes: 1,
         date: '2024-02-05T00:00:00Z',
@@ -231,17 +239,17 @@ export const recipeData = [
             {
                 stepNumber: 1,
                 description: 'Нарезать капусту и отварить.',
-                image: 'url',
+                image: step2,
             },
             {
                 stepNumber: 2,
                 description: 'Смешать с мукой и сформировать котлеты.',
-                image: 'url',
+                image: step1,
             },
             {
                 stepNumber: 3,
                 description: 'Обжарить до золотистой корочки.',
-                image: 'url',
+                image: step3,
             },
         ],
     },
@@ -251,7 +259,7 @@ export const recipeData = [
         description: 'Сытное рагу из сезонных овощей, приправленное травами.',
         category: ['vegan', 'second-dish'],
         subcategory: ['side-dishes', 'vegetables', 'snacks'],
-        image: 'путь к изображению в вашем проекте',
+        image: Kneli,
         bookmarks: 8,
         likes: 60,
         date: '2023-03-12T00:00:00Z',
@@ -269,17 +277,17 @@ export const recipeData = [
             {
                 stepNumber: 1,
                 description: 'Нарезать все овощи.',
-                image: 'url',
+                image: step1,
             },
             {
                 stepNumber: 2,
                 description: 'Обжарить на сковороде.',
-                image: 'url',
+                image: '',
             },
             {
                 stepNumber: 3,
                 description: 'Добавить специи и тушить до готовности.',
-                image: 'url',
+                image: step6,
             },
         ],
     },
@@ -331,7 +339,7 @@ export const recipeData = [
         description: 'Салат с обжаренными на гриле овощами и легкой заправкой.',
         category: ['salads'],
         subcategory: ['warm-salads'],
-        image: 'путь к изображению в вашем проекте',
+        image: Salad,
         bookmarks: 10,
         likes: 80,
         date: '2023-03-20T00:00:00Z',
@@ -352,24 +360,24 @@ export const recipeData = [
             {
                 stepNumber: 1,
                 description: 'Обжарить овощи на гриле.',
-                image: 'url',
+                image: step1,
             },
             {
                 stepNumber: 2,
                 description: 'Смешать с заправкой и подавать.',
-                image: 'url',
+                image: step2,
             },
         ],
     },
     {
         id: '9',
-        title: 'Лапша с курицей и шафраном',
+        title: 'Лапша с курицей и шафраном!',
         description: 'Ароматная лапша с курицей и шафраном, идеальное сочетание для сытного обеда.',
         category: ['second-dish', 'national', 'child'],
         subcategory: ['poultry-dish'],
         image: Lapsha,
-        bookmarks: 258,
-        likes: 1342,
+        bookmarks: 348,
+        likes: 1900,
         date: '2024-03-08T00:00:00Z',
         time: '40 минут',
         portions: 4,

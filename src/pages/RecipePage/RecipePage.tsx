@@ -27,8 +27,12 @@ const gaps = {
 const RecipePage = () => {
     const { recipeId } = useParams();
 
-    const data = recipeData[Number(recipeId)];
+    const data = recipeData.find((recipe) => recipe.id === recipeId);
     const { screenSize, isMobile } = useScreenSize();
+
+    if (!data) {
+        return null;
+    }
 
     return (
         <Flex
@@ -40,8 +44,8 @@ const RecipePage = () => {
         >
             <RecipeTitle
                 screenSize={screenSize}
-                title={data.title}
-                description={data.description}
+                title={data?.title}
+                description={data?.description}
                 time={data.time}
                 likes={data.likes}
                 bookmarks={data.bookmarks}
@@ -49,7 +53,11 @@ const RecipePage = () => {
                 category={data.category}
             />
             <RecipeCalories screenSize={screenSize} nutritionValue={data.nutritionValue} />
-            <RecipeIngredients screenSize={screenSize} ingredients={data.ingredients} />
+            <RecipeIngredients
+                portions={Number(data.portions)}
+                screenSize={screenSize}
+                ingredients={data.ingredients}
+            />
             <RecipeSteps screenSize={screenSize} steps={data.steps} />
             <RecipeAuthor isMobile={isMobile} screenSize={screenSize} />
             <NewRecipes />

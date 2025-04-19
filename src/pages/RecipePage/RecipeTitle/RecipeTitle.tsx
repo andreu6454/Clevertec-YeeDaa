@@ -95,6 +95,7 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
     return (
         <Flex direction={screenSize === 'Mobile' ? 'column' : 'row'} gap={sizes[screenSize].gap}>
             <Image
+                borderRadius='8px'
                 width={sizes[screenSize].imgWidth}
                 height={sizes[screenSize].imgHeight}
                 src={image}
