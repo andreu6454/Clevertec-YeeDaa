@@ -18,7 +18,12 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
         const pathnames = location.pathname.split('/').filter(Boolean);
 
         return (
-            <Breadcrumb spacing={0} separator={<ChevronRightIcon color='gray.500' />} {...rest}>
+            <Breadcrumb
+                data-test-id='breadcrumbs'
+                spacing={0}
+                separator={<ChevronRightIcon color='gray.500' />}
+                {...rest}
+            >
                 <BreadcrumbItem>
                     <BreadcrumbLink color='blackAlpha.700' as={Link} to='/'>
                         {homeElement}
