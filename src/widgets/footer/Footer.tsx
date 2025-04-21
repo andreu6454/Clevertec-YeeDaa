@@ -11,6 +11,7 @@ import SearchIcon from '../../assets/svg/searchIcon.svg';
 const Footer = () => (
     <footer data-test-id='footer'>
         <Box
+            zIndex={10}
             display='flex'
             alignItems='center'
             justifyContent='space-evenly'
