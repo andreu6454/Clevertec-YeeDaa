@@ -11,6 +11,7 @@ export const AppRouter = () => (
         <Route index element={<MainPage />} />
         {createRoutes({ data: NavBarData })}
         <Route path='/juiciest' element={<JuiciestFood />} />
-        {/*<Route path='*' element={<div>404</div>}/>*/}
+        <Route path='/login' element={<div>login</div>} />
+        <Route path='*' element={<div>404</div>} />
     </Routes>
 );
