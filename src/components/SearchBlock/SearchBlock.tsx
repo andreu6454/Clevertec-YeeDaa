@@ -1,8 +1,11 @@
 import { IconButton, Input, InputGroup, Select, Switch } from '@chakra-ui/icons';
 import { Flex, Image, InputRightElement, Text } from '@chakra-ui/react';
 
+import { Filters } from '~/components/Filters/Filters';
 import { useScreenSize } from '~/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { openFilters } from '~/store/app-slice';
+import { useAppDispatch } from '~/store/hooks';
 
 import SearchFilterIcon from '../../assets/svg/searchFilters.svg';
 import SearchIcon from '../../assets/svg/searchIcon.svg';
@@ -64,6 +67,12 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
 
     const { screenSize, isDesktop, isLaptop } = useScreenSize();
 
+    const dispatch = useAppDispatch();
+
+    const onClickHandler = () => {
+        dispatch(openFilters());
+    };
+
     return (
         <Flex
             width={Sizes[screenSize].width}
@@ -71,6 +80,7 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
             padding={Sizes[screenSize].paddingY}
             alignItems='center'
         >
+            <Filters />
             <Flex
                 direction='column'
                 alignItems='center'
@@ -99,6 +109,8 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
             </Flex>
             <Flex gap='12px' marginBottom='12px'>
                 <IconButton
+                    data-test-id='filter-button'
+                    onClick={onClickHandler}
                     borderColor='rgba(0, 0, 0, 0.48)'
                     size={Sizes[screenSize].size}
                     variant='outline'
