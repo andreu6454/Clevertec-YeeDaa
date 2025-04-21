@@ -20,7 +20,7 @@ export const NewRecipes = memo(() => {
     const navigate = useNavigate();
 
     const mappedRecipes = [...recipeData]
-        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        // .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
         .map((recipe) => {
             const onClickHandler = () => {
                 navigate(`${recipe.category[0]}/${recipe.subcategory[0]}/${recipe.id}`);
