@@ -8,6 +8,13 @@ import { recipeData } from '~/shared/data/recipeData';
 import { Carousel } from '~/shared/ui/Carousel/Carousel';
 import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
 
+const width = {
+    Desktop: 1360,
+    Laptop: 880,
+    Tablet: 728,
+    Mobile: 328,
+};
+
 export const NewRecipes = memo(() => {
     const { screenSize } = useScreenSize();
     const navigate = useNavigate();
@@ -35,7 +42,7 @@ export const NewRecipes = memo(() => {
         });
 
     return (
-        <Box width='100%'>
+        <Box width={width[screenSize]} height='max-content'>
             <PageBlockTitle title='Новые рецепты' />
             <Carousel>{mappedRecipes}</Carousel>
         </Box>

@@ -1,73 +1,70 @@
-import { IconButton } from '@chakra-ui/icons';
-import { Flex, Image } from '@chakra-ui/react';
-import { memo, ReactNode, useRef } from 'react';
+import 'swiper/swiper-bundle.css';
 
-import LeftArrowIcon from '~/assets/svg/leftArrowIcon.svg';
-import RightArrowIcon from '~/assets/svg/rightArrowIcon.svg';
+import { Box } from '@chakra-ui/icons';
+import { memo, ReactNode, useRef } from 'react';
+import type { Swiper as SwiperType } from 'swiper';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 import { useScreenSize } from '~/hooks/useScreenSize';
+import { CarouselButtons } from '~/shared/ui/Carousel/CarouselButtons/CarouselButtons';
 
 interface CarouselProps {
-    children?: ReactNode[];
+    children: ReactNode[];
 }
 
 export const Carousel = memo((props: CarouselProps) => {
     const { children } = props;
 
-    const { screenSize } = useScreenSize();
+    const { screenSize, isDesktop, isMobile, isTablet } = useScreenSize();
 
-    const scrollRef = useRef<HTMLDivElement>(null);
+    const swiperRef = useRef<SwiperType | null>(null);
 
-    const amount = screenSize === 'Desktop' ? 346 : 289;
-
-    const scroll = (direction: 'left' | 'right') => {
-        if (scrollRef.current) {
-            const scrollAmount = direction === 'left' ? -amount : amount;
-            scrollRef.current.scrollBy({
-                left: scrollAmount,
-                behavior: 'smooth',
-            });
-        }
+    const next = () => {
+        swiperRef.current?.slideNext();
     };
 
-    return (
-        <Flex
-            overflow='auto'
-            ref={scrollRef}
-            gap='12px'
-            width='100%'
-            sx={{
-                scrollbarWidth: 'none',
-                '&::-webkit-scrollbar': {
-                    display: 'none',
-                },
-            }}
-            paddingY='4px'
+    const prev = () => {
+        swiperRef.current?.slidePrev();
+    };
+
+    const swiperSlides = children.map((el, index) => (
+        <SwiperSlide
+            data-test-id={`carousel-card-${index}`}
+            style={{ width: 'auto' }}
+            key={index + 'swiper'}
         >
-            {(screenSize === 'Desktop' || screenSize === 'Laptop') && (
-                <IconButton
-                    zIndex={3}
-                    aria-label='Previous'
-                    icon={<Image src={LeftArrowIcon} />}
-                    position='absolute'
-                    transform='translate(-20%, 350%)'
-                    onClick={() => scroll('left')}
-                />
-            )}
-            {children}
-            {(screenSize === 'Desktop' || screenSize === 'Laptop') && (
-                <IconButton
-                    zIndex={3}
-                    aria-label='Previous'
-                    icon={<Image src={RightArrowIcon} />}
-                    position='absolute'
-                    transform={
-                        screenSize === 'Desktop'
-                            ? 'translate(1324px, 350%)'
-                            : 'translate(842px, 350%)'
-                    }
-                    onClick={() => scroll('right')}
-                />
-            )}
-        </Flex>
+            {el}
+        </SwiperSlide>
+    ));
+
+    return (
+        <Box>
+            <CarouselButtons
+                isMobile={isMobile}
+                isTablet={isTablet}
+                onLeftClick={prev}
+                onRightClick={next}
+                screenSize={screenSize}
+            />
+            <Swiper
+                data-test-id='carousel'
+                onSwiper={(swiper) => (swiperRef.current = swiper)}
+                style={isMobile ? { overflow: 'visible' } : {}}
+                direction='horizontal'
+                spaceBetween={isDesktop ? '24px' : '12px'}
+                loop={true}
+                pagination={true}
+                breakpoints={{
+                    320: { slidesPerView: 2.01 },
+                    768: { slidesPerView: 4.3 },
+                    1420: { slidesPerView: 3.085 },
+                    1920: { slidesPerView: 4 },
+                }}
+                modules={[Navigation]}
+            >
+                {swiperSlides}
+            </Swiper>
+        </Box>
     );
 });

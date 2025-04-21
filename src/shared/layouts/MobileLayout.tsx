@@ -18,7 +18,7 @@ export const MobileLayout = (props: MobileLayoutProps) => {
     const padding = isMobile ? '64px 16px 100px 16px' : '64px 12px 100px 20px';
 
     return (
-        <Box width='100%' minHeight='100vh'>
+        <Box width='100%' minHeight='100vh' overflowX='hidden'>
             {/*<BackGround />*/}
             {header}
             <Box width='100%' height='100%' padding={padding}>
