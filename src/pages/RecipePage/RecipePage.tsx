@@ -1,8 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import { useParams } from 'react-router';
 
+import { NewRecipes } from '~/components/NewRecipes/NewRecipes';
 import { useScreenSize } from '~/hooks/useScreenSize';
-import { NewRecipes } from '~/pages/MainPage/NewRecipes/NewRecipes';
 import { RecipeAuthor } from '~/pages/RecipePage/RecipeAuthor/RecipeAuthor';
 import { RecipeCalories } from '~/pages/RecipePage/RecipeCalories/RecipeCalories';
 import { RecipeIngredients } from '~/pages/RecipePage/RecipeIngredients/RecipeIngredients';

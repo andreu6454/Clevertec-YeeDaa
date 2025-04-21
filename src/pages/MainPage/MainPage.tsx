@@ -1,10 +1,10 @@
 import { Flex } from '@chakra-ui/react';
 import { FC, memo } from 'react';
 
+import { NewRecipes } from '~/components/NewRecipes/NewRecipes';
 import { SearchBlock } from '~/components/SearchBlock/SearchBlock';
 import { CulinaryBlogs } from '~/pages/MainPage/CulinaryBlogs/CulinaryBlogs';
 import { Juiciest } from '~/pages/MainPage/JuciestFood/Juiciest';
-import { NewRecipes } from '~/pages/MainPage/NewRecipes/NewRecipes';
 import { RecommendationBlock } from '~/widgets/RecommendationBlock/RecommendationBlock';
 
 export const MainPage: FC = memo(() => (
