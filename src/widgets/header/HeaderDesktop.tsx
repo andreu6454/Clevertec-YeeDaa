@@ -1,9 +1,10 @@
-import { Box } from '@chakra-ui/icons';
+import { Box, HamburgerIcon, IconButton } from '@chakra-ui/icons';
 import { Avatar, Flex, Image, Link, Text } from '@chakra-ui/react';
 import { memo } from 'react';
 import { Link as ReactLink, useNavigate } from 'react-router';
 
 import { Breadcrumbs } from '~/components/Breadcrumbs/Breadcrumbs';
+import { useScreenSize } from '~/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { isBurgerOpenSelector, isLoginSelector } from '~/store/app-slice';
 import { useAppSelector } from '~/store/hooks';
@@ -16,6 +17,7 @@ import LogoLarge from '../../assets/svg/LogoLarge.svg';
 export const HeaderDesktop = memo(() => {
     const navigate = useNavigate();
 
+    const { isDesktopLaptop } = useScreenSize();
     const isLogin = useAppSelector(isLoginSelector);
     const isBurgerOpen = useAppSelector(isBurgerOpenSelector);
 
@@ -84,6 +86,15 @@ export const HeaderDesktop = memo(() => {
                             <Image width='14px' height='14px' src={LoginIcon} />
                         </Flex>
                     </Link>
+                    <IconButton
+                        position={isDesktopLaptop ? 'absolute' : 'static'}
+                        width={isDesktopLaptop ? '0' : '100%'}
+                        visibility={isDesktopLaptop ? 'hidden' : 'visible'}
+                        data-test-id='hamburger-icon'
+                        variant='ghost'
+                        aria-label='menu'
+                        icon={<HamburgerIcon boxSize='24px' color='black' />}
+                    />
                 </Flex>
             )}
         </Flex>

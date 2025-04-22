@@ -18,6 +18,7 @@ interface CardWithLeftImageProps {
     bookMarks: number;
     likes: number;
     onClickHandler?: () => void;
+    index: number;
 }
 
 const sizes = {
@@ -64,7 +65,8 @@ const sizes = {
 };
 
 export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
-    const { size, image, dishType, description, title, onClickHandler, bookMarks, likes } = props;
+    const { size, image, dishType, description, title, onClickHandler, bookMarks, likes, index } =
+        props;
 
     const [isSmall, setIsSmall] = useState(size === 'Mobile' || size === 'Tablet');
 
@@ -162,6 +164,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                         {!isSmall && 'Сохранить'}
                     </Button>
                     <Button
+                        data-test-id={`card-link-${index}`}
                         onClick={onClickHandler}
                         size={!isSmall ? 'sm' : 'xs'}
                         backgroundColor='#000'

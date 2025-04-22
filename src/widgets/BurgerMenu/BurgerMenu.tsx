@@ -1,24 +1,37 @@
 import { Flex } from '@chakra-ui/react';
-import { memo, ReactNode } from 'react';
+import { memo } from 'react';
 
+import { useScreenSize } from '~/hooks/useScreenSize';
 import { useScrollLock } from '~/hooks/useScrollLock';
+import { closeBurgerMenu, isBurgerOpenSelector } from '~/store/app-slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { BurgerMenuContent } from '~/widgets/BurgerMenu/BurgerMenuContent/BurgerMenuContent';
 
-interface BurgerMenuProps {
-    width: string;
-    height: string;
-    children: ReactNode;
-    isOpen: boolean;
-    closeHandler: () => void;
-}
+// const sizes = {
+//     Tablet: {},
+//     Mobile: {}
+// }
 
-export const BurgerMenu = memo((props: BurgerMenuProps) => {
-    const { width, height, isOpen, children, closeHandler } = props;
+export const BurgerMenu = memo(() => {
+    const { isMobile } = useScreenSize();
 
-    useScrollLock(isOpen);
+    const isBurgerOpen = useAppSelector(isBurgerOpenSelector);
+    const dispatch = useAppDispatch();
+
+    const closeMenuHandler = () => {
+        dispatch(closeBurgerMenu());
+    };
+
+    useScrollLock(isBurgerOpen);
+
+    if (!isBurgerOpen) {
+        return null;
+    }
+
     return (
         <Flex
-            onClick={closeHandler}
-            top={0}
+            onClick={closeMenuHandler}
+            top='64px'
             left={0}
             backgroundColor='rgba(0, 0, 0, 0.16)'
             background={{ blur: '4px' }}
@@ -30,14 +43,25 @@ export const BurgerMenu = memo((props: BurgerMenuProps) => {
             pointerEvents='auto'
         >
             <Flex
+                borderRadius='0 0 12px 12px'
+                position='absolute'
+                right={0}
+                top={0}
                 overflowY='scroll'
                 backgroundColor='#fff'
-                height={height}
-                width={width}
+                height={isMobile ? '652px' : '868px'}
+                width='344px'
                 pointerEvents='auto'
                 onClick={(e) => e.stopPropagation()}
+                sx={{
+                    '&::-webkit-scrollbar': {
+                        display: 'none',
+                    },
+                    '-ms-overflow-style': 'none',
+                    'scrollbar-width': 'none',
+                }}
             >
-                {children}
+                <BurgerMenuContent />
             </Flex>
         </Flex>
     );

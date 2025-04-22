@@ -1,9 +1,9 @@
 import { Select } from '@chakra-ui/icons';
 
-import { NavBarData } from '~/shared/data/navBarData';
+import { navBarData } from '~/shared/data/navBarData';
 
 export const CategoryFilter = () => {
-    const mappedOptions = NavBarData.map((el) => {
+    const mappedOptions = navBarData.map((el) => {
         if (el.title === 'Веганская кухня') {
             return (
                 <option data-test-id='checkbox-веганская кухня' key={'select' + el.title}>

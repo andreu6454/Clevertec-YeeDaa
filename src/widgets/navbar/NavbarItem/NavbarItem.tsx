@@ -10,10 +10,11 @@ interface NavbarItemProps {
     icon: string;
     general: string;
     links: Array<{ title: string; link: string }>;
+    isDesktopLaptop: boolean;
 }
 
 export const NavbarItem = memo((props: NavbarItemProps) => {
-    const { title, icon, general, links } = props;
+    const { title, icon, general, links, isDesktopLaptop } = props;
     const navigate = useNavigate();
 
     const mappedLinks =
@@ -32,10 +33,10 @@ export const NavbarItem = memo((props: NavbarItemProps) => {
     };
 
     return (
-        <AccordionItem border='none' width='230px'>
+        <AccordionItem border='none' width={isDesktopLaptop ? '230px' : '302px'}>
             <AccordionButton
                 padding='12px 8px'
-                width='230px'
+                width={isDesktopLaptop ? '230px' : '302px'}
                 height='48px'
                 _expanded={{
                     bg: '#eaffc7',
@@ -50,11 +51,20 @@ export const NavbarItem = memo((props: NavbarItemProps) => {
                 <Link
                     textDecoration='none'
                     data-test-id={general === 'vegan' ? 'vegan-cuisine' : ''}
-                    onClick={handleClick}
                 >
-                    <Flex as='span' flex='1' textAlign='left' alignItems='center'>
+                    <Flex
+                        as='span'
+                        flex='1'
+                        textAlign='left'
+                        alignItems='center'
+                        onClick={handleClick}
+                    >
                         <Image marginRight='12px' src={icon} boxSize='24px' />
-                        <Text width='150px' color='#000' noOfLines={1}>
+                        <Text
+                            width={isDesktopLaptop ? '150px' : '222px'}
+                            color='#000'
+                            noOfLines={1}
+                        >
                             {title}
                         </Text>
                     </Flex>

@@ -7,7 +7,7 @@ export type AppState = typeof initialState;
 const initialState = {
     isLoading: false,
     error: '' as string | null,
-    isBurgerOpen: true,
+    isBurgerOpen: false,
     isFiltersOpen: false,
     isLogin: false,
 };

@@ -45,7 +45,9 @@ export const RecipeIngredients = memo((props: RecipeIngredientsProps) => {
             <Tr key={ingredient.title} background={(index + 1) % 2 ? 'rgba(0, 0, 0, 0.06)' : ''}>
                 <Td>{ingredient.title}</Td>
                 <Td textAlign='right'>
-                    {!!resultCount && resultCount}
+                    <span data-test-id={`ingredient-quantity-${index}`}>
+                        {!!resultCount && resultCount}
+                    </span>
                     {' ' + ingredient.measureUnit}
                 </Td>
             </Tr>
@@ -92,8 +94,8 @@ export const RecipeIngredients = memo((props: RecipeIngredientsProps) => {
                                 >
                                     <NumberInputField />
                                     <NumberInputStepper>
-                                        <NumberIncrementStepper />
-                                        <NumberDecrementStepper />
+                                        <NumberIncrementStepper data-test-id='increment-stepper' />
+                                        <NumberDecrementStepper data-test-id='decrement-stepper' />
                                     </NumberInputStepper>
                                 </NumberInput>
                             </Flex>

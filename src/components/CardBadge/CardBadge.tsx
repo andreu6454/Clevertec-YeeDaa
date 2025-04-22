@@ -1,6 +1,6 @@
 import { Avatar, Badge, Flex, Image, Text } from '@chakra-ui/react';
 
-import { NavBarData } from '~/shared/data/navBarData';
+import { navBarData } from '~/shared/data/navBarData';
 
 interface DishTypeBadgeProps {
     type: 'dishType' | 'recommendation';
@@ -31,7 +31,7 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
         large: '8px',
     };
 
-    const dishTypes = NavBarData.filter((item) => item.general === dishType);
+    const dishTypes = navBarData.filter((item) => item.general === dishType);
 
     if (type === 'recommendation') {
         return (

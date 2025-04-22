@@ -19,7 +19,7 @@ export const Juiciest = () => {
     const navigate = useNavigate();
 
     const onClickHandler = () => {
-        navigate('/juiciest');
+        navigate('/the-juiciest');
     };
 
     const { screenSize, isDesktop, isLaptop, isMobile, isTablet } = useScreenSize();
@@ -28,13 +28,14 @@ export const Juiciest = () => {
 
     const mappedRecipes = [...recipeData]
         .sort((a, b) => b.likes - a.likes)
-        .map((recipe) => {
+        .map((recipe, index) => {
             const onClickHandler = () => {
                 navigate(`${recipe.category[0]}/${recipe.subcategory[0]}/${recipe.id}`);
             };
 
             return (
                 <CardWithLeftImage
+                    index={index}
                     bookMarks={recipe.bookmarks}
                     likes={recipe.likes}
                     onClickHandler={onClickHandler}

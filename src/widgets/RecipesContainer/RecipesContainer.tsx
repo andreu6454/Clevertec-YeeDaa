@@ -14,13 +14,14 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
     const { screenSize, isTablet, isDesktop } = useScreenSize();
     const navigate = useNavigate();
 
-    const mappedCards = data.map((recipe) => {
+    const mappedCards = data.map((recipe, index) => {
         const onClickHandler = () => {
             navigate(`/${recipe.category[0]}/${recipe.subcategory[0]}/${recipe.id}`);
         };
 
         return (
             <CardWithLeftImage
+                index={index}
                 onClickHandler={onClickHandler}
                 bookMarks={recipe.bookmarks}
                 likes={recipe.likes}

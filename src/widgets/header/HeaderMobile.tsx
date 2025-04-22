@@ -1,14 +1,26 @@
 import { Box, HamburgerIcon, IconButton, useMediaQuery } from '@chakra-ui/icons';
-import { Image } from '@chakra-ui/react';
+import { CloseButton, Image } from '@chakra-ui/react';
 
 import LogoLarge from '~/assets/svg/LogoLarge.svg';
 import LogoSmall from '~/assets/svg/LogoSmall.svg';
+import { closeBurgerMenu, isBurgerOpenSelector, openBurgerMenu } from '~/store/app-slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { ReactionsBar } from '~/widgets/ReactionsBar/ReactionsBar';
 
 export const HeaderMobile = () => {
     const [isTablet] = useMediaQuery('(min-width: 768px)');
 
     const image = isTablet ? LogoLarge : LogoSmall;
+
+    const dispatch = useAppDispatch();
+    const isBurgerOpen = useAppSelector(isBurgerOpenSelector);
+
+    const openMenuHandler = () => {
+        dispatch(openBurgerMenu());
+    };
+    const closeMenuHandler = () => {
+        dispatch(closeBurgerMenu());
+    };
 
     return (
         <Box
@@ -24,13 +36,26 @@ export const HeaderMobile = () => {
         >
             <Image height='32px' src={image} alt='yee-daa' />
             <Box display='flex' alignItems='center' justifyContent='space-between'>
-                <ReactionsBar />
-                <IconButton
-                    size='lg'
-                    variant='ghost'
-                    aria-label='menu'
-                    icon={<HamburgerIcon boxSize='24px' color='black' />}
-                />
+                {!isBurgerOpen && <ReactionsBar />}
+                {isBurgerOpen ? (
+                    <IconButton
+                        data-test-id='close-icon'
+                        onClick={closeMenuHandler}
+                        size='lg'
+                        variant='ghost'
+                        aria-label='menu'
+                        icon={<CloseButton />}
+                    />
+                ) : (
+                    <IconButton
+                        data-test-id='hamburger-icon'
+                        onClick={openMenuHandler}
+                        size='lg'
+                        variant='ghost'
+                        aria-label='menu'
+                        icon={<HamburgerIcon boxSize='24px' color='black' />}
+                    />
+                )}
             </Box>
         </Box>
     );

@@ -12,7 +12,7 @@ import SnacksIcon from '~/assets/svg/navbarIcons/snacks.svg';
 import TherapeuticNutritionIcon from '~/assets/svg/navbarIcons/therapeuticNutrition.svg';
 import VeganCuisineIcon from '~/assets/svg/navbarIcons/veganCuisine.svg';
 
-export const NavBarData = [
+export const navBarData = [
     {
         icon: SaladsIcon,
         title: 'Салаты',
