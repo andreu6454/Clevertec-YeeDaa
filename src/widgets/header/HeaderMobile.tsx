@@ -44,7 +44,7 @@ export const HeaderMobile = () => {
                         size='lg'
                         variant='ghost'
                         aria-label='menu'
-                        icon={<CloseButton />}
+                        icon={<CloseButton as='div' />}
                     />
                 ) : (
                     <IconButton

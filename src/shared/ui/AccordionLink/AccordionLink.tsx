@@ -5,9 +5,10 @@ import { useLocation, useNavigate } from 'react-router';
 interface AccordionLinkProps {
     title: string;
     link: string;
+    linkforTest: string;
 }
 
-export const AccordionLink = ({ title, link }: AccordionLinkProps) => {
+export const AccordionLink = ({ title, link, linkforTest }: AccordionLinkProps) => {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -18,6 +19,7 @@ export const AccordionLink = ({ title, link }: AccordionLinkProps) => {
     if (location.pathname === `/${link}`) {
         return (
             <Flex
+                data-test-id={`${linkforTest}-active`}
                 width='240px'
                 height='36px'
                 padding='6px 8px 6px 33px'

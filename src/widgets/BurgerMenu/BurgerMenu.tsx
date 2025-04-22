@@ -7,11 +7,6 @@ import { closeBurgerMenu, isBurgerOpenSelector } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { BurgerMenuContent } from '~/widgets/BurgerMenu/BurgerMenuContent/BurgerMenuContent';
 
-// const sizes = {
-//     Tablet: {},
-//     Mobile: {}
-// }
-
 export const BurgerMenu = memo(() => {
     const { isMobile } = useScreenSize();
 
@@ -35,7 +30,7 @@ export const BurgerMenu = memo(() => {
             left={0}
             backgroundColor='rgba(0, 0, 0, 0.16)'
             background={{ blur: '4px' }}
-            position='absolute'
+            position='fixed'
             width='100vw'
             height='100vh'
             justify='flex-end'
@@ -44,9 +39,9 @@ export const BurgerMenu = memo(() => {
         >
             <Flex
                 borderRadius='0 0 12px 12px'
-                position='absolute'
+                position='fixed'
                 right={0}
-                top={0}
+                top='64px'
                 overflowY='scroll'
                 backgroundColor='#fff'
                 height={isMobile ? '652px' : '868px'}
@@ -57,8 +52,7 @@ export const BurgerMenu = memo(() => {
                     '&::-webkit-scrollbar': {
                         display: 'none',
                     },
-                    '-ms-overflow-style': 'none',
-                    'scrollbar-width': 'none',
+                    scrollbarWidth: 'none',
                 }}
             >
                 <BurgerMenuContent />

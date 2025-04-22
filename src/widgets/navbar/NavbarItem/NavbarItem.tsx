@@ -17,17 +17,14 @@ export const NavbarItem = memo((props: NavbarItemProps) => {
     const { title, icon, general, links, isDesktopLaptop } = props;
     const navigate = useNavigate();
 
-    const mappedLinks =
-        links?.length > 0
-            ? links.map((link, index) => (
-                  <AccordionLink
-                      title={link.title}
-                      key={`${general}-${link.link}${index}`}
-                      link={`${general}/${link.link}`}
-                  />
-              ))
-            : null;
-
+    const mappedLinks = links.map((link, index) => (
+        <AccordionLink
+            title={link.title}
+            key={`${general}-${link.link}${index}`}
+            link={`${general}/${link.link}`}
+            linkforTest={link.link}
+        />
+    ));
     const handleClick = () => {
         navigate(general, { replace: true });
     };
@@ -61,6 +58,7 @@ export const NavbarItem = memo((props: NavbarItemProps) => {
                     >
                         <Image marginRight='12px' src={icon} boxSize='24px' />
                         <Text
+                            data-test-id='${category}'
                             width={isDesktopLaptop ? '150px' : '222px'}
                             color='#000'
                             noOfLines={1}

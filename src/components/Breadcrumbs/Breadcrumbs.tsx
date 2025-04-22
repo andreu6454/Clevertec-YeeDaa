@@ -4,6 +4,8 @@ import { FC, memo, ReactNode } from 'react';
 import { Link, useLocation } from 'react-router';
 
 import { recipeData } from '~/shared/data/recipeData';
+import { closeBurgerMenu } from '~/store/app-slice';
+import { useAppDispatch } from '~/store/hooks';
 
 type PathNames = Record<string, string>;
 
@@ -16,6 +18,11 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
     ({ pathNames = {}, homeElement = 'Главная' }) => {
         const location = useLocation();
         const pathnames = location.pathname.split('/').filter(Boolean);
+        const dispatch = useAppDispatch();
+
+        const closeMenuHandler = () => {
+            dispatch(closeBurgerMenu());
+        };
 
         const mappedPaths = pathnames.map((path, index) => {
             const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
@@ -34,6 +41,7 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
                     ) : (
                         <>
                             <ChahkraLink
+                                onClick={closeMenuHandler}
                                 as={Link}
                                 to={routeTo}
                                 color='blackAlpha.700'
@@ -51,6 +59,7 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
         return (
             <Box display='flex' maxWidth='100%' data-test-id='breadcrumbs' flexWrap='wrap'>
                 <ChahkraLink
+                    onClick={closeMenuHandler}
                     color={location.pathname !== '/' ? 'blackAlpha.700' : ''}
                     as={Link}
                     to='/'

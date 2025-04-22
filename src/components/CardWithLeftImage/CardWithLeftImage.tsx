@@ -76,6 +76,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
 
     return (
         <Card
+            data-test-id={`food-card-${index}`}
             _hover={{
                 boxShadow:
                     '0 4px 8px -2px rgba(32, 126, 0, 0.1), 0 6px 12px -2px rgba(32, 126, 0, 0.15)',

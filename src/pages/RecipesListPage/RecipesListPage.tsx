@@ -30,7 +30,7 @@ export const RecipesListPage = memo(() => {
             recTitle='Десерты, выпечка'
             recDescription='Без них невозможно представить себе ни современную, ни традиционную кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб — рецепты изделий из теста многообразны и невероятно популярны..'
         >
-            <LinksCarousel size={screenSize} links={navBarData[6].links} />
+            <LinksCarousel category={category} size={screenSize} links={navBarData[6].links} />
             <RecipesContainer data={recipes} />
         </CuisinePageLayout>
     );
