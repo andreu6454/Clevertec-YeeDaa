@@ -1,9 +1,9 @@
 import { memo, useEffect } from 'react';
 
 import { LinksCarousel } from '~/components/LinksCarousel/LinksCarousel';
-import { useRouteSegments } from '~/hooks/useRouteSegments';
-import { useScreenSize } from '~/hooks/useScreenSize';
 import { navBarData } from '~/shared/data/navBarData';
+import { useRouteSegments } from '~/shared/hooks/useRouteSegments';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { filteredDataSelector, setFilteredData } from '~/store/recipesListPage-slice';

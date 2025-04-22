@@ -6,7 +6,7 @@ import type { Swiper as SwiperType } from 'swiper';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CarouselButtons } from '~/shared/ui/Carousel/CarouselButtons/CarouselButtons';
 
 interface CarouselProps {

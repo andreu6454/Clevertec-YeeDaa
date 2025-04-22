@@ -1,7 +1,7 @@
 import './App.css';
 
 import { AppRouter } from '~/app/router/AppRouter';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { DesktopLaptopLayout } from '~/shared/layouts/DesktopLaptopLayout';
 import { MobileLayout } from '~/shared/layouts/MobileLayout';
 import Footer from '~/widgets/footer/Footer';

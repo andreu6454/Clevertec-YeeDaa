@@ -4,7 +4,7 @@ import { Link as ReactRouterLink } from 'react-router';
 
 import ArrowRightIcon from '~/assets/svg/BsArrowRight.svg';
 import { CardWithAvatar } from '~/components/CardWithAvatar/CardWithAvatar';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
 import Avatar1 from '../../../assets/images/elenaAvatar.png';
 

@@ -1,8 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { useScreenSize } from '~/hooks/useScreenSize';
-import { useScrollLock } from '~/hooks/useScrollLock';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { useScrollLock } from '~/shared/hooks/useScrollLock';
 import { closeBurgerMenu, isBurgerOpenSelector } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { BurgerMenuContent } from '~/widgets/BurgerMenu/BurgerMenuContent/BurgerMenuContent';

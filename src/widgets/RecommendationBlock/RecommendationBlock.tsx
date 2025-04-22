@@ -2,7 +2,7 @@ import { Flex, Text } from '@chakra-ui/react';
 
 import { CardWithIcon } from '~/components/CardWithIcon/CardWithIcon';
 import { CardWithoutImage } from '~/components/CardWithoutImage/CardWithoutImage';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
 import PotIcon from '../../assets/svg/navbarIcons/firstCourses.svg';
 import KitchenIcon from '../../assets/svg/navbarIcons/secondCourses.svg';

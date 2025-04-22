@@ -3,8 +3,8 @@ import { memo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { CardWithImage } from '~/components/CardWithImage/CardWithImage';
-import { useScreenSize } from '~/hooks/useScreenSize';
 import { recipeData } from '~/shared/data/recipeData';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Carousel } from '~/shared/ui/Carousel/Carousel';
 import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
 

@@ -1,6 +1,6 @@
 import { Text } from '@chakra-ui/react';
 
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
 interface PageBlockTitleProps {
     title: string;

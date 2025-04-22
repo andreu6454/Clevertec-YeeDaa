@@ -2,7 +2,7 @@ import { IconButton, Input, InputGroup, Select, Switch } from '@chakra-ui/icons'
 import { Flex, Image, InputRightElement, Text } from '@chakra-ui/react';
 
 import { Filters } from '~/components/Filters/Filters';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { openFilters } from '~/store/app-slice';
 import { useAppDispatch } from '~/store/hooks';

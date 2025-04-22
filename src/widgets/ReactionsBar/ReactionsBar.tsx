@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/icons';
 
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 
 export const ReactionsBar = () => {

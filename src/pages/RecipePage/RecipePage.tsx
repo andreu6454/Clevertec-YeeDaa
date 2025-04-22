@@ -2,13 +2,13 @@ import { Flex } from '@chakra-ui/react';
 import { useParams } from 'react-router';
 
 import { NewRecipes } from '~/components/NewRecipes/NewRecipes';
-import { useScreenSize } from '~/hooks/useScreenSize';
 import { RecipeAuthor } from '~/pages/RecipePage/RecipeAuthor/RecipeAuthor';
 import { RecipeCalories } from '~/pages/RecipePage/RecipeCalories/RecipeCalories';
 import { RecipeIngredients } from '~/pages/RecipePage/RecipeIngredients/RecipeIngredients';
 import { RecipeSteps } from '~/pages/RecipePage/RecipeSteps/RecipeSteps';
 import { RecipeTitle } from '~/pages/RecipePage/RecipeTitle/RecipeTitle';
 import { recipeData } from '~/shared/data/recipeData';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
 const paddings = {
     Desktop: '56px',

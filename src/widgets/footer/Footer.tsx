@@ -1,7 +1,7 @@
 import { Avatar, Box, IconButton } from '@chakra-ui/icons';
 import { memo } from 'react';
 
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import FooterButton from '~/widgets/footer/FooterButton/FooterButton';
 import { FooterIcon } from '~/widgets/footer/FooterIcon/FooterIcon';
 

@@ -2,7 +2,7 @@ import { Drawer } from '@chakra-ui/icons';
 import { DrawerContent, DrawerOverlay } from '@chakra-ui/react';
 
 import { FiltersMenuContent } from '~/components/Filters/FiltersMenuContent/FiltersMenuContent';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { closeFilters, isFiltersOpenSelector } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 

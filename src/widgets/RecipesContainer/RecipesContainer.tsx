@@ -2,8 +2,8 @@ import { Button, Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
-import { useScreenSize } from '~/hooks/useScreenSize';
 import { recipeData } from '~/shared/data/recipeData';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
 interface RecipesContainerProps {
     data: typeof recipeData;

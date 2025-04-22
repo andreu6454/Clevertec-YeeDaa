@@ -6,7 +6,7 @@ import { AuthorFilter } from '~/components/Filters/FiltersMenuContent/AuthorFilt
 import { CategoryFilter } from '~/components/Filters/FiltersMenuContent/CategoryFilter/CategoryFilter';
 import { MeatFilter } from '~/components/Filters/FiltersMenuContent/MeatFilter/MeatFilter';
 import { SideDishFilter } from '~/components/Filters/FiltersMenuContent/SideDishFilter/SideDishFilter';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { closeFilters } from '~/store/app-slice';
 import { useAppDispatch } from '~/store/hooks';
 

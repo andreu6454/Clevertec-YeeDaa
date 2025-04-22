@@ -1,4 +1,4 @@
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { HeaderDesktop } from '~/widgets/header/HeaderDesktop';
 import { HeaderMobile } from '~/widgets/header/HeaderMobile';
 

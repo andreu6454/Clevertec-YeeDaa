@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { Link as ReactLink, useNavigate } from 'react-router';
 
 import { Breadcrumbs } from '~/components/Breadcrumbs/Breadcrumbs';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { isBurgerOpenSelector, isLoginSelector } from '~/store/app-slice';
 import { useAppSelector } from '~/store/hooks';
