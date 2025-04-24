@@ -1,10 +1,12 @@
-import { Card, Image } from '@chakra-ui/icons';
+import { Box, Card, Image } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
 import { memo, useEffect, useState } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { useAppSelector } from '~/store/hooks';
+import { searchInputSelector } from '~/store/recipesListPage-slice';
 
 import ElenaAvatar from '../../assets/images/elenaAvatar.png';
 import BookmarkIcon from '../../assets/svg/bookmark.svg';
@@ -69,6 +71,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
         props;
 
     const [isSmall, setIsSmall] = useState(size === 'Mobile' || size === 'Tablet');
+    const searchInputValue = useAppSelector(searchInputSelector);
 
     useEffect(() => {
         setIsSmall(size === 'Mobile' || size === 'Tablet');
@@ -138,7 +141,15 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                         textOverflow='ellipsis'
                         noOfLines={isSmall ? 2 : 1}
                     >
-                        {title}
+                        {title.split(new RegExp(`(${searchInputValue})`, 'i')).map((part, i) =>
+                            part.toLowerCase() === searchInputValue.toLowerCase() ? (
+                                <Box as='span' key={i} color='#2db100'>
+                                    {part}
+                                </Box> //подсветка найденной части
+                            ) : (
+                                part
+                            ),
+                        )}
                     </Typography>
                     {!isSmall && (
                         <Typography

@@ -1,14 +1,14 @@
-import { IconButton, Input, InputGroup, Select, Switch } from '@chakra-ui/icons';
-import { Flex, Image, InputRightElement, Text } from '@chakra-ui/react';
+import { IconButton, Select, Switch, useBoolean } from '@chakra-ui/icons';
+import { Flex, Image, Text } from '@chakra-ui/react';
 
 import { Filters } from '~/components/Filters/Filters';
+import { Search } from '~/components/SearchBlock/Search/Search';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { openFilters } from '~/store/app-slice';
 import { useAppDispatch } from '~/store/hooks';
 
 import SearchFilterIcon from '../../assets/svg/searchFilters.svg';
-import SearchIcon from '../../assets/svg/searchIcon.svg';
 
 const Sizes = {
     Desktop: {
@@ -65,6 +65,8 @@ interface FoodSearchCardProps {
 export const SearchBlock = (props: FoodSearchCardProps) => {
     const { title, description } = props;
 
+    const [isSearchFilterOn, { on: setFocus, off: setBlur }] = useBoolean(false);
+
     const { screenSize, isDesktop, isLaptop } = useScreenSize();
 
     const dispatch = useAppDispatch();
@@ -75,8 +77,14 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
 
     return (
         <Flex
+            boxShadow={
+                isSearchFilterOn
+                    ? '0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 20px 25px -5px rgba(0, 0, 0, 0.1)'
+                    : ''
+            }
             width={Sizes[screenSize].width}
             flexDirection='column'
+            borderRadius='24px'
             padding={Sizes[screenSize].paddingY}
             alignItems='center'
         >
@@ -118,27 +126,7 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
                 >
                     <Image src={SearchFilterIcon} />
                 </IconButton>
-                <InputGroup borderColor='rgba(0, 0, 0, 0.48)' width={Sizes[screenSize].inputWidth}>
-                    <Input
-                        color='black'
-                        size={Sizes[screenSize].size}
-                        placeholder='Название или ингредиент...'
-                        _placeholder={{ color: '#134b00' }}
-                    />
-                    <InputRightElement boxSize={Sizes[screenSize].size === 'lg' ? '48px' : '32px'}>
-                        <IconButton
-                            variant='ghost'
-                            size={Sizes[screenSize].size}
-                            aria-label='search'
-                        >
-                            <Image
-                                width={Sizes[screenSize].size === 'lg' ? '31px' : '24px'}
-                                height={Sizes[screenSize].size === 'lg' ? '31px' : '24px'}
-                                src={SearchIcon}
-                            />
-                        </IconButton>
-                    </InputRightElement>
-                </InputGroup>
+                <Search setBlur={setBlur} setFocus={setFocus} isSearchFilterOn={isSearchFilterOn} />
             </Flex>
             {(isDesktop || isLaptop) && (
                 <Flex width='518px' gap='16px'>

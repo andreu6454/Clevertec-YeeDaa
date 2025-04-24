@@ -6,7 +6,11 @@ import { useRouteSegments } from '~/shared/hooks/useRouteSegments';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { filteredDataSelector, setFilteredData } from '~/store/recipesListPage-slice';
+import {
+    filteredDataSelector,
+    setCategoriesFilter,
+    setFilteredData,
+} from '~/store/recipesListPage-slice';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
 export const RecipesListPage = memo(() => {
@@ -15,11 +19,14 @@ export const RecipesListPage = memo(() => {
     const dispatch = useAppDispatch();
 
     const { category, subcategory } = useRouteSegments();
+
     useEffect(() => {
-        dispatch(setFilteredData({ category, subcategory }));
+        dispatch(setCategoriesFilter([category, subcategory]));
+        dispatch(setFilteredData());
     }, [category, subcategory]);
 
     const title = navBarData.filter((el) => el.general === category)[0].title;
+    const links = navBarData.filter((el) => el.general === category)[0].links;
 
     const recipes = useAppSelector(filteredDataSelector);
 
@@ -30,7 +37,7 @@ export const RecipesListPage = memo(() => {
             recTitle='Десерты, выпечка'
             recDescription='Без них невозможно представить себе ни современную, ни традиционную кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб — рецепты изделий из теста многообразны и невероятно популярны..'
         >
-            <LinksCarousel category={category} size={screenSize} links={navBarData[6].links} />
+            <LinksCarousel category={category} size={screenSize} links={links} />
             <RecipesContainer data={recipes} />
         </CuisinePageLayout>
     );

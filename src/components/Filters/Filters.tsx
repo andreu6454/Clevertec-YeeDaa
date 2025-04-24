@@ -27,7 +27,7 @@ export const Filters = () => {
             onClose={onClickHandler}
         >
             <DrawerOverlay />
-            <DrawerContent width='463px'>
+            <DrawerContent width={isDesktopLaptop ? '463px' : '344px'}>
                 <FiltersMenuContent />
             </DrawerContent>
         </Drawer>

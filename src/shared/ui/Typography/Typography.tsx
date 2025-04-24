@@ -1,7 +1,8 @@
 import { Text, TextProps } from '@chakra-ui/react';
+import { ReactNode } from 'react';
 
 interface TypographyProps extends TextProps {
-    children: string;
+    children: ReactNode | string;
     Size: TypographySizes;
     noOfLines?: number;
 }

@@ -99,6 +99,7 @@ export const recipeData = [
                 image: step3,
             },
         ],
+        meat: '',
         side: 'potatoes',
     },
     {
@@ -138,6 +139,8 @@ export const recipeData = [
                 image: step3,
             },
         ],
+        meat: '',
+        side: 'other',
     },
     {
         id: '3',
@@ -176,6 +179,8 @@ export const recipeData = [
                 image: step6,
             },
         ],
+        meat: '',
+        side: 'bulgur',
     },
     {
         id: '4',
@@ -214,6 +219,7 @@ export const recipeData = [
                 image: step8,
             },
         ],
+        meat: '',
         side: 'potatoes',
     },
     {
@@ -252,6 +258,8 @@ export const recipeData = [
                 image: step3,
             },
         ],
+        meat: '',
+        side: 'cabbage',
     },
     {
         id: '6',
@@ -290,6 +298,8 @@ export const recipeData = [
                 image: step6,
             },
         ],
+        meat: '',
+        side: 'other',
     },
     {
         id: '7',
@@ -340,6 +350,8 @@ export const recipeData = [
                 image: 'url',
             },
         ],
+        meat: 'chicken',
+        side: 'spaghetti',
     },
     {
         id: '8',
@@ -376,6 +388,8 @@ export const recipeData = [
                 image: step2,
             },
         ],
+        meat: '',
+        side: 'other',
     },
     {
         id: '9',
@@ -449,5 +463,7 @@ export const recipeData = [
                 image: step8,
             },
         ],
+        meat: 'chicken',
+        side: 'spaghetti',
     },
 ];
