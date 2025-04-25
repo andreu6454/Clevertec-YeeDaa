@@ -22,8 +22,9 @@ export const CarouselButtons = (props: CarouselButtonsProps) => {
         transformLeft = 'translate(-20%, 350%)';
         if (screenSize === 'Desktop') {
             transformRight = 'translate(1324px, 350%)';
+        } else {
+            transformRight = 'translate(842px, 350%)';
         }
-        transformRight = 'translate(842px, 350%)';
     } // для корректного отображения на mobile и tablet
 
     return (

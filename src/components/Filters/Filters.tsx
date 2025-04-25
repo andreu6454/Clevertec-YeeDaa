@@ -21,6 +21,7 @@ export const Filters = () => {
     }
     return (
         <Drawer
+            data-test-id='filter-drawer'
             size={isDesktopLaptop ? 'sm' : 'xs'}
             isOpen={isFiltersOpen}
             placement='right'

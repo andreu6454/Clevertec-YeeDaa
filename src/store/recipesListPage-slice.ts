@@ -13,6 +13,8 @@ const initialState = {
     filteredData: recipeData,
     isAllergenFilterOn: false,
     searchInputValue: '',
+    searchError: false,
+    isSearchCompleted: false,
     filters: {
         meatFilters: [] as string[],
         sideDishFilters: [] as string[],
@@ -35,6 +37,7 @@ export const recipesListPageSlice = createSlice({
         setCategoriesFilter(state, { payload: categories }: PayloadAction<string[]>) {
             state.category = categories[0];
             state.subcategory = categories[1];
+            state.isSearchCompleted = false;
         },
         setMeatFilters(state, { payload: meatFilters }: PayloadAction<string[]>) {
             state.filters.meatFilters = meatFilters;
@@ -54,6 +57,7 @@ export const recipesListPageSlice = createSlice({
                 sideDishFilters: [],
                 allergens: [],
             };
+            state.isSearchCompleted = false;
             state.searchInputValue = '';
             state.filteredData = state.recipes.filter(
                 (recipe) =>
@@ -62,17 +66,23 @@ export const recipesListPageSlice = createSlice({
             );
         },
         setFilteredData: (state) => {
+            state.searchError = false;
+
             if (state.subcategory.length > 0) {
                 state.filteredData = state.recipes.filter(
                     (recipe) =>
                         recipe.category.includes(state.category) &&
                         recipe.subcategory.includes(state.subcategory),
                 ); //для фильтра на recipeListPage по категории и саб категории
-            } else {
+            } else if (state.category.length > 0) {
                 state.filteredData = state.recipes.filter((recipe) =>
                     recipe.category.includes(state.category),
                 ); // для фильтра только по категории
             }
+
+            if (state.subcategory.length === 0 && state.category.length === 0) {
+                state.filteredData = state.recipes;
+            } // для поиска на главной странице
 
             if (state.filters.meatFilters.length > 0) {
                 state.filteredData = state.filteredData.filter((recipe) =>
@@ -88,9 +98,14 @@ export const recipesListPageSlice = createSlice({
 
             if (state.searchInputValue.length > 0) {
                 state.filteredData = state.filteredData.filter((recipe) =>
-                    recipe.title.toLowerCase().startsWith(state.searchInputValue.toLowerCase()),
+                    recipe.title.toLowerCase().includes(state.searchInputValue.toLowerCase()),
                 ); // для поиска по тайтлу
             }
+
+            if (state.filteredData.length === 0) {
+                state.searchError = true;
+            }
+            state.isSearchCompleted = true; // для поиска на главной странице
         },
     },
 });
@@ -105,6 +120,9 @@ export const allergenFilterOnSelector = (state: ApplicationState) =>
     state.recipesListPage.isAllergenFilterOn;
 export const searchInputSelector = (state: ApplicationState) =>
     state.recipesListPage.searchInputValue;
+export const searchCompletedSelector = (state: ApplicationState) =>
+    state.recipesListPage.isSearchCompleted;
+export const searchErrorSelector = (state: ApplicationState) => state.recipesListPage.searchError;
 
 export const {
     setRecipesListPageError,
