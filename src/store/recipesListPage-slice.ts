@@ -100,7 +100,6 @@ export const recipesListPageSlice = createSlice({
         },
         setFilteredData: (state) => {
             state.searchError = false;
-            console.log(1);
 
             state.filteredData = filterRecipesByCategory(state.recipes, {
                 categories: state.category,

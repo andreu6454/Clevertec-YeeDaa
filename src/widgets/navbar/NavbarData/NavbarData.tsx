@@ -52,7 +52,7 @@ export const NavbarData = memo(() => {
             <Box
                 width={isDesktopLaptop ? '256px' : '344px'}
                 height={isDesktopLaptop ? '144px' : '96px'}
-                marginBottom='32px'
+                marginBottom={isDesktopLaptop ? '32px' : 0}
                 gap='16px'
                 display='flex'
                 flexDirection='column'

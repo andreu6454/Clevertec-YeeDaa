@@ -122,6 +122,8 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
                             fontSize={sizes[screenSize].titleFS}
                             lineHeight={sizes[screenSize].titleLH}
                             marginBottom={sizes[screenSize].titleMB}
+                            noOfLines={3}
+                            overflow='hidden'
                         >
                             {title}
                         </Text>
