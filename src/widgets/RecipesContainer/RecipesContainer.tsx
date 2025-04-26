@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router';
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
 import { recipeData } from '~/shared/data/recipeData';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { useAppSelector } from '~/store/hooks';
+import { searchErrorSelector } from '~/store/recipesListPage-slice';
 
 interface RecipesContainerProps {
     data: typeof recipeData;
@@ -13,6 +15,8 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
     const { data } = props;
     const { screenSize, isTablet, isDesktop } = useScreenSize();
     const navigate = useNavigate();
+
+    const searchError = useAppSelector(searchErrorSelector);
 
     const mappedCards = data.map((recipe, index) => {
         const onClickHandler = () => {
@@ -72,13 +76,15 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
                 {mappedCards}
             </Flex>
 
-            <Flex>
-                <Flex width='100%' justifyContent='center'>
-                    <Button backgroundColor='#b1ff2e' color='#000' size='md'>
-                        Загрузить еще
-                    </Button>
+            {!searchError && (
+                <Flex>
+                    <Flex width='100%' justifyContent='center'>
+                        <Button backgroundColor='#b1ff2e' color='#000' size='md'>
+                            Загрузить еще
+                        </Button>
+                    </Flex>
                 </Flex>
-            </Flex>
+            )}
         </Flex>
     );
 };

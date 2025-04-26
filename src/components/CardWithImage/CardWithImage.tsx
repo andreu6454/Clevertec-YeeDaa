@@ -6,8 +6,6 @@ import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
-import AlexAvatar from '../../assets/images/alexAvatar.png';
-
 interface CardWithImageProps {
     title: string;
     image: string;
@@ -89,15 +87,15 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                 {(size === 'Tablet' || size === 'Mobile') && (
                     <CardBadge type='dishType' size='small' bgColor='green' dishType={dishType} />
                 )}
-                {(size === 'Desktop' || size === 'Laptop') && (
-                    <CardBadge
-                        type='recommendation'
-                        size='small'
-                        bgColor='green'
-                        avatar={AlexAvatar}
-                        name='Alex Cook'
-                    />
-                )}
+                {/*{(size === 'Desktop' || size === 'Laptop') && (*/}
+                {/*    <CardBadge*/}
+                {/*        type='recommendation'*/}
+                {/*        size='small'*/}
+                {/*        bgColor='green'*/}
+                {/*        avatar={AlexAvatar}*/}
+                {/*        name='Alex Cook'*/}
+                {/*    />*/}
+                {/*)}*/}
             </Box>
             <Box padding={sizes[size].padding}>
                 <Box

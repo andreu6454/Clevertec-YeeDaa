@@ -36,6 +36,7 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
     if (type === 'recommendation') {
         return (
             <Badge
+                flexShrink={0}
                 backgroundColor={bgColors[bgColor]}
                 color='secondary'
                 padding={paddings[size]}
@@ -54,6 +55,7 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
 
     return (
         <Badge
+            flexShrink={0}
             backgroundColor={bgColors[bgColor]}
             color='secondary'
             padding={paddings[size]}
@@ -62,9 +64,9 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
             height='24px'
         >
             <Flex height='24px' gap={gap[size]} alignItems='center'>
-                <Image width='16px' height='16px' src={dishTypes[0].icon} alt='' />
+                <Image width='16px' height='16px' src={dishTypes[0]?.icon} alt='' />
                 <Text fontWeight='400' fontSize='14px' lineHeight='143%'>
-                    {dishTypes[0].title}
+                    {dishTypes[0]?.title}
                 </Text>
             </Flex>
         </Badge>

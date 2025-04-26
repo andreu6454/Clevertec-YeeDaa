@@ -31,7 +31,7 @@ export const HeaderMobile = () => {
             alignItems='center'
             padding='8px 16px'
             width='100vw'
-            backgroundColor='#ffffd3'
+            backgroundColor={isBurgerOpen ? 'white' : '#ffffd3'}
             height='64px'
         >
             <Image height='32px' src={image} alt='yee-daa' />

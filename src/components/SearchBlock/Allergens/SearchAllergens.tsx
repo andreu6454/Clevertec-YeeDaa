@@ -85,7 +85,7 @@ export const SearchAllergens = memo(() => {
                 >
                     <SearchAllergensHeader />
                 </MenuButton>
-                <MenuList width='100%' data-test-id='allergens-menu'>
+                <MenuList zIndex={2} width='100%' data-test-id='allergens-menu'>
                     {isSearchAllergenFilterOn && mappedAllergens}
                     {isSearchAllergenFilterOn && <NewAllergenInput />}
                 </MenuList>

@@ -33,18 +33,20 @@ export const CheckboxWithTitle = (props: CheckboxWithTitleProps) => {
                 colorScheme='green'
                 sx={{
                     '& .chakra-checkbox__control': {
-                        border: '2px solid #d7ff94',
+                        border: '2px solid #b1ff2e',
                     },
                 }}
                 _checked={{
                     '& .chakra-checkbox__control': {
                         bg: '#d7ff94',
-                        borderColor: '#d7ff94',
+                        borderColor: '#b1ff2e',
+                        color: 'black',
                     },
                 }}
                 _hover={{
                     '& .chakra-checkbox__control': {
-                        borderColor: '#d7ff94',
+                        borderColor: '#b1ff2e',
+                        color: 'black',
                     },
                 }}
             />
