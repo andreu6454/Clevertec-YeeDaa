@@ -1,18 +1,18 @@
-import ChildrensIcon from '~/assets/svg/childrens.svg';
-import DessertsIcon from '~/assets/svg/desserts.svg';
-import DrinksIcon from '~/assets/svg/drinks.svg';
-import FirstCoursesIcon from '~/assets/svg/firstCourses.svg';
-import GrilledIcon from '~/assets/svg/grilled.svg';
-import NationalIcon from '~/assets/svg/national.svg';
-import PreparationsIcon from '~/assets/svg/preparations.svg';
-import SaladsIcon from '~/assets/svg/salads.svg';
-import SaucesIcon from '~/assets/svg/sauces.svg';
-import SecondCoursesIcon from '~/assets/svg/secondCourses.svg';
-import SnacksIcon from '~/assets/svg/snacks.svg';
-import TherapeuticNutritionIcon from '~/assets/svg/therapeuticNutrition.svg';
-import VeganCuisineIcon from '~/assets/svg/veganCuisine.svg';
+import ChildrensIcon from '~/assets/svg/navbarIcons/childrens.svg';
+import DessertsIcon from '~/assets/svg/navbarIcons/desserts.svg';
+import DrinksIcon from '~/assets/svg/navbarIcons/drinks.svg';
+import FirstCoursesIcon from '~/assets/svg/navbarIcons/firstCourses.svg';
+import GrilledIcon from '~/assets/svg/navbarIcons/grilled.svg';
+import NationalIcon from '~/assets/svg/navbarIcons/national.svg';
+import PreparationsIcon from '~/assets/svg/navbarIcons/preparations.svg';
+import SaladsIcon from '~/assets/svg/navbarIcons/salads.svg';
+import SaucesIcon from '~/assets/svg/navbarIcons/sauces.svg';
+import SecondCoursesIcon from '~/assets/svg/navbarIcons/secondCourses.svg';
+import SnacksIcon from '~/assets/svg/navbarIcons/snacks.svg';
+import TherapeuticNutritionIcon from '~/assets/svg/navbarIcons/therapeuticNutrition.svg';
+import VeganCuisineIcon from '~/assets/svg/navbarIcons/veganCuisine.svg';
 
-export const NavBarData = [
+export const navBarData = [
     {
         icon: SaladsIcon,
         title: 'Салаты',
@@ -40,7 +40,7 @@ export const NavBarData = [
     {
         icon: FirstCoursesIcon,
         title: 'Первые блюда',
-        general: 'first-courses',
+        general: 'first-dish',
         links: [
             { title: 'Мясные супы', link: 'meat-soups' },
             { title: 'Овощные супы', link: 'vegetable-soups' },
@@ -52,12 +52,12 @@ export const NavBarData = [
     {
         icon: SecondCoursesIcon,
         title: 'Вторые блюда',
-        general: 'second-courses',
+        general: 'second-dish',
         links: [
             { title: 'Мясные', link: 'meat' },
             { title: 'Рыбные', link: 'fish' },
-            { title: 'Овощные', link: 'vegetable' },
-            { title: 'Из птицы', link: 'poultry' },
+            { title: 'Овощные', link: 'vegetables' },
+            { title: 'Из птицы', link: 'poultry-dish' },
             { title: 'Из грибов', link: 'mushrooms' },
             { title: 'Из субпродуктов', link: 'Offal' },
             { title: 'На пару', link: 'couple' },
@@ -81,7 +81,7 @@ export const NavBarData = [
             { title: 'Сырники и ватрушки', link: 'syrniki' },
             { title: 'Из слоеного теста', link: 'puff-dough' },
             { title: 'Из заварного теста', link: 'choux-dough' },
-            { title: 'Из заварного теста', link: 'yeast-dough' },
+            { title: 'Из дрожжевого теста', link: 'yeast-dough' },
             { title: 'Булочки и сдоба', link: 'buns' },
             { title: 'Хлеб', link: 'bread' },
             { title: 'Тесто на пиццу', link: 'pizza-dough' },
@@ -107,8 +107,8 @@ export const NavBarData = [
         general: 'vegan',
         links: [
             { title: 'Закуски', link: 'snacks' },
-            { title: 'Первые блюда', link: 'first-courses' },
-            { title: 'Вторые блюда', link: 'second-courses' },
+            { title: 'Первые блюда', link: 'first-dish' },
+            { title: 'Вторые блюда', link: 'second-dish' },
             { title: 'Гарниры', link: 'side-dishes' },
             { title: 'Десерты', link: 'desserts' },
             { title: 'Выпечка', link: 'bakery' },
@@ -121,8 +121,8 @@ export const NavBarData = [
         title: 'Детские блюда',
         general: 'child',
         links: [
-            { title: 'Первые блюда', link: 'first-courses' },
-            { title: 'Вторые блюда', link: 'second-courses' },
+            { title: 'Первые блюда', link: 'first-dish' },
+            { title: 'Вторые блюда', link: 'second-dish' },
             { title: 'Гарниры', link: 'side-dishes' },
             { title: 'Выпечка', link: 'bakery' },
             { title: 'Без глютена', link: 'gluten-free' },
@@ -136,7 +136,7 @@ export const NavBarData = [
         title: 'Лечебное питание',
         general: 'healthy',
         links: [
-            { title: 'Детская диета', link: 'childerns-diet' },
+            { title: 'Детская диета', link: 'childrens-diet' },
             { title: 'Диета №1', link: 'diet1' },
             { title: 'Диета №2', link: 'diet2' },
             { title: 'Диета №3', link: 'diet3' },
@@ -160,21 +160,21 @@ export const NavBarData = [
         title: 'Национальные',
         general: 'national',
         links: [
-            { title: 'Американская кухня', link: 'american-cuisine' },
-            { title: 'Армянская кухня', link: 'armenian-courses' },
-            { title: 'Греческая кухня', link: 'greek-courses' },
-            { title: 'Грузинская кухня', link: 'georgian-courses' },
-            { title: 'Итальянская кухня', link: 'italian-courses' },
-            { title: 'Испанская кухня', link: 'spanish-courses' },
-            { title: 'Китайская кухня', link: 'chinese-courses' },
-            { title: 'Мексиканская кухня', link: 'mexican-courses' },
-            { title: 'Паназиатская кухня', link: 'pan-asian-courses' },
-            { title: 'Русская кухня', link: 'russian-courses' },
-            { title: 'Турецкая кухня', link: 'turkish-courses' },
-            { title: 'Французская кухня', link: 'french-courses' },
-            { title: 'Шведская кухня', link: 'swedish-courses' },
-            { title: 'Японская кухня', link: 'japanese-courses' },
-            { title: 'Другая кухня', link: 'other-courses' },
+            { title: 'Американская кухня', link: 'american' },
+            { title: 'Армянская кухня', link: 'armenian' },
+            { title: 'Греческая кухня', link: 'greek' },
+            { title: 'Грузинская кухня', link: 'georgian' },
+            { title: 'Итальянская кухня', link: 'italian' },
+            { title: 'Испанская кухня', link: 'spanish' },
+            { title: 'Китайская кухня', link: 'chinese' },
+            { title: 'Мексиканская кухня', link: 'mexican' },
+            { title: 'Паназиатская кухня', link: 'pan-asian' },
+            { title: 'Русская кухня', link: 'russian' },
+            { title: 'Турецкая кухня', link: 'turkish' },
+            { title: 'Французская кухня', link: 'french' },
+            { title: 'Шведская кухня', link: 'swedish' },
+            { title: 'Японская кухня', link: 'japanese' },
+            { title: 'Другая кухня', link: 'other' },
         ],
     },
     {

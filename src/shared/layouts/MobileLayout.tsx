@@ -2,7 +2,8 @@ import { Box } from '@chakra-ui/icons';
 import { ReactNode } from 'react';
 
 import { ScrollToTop } from '~/components/ScrollToTop/ScrollToTop';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { BurgerMenu } from '~/widgets/BurgerMenu/BurgerMenu';
 
 interface MobileLayoutProps {
     header: ReactNode;
@@ -15,10 +16,10 @@ export const MobileLayout = (props: MobileLayoutProps) => {
 
     const { isMobile } = useScreenSize();
 
-    const padding = isMobile ? '80px 16px 100px 16px' : '80px 12px 100px 20px';
+    const padding = isMobile ? '64px 16px 100px 16px' : '64px 12px 100px 20px';
 
     return (
-        <Box width='100%' minHeight='100vh'>
+        <Box width='100%' minHeight='100vh' overflowX='hidden'>
             {/*<BackGround />*/}
             {header}
             <Box width='100%' height='100%' padding={padding}>
@@ -26,6 +27,7 @@ export const MobileLayout = (props: MobileLayoutProps) => {
             </Box>
             {footer}
             <ScrollToTop />
+            <BurgerMenu />
         </Box>
     );
 };

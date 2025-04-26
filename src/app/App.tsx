@@ -1,8 +1,7 @@
 import './App.css';
 
-import { useMediaQuery } from '@chakra-ui/icons';
-
 import { AppRouter } from '~/app/router/AppRouter';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { DesktopLaptopLayout } from '~/shared/layouts/DesktopLaptopLayout';
 import { MobileLayout } from '~/shared/layouts/MobileLayout';
 import Footer from '~/widgets/footer/Footer';
@@ -11,9 +10,9 @@ import { Navbar } from '~/widgets/navbar/Navbar';
 import { Sidebar } from '~/widgets/sidebar/Sidebar';
 
 function App() {
-    const [isDesktopOrLaptop] = useMediaQuery('(min-width: 1440px)');
+    const { isDesktop, isLaptop } = useScreenSize();
 
-    return isDesktopOrLaptop ? (
+    return isDesktop || isLaptop ? (
         <DesktopLaptopLayout
             data-test-id='app'
             header={<Header />}

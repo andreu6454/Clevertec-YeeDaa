@@ -3,39 +3,37 @@ import { AccordionButton, AccordionItem, Flex, Link, Text } from '@chakra-ui/rea
 import { memo } from 'react';
 import { useNavigate } from 'react-router';
 
-import { AccordionLink } from '~/components/AccordionLink/AccordionLink';
+import { AccordionLink } from '~/shared/ui/AccordionLink/AccordionLink';
 
 interface NavbarItemProps {
     title: string;
     icon: string;
     general: string;
     links: Array<{ title: string; link: string }>;
+    isDesktopLaptop: boolean;
 }
 
 export const NavbarItem = memo((props: NavbarItemProps) => {
-    const { title, icon, general, links } = props;
+    const { title, icon, general, links, isDesktopLaptop } = props;
     const navigate = useNavigate();
 
-    const mappedLinks =
-        links?.length > 0
-            ? links.map((link, index) => (
-                  <AccordionLink
-                      title={link.title}
-                      key={`${general}-${link.link}${index}`}
-                      link={`${general}/${link.link}`}
-                  />
-              ))
-            : null;
-
+    const mappedLinks = links.map((link, index) => (
+        <AccordionLink
+            title={link.title}
+            key={`${general}-${link.link}${index}`}
+            link={`${general}/${link.link}`}
+            linkforTest={link.link}
+        />
+    ));
     const handleClick = () => {
         navigate(general, { replace: true });
     };
 
     return (
-        <AccordionItem border='none' width='230px'>
+        <AccordionItem border='none' width={isDesktopLaptop ? '230px' : '302px'}>
             <AccordionButton
                 padding='12px 8px'
-                width='230px'
+                width={isDesktopLaptop ? '230px' : '302px'}
                 height='48px'
                 _expanded={{
                     bg: '#eaffc7',
@@ -50,11 +48,21 @@ export const NavbarItem = memo((props: NavbarItemProps) => {
                 <Link
                     textDecoration='none'
                     data-test-id={general === 'vegan' ? 'vegan-cuisine' : ''}
-                    onClick={handleClick}
                 >
-                    <Flex as='span' flex='1' textAlign='left' alignItems='center'>
+                    <Flex
+                        as='span'
+                        flex='1'
+                        textAlign='left'
+                        alignItems='center'
+                        onClick={handleClick}
+                    >
                         <Image marginRight='12px' src={icon} boxSize='24px' />
-                        <Text width='150px' color='#000' noOfLines={1}>
+                        <Text
+                            data-test-id='${category}'
+                            width={isDesktopLaptop ? '150px' : '222px'}
+                            color='#000'
+                            noOfLines={1}
+                        >
                             {title}
                         </Text>
                     </Flex>

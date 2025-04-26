@@ -1,6 +1,6 @@
 import { Avatar, Badge, Flex, Image, Text } from '@chakra-ui/react';
 
-import { NavBarData } from '~/shared/data/navBarData';
+import { navBarData } from '~/shared/data/navBarData';
 
 interface DishTypeBadgeProps {
     type: 'dishType' | 'recommendation';
@@ -30,11 +30,13 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
         medium: '8px',
         large: '8px',
     };
-    const dishTypes = NavBarData.filter((item) => item.title === dishType);
+
+    const dishTypes = navBarData.filter((item) => item.general === dishType);
 
     if (type === 'recommendation') {
         return (
             <Badge
+                flexShrink={0}
                 backgroundColor={bgColors[bgColor]}
                 color='secondary'
                 padding={paddings[size]}
@@ -53,16 +55,18 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
 
     return (
         <Badge
+            flexShrink={0}
             backgroundColor={bgColors[bgColor]}
             color='secondary'
             padding={paddings[size]}
             textTransform='none'
             borderRadius='4px'
+            height='24px'
         >
             <Flex height='24px' gap={gap[size]} alignItems='center'>
-                <Image width='16px' height='16px' src={dishTypes[0].icon} alt='' />
+                <Image width='16px' height='16px' src={dishTypes[0]?.icon} alt='' />
                 <Text fontWeight='400' fontSize='14px' lineHeight='143%'>
-                    {dishTypes[0].title}
+                    {dishTypes[0]?.title}
                 </Text>
             </Flex>
         </Badge>

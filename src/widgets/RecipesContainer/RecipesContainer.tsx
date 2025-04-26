@@ -1,26 +1,43 @@
 import { Button, Flex } from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { recipeData } from '~/shared/data/recipeData';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { useAppSelector } from '~/store/hooks';
+import { searchErrorSelector } from '~/store/recipesListPage-slice';
 
 interface RecipesContainerProps {
-    data: Array<{ title: string; image: string; description: string; dishType: string }>;
+    data: typeof recipeData;
 }
 
 export const RecipesContainer = (props: RecipesContainerProps) => {
     const { data } = props;
     const { screenSize, isTablet, isDesktop } = useScreenSize();
+    const navigate = useNavigate();
 
-    const mappedCards = data.map((el) => (
-        <CardWithLeftImage
-            key={el.title}
-            image={el.image}
-            title={el.title}
-            description={el.description}
-            dishType={el.dishType}
-            size={screenSize}
-        />
-    ));
+    const searchError = useAppSelector(searchErrorSelector);
+
+    const mappedCards = data.map((recipe, index) => {
+        const onClickHandler = () => {
+            navigate(`/${recipe.category[0]}/${recipe.subcategory[0]}/${recipe.id}`);
+        };
+
+        return (
+            <CardWithLeftImage
+                index={index}
+                onClickHandler={onClickHandler}
+                bookMarks={recipe.bookmarks}
+                likes={recipe.likes}
+                key={recipe.title}
+                image={recipe.image}
+                title={recipe.title}
+                description={recipe.description}
+                dishType={recipe.category[0]}
+                size={screenSize}
+            />
+        );
+    });
 
     const direction = isDesktop || isTablet ? 'row' : 'column';
 
@@ -59,13 +76,15 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
                 {mappedCards}
             </Flex>
 
-            <Flex>
-                <Flex width='100%' justifyContent='center'>
-                    <Button backgroundColor='#b1ff2e' color='#000' size='md'>
-                        Загрузить еще
-                    </Button>
+            {!searchError && (
+                <Flex>
+                    <Flex width='100%' justifyContent='center'>
+                        <Button backgroundColor='#b1ff2e' color='#000' size='md'>
+                            Загрузить еще
+                        </Button>
+                    </Flex>
                 </Flex>
-            </Flex>
+            )}
         </Flex>
     );
 };

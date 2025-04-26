@@ -1,13 +1,11 @@
-import { Button, Flex, Image, Text } from '@chakra-ui/react';
+import { Button, Flex, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { recipeData } from '~/shared/data/recipeData';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
 
-import Kneli from '../../../assets/images/kneli.png';
-import Lapsha from '../../../assets/images/lapsha.png';
-import TomYam from '../../../assets/images/tomyam.png';
-import Vetchina from '../../../assets/images/vetchina.png';
 import ArrowRightIcon from '../../../assets/svg/BsArrowRight.svg';
 
 const gap = {
@@ -17,46 +15,46 @@ const gap = {
     Mobile: '12px',
 };
 
-const sizes = {
-    Desktop: {
-        fontSize: '48px',
-        lineHeight: '100%',
-    },
-    Laptop: {
-        fontSize: '36px',
-        lineHeight: '111%',
-    },
-    Tablet: {
-        fontSize: '24px',
-        lineHeight: '133%',
-    },
-    Mobile: {
-        fontSize: '24px',
-        lineHeight: '133%',
-    },
-};
-
 export const Juiciest = () => {
     const navigate = useNavigate();
 
     const onClickHandler = () => {
-        navigate('/juiciest');
+        navigate('/the-juiciest');
     };
 
     const { screenSize, isDesktop, isLaptop, isMobile, isTablet } = useScreenSize();
 
     const direction = isDesktop || isTablet ? 'row' : 'column';
 
+    const mappedRecipes = [...recipeData]
+        .sort((a, b) => b.likes - a.likes)
+        .map((recipe, index) => {
+            const onClickHandler = () => {
+                navigate(`${recipe.category[0]}/${recipe.subcategory[0]}/${recipe.id}`);
+            };
+
+            return (
+                <CardWithLeftImage
+                    index={index}
+                    bookMarks={recipe.bookmarks}
+                    likes={recipe.likes}
+                    onClickHandler={onClickHandler}
+                    key={recipe.title}
+                    size={screenSize}
+                    image={recipe.image}
+                    title={recipe.title}
+                    description={recipe.description}
+                    dishType={recipe.category[0]}
+                />
+            );
+        })
+        .slice(0, 8);
+
     return (
         <Flex direction='column' gap={gap[screenSize]} width='100%'>
             <Flex width='100%' justifyContent='space-between' alignItems='center'>
-                <Text
-                    fontWeight='500'
-                    fontSize={sizes[screenSize].fontSize}
-                    lineHeight={sizes[screenSize].lineHeight}
-                >
-                    Самое сочное
-                </Text>
+                <PageBlockTitle title='Самое сочное' />
+
                 {(isDesktop || isLaptop) && (
                     <Button
                         data-test-id='juiciest-link'
@@ -77,34 +75,7 @@ export const Juiciest = () => {
                 direction={direction}
                 wrap='wrap'
             >
-                <CardWithLeftImage
-                    image={Kneli}
-                    size={screenSize}
-                    title='Кнели со спагетти'
-                    description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Вторые блюда'
-                />
-                <CardWithLeftImage
-                    image={Vetchina}
-                    size={screenSize}
-                    title='Пряная ветчина по итальянски'
-                    description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Вторые блюда'
-                />
-                <CardWithLeftImage
-                    image={Lapsha}
-                    size={screenSize}
-                    title='Лапша с курицей и шафраном'
-                    description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Вторые блюда'
-                />
-                <CardWithLeftImage
-                    image={TomYam}
-                    size={screenSize}
-                    title='Том-ям с капустой кимчи'
-                    description='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                    dishType='Национальные'
-                />
+                {mappedRecipes}
             </Flex>
             <Flex
                 position={isMobile || isTablet ? 'static' : 'absolute'}

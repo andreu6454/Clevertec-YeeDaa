@@ -1,12 +1,12 @@
-import { Link } from '@chakra-ui/icons';
-import { Flex, Image, Text } from '@chakra-ui/react';
+import { Flex, Image, Link, Text } from '@chakra-ui/react';
 import { memo } from 'react';
+import { Link as ReactRouterLink } from 'react-router';
 
 import ArrowRightIcon from '~/assets/svg/BsArrowRight.svg';
 import { CardWithAvatar } from '~/components/CardWithAvatar/CardWithAvatar';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
-import Avatar1 from '../../../assets/images/blogAvatar1.png';
+import Avatar1 from '../../../assets/images/elenaAvatar.png';
 
 export const CulinaryBlogs = memo(() => {
     const { isMobile, isTablet, screenSize } = useScreenSize();
@@ -28,7 +28,7 @@ export const CulinaryBlogs = memo(() => {
                 </Text>
 
                 {!(isMobile || isTablet) && (
-                    <Link padding='8px 16px' href='/blogs'>
+                    <Link padding='8px 16px' as={ReactRouterLink} to='/blogs'>
                         <Flex gap='8px' alignItems='center'>
                             <Text fontWeight='600' fontSize='16px' lineHeight='150%'>
                                 Все авторы
@@ -69,7 +69,7 @@ export const CulinaryBlogs = memo(() => {
             </Flex>
             {(isMobile || isTablet) && (
                 <Flex width='100%' justifyContent='center'>
-                    <Link padding='8px 16px' href='/blogs'>
+                    <Link padding='8px 16px' as={ReactRouterLink} to='/blogs'>
                         <Flex gap='8px' alignItems='center'>
                             <Text fontWeight='600' fontSize='16px' lineHeight='150%'>
                                 Все авторы

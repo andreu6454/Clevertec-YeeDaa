@@ -2,10 +2,10 @@ import { Flex, Text } from '@chakra-ui/react';
 
 import { CardWithIcon } from '~/components/CardWithIcon/CardWithIcon';
 import { CardWithoutImage } from '~/components/CardWithoutImage/CardWithoutImage';
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
-import PotIcon from '../../assets/svg/firstCourses.svg';
-import KitchenIcon from '../../assets/svg/secondCourses.svg';
+import PotIcon from '../../assets/svg/navbarIcons/firstCourses.svg';
+import KitchenIcon from '../../assets/svg/navbarIcons/secondCourses.svg';
 
 const sizes = {
     Desktop: {
@@ -95,13 +95,13 @@ export const RecommendationBlock = (props: RecommendationBlockProps) => {
                     size={screenSize}
                     title='Бананово-молочное желе'
                     description='Молочное желе – это просто, вкусно и полезно, ведь для его приготовления в качестве основы используется молоко.'
-                    dishType='Детские блюда'
+                    dishType='child'
                 />
                 <CardWithoutImage
                     size={screenSize}
                     title='Нежный сливочно-сырный крем для кексов'
                     description='Сливочно-сырным кремом можно украсить кексы, либо другую выпечку, а также этим кремом можно наполнить заварные пирожные.'
-                    dishType='Детские блюда'
+                    dishType='child'
                 />
                 <Flex gap='12px' justifyContent='space-between' direction='column'>
                     <CardWithIcon

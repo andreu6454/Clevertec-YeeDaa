@@ -1,13 +1,13 @@
-import { Box, useMediaQuery } from '@chakra-ui/icons';
+import { Box } from '@chakra-ui/icons';
 
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 
 export const ReactionsBar = () => {
-    const [isTablet] = useMediaQuery('(min-width: 768px)');
-    const [isDesktop] = useMediaQuery('(min-width: 1440px)');
+    const { isDesktop, isTablet, isLaptop } = useScreenSize();
     const paddingsReactionBox = isTablet ? '0 16px' : '0 8px';
 
-    if (isDesktop) {
+    if (isDesktop || isLaptop) {
         return (
             <Box
                 width='208px'

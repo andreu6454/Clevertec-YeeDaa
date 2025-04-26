@@ -1,11 +1,10 @@
-import { Box, Card, Text } from '@chakra-ui/icons';
+import { Box, Card } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
-
-import AlexAvatar from '../../assets/images/alexAvatar.png';
+import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 interface CardWithImageProps {
     title: string;
@@ -13,6 +12,9 @@ interface CardWithImageProps {
     dishType: string;
     size: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
     description: string;
+    bookMarks: number;
+    likes: number;
+    onClickHandler?: () => void;
 }
 
 const sizes = {
@@ -22,9 +24,7 @@ const sizes = {
         imgHeight: '128px',
         padding: '8px',
         pdImage: '8px',
-        fontWeight: '500',
-        fontSize: '16px',
-        lineHeight: '150%',
+        textTitleSize: TypographySizes.md,
         textWidth: '142px',
         textHeight: '48px',
     },
@@ -34,9 +34,7 @@ const sizes = {
         imgHeight: '128px',
         padding: '8px',
         pdImage: '8px',
-        fontWeight: '500',
-        fontSize: '16px',
-        lineHeight: '150%',
+        textTitleSize: TypographySizes.md,
         textWidth: '142px',
         textHeight: '48px',
     },
@@ -46,9 +44,7 @@ const sizes = {
         imgHeight: '230px',
         padding: '12px',
         pdImage: '20px 24px',
-        fontWeight: '500',
-        fontSize: '20px',
-        lineHeight: '140%',
+        textTitleSize: TypographySizes.xl,
         textWidth: '253px',
         textHeight: '100px',
     },
@@ -58,19 +54,18 @@ const sizes = {
         imgHeight: '230px',
         padding: '12px',
         pdImage: '20px 24px',
-        fontWeight: '500',
-        fontSize: '20px',
-        lineHeight: '140%',
+        textTitleSize: TypographySizes.xl,
         textWidth: '274px',
         textHeight: '100px',
     },
 };
 
 export const CardWithImage = memo((props: CardWithImageProps) => {
-    const { title, image, dishType, size, description } = props;
+    const { title, image, dishType, size, description, onClickHandler, bookMarks, likes } = props;
 
     return (
         <Card
+            onClick={onClickHandler}
             _hover={{
                 boxShadow:
                     '0 4px 8px -2px rgba(32, 126, 0, 0.1), 0 6px 12px -2px rgba(32, 126, 0, 0.15)',
@@ -92,15 +87,15 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                 {(size === 'Tablet' || size === 'Mobile') && (
                     <CardBadge type='dishType' size='small' bgColor='green' dishType={dishType} />
                 )}
-                {(size === 'Desktop' || size === 'Laptop') && (
-                    <CardBadge
-                        type='recommendation'
-                        size='small'
-                        bgColor='green'
-                        avatar={AlexAvatar}
-                        name='Alex Cook'
-                    />
-                )}
+                {/*{(size === 'Desktop' || size === 'Laptop') && (*/}
+                {/*    <CardBadge*/}
+                {/*        type='recommendation'*/}
+                {/*        size='small'*/}
+                {/*        bgColor='green'*/}
+                {/*        avatar={AlexAvatar}*/}
+                {/*        name='Alex Cook'*/}
+                {/*    />*/}
+                {/*)}*/}
             </Box>
             <Box padding={sizes[size].padding}>
                 <Box
@@ -108,25 +103,24 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                     height={sizes[size].textHeight}
                     marginBottom='24px'
                 >
-                    <Text
-                        fontWeight={sizes[size].fontWeight}
-                        fontSize={sizes[size].fontSize}
-                        lineHeight={sizes[size].lineHeight}
+                    <Typography
+                        overflow='hidden'
+                        textOverflow='ellipsis'
+                        noOfLines={2}
+                        Size={sizes[size].textTitleSize}
                         overflowWrap='break-word'
                     >
                         {title}
-                    </Text>
+                    </Typography>
                     {(size === 'Desktop' || size === 'Laptop') && (
-                        <Text
-                            fontWeight='400'
-                            fontSize='14px'
-                            lineHeight='143%'
+                        <Typography
+                            Size={TypographySizes.sm}
                             overflow='hidden'
                             textOverflow='ellipsis'
                             noOfLines={3}
                         >
                             {description}
-                        </Text>
+                        </Typography>
                     )}
                 </Box>
 
@@ -140,8 +134,8 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                         />
                     )}
                     <Flex width='max-content'>
-                        <ReactionCount size='small' count={15} variant='bookmark' />
-                        <ReactionCount size='small' count={5} variant='emoji' />
+                        <ReactionCount size='small' count={bookMarks} variant='bookmark' />
+                        <ReactionCount size='small' count={likes} variant='emoji' />
                     </Flex>
                 </Flex>
             </Box>

@@ -1,10 +1,12 @@
-import { Box } from '@chakra-ui/icons';
-import { Flex, Link } from '@chakra-ui/react';
-import { useLocation } from 'react-router';
+import { Tab, TabList } from '@chakra-ui/icons';
+import { Tabs } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 
 interface LinksCarouselProps {
     links: Array<{ title: string; link: string }>;
     size: 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile';
+    category: string;
 }
 
 const sizes = {
@@ -30,14 +32,24 @@ const sizes = {
     },
 };
 export const LinksCarousel = (props: LinksCarouselProps) => {
-    const location = useLocation();
+    const { links, size, category } = props;
 
+    const location = useLocation();
+    const navigate = useNavigate();
     const currentPath = location.pathname.split('/')[2];
 
-    const { links, size } = props;
+    const activeIndex = links.findIndex((link) => link.link === currentPath);
+    const [tabIndex, setTabIndex] = useState(activeIndex);
+
+    const handleTabsChange = (index: number) => {
+        setTabIndex(index);
+        navigate(`/${category}/${links[index].link}`);
+    };
 
     return (
-        <Box
+        <Tabs
+            variant='unstyled'
+            index={tabIndex}
             sx={{
                 scrollbarWidth: 'none',
                 '&::-webkit-scrollbar': {
@@ -48,34 +60,33 @@ export const LinksCarousel = (props: LinksCarouselProps) => {
             overflowX='scroll'
             borderBottom='1px solid rgba(0, 0, 0, 0.08)'
             mb='12px'
+            onChange={handleTabsChange}
+            alignItems={size === 'Desktop' || size === 'Laptop' ? 'center' : 'flex-start'}
         >
-            <Flex
-                gap={4}
-                px={6}
-                justify='center'
-                alignItems={size === 'Desktop' || size === 'Laptop' ? 'center' : 'flex-start'}
-            >
-                {links.map((link) => {
+            <TabList>
+                {links.map((link, index) => {
                     const isActive = currentPath === link.link;
-
                     return (
-                        <Link
+                        <Tab
+                            data-test-id={`tab-${link.link}-${index}`}
+                            _selected={{
+                                color: '#2db100',
+                                borderBottom: '2px solid #2db100',
+                            }}
                             key={link.link}
-                            href={link.link}
                             whiteSpace='nowrap'
                             padding={sizes[size].padding}
-                            borderBottom={isActive ? '2px solid #2db100' : ''}
-                            color={isActive ? '#2db100' : '#134b00'}
-                            transition='all 0.2s'
+                            borderBottom={isActive ? '2px solid #' : ''}
+                            color='#134b00'
                             fontWeight='500'
                             fontSize={sizes[size].fontSize}
                             lineHeight={sizes[size].lineHeight}
                         >
                             {link.title}
-                        </Link>
+                        </Tab>
                     );
                 })}
-            </Flex>
-        </Box>
+            </TabList>
+        </Tabs>
     );
 };

@@ -1,6 +1,8 @@
 import { Box, Card } from '@chakra-ui/icons';
-import { Avatar, Flex, Text } from '@chakra-ui/react';
+import { Avatar, Flex } from '@chakra-ui/react';
 import { memo } from 'react';
+
+import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 interface CardWithAvatarProps {
     avatar: string;
@@ -17,15 +19,9 @@ const sizes = {
         paddingAvatar: '24px 24px 16px 24px',
         paddingText: '16px 24px 24px 24px',
         avatarSize: 'md',
-        fNameWeight: '500',
-        fNameSize: '18px',
-        lNameHeight: '156%',
-        fUserNameWeight: '400',
-        fUserNameSize: '14px',
-        lUserNameHeight: '143%',
-        fTextNameWeight: '400',
-        fTextNameSize: '14px',
-        lTextNameHeight: '143%',
+        textNameSize: TypographySizes.lg,
+        textUsernameSize: TypographySizes.sm,
+        textDescriptionSize: TypographySizes.sm,
     },
     Laptop: {
         width: '266px',
@@ -33,15 +29,9 @@ const sizes = {
         paddingAvatar: '16px 16px 8px 16px',
         paddingText: '8px 16px 16px 16px',
         avatarSize: 'md',
-        fNameWeight: '500',
-        fNameSize: '18px',
-        lNameHeight: '156%',
-        fUserNameWeight: '400',
-        fUserNameSize: '14px',
-        lUserNameHeight: '143%',
-        fTextNameWeight: '400',
-        fTextNameSize: '14px',
-        lTextNameHeight: '143%',
+        textNameSize: TypographySizes.lg,
+        textUsernameSize: TypographySizes.sm,
+        textDescriptionSize: TypographySizes.sm,
     },
     Tablet: {
         width: '226px',
@@ -49,15 +39,9 @@ const sizes = {
         paddingAvatar: '16px 16px 12px 16px',
         paddingText: '12px 16px 16px 16px',
         avatarSize: 'sm',
-        fNameWeight: '500',
-        fNameSize: '16px',
-        lNameHeight: '150%',
-        fUserNameWeight: '400',
-        fUserNameSize: '12px',
-        lUserNameHeight: '133%',
-        fTextNameWeight: '400',
-        fTextNameSize: '14px',
-        lTextNameHeight: '143%',
+        textNameSize: TypographySizes.md,
+        textUsernameSize: TypographySizes.xs,
+        textDescriptionSize: TypographySizes.sm,
     },
     Mobile: {
         width: '304px',
@@ -65,15 +49,9 @@ const sizes = {
         paddingAvatar: '16px 16px 12px 16px',
         paddingText: '12px 16px 16px 16px',
         avatarSize: 'sm',
-        fNameWeight: '500',
-        fNameSize: '16px',
-        lNameHeight: '150%',
-        fUserNameWeight: '400',
-        fUserNameSize: '12px',
-        lUserNameHeight: '133%',
-        fTextNameWeight: '400',
-        fTextNameSize: '14px',
-        lTextNameHeight: '133%',
+        textNameSize: TypographySizes.md,
+        textUsernameSize: TypographySizes.xs,
+        textDescriptionSize: TypographySizes.sm,
     },
 };
 
@@ -93,36 +71,26 @@ export const CardWithAvatar = memo((props: CardWithAvatarProps) => {
             <Flex alignItems='center' width='100%' padding={sizes[size].paddingAvatar} gap='12px'>
                 <Avatar size={sizes[size].avatarSize} src={avatar} />
                 <Box width='100%' minWidth={0}>
-                    <Text
-                        fontWeight={sizes[size].fNameWeight}
-                        fontSize={sizes[size].fNameSize}
-                        lineHeight={sizes[size].lNameHeight}
+                    <Typography
+                        Size={sizes[size].textNameSize}
                         whiteSpace='nowrap'
                         overflow='hidden'
                         textOverflow='ellipsis'
                     >
                         {name}
-                    </Text>
-                    <Text
-                        fontWeight={sizes[size].fUserNameWeight}
-                        fontSize={sizes[size].fUserNameSize}
-                        lineHeight={sizes[size].lUserNameHeight}
-                    >
-                        {username}
-                    </Text>
+                    </Typography>
+                    <Typography Size={sizes[size].textUsernameSize}>{username}</Typography>
                 </Box>
             </Flex>
             <Box padding={sizes[size].paddingText}>
-                <Text
-                    fontWeight={sizes[size].fTextNameWeight}
-                    fontSize={sizes[size].fTextNameSize}
-                    lineHeight={sizes[size].lTextNameHeight}
+                <Typography
+                    Size={sizes[size].textDescriptionSize}
                     overflow='hidden'
                     textOverflow='ellipsis'
                     noOfLines={3}
                 >
                     {text}
-                </Text>
+                </Typography>
             </Box>
         </Card>
     );

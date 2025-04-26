@@ -1,10 +1,16 @@
-import { IconButton, Input, InputGroup, Select, Switch } from '@chakra-ui/icons';
-import { Flex, Image, InputRightElement, Text } from '@chakra-ui/react';
+import { IconButton, useBoolean } from '@chakra-ui/icons';
+import { Flex, Image, Text } from '@chakra-ui/react';
 
-import { useScreenSize } from '~/hooks/useScreenSize';
+import { Filters } from '~/components/Filters/Filters';
+import { SearchAllergens } from '~/components/SearchBlock/Allergens/SearchAllergens';
+import { Search } from '~/components/SearchBlock/Search/Search';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { openFilters } from '~/store/app-slice';
+import { useAppDispatch } from '~/store/hooks';
+import { setClearFilters } from '~/store/recipesListPage-slice';
 
 import SearchFilterIcon from '../../assets/svg/searchFilters.svg';
-import SearchIcon from '../../assets/svg/searchIcon.svg';
 
 const Sizes = {
     Desktop: {
@@ -12,44 +18,44 @@ const Sizes = {
         height: '248px',
         size: 'lg',
         mbText: '32px',
+        paddingY: '32px 0 32px 0',
         fSize: '48px',
         lHeight: '100%',
         inputWidth: '458px',
-        fDescSize: '16px',
-        lDescHeight: '150%',
+        textDescriptionSize: TypographySizes.md,
     },
     Laptop: {
         width: '578px',
         height: '248px',
         size: 'lg',
         mbText: '32px',
+        paddingY: '32px 0 32px 0',
         fSize: '48px',
         lHeight: '100%',
         inputWidth: '458px',
-        fDescSize: '16px',
-        lDescHeight: '150%',
+        textDescriptionSize: TypographySizes.md,
     },
     Tablet: {
         width: '727px',
         height: '80px',
         size: 'sm',
         mbText: '16px',
+        paddingY: '16px 0 32px 0',
         fSize: '24px',
         lHeight: '133%',
         inputWidth: '404px',
-        fDescSize: '14px',
-        lDescHeight: '143%',
+        textDescriptionSize: TypographySizes.sm,
     },
     Mobile: {
         width: '328px',
         height: '80px',
         size: 'sm',
         mbText: '16px',
+        paddingY: '16px 0 32px 0',
         fSize: '24px',
         lHeight: '133%',
         inputWidth: '284px',
-        fDescSize: '14px',
-        lDescHeight: '143%',
+        textDescriptionSize: TypographySizes.sm,
     },
 };
 
@@ -61,15 +67,31 @@ interface FoodSearchCardProps {
 export const SearchBlock = (props: FoodSearchCardProps) => {
     const { title, description } = props;
 
+    const [isSearchFilterOn, { on: setFocus, off: setBlur }] = useBoolean(false);
+
     const { screenSize, isDesktop, isLaptop } = useScreenSize();
+
+    const dispatch = useAppDispatch();
+
+    const onClickHandler = () => {
+        dispatch(setClearFilters());
+        dispatch(openFilters());
+    };
 
     return (
         <Flex
+            boxShadow={
+                isSearchFilterOn
+                    ? '0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 20px 25px -5px rgba(0, 0, 0, 0.1)'
+                    : ''
+            }
             width={Sizes[screenSize].width}
             flexDirection='column'
-            marginBottom='32px'
+            borderRadius='24px'
+            padding={Sizes[screenSize].paddingY}
             alignItems='center'
         >
+            <Filters />
             <Flex
                 direction='column'
                 alignItems='center'
@@ -86,20 +108,20 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
                     {title}
                 </Text>
                 {description && (
-                    <Text
+                    <Typography
+                        Size={Sizes[screenSize].textDescriptionSize}
                         width={isDesktop || isLaptop ? '696px' : '100%'}
                         color='rgba(0, 0, 0, 0.48)'
-                        fontWeight='500'
-                        fontSize={Sizes[screenSize].fDescSize}
-                        lineHeight={Sizes[screenSize].lDescHeight}
                         textAlign='center'
                     >
                         {description}
-                    </Text>
+                    </Typography>
                 )}
             </Flex>
             <Flex gap='12px' marginBottom='12px'>
                 <IconButton
+                    data-test-id='filter-button'
+                    onClick={onClickHandler}
                     borderColor='rgba(0, 0, 0, 0.48)'
                     size={Sizes[screenSize].size}
                     variant='outline'
@@ -107,39 +129,9 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
                 >
                     <Image src={SearchFilterIcon} />
                 </IconButton>
-                <InputGroup borderColor='rgba(0, 0, 0, 0.48)' width={Sizes[screenSize].inputWidth}>
-                    <Input
-                        color='black'
-                        size={Sizes[screenSize].size}
-                        placeholder='Название или ингредиент...'
-                        _placeholder={{ color: '#134b00' }}
-                    />
-                    <InputRightElement boxSize={Sizes[screenSize].size === 'lg' ? '48px' : '32px'}>
-                        <IconButton
-                            variant='ghost'
-                            size={Sizes[screenSize].size}
-                            aria-label='search'
-                        >
-                            <Image
-                                width={Sizes[screenSize].size === 'lg' ? '31px' : '24px'}
-                                height={Sizes[screenSize].size === 'lg' ? '31px' : '24px'}
-                                src={SearchIcon}
-                            />
-                        </IconButton>
-                    </InputRightElement>
-                </InputGroup>
+                <Search setBlur={setBlur} setFocus={setFocus} isSearchFilterOn={isSearchFilterOn} />
             </Flex>
-            {(isDesktop || isLaptop) && (
-                <Flex width='518px' gap='16px'>
-                    <Flex padding='6px 0 6px 8px' gap='12px' alignItems='center'>
-                        <Text fontWeight='500' fontSize='16px' lineHeight='150%'>
-                            Исключить мои аллергены
-                        </Text>
-                        <Switch size='md' />
-                    </Flex>
-                    <Select width='234px' placeholder='Выберите из списка...'></Select>
-                </Flex>
-            )}
+            {(isDesktop || isLaptop) && <SearchAllergens />}
         </Flex>
     );
 };
