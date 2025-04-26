@@ -1,7 +1,7 @@
-import { Checkbox } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
 
 import { sideDishFilters } from '~/shared/data/recipeFilters';
+import { CustomCheckbox } from '~/shared/ui/Checkbox/Checkbox';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { setSideDishFilters, sideDishFiltersSelector } from '~/store/recipesListPage-slice';
@@ -24,26 +24,13 @@ export const SideDishFilter = () => {
         };
 
         return (
-            <Checkbox
-                onChange={onChangeHandler}
+            <CustomCheckbox
+                title={el.title}
+                key={el.title + 'checkbox'}
+                onChangeHandler={onChangeHandler}
                 isChecked={isChecked}
-                data-test-id={el.title === 'Картошка' ? 'checkbox-картошка' : ''}
-                key={'checkbox' + el.title}
-                colorScheme='green'
-                sx={{
-                    '& .chakra-checkbox__control': {
-                        border: '2px solid #d7ff94',
-                    },
-                }}
-                _checked={{
-                    '& .chakra-checkbox__control': {
-                        bg: '#d7ff94',
-                        borderColor: '#d7ff94',
-                    },
-                }}
-            >
-                <Typography Size={TypographySizes.sm}>{el.title}</Typography>
-            </Checkbox>
+                dataTestId={el.title === 'Картошка' ? 'checkbox-картошка' : ''}
+            />
         );
     });
 

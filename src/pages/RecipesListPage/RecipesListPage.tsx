@@ -21,7 +21,7 @@ export const RecipesListPage = memo(() => {
     const { category, subcategory } = useRouteSegments();
 
     useEffect(() => {
-        dispatch(setCategoriesFilter([category, subcategory]));
+        dispatch(setCategoriesFilter({ categories: [category], subcategory: subcategory }));
         dispatch(setFilteredData());
     }, [category, subcategory]);
 

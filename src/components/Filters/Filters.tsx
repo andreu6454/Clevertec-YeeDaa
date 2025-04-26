@@ -21,14 +21,13 @@ export const Filters = () => {
     }
     return (
         <Drawer
-            data-test-id='filter-drawer'
             size={isDesktopLaptop ? 'sm' : 'xs'}
             isOpen={isFiltersOpen}
             placement='right'
             onClose={onClickHandler}
         >
             <DrawerOverlay />
-            <DrawerContent width={isDesktopLaptop ? '463px' : '344px'}>
+            <DrawerContent data-test-id='filter-drawer' width={isDesktopLaptop ? '463px' : '344px'}>
                 <FiltersMenuContent />
             </DrawerContent>
         </Drawer>

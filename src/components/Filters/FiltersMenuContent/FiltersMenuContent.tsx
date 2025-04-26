@@ -4,13 +4,20 @@ import { Button, Flex, Text } from '@chakra-ui/react';
 import { AllergensFilter } from '~/components/Filters/FiltersMenuContent/AllergensFilter/AllergensFilter';
 import { AuthorFilter } from '~/components/Filters/FiltersMenuContent/AuthorFilter/AuthorFilter';
 import { CategoryFilter } from '~/components/Filters/FiltersMenuContent/CategoryFilter/CategoryFilter';
-import ChosenFilters from '~/components/Filters/FiltersMenuContent/ChosenFilters/ChosenFilters';
+import { ChosenFilters } from '~/components/Filters/FiltersMenuContent/ChosenFilters/ChosenFilters';
 import { MeatFilter } from '~/components/Filters/FiltersMenuContent/MeatFilter/MeatFilter';
 import { SideDishFilter } from '~/components/Filters/FiltersMenuContent/SideDishFilter/SideDishFilter';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { closeFilters } from '~/store/app-slice';
-import { useAppDispatch } from '~/store/hooks';
-import { setClearFilters, setFilteredData } from '~/store/recipesListPage-slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import {
+    allergensSelector,
+    filterCategorySelector,
+    meatFiltersSelector,
+    setClearFilters,
+    setFilteredData,
+    sideDishFiltersSelector,
+} from '~/store/recipesListPage-slice';
 
 import CloseIcon from '../../../assets/svg/close.svg';
 
@@ -18,6 +25,18 @@ export const FiltersMenuContent = () => {
     const dispatch = useAppDispatch();
 
     const { isDesktopLaptop } = useScreenSize();
+
+    const allergens = useAppSelector(allergensSelector);
+    const meatFilters = useAppSelector(meatFiltersSelector);
+    const sideDishFilters = useAppSelector(sideDishFiltersSelector);
+    const categories = useAppSelector(filterCategorySelector);
+
+    const isDisableFilterButton = !(
+        meatFilters.length > 0 ||
+        allergens.length > 0 ||
+        sideDishFilters.length > 0 ||
+        categories.length > 0
+    );
 
     const onCloseHandler = () => {
         dispatch(closeFilters());
@@ -59,7 +78,6 @@ export const FiltersMenuContent = () => {
                 <MeatFilter />
                 <SideDishFilter />
                 <AllergensFilter />
-                {/*<ChosenFilters/>*/}
             </Flex>
             <Flex direction='column' padding={isDesktopLaptop ? '32px' : '016px'} gap='32px'>
                 <ChosenFilters />
@@ -74,6 +92,8 @@ export const FiltersMenuContent = () => {
                         Очистить фильтр
                     </Button>
                     <Button
+                        pointerEvents={isDisableFilterButton ? 'none' : 'auto'}
+                        isDisabled={isDisableFilterButton}
                         onClick={onFilterClickHandler}
                         color='#fff'
                         backgroundColor='rgba(0, 0, 0, 0.92)'
