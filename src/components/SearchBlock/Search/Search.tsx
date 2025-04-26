@@ -93,7 +93,7 @@ export const Search = memo((props: SearchProps) => {
 
     if (searchError) {
         borderColor = 'red';
-    } else if (searchCompleted && !searchError) {
+    } else if (searchCompleted && !searchError && searchValue.length !== 0) {
         borderColor = '#2db100';
     } else {
         borderColor = 'rgba(0, 0, 0, 0.48)';

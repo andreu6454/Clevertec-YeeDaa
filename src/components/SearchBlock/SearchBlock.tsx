@@ -1,12 +1,14 @@
-import { IconButton, Select, Switch, useBoolean } from '@chakra-ui/icons';
+import { IconButton, useBoolean } from '@chakra-ui/icons';
 import { Flex, Image, Text } from '@chakra-ui/react';
 
 import { Filters } from '~/components/Filters/Filters';
+import { SearchAllergens } from '~/components/SearchBlock/Allergens/SearchAllergens';
 import { Search } from '~/components/SearchBlock/Search/Search';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { openFilters } from '~/store/app-slice';
 import { useAppDispatch } from '~/store/hooks';
+import { setClearFilters } from '~/store/recipesListPage-slice';
 
 import SearchFilterIcon from '../../assets/svg/searchFilters.svg';
 
@@ -72,6 +74,7 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
     const dispatch = useAppDispatch();
 
     const onClickHandler = () => {
+        dispatch(setClearFilters());
         dispatch(openFilters());
     };
 
@@ -128,15 +131,7 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
                 </IconButton>
                 <Search setBlur={setBlur} setFocus={setFocus} isSearchFilterOn={isSearchFilterOn} />
             </Flex>
-            {(isDesktop || isLaptop) && (
-                <Flex width='518px' gap='16px'>
-                    <Flex padding='6px 0 6px 8px' gap='12px' alignItems='center'>
-                        <Typography Size={TypographySizes.md}>Исключить мои аллергены</Typography>
-                        <Switch size='md' />
-                    </Flex>
-                    <Select width='234px' placeholder='Выберите из списка...'></Select>
-                </Flex>
-            )}
+            {(isDesktop || isLaptop) && <SearchAllergens />}
         </Flex>
     );
 };

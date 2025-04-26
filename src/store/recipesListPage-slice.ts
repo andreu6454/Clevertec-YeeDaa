@@ -1,6 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { recipeData } from '~/shared/data/recipeData';
+import { allergenFilters } from '~/shared/data/recipeFilters';
+import {
+    filterByAllergens,
+    filterByMeat,
+    filterBySideDish,
+    filterByTitle,
+    filterRecipesByCategory,
+} from '~/store/recipeListFilterService/recipeListFilterService';
 
 import { ApplicationState } from './configure-store';
 
@@ -8,10 +16,12 @@ const initialState = {
     isLoading: false,
     error: '' as string | null,
     recipes: recipeData,
-    category: '',
+    category: [] as string[],
+    currentPageCategories: [] as string[],
     subcategory: '',
     filteredData: recipeData,
     isAllergenFilterOn: false,
+    isSearchAllergenFilterOn: false,
     searchInputValue: '',
     searchError: false,
     isSearchCompleted: false,
@@ -34,9 +44,15 @@ export const recipesListPageSlice = createSlice({
         setSearchInputValue(state, { payload: searchInputValue }: PayloadAction<string | null>) {
             state.searchInputValue = searchInputValue || '';
         },
-        setCategoriesFilter(state, { payload: categories }: PayloadAction<string[]>) {
-            state.category = categories[0];
-            state.subcategory = categories[1];
+        setCurrentPageCategory(state, { payload: searchInputValue }: PayloadAction<string[]>) {
+            state.currentPageCategories = searchInputValue || [];
+        },
+        setCategoriesFilter(
+            state,
+            { payload }: PayloadAction<{ categories: string[]; subcategory: string }>,
+        ) {
+            state.category = payload.categories || [];
+            state.subcategory = payload.subcategory || '';
             state.isSearchCompleted = false;
         },
         setMeatFilters(state, { payload: meatFilters }: PayloadAction<string[]>) {
@@ -46,7 +62,16 @@ export const recipesListPageSlice = createSlice({
             state.filters.sideDishFilters = sideDishFilters;
         },
         setIsAllergenFilterOn(state) {
+            if (state.isAllergenFilterOn) {
+                state.filters.allergens = [];
+            }
             state.isAllergenFilterOn = !state.isAllergenFilterOn;
+        },
+        setIsSearchAllergenFilterOn(state) {
+            if (state.isSearchAllergenFilterOn) {
+                state.filters.allergens = [];
+            }
+            state.isSearchAllergenFilterOn = !state.isSearchAllergenFilterOn;
         },
         setAllergens(state, { payload: allergens }: PayloadAction<string[]>) {
             state.filters.allergens = allergens;
@@ -57,49 +82,46 @@ export const recipesListPageSlice = createSlice({
                 sideDishFilters: [],
                 allergens: [],
             };
+
+            if (state.currentPageCategories[0] === undefined) {
+                state.category = [];
+            } else {
+                state.category = [state.currentPageCategories[0]];
+            }
+
+            state.subcategory = state.currentPageCategories[1] || '';
+
             state.isSearchCompleted = false;
             state.searchInputValue = '';
-            state.filteredData = state.recipes.filter(
-                (recipe) =>
-                    recipe.category.includes(state.category) &&
-                    recipe.subcategory.includes(state.subcategory),
-            );
+            state.filteredData = filterRecipesByCategory(state.recipes, {
+                categories: state.category,
+                subcategory: state.subcategory || '',
+            });
         },
         setFilteredData: (state) => {
             state.searchError = false;
+            console.log(1);
 
-            if (state.subcategory.length > 0) {
-                state.filteredData = state.recipes.filter(
-                    (recipe) =>
-                        recipe.category.includes(state.category) &&
-                        recipe.subcategory.includes(state.subcategory),
-                ); //для фильтра на recipeListPage по категории и саб категории
-            } else if (state.category.length > 0) {
-                state.filteredData = state.recipes.filter((recipe) =>
-                    recipe.category.includes(state.category),
-                ); // для фильтра только по категории
-            }
+            state.filteredData = filterRecipesByCategory(state.recipes, {
+                categories: state.category,
+                subcategory: state.subcategory || '',
+            });
 
-            if (state.subcategory.length === 0 && state.category.length === 0) {
-                state.filteredData = state.recipes;
-            } // для поиска на главной странице
+            state.filteredData = filterByMeat(state.filteredData, state.filters.meatFilters); // для фильтрации по мясу
 
-            if (state.filters.meatFilters.length > 0) {
-                state.filteredData = state.filteredData.filter((recipe) =>
-                    state.filters.meatFilters.some((filter) => recipe.meat.includes(filter)),
-                ); // для фильтра по мясу
-            }
+            state.filteredData = filterBySideDish(
+                state.filteredData,
+                state.filters.sideDishFilters,
+            ); // для фильтра по гарниру
 
-            if (state.filters.sideDishFilters.length > 0) {
-                state.filteredData = state.filteredData.filter((recipe) =>
-                    state.filters.sideDishFilters.some((filter) => recipe.side.includes(filter)),
-                ); // для фильтра по гарниру
-            }
+            state.filteredData = filterByTitle(state.filteredData, state.searchInputValue); // для фильтра по гарниру
 
-            if (state.searchInputValue.length > 0) {
-                state.filteredData = state.filteredData.filter((recipe) =>
-                    recipe.title.toLowerCase().includes(state.searchInputValue.toLowerCase()),
-                ); // для поиска по тайтлу
+            if (state.isAllergenFilterOn || state.isSearchAllergenFilterOn) {
+                state.filteredData = filterByAllergens(
+                    state.filteredData,
+                    state.filters.allergens,
+                    allergenFilters,
+                ); // для фильтрации по аллергенам
             }
 
             if (state.filteredData.length === 0) {
@@ -118,15 +140,21 @@ export const sideDishFiltersSelector = (state: ApplicationState) =>
     state.recipesListPage.filters.sideDishFilters;
 export const allergenFilterOnSelector = (state: ApplicationState) =>
     state.recipesListPage.isAllergenFilterOn;
+export const allergensSearchFilterOnSelector = (state: ApplicationState) =>
+    state.recipesListPage.isSearchAllergenFilterOn;
+export const allergensSelector = (state: ApplicationState) =>
+    state.recipesListPage.filters.allergens;
 export const searchInputSelector = (state: ApplicationState) =>
     state.recipesListPage.searchInputValue;
 export const searchCompletedSelector = (state: ApplicationState) =>
     state.recipesListPage.isSearchCompleted;
 export const searchErrorSelector = (state: ApplicationState) => state.recipesListPage.searchError;
+export const filterCategorySelector = (state: ApplicationState) => state.recipesListPage.category;
 
 export const {
     setRecipesListPageError,
     setRecipesListPageLoader,
+    setCurrentPageCategory,
     setCategoriesFilter,
     setFilteredData,
     setMeatFilters,
@@ -134,6 +162,7 @@ export const {
     setSearchInputValue,
     setAllergens,
     setIsAllergenFilterOn,
+    setIsSearchAllergenFilterOn,
     setClearFilters,
 } = recipesListPageSlice.actions;
 

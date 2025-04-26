@@ -32,13 +32,17 @@ export const authorsFilters = [
 ];
 
 export const allergenFilters = [
-    { title: 'Молочные продукты', general: 'milk' },
-    { title: 'Яйцо', general: 'egg' },
-    { title: 'Рыба', general: 'fish' },
-    { title: 'Моллюски', general: 'mollusks' },
-    { title: 'Орехи', general: 'nuts' },
-    { title: 'Томат (Помидор)', general: 'tomato' },
-    { title: 'Цитрусовые', general: 'citrus' },
-    { title: 'Клубника (ягоды)', general: 'berries' },
-    { title: 'Шоколад', general: 'chocolate' },
+    { title: 'Молочные продукты', general: 'milk', ingredients: ['сливок'] },
+    { title: 'Яйцо', general: 'egg', ingredients: ['Яйцо'] },
+    { title: 'Рыба', general: 'fish', ingredients: ['Рыба'] },
+    { title: 'Моллюски', general: 'mollusks', ingredients: ['Моллюски'] },
+    { title: 'Орехи', general: 'nuts', ingredients: ['Орехи'] },
+    {
+        title: 'Томат (Помидор)',
+        general: 'tomato',
+        ingredients: ['Томат', 'Помидор', 'томатный соус'],
+    },
+    { title: 'Цитрусовые', general: 'citrus', ingredients: ['Цитрусовые'] },
+    { title: 'Клубника (ягоды)', general: 'berries', ingredients: ['Клубника', 'ягоды'] },
+    { title: 'Шоколад', general: 'chocolate', ingredients: ['Шоколад'] },
 ];

@@ -2,28 +2,28 @@ import { ChevronDownIcon, Menu, MenuList, Switch } from '@chakra-ui/icons';
 import { Button, Flex, MenuButton } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { AllergensFilterHeader } from '~/components/Filters/FiltersMenuContent/AllergensFilter/AllergensFilterHeader/AllergensFilterHeader';
 import { NewAllergenInput } from '~/components/Filters/FiltersMenuContent/AllergensFilter/NewAllergenInput/NewAllergenInput';
+import { SearchAllergensHeader } from '~/components/SearchBlock/Allergens/SearchAllergensHeader/SearchAllergensHeader';
 import { allergenFilters } from '~/shared/data/recipeFilters';
 import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTitle';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
-    allergenFilterOnSelector,
+    allergensSearchFilterOnSelector,
     allergensSelector,
     setAllergens,
-    setIsAllergenFilterOn,
+    setFilteredData,
+    setIsSearchAllergenFilterOn,
 } from '~/store/recipesListPage-slice';
 
-export const AllergensFilter = memo(() => {
+export const SearchAllergens = memo(() => {
     const dispatch = useAppDispatch();
-    const isAllergenFilterOn = useAppSelector(allergenFilterOnSelector);
-
+    const isSearchAllergenFilterOn = useAppSelector(allergensSearchFilterOnSelector);
     const allergens = useAppSelector(allergensSelector);
-    const border = allergens.length === 0 ? '1px solid rgba(0, 0, 0, 0.08)' : '1px solid #d7ff94';
 
+    const border = allergens.length === 0 ? '1px solid rgba(0, 0, 0, 0.08)' : '1px solid #d7ff94';
     const onChangeHandler = () => {
-        dispatch(setIsAllergenFilterOn());
+        dispatch(setIsSearchAllergenFilterOn());
     };
 
     const mappedAllergens = allergenFilters.map((el, index) => {
@@ -35,6 +35,7 @@ export const AllergensFilter = memo(() => {
             } else {
                 dispatch(setAllergens([...allergens, el.title]));
             }
+            dispatch(setFilteredData());
         };
 
         return (
@@ -50,13 +51,13 @@ export const AllergensFilter = memo(() => {
     });
 
     return (
-        <Flex direction='column' gap='8px'>
+        <Flex width='518px' gap='16px'>
             <Flex padding='6px 0 6px 8px' gap='12px' alignItems='center'>
-                <Typography Size={TypographySizes.md}>Исключить мои аллергены</Typography>
+                <Typography Size={TypographySizes.md}>Исключить аллергены</Typography>
                 <Switch
                     onChange={onChangeHandler}
-                    isChecked={isAllergenFilterOn}
-                    data-test-id='allergens-switcher-filter'
+                    isChecked={isSearchAllergenFilterOn}
+                    data-test-id='allergens-switcher'
                     size='md'
                     _checked={{
                         '& .chakra-switch__track': {
@@ -65,28 +66,28 @@ export const AllergensFilter = memo(() => {
                     }}
                 />
             </Flex>
-
             <Menu min-height='40px'>
                 <MenuButton
-                    data-test-id='allergens-menu-button-filter'
-                    pointerEvents={isAllergenFilterOn ? 'auto' : 'none'}
+                    data-test-id='allergens-menu-button'
+                    pointerEvents={isSearchAllergenFilterOn ? 'auto' : 'none'}
+                    isDisabled={!isSearchAllergenFilterOn}
                     border={border}
                     borderRadius='6px'
                     textAlign='start'
                     padding='10px 16px'
                     variant='outlined'
                     justifyContent='space-between'
-                    width='100%'
+                    width='269px'
                     min-height='40px'
                     height='max-content'
                     as={Button}
                     rightIcon={<ChevronDownIcon />}
                 >
-                    <AllergensFilterHeader />
+                    <SearchAllergensHeader />
                 </MenuButton>
-                <MenuList width='100%'>
-                    {isAllergenFilterOn && mappedAllergens}
-                    {isAllergenFilterOn && <NewAllergenInput />}
+                <MenuList width='100%' data-test-id='allergens-menu'>
+                    {isSearchAllergenFilterOn && mappedAllergens}
+                    {isSearchAllergenFilterOn && <NewAllergenInput />}
                 </MenuList>
             </Menu>
         </Flex>

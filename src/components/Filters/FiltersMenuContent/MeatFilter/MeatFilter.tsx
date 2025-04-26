@@ -1,7 +1,7 @@
-import { Checkbox } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
 
 import { meatFilters } from '~/shared/data/recipeFilters';
+import { CustomCheckbox } from '~/shared/ui/Checkbox/Checkbox';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { meatFiltersSelector, setMeatFilters } from '~/store/recipesListPage-slice';
@@ -22,25 +22,12 @@ export const MeatFilter = () => {
         };
 
         return (
-            <Checkbox
-                onChange={onChangeHandler}
+            <CustomCheckbox
+                title={el.title}
+                key={el.general}
+                onChangeHandler={onChangeHandler}
                 isChecked={isChecked}
-                key={'checkbox' + el.title}
-                colorScheme='green'
-                sx={{
-                    '& .chakra-checkbox__control': {
-                        border: '2px solid #d7ff94',
-                    },
-                }}
-                _checked={{
-                    '& .chakra-checkbox__control': {
-                        bg: '#d7ff94',
-                        borderColor: '#d7ff94',
-                    },
-                }}
-            >
-                <Typography Size={TypographySizes.sm}>{el.title}</Typography>
-            </Checkbox>
+            />
         );
     });
 
