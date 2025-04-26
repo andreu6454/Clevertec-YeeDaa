@@ -17,6 +17,7 @@ const sizes = {
         imgHeight: '244px',
         padding: '20px 24px',
         gap: '16px',
+        ofLines: 8,
     },
     Laptop: {
         width: '578px',
@@ -24,6 +25,7 @@ const sizes = {
         imgHeight: '244px',
         padding: '20px 24px',
         gap: '16px',
+        ofLines: 8,
     },
     Tablet: {
         width: '604px',
@@ -31,13 +33,15 @@ const sizes = {
         imgHeight: '128px',
         padding: '8px',
         gap: '12px',
+        ofLines: 4,
     },
     Mobile: {
         width: '328px',
         imgWidth: '158px',
         imgHeight: '128px',
-        padding: '8px',
+        padding: '8px 8px 0 8px',
         gap: '12px',
+        ofLines: 4,
     },
 };
 
@@ -66,10 +70,9 @@ const StepCard = (props: StepCardProps) => {
                     <Typography Size={TypographySizes.sm}>{`Шаг ${stepNumber}`}</Typography>
                 </Box>
                 <Typography
-                    maxHeight='100%'
+                    maxHeight={screenSize === 'Mobile' ? '80px' : ''}
                     Size={TypographySizes.sm}
                     overflow='hidden'
-                    textOverflow='ellipsis'
                 >
                     {description}
                 </Typography>
