@@ -3,10 +3,13 @@ import { memo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { CardWithImage } from '~/components/CardWithImage/CardWithImage';
-import { recipeData } from '~/shared/data/recipeData';
+import { useGetNewestRecipesQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getCategoryById, getSubCategoryById } from '~/shared/services/getCategoryById';
 import { Carousel } from '~/shared/ui/Carousel/Carousel';
 import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
+import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
+import { useAppSelector } from '~/store/hooks';
 
 const width = {
     Desktop: 1360,
@@ -19,25 +22,29 @@ export const NewRecipes = memo(() => {
     const { screenSize } = useScreenSize();
     const navigate = useNavigate();
 
-    const mappedRecipes = [...recipeData]
-        .slice(0, 10)
-        // .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-        .map((recipe) => {
-            const onClickHandler = () => {
-                navigate(`${recipe.category[0]}/${recipe.subcategory[0]}/${recipe.id}`);
-            };
+    const { data } = useGetNewestRecipesQuery();
+    const categories = useAppSelector(categoriesSelector);
+    const subCategories = useAppSelector(subCategoriesSelector);
 
+    // if (isLoading) return <FullScreenSpinner />;
+    if (!data) {
+        return null;
+    }
+    const mappedRecipes = [...data.data]
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .map((recipe) => {
+            const category = getCategoryById(categories, subCategories, recipe.categoriesIds[0]);
+            const subCategory = getSubCategoryById(subCategories, recipe.categoriesIds[0]);
+
+            const onClickHandler = () => {
+                navigate(`/${category?.category}/${subCategory?.category}/${recipe._id}`);
+            };
             return (
                 <CardWithImage
-                    bookMarks={recipe.bookmarks}
-                    likes={recipe.likes}
                     onClickHandler={onClickHandler}
                     key={recipe.title}
-                    size={screenSize}
-                    image={recipe.image}
-                    title={recipe.title}
-                    description={recipe.description}
-                    dishType={recipe.category[0]}
+                    recipe={recipe}
+                    categoryTitle={category?.category || ''}
                 />
             );
         });
