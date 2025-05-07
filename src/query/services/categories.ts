@@ -4,6 +4,7 @@ import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
 import { CategoryResponse } from '~/query/types/types';
+import { setAppError } from '~/store/app-slice';
 import { setCategories } from '~/store/categories-slice';
 
 export const categoriesApi = apiSlice
@@ -24,6 +25,7 @@ export const categoriesApi = apiSlice
                         const { data } = await queryFulfilled;
                         dispatch(setCategories(data));
                     } catch {
+                        dispatch(setAppError('categoriesError'));
                         console.log('Categories response error');
                     }
                 },

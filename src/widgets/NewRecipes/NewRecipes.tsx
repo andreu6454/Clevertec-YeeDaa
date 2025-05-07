@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router';
 import { CardWithImage } from '~/components/CardWithImage/CardWithImage';
 import { useGetNewestRecipesQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-import { getCategoryById, getSubCategoryById } from '~/shared/services/getCategoryById';
+import { getCategoryById } from '~/shared/services/getCategoryById';
+import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { Carousel } from '~/shared/ui/Carousel/Carousel';
 import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
+import { setAppError } from '~/store/app-slice';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
-import { useAppSelector } from '~/store/hooks';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 const width = {
     Desktop: 1360,
@@ -20,13 +22,20 @@ const width = {
 
 export const NewRecipes = memo(() => {
     const { screenSize } = useScreenSize();
-    const navigate = useNavigate();
 
-    const { data } = useGetNewestRecipesQuery();
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const { data, error } = useGetNewestRecipesQuery();
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 
     // if (isLoading) return <FullScreenSpinner />;
+
+    if (error) {
+        dispatch(setAppError('error'));
+    }
+
     if (!data) {
         return null;
     }
@@ -34,10 +43,16 @@ export const NewRecipes = memo(() => {
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         .map((recipe) => {
             const category = getCategoryById(categories, subCategories, recipe.categoriesIds[0]);
-            const subCategory = getSubCategoryById(subCategories, recipe.categoriesIds[0]);
 
             const onClickHandler = () => {
-                navigate(`/${category?.category}/${subCategory?.category}/${recipe._id}`);
+                navigate(
+                    getNavigateLinkToRecipe(
+                        categories,
+                        subCategories,
+                        recipe.categoriesIds[0],
+                        recipe._id,
+                    ),
+                );
             };
             return (
                 <CardWithImage

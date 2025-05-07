@@ -1,9 +1,9 @@
 import { Box } from '@chakra-ui/icons';
 import { ReactNode } from 'react';
 
+import { ErrorAlert } from '~/components/ErrorAlert/ErrorAlert';
 import { ScrollToTop } from '~/components/ScrollToTop/ScrollToTop';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-import { ErrorAlert } from '~/shared/ui/ErrorAlert/ErrorAlert';
 import { BurgerMenu } from '~/widgets/BurgerMenu/BurgerMenu';
 
 interface MobileLayoutProps {

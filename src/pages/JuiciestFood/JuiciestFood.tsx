@@ -19,15 +19,18 @@ export const JuiciestFood = memo(() => {
         if (data) {
             setAllRecipes((prev) => [...prev, ...data.data]);
             setIsButtonLoading(false);
-            if (page >= data.meta.totalPages) {
-                setIsLastPage(true);
-            }
+        }
+    }, [data]);
+
+    useEffect(() => {
+        if (data && page >= data?.meta.totalPages) {
+            setIsLastPage(true);
         }
     }, [data, page]);
 
     const onLoadMoreClick = () => {
-        setPage(page + 1);
         setIsButtonLoading(true);
+        setPage(page + 1);
     };
 
     if (isLoading) return <FullScreenSpinner />;

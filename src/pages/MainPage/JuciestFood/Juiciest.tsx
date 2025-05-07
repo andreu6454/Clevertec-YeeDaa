@@ -6,8 +6,9 @@ import { useGetJuiciestRecipesQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
+import { setAppError } from '~/store/app-slice';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
-import { useAppSelector } from '~/store/hooks';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 import ArrowRightIcon from '../../../assets/svg/BsArrowRight.svg';
 
@@ -20,8 +21,9 @@ const gap = {
 
 export const Juiciest = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
-    const { data } = useGetJuiciestRecipesQuery(1);
+    const { data, error } = useGetJuiciestRecipesQuery(1);
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 
@@ -30,7 +32,6 @@ export const Juiciest = () => {
     };
 
     const { screenSize, isDesktop, isLaptop, isMobile, isTablet } = useScreenSize();
-
     const direction = isDesktop || isTablet ? 'row' : 'column';
 
     const mappedRecipes = data?.data.map((recipe, index) => {
@@ -50,6 +51,9 @@ export const Juiciest = () => {
         );
     });
 
+    if (error) {
+        dispatch(setAppError('error'));
+    }
     // if (isLoading) return <FullScreenSpinner />;
     return (
         <Flex direction='column' gap={gap[screenSize]} width='100%'>

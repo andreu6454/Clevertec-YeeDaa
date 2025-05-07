@@ -9,8 +9,9 @@ import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { CategoryType } from '~/shared/types/categoryTypes';
+import { setAppError } from '~/store/app-slice';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
-import { useAppSelector } from '~/store/hooks';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 const sizes = {
     Desktop: {
@@ -50,7 +51,9 @@ const sizes = {
 export const RecommendationBlock = memo(() => {
     const { screenSize, isLaptop } = useScreenSize();
     const direction = screenSize === 'Mobile' || screenSize === 'Tablet' ? 'column' : 'row';
+
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const [randomCategory, setRandomCategory] = useState<{
         id: string;
@@ -73,7 +76,7 @@ export const RecommendationBlock = memo(() => {
         }
     }, [categories, subCategories]); // Добавляем зависимости
 
-    const { data } = useGetRecipeByCategoryQuery(
+    const { data, error } = useGetRecipeByCategoryQuery(
         { subcategoryId: randomCategory?.id || '', limit: 5 },
         {
             skip: !randomCategory?.id,
@@ -85,6 +88,10 @@ export const RecommendationBlock = memo(() => {
     const length = recipes?.length || 0;
 
     // if (isLoading) return <FullScreenSpinner />;
+
+    if (error) {
+        dispatch(setAppError('error'));
+    }
 
     if (!recipes) return null;
     return (
