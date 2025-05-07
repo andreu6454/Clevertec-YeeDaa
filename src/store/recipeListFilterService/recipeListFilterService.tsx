@@ -1,30 +1,31 @@
 import { recipeData } from '~/shared/data/recipeData';
+// import {Recipe} from "~/shared/types/recipeTypes";
 
-interface FilterCategoryOptions {
-    categories: string[];
-    subcategory?: string;
-}
+// interface FilterCategoryOptions {
+//     categories: string[];
+//     subcategory?: string;
+// }
 
-export const filterRecipesByCategory = (
-    recipes: typeof recipeData,
-    options: FilterCategoryOptions,
-) => {
-    const { categories, subcategory } = options;
-
-    if (subcategory?.length === 0 && categories.length === 0) {
-        return recipes;
-    } // для поиска на MainPage по всем категориям
-
-    return recipes.filter((recipe) => {
-        const matchesCategory =
-            categories.length === 0 ||
-            categories.some((category) => recipe.category.includes(category));
-
-        const matchesSubcategory = !subcategory || recipe.subcategory.includes(subcategory);
-
-        return matchesCategory && matchesSubcategory;
-    });
-};
+// export const filterRecipesByCategory = (
+//     recipes: Recipe[],
+//     options: FilterCategoryOptions,
+// ) => {
+//     const { categories, subcategory } = options;
+//
+//     if (subcategory?.length === 0 && categories.length === 0) {
+//         return recipes;
+//     } // для поиска на MainPage по всем категориям
+//
+//     return recipes.filter((recipe) => {
+//         const matchesCategory =
+//             categories.length === 0 ||
+//             categories.some((category) => recipe.category.includes(category));
+//
+//         const matchesSubcategory = !subcategory || recipe.subcategory.includes(subcategory);
+//
+//         return matchesCategory && matchesSubcategory;
+//     });
+// };
 
 export const filterByMeat = (recipes: typeof recipeData, meatFilters: string[]) => {
     if (meatFilters.length === 0) return recipes;

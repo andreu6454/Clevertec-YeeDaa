@@ -3,17 +3,14 @@ import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { Recipe } from '~/shared/types/recipeTypes';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 interface CardWithImageProps {
-    title: string;
-    image: string;
-    dishType: string;
-    size: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
-    description: string;
-    bookMarks: number;
-    likes: number;
+    recipe: Recipe;
+    categoryTitle: string;
     onClickHandler?: () => void;
 }
 
@@ -61,10 +58,13 @@ const sizes = {
 };
 
 export const CardWithImage = memo((props: CardWithImageProps) => {
-    const { title, image, dishType, size, description, onClickHandler, bookMarks, likes } = props;
+    const { onClickHandler, recipe, categoryTitle } = props;
+
+    const { screenSize } = useScreenSize();
 
     return (
         <Card
+            margin='2px'
             onClick={onClickHandler}
             _hover={{
                 boxShadow:
@@ -72,20 +72,20 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                 transition: 'all 0.3s ease',
             }}
             flexShrink={0}
-            width={sizes[size].width}
-            height={sizes[size].height}
+            width={sizes[screenSize].width}
+            height={sizes[screenSize].height}
             borderRadius='8px'
         >
             <Box
                 borderTopRadius='8px'
                 width='100%'
-                height={sizes[size].imgHeight}
+                height={sizes[screenSize].imgHeight}
                 backgroundSize='100% 100%'
-                backgroundImage={image}
-                padding={sizes[size].pdImage}
+                backgroundImage={'https://training-api.clevertec.ru' + recipe.image}
+                padding={sizes[screenSize].pdImage}
             >
-                {(size === 'Tablet' || size === 'Mobile') && (
-                    <CardBadge type='dishType' size='small' bgColor='green' dishType={dishType} />
+                {(screenSize === 'Tablet' || screenSize === 'Mobile') && (
+                    <CardBadge type='dishType' size='small' bgColor='green' dishType='asdasd' />
                 )}
                 {/*{(size === 'Desktop' || size === 'Laptop') && (*/}
                 {/*    <CardBadge*/}
@@ -97,45 +97,45 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                 {/*    />*/}
                 {/*)}*/}
             </Box>
-            <Box padding={sizes[size].padding}>
+            <Box padding={sizes[screenSize].padding}>
                 <Box
-                    width={sizes[size].textWidth}
-                    height={sizes[size].textHeight}
+                    width={sizes[screenSize].textWidth}
+                    height={sizes[screenSize].textHeight}
                     marginBottom='24px'
                 >
                     <Typography
                         overflow='hidden'
                         textOverflow='ellipsis'
                         noOfLines={2}
-                        Size={sizes[size].textTitleSize}
+                        Size={sizes[screenSize].textTitleSize}
                         overflowWrap='break-word'
                     >
-                        {title}
+                        {recipe.title}
                     </Typography>
-                    {(size === 'Desktop' || size === 'Laptop') && (
+                    {(screenSize === 'Desktop' || screenSize === 'Laptop') && (
                         <Typography
                             Size={TypographySizes.sm}
                             overflow='hidden'
                             textOverflow='ellipsis'
                             noOfLines={3}
                         >
-                            {description}
+                            {recipe.description}
                         </Typography>
                     )}
                 </Box>
 
                 <Flex justifyContent='space-between' alignItems='center'>
-                    {(size === 'Desktop' || size === 'Laptop') && (
+                    {(screenSize === 'Desktop' || screenSize === 'Laptop') && (
                         <CardBadge
                             type='dishType'
                             size='medium'
                             bgColor='green'
-                            dishType={dishType}
+                            dishType={categoryTitle}
                         />
                     )}
                     <Flex width='max-content'>
-                        <ReactionCount size='small' count={bookMarks} variant='bookmark' />
-                        <ReactionCount size='small' count={likes} variant='emoji' />
+                        <ReactionCount size='small' count={recipe.bookmarks} variant='bookmark' />
+                        <ReactionCount size='small' count={recipe.likes} variant='emoji' />
                     </Flex>
                 </Flex>
             </Box>

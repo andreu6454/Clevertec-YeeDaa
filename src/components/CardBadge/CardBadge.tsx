@@ -1,6 +1,7 @@
 import { Avatar, Badge, Flex, Image, Text } from '@chakra-ui/react';
 
-import { navBarData } from '~/shared/data/navBarData';
+import { categoriesSelector } from '~/store/categories-slice';
+import { useAppSelector } from '~/store/hooks';
 
 interface DishTypeBadgeProps {
     type: 'dishType' | 'recommendation';
@@ -31,7 +32,9 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
         large: '8px',
     };
 
-    const dishTypes = navBarData.filter((item) => item.general === dishType);
+    const categories = useAppSelector(categoriesSelector);
+
+    const dishTypes = categories.find((item) => item.category === dishType);
 
     if (type === 'recommendation') {
         return (
@@ -64,9 +67,14 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
             height='24px'
         >
             <Flex height='24px' gap={gap[size]} alignItems='center'>
-                <Image width='16px' height='16px' src={dishTypes[0]?.icon} alt='' />
+                <Image
+                    width='16px'
+                    height='16px'
+                    src={'https://training-api.clevertec.ru' + dishTypes?.icon}
+                    alt=''
+                />
                 <Text fontWeight='400' fontSize='14px' lineHeight='143%'>
-                    {dishTypes[0]?.title}
+                    {dishTypes?.title}
                 </Text>
             </Flex>
         </Badge>

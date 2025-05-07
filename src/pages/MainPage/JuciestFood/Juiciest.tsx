@@ -2,9 +2,12 @@ import { Button, Flex, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
-import { recipeData } from '~/shared/data/recipeData';
+import { useGetJuiciestRecipesQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getCategoryById } from '~/shared/services/getCategoryById';
 import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
+import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
+import { useAppSelector } from '~/store/hooks';
 
 import ArrowRightIcon from '../../../assets/svg/BsArrowRight.svg';
 
@@ -18,6 +21,10 @@ const gap = {
 export const Juiciest = () => {
     const navigate = useNavigate();
 
+    const { data } = useGetJuiciestRecipesQuery(1);
+    const categories = useAppSelector(categoriesSelector);
+    const subCategories = useAppSelector(subCategoriesSelector);
+
     const onClickHandler = () => {
         navigate('/the-juiciest');
     };
@@ -26,30 +33,24 @@ export const Juiciest = () => {
 
     const direction = isDesktop || isTablet ? 'row' : 'column';
 
-    const mappedRecipes = [...recipeData]
-        .sort((a, b) => b.likes - a.likes)
-        .map((recipe, index) => {
-            const onClickHandler = () => {
-                navigate(`${recipe.category[0]}/${recipe.subcategory[0]}/${recipe.id}`);
-            };
+    const mappedRecipes = data?.data.map((recipe, index) => {
+        const category = getCategoryById(categories, subCategories, recipe.categoriesIds[0]);
 
-            return (
-                <CardWithLeftImage
-                    index={index}
-                    bookMarks={recipe.bookmarks}
-                    likes={recipe.likes}
-                    onClickHandler={onClickHandler}
-                    key={recipe.title}
-                    size={screenSize}
-                    image={recipe.image}
-                    title={recipe.title}
-                    description={recipe.description}
-                    dishType={recipe.category[0]}
-                />
-            );
-        })
-        .slice(0, 8);
+        const onClickHandler = () => {
+            navigate(`/the-juiciest/${recipe._id}`);
+        };
+        return (
+            <CardWithLeftImage
+                index={index}
+                onClickHandler={onClickHandler}
+                key={recipe.title + index}
+                recipe={recipe}
+                categoryTitle={category?.category || ''}
+            />
+        );
+    });
 
+    // if (isLoading) return <FullScreenSpinner />;
     return (
         <Flex direction='column' gap={gap[screenSize]} width='100%'>
             <Flex width='100%' justifyContent='space-between' alignItems='center'>
@@ -87,12 +88,26 @@ export const Juiciest = () => {
                     data-test-id='juiciest-link-mobile'
                     onClick={onClickHandler}
                     backgroundColor='#b1ff2e'
+                    width={isTablet ? 0 : ''}
+                    visibility={isTablet || isDesktop || isLaptop ? 'hidden' : 'visible'}
                     color='#000'
                     size='md'
                     rightIcon={<Image src={ArrowRightIcon} />}
                 >
                     Вся подборка
                 </Button>
+                {isTablet && (
+                    <Button // кнопка для тестов
+                        data-test-id={isTablet && 'juiciest-link'}
+                        onClick={onClickHandler}
+                        backgroundColor='#b1ff2e'
+                        color='#000'
+                        size='md'
+                        rightIcon={<Image src={ArrowRightIcon} />}
+                    >
+                        Вся подборка
+                    </Button>
+                )}
             </Flex>
         </Flex>
     );

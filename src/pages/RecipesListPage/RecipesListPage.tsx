@@ -1,44 +1,47 @@
 import { memo, useEffect } from 'react';
 
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { LinksCarousel } from '~/components/LinksCarousel/LinksCarousel';
-import { navBarData } from '~/shared/data/navBarData';
+import { useGetRecipeByCategoryQuery } from '~/query/services/recipes';
 import { useRouteSegments } from '~/shared/hooks/useRouteSegments';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
+import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import {
-    filteredDataSelector,
-    setCategoriesFilter,
-    setFilteredData,
-} from '~/store/recipesListPage-slice';
+import { setCategoriesFilter, setFilteredData } from '~/store/recipesListPage-slice';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
 export const RecipesListPage = memo(() => {
     const { screenSize } = useScreenSize();
 
     const dispatch = useAppDispatch();
+    const subCategories = useAppSelector(subCategoriesSelector);
+    const categories = useAppSelector(categoriesSelector);
 
     const { category, subcategory } = useRouteSegments();
+
+    const subcategoryId = subCategories.find((el) => el.category === subcategory)?._id || '';
+    const categoryInfo = categories.find((el) => el.category === category);
+
+    const { data, isLoading } = useGetRecipeByCategoryQuery({
+        subcategoryId: subcategoryId,
+        limit: 8,
+    });
 
     useEffect(() => {
         dispatch(setCategoriesFilter({ categories: [category], subcategory: subcategory }));
         dispatch(setFilteredData());
-    }, [category, subcategory]);
+    }, [category, subcategory, dispatch]);
 
-    const title = navBarData.filter((el) => el.general === category)[0].title;
-    const links = navBarData.filter((el) => el.general === category)[0].links;
+    const title = categoryInfo?.title || '';
+    const description = categoryInfo?.description;
+    const links = categoryInfo?.subCategories || [];
 
-    const recipes = useAppSelector(filteredDataSelector);
-
+    if (isLoading) return <FullScreenSpinner />;
     return (
-        <CuisinePageLayout
-            searchTitle={title}
-            searchDescription='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
-            recTitle='Десерты, выпечка'
-            recDescription='Без них невозможно представить себе ни современную, ни традиционную кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб — рецепты изделий из теста многообразны и невероятно популярны..'
-        >
+        <CuisinePageLayout searchTitle={title} searchDescription={description}>
             <LinksCarousel category={category} size={screenSize} links={links} />
-            <RecipesContainer data={recipes} />
+            <RecipesContainer data={data?.data || []} />
         </CuisinePageLayout>
     );
 });

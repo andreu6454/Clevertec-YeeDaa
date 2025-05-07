@@ -3,22 +3,21 @@ import { Link as ChahkraLink, Text } from '@chakra-ui/react';
 import { FC, memo, ReactNode } from 'react';
 import { Link, useLocation } from 'react-router';
 
-import { recipeData } from '~/shared/data/recipeData';
-import { closeBurgerMenu } from '~/store/app-slice';
-import { useAppDispatch } from '~/store/hooks';
-
-type PathNames = Record<string, string>;
+import { CategoryResponse } from '~/query/types/types';
+import { closeBurgerMenu, recipePageTitleSelector } from '~/store/app-slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 interface SmartBreadcrumbsProps {
-    pathNames?: PathNames;
+    pathNames: CategoryResponse;
     homeElement?: ReactNode;
 }
 
 export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
-    ({ pathNames = {}, homeElement = 'Главная' }) => {
+    ({ pathNames, homeElement = 'Главная' }) => {
         const location = useLocation();
         const pathnames = location.pathname.split('/').filter(Boolean);
         const dispatch = useAppDispatch();
+        const pageTitle = useAppSelector(recipePageTitleSelector);
 
         const closeMenuHandler = () => {
             dispatch(closeBurgerMenu());
@@ -28,11 +27,20 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
             const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
             const isLast = index === pathnames.length - 1;
 
-            const isNumericPath = !isNaN(Number(path));
+            let displayName = pathNames.find((el) => el.category === path)?.title || path;
+            //  для все категорий и сабКатегорий
 
-            const displayName = isNumericPath
-                ? recipeData.find((el) => el.id === path)?.title || path
-                : pathNames[path] || path;
+            if (pageTitle && pageTitle._id === path) {
+                displayName = pageTitle.title;
+            } // для названий рецептов
+
+            if (path === 'the-juiciest') {
+                displayName = 'Самое сочное';
+            } // для "самое сочное"
+
+            if (path === 'not-found') {
+                displayName = 'Страница не существует';
+            } // для "404"
 
             return (
                 <Box display='flex' alignItems='center' key={displayName}>

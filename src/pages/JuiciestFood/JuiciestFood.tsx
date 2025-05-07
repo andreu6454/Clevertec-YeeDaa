@@ -1,19 +1,44 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
+import { useGetJuiciestPageRecipesQuery } from '~/query/services/recipes';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
-import { useAppSelector } from '~/store/hooks';
-import { recipesSelector } from '~/store/recipesListPage-slice';
+import { Recipe } from '~/shared/types/recipeTypes';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
 export const JuiciestFood = memo(() => {
-    const recipes = [...useAppSelector(recipesSelector)].sort((a, b) => b.likes - a.likes);
+    const [page, setPage] = useState<number>(1);
+    const [isLastPage, setIsLastPage] = useState<boolean>(false);
+    const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
+
+    const { data, isLoading } = useGetJuiciestPageRecipesQuery(page);
+
+    const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
+
+    useEffect(() => {
+        if (data) {
+            setAllRecipes((prev) => [...prev, ...data.data]);
+            setIsButtonLoading(false);
+            if (page >= data.meta.totalPages) {
+                setIsLastPage(true);
+            }
+        }
+    }, [data, page]);
+
+    const onLoadMoreClick = () => {
+        setPage(page + 1);
+        setIsButtonLoading(true);
+    };
+
+    if (isLoading) return <FullScreenSpinner />;
     return (
-        <CuisinePageLayout
-            searchTitle='Самое сочное'
-            recTitle='Веганская кухня'
-            recDescription='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
-        >
-            <RecipesContainer data={recipes} />
+        <CuisinePageLayout searchTitle='Самое сочное'>
+            <RecipesContainer
+                isLoading={isButtonLoading}
+                isLastPage={isLastPage}
+                onClickHandler={onLoadMoreClick}
+                data={allRecipes}
+            />
         </CuisinePageLayout>
     );
 });

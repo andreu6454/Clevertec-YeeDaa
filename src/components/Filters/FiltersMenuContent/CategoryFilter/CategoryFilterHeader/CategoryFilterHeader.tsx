@@ -1,15 +1,17 @@
-import { navBarData } from '~/shared/data/navBarData';
 import { Tags } from '~/shared/ui/Tags/Tags';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
 import { filterCategorySelector } from '~/store/recipesListPage-slice';
 
 export const CategoryFilterHeader = () => {
     const categories = useAppSelector(filterCategorySelector);
 
-    console.log(categories);
+    const allCategories = useAppSelector(allCategoriesSelector);
 
-    const tagsTitles = categories.map((t) => navBarData.filter((el) => el.general === t)[0]?.title);
+    const tagsTitles = categories.map(
+        (t) => allCategories.filter((el) => el.category === t)[0]?.title,
+    );
 
     if (categories.length === 0) {
         return (

@@ -16,7 +16,8 @@
                     }
                 }
             }
-        ]
+        ],
+        "jsx": "react"
     },
     "include": ["src", "cypress/**/*.ts", "cypress.config.ts"],
     "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]

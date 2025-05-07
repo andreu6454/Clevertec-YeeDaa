@@ -1,12 +1,13 @@
 import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { navBarData } from '~/shared/data/navBarData';
+import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { filterCategorySelector, setCategoriesFilter } from '~/store/recipesListPage-slice';
 
 export const ChosenCategories = memo(() => {
     const categories = useAppSelector(filterCategorySelector);
+    const allCategories = useAppSelector(allCategoriesSelector);
     const dispatch = useAppDispatch();
 
     return categories.map((el) => {
@@ -33,7 +34,7 @@ export const ChosenCategories = memo(() => {
                 colorScheme='green'
                 color='#207e00'
             >
-                <TagLabel>{navBarData.filter((cat) => cat.general === el)[0]?.title}</TagLabel>
+                <TagLabel>{allCategories.filter((cat) => cat.category === el)[0]?.title}</TagLabel>
                 <TagCloseButton />
             </Tag>
         );

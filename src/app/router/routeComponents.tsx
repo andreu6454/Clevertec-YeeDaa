@@ -2,28 +2,23 @@ import { Navigate, Route } from 'react-router';
 
 import RecipePage from '~/pages/RecipePage/RecipePage';
 import { RecipesListPage } from '~/pages/RecipesListPage/RecipesListPage';
-
-type NavItem = {
-    icon: string;
-    title: string;
-    general: string;
-    links: Array<{
-        title: string;
-        link: string;
-    }>;
-};
+import { CategoryType } from '~/shared/types/categoryTypes';
 
 interface CreateRoutesProps {
-    data: NavItem[];
+    data: CategoryType[];
 }
 
 export const createRoutes = ({ data }: CreateRoutesProps) =>
     data.map((category) => (
-        <Route path={`/${category.general}`} key={category.general}>
-            <Route index element={<Navigate to={category.links[0].link} replace />} />
+        <Route path={`/${category.category}`} key={category.category}>
+            <Route index element={<Navigate to={category.subCategories[0].category} replace />} />
 
-            {category.links.map((subItem) => (
-                <Route path={`${subItem.link}/`} key={subItem.link} element={<RecipesListPage />} />
+            {category.subCategories.map((subItem) => (
+                <Route
+                    path={`${subItem.category}/`}
+                    key={subItem.category}
+                    element={<RecipesListPage />}
+                />
             ))}
 
             <Route path=':subcategory/:recipeId' element={<RecipePage />} />

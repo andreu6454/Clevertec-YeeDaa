@@ -1,14 +1,19 @@
 import { Flex } from '@chakra-ui/react';
 import { useParams } from 'react-router';
 
-import { NewRecipes } from '~/components/NewRecipes/NewRecipes';
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { RecipeAuthor } from '~/pages/RecipePage/RecipeAuthor/RecipeAuthor';
 import { RecipeCalories } from '~/pages/RecipePage/RecipeCalories/RecipeCalories';
 import { RecipeIngredients } from '~/pages/RecipePage/RecipeIngredients/RecipeIngredients';
 import { RecipeSteps } from '~/pages/RecipePage/RecipeSteps/RecipeSteps';
 import { RecipeTitle } from '~/pages/RecipePage/RecipeTitle/RecipeTitle';
-import { recipeData } from '~/shared/data/recipeData';
+import { useGetRecipeByIdQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getCategoryById } from '~/shared/services/getCategoryById';
+import { setAppError } from '~/store/app-slice';
+import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { NewRecipes } from '~/widgets/NewRecipes/NewRecipes';
 
 const paddings = {
     Desktop: '56px',
@@ -26,12 +31,29 @@ const gaps = {
 
 const RecipePage = () => {
     const { recipeId } = useParams();
-
-    const data = recipeData.find((recipe) => recipe.id === recipeId);
+    const dispatch = useAppDispatch();
     const { screenSize, isMobile } = useScreenSize();
+    const categories = useAppSelector(categoriesSelector);
+    const subCategories = useAppSelector(subCategoriesSelector);
 
-    if (!data) {
-        return null;
+    const { data, isLoading, isError } = useGetRecipeByIdQuery(recipeId || '', {
+        skip: !recipeId,
+    });
+
+    if (!data || data.categoriesIds.length === 0) return null;
+
+    const categoriesForRender = Array.from(
+        new Set(
+            data.categoriesIds.map(
+                (el) => getCategoryById(categories, subCategories, el)?.category || '',
+            ),
+        ),
+    );
+
+    if (isLoading) return <FullScreenSpinner />;
+    if (isError) {
+        dispatch(setAppError('error'));
+        window.history.back();
     }
 
     return (
@@ -50,7 +72,7 @@ const RecipePage = () => {
                 likes={data.likes}
                 bookmarks={data.bookmarks}
                 image={data.image}
-                category={data.category}
+                category={categoriesForRender}
             />
             <RecipeCalories screenSize={screenSize} nutritionValue={data.nutritionValue} />
             <RecipeIngredients

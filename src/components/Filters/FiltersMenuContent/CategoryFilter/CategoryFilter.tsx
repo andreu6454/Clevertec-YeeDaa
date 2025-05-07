@@ -2,30 +2,31 @@ import { ChevronDownIcon, Menu, MenuList } from '@chakra-ui/icons';
 import { Button, MenuButton } from '@chakra-ui/react';
 
 import { CategoryFilterHeader } from '~/components/Filters/FiltersMenuContent/CategoryFilter/CategoryFilterHeader/CategoryFilterHeader';
-import { navBarData } from '~/shared/data/navBarData';
 import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTitle';
+import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { filterCategorySelector, setCategoriesFilter } from '~/store/recipesListPage-slice';
 
 export const CategoryFilter = () => {
     const dispatch = useAppDispatch();
 
+    const allCategories = useAppSelector(allCategoriesSelector);
     const categories = useAppSelector(filterCategorySelector);
 
-    const mappedCategories = navBarData.map((el, index) => {
-        const isChecked = categories.includes(el.general);
+    const mappedCategories = allCategories.map((el, index) => {
+        const isChecked = categories.includes(el.category);
         const onChangeHandler = () => {
             if (isChecked) {
                 dispatch(
                     setCategoriesFilter({
-                        categories: categories.filter((item) => item !== el.general),
+                        categories: categories.filter((item) => item !== el.category),
                         subcategory: '',
                     }),
                 );
             } else {
                 dispatch(
                     setCategoriesFilter({
-                        categories: [...categories, el.general],
+                        categories: [...categories, el.category],
                         subcategory: '',
                     }),
                 );

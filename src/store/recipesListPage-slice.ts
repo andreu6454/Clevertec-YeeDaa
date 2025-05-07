@@ -1,21 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { recipeData } from '~/shared/data/recipeData';
-import { allergenFilters } from '~/shared/data/recipeFilters';
-import {
-    filterByAllergens,
-    filterByMeat,
-    filterBySideDish,
-    filterByTitle,
-    filterRecipesByCategory,
-} from '~/store/recipeListFilterService/recipeListFilterService';
+import { Recipe } from '~/shared/types/recipeTypes';
 
 import { ApplicationState } from './configure-store';
 
 const initialState = {
     isLoading: false,
     error: '' as string | null,
-    recipes: recipeData,
+    recipes: [] as Recipe[],
     category: [] as string[],
     currentPageCategories: [] as string[],
     subcategory: '',
@@ -93,39 +86,39 @@ export const recipesListPageSlice = createSlice({
 
             state.isSearchCompleted = false;
             state.searchInputValue = '';
-            state.filteredData = filterRecipesByCategory(state.recipes, {
-                categories: state.category,
-                subcategory: state.subcategory || '',
-            });
+            // state.filteredData = filterRecipesByCategory(state.recipes, {
+            //     categories: state.category,
+            //     subcategory: state.subcategory || '',
+            // });
         },
         setFilteredData: (state) => {
             state.searchError = false;
 
-            state.filteredData = filterRecipesByCategory(state.recipes, {
-                categories: state.category,
-                subcategory: state.subcategory || '',
-            });
+            // state.filteredData = filterRecipesByCategory(state.recipes, {
+            //     categories: state.category,
+            //     subcategory: state.subcategory || '',
+            // });
 
-            state.filteredData = filterByMeat(state.filteredData, state.filters.meatFilters); // для фильтрации по мясу
+            // state.filteredData = filterByMeat(state.filteredData, state.filters.meatFilters); // для фильтрации по мясу
 
-            state.filteredData = filterBySideDish(
-                state.filteredData,
-                state.filters.sideDishFilters,
-            ); // для фильтра по гарниру
+            // state.filteredData = filterBySideDish(
+            //     state.filteredData,
+            //     state.filters.sideDishFilters,
+            // ); // для фильтра по гарниру
 
-            state.filteredData = filterByTitle(state.filteredData, state.searchInputValue); // для фильтра по гарниру
+            // state.filteredData = filterByTitle(state.filteredData, state.searchInputValue); // для фильтра по гарниру
 
-            if (state.isAllergenFilterOn || state.isSearchAllergenFilterOn) {
-                state.filteredData = filterByAllergens(
-                    state.filteredData,
-                    state.filters.allergens,
-                    allergenFilters,
-                ); // для фильтрации по аллергенам
-            }
+            // if (state.isAllergenFilterOn || state.isSearchAllergenFilterOn) {
+            //     state.filteredData = filterByAllergens(
+            //         state.filteredData,
+            //         state.filters.allergens,
+            //         allergenFilters,
+            //     ); // для фильтрации по аллергенам
+            // }
 
-            if (state.filteredData.length === 0) {
-                state.searchError = true;
-            }
+            // if (state.filteredData.length === 0) {
+            //     state.searchError = true;
+            // }
             state.isSearchCompleted = true; // для поиска на главной странице
         },
     },

@@ -53,7 +53,7 @@ const StepCard = (props: StepCardProps) => {
                 <Image
                     height={sizes[screenSize].imgHeight}
                     width={sizes[screenSize].imgWidth}
-                    src={image}
+                    src={'https://training-api.clevertec.ru' + image}
                 />
             )}
             <Flex
@@ -73,6 +73,7 @@ const StepCard = (props: StepCardProps) => {
                     maxHeight={screenSize === 'Mobile' ? '80px' : ''}
                     Size={TypographySizes.sm}
                     overflow='hidden'
+                    noOfLines={9}
                 >
                     {description}
                 </Typography>

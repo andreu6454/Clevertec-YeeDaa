@@ -13,8 +13,10 @@ import {
 } from '@chakra-ui/react';
 import { memo, useState } from 'react';
 
+import { IngredientType } from '~/shared/types/recipeTypes';
+
 interface RecipeIngredientsProps {
-    ingredients: Array<{ title: string; count: string; measureUnit: string }>;
+    ingredients: IngredientType[];
     screenSize: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
     portions: number;
 }
@@ -46,7 +48,7 @@ export const RecipeIngredients = memo((props: RecipeIngredientsProps) => {
                 <Td>{ingredient.title}</Td>
                 <Td textAlign='right'>
                     <span data-test-id={`ingredient-quantity-${index}`}>
-                        {!!resultCount && resultCount}
+                        {!!resultCount && Math.round(resultCount * 10) / 10}
                     </span>
                     {' ' + ingredient.measureUnit}
                 </Td>

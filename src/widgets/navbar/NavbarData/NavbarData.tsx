@@ -4,8 +4,9 @@ import { memo } from 'react';
 import { useLocation } from 'react-router';
 
 import LeaveIcon from '~/assets/svg/leaveIcon.svg';
-import { navBarData } from '~/shared/data/navBarData';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { categoriesSelector } from '~/store/categories-slice';
+import { useAppSelector } from '~/store/hooks';
 import { NavbarItem } from '~/widgets/navbar/NavbarItem/NavbarItem';
 
 export const NavbarData = memo(() => {
@@ -15,11 +16,13 @@ export const NavbarData = memo(() => {
 
     const accordionHeight = isTablet ? '600px' : '460px';
 
+    const categories = useAppSelector(categoriesSelector);
+
     let index;
     const path = location.pathname.split('/')[1];
 
-    const mappedItems = navBarData.map((el, ind) => {
-        if (path === el.general) {
+    const mappedItems = categories.map((el, ind) => {
+        if (path === el.category) {
             index = ind;
         }
 
@@ -29,8 +32,8 @@ export const NavbarData = memo(() => {
                 key={el.title}
                 title={el.title}
                 icon={el.icon}
-                general={el.general}
-                links={el.links}
+                general={el.category}
+                links={el.subCategories}
             />
         );
     });

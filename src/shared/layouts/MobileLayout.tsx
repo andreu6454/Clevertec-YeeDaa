@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 
 import { ScrollToTop } from '~/components/ScrollToTop/ScrollToTop';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { ErrorAlert } from '~/shared/ui/ErrorAlert/ErrorAlert';
 import { BurgerMenu } from '~/widgets/BurgerMenu/BurgerMenu';
 
 interface MobileLayoutProps {
@@ -27,6 +28,7 @@ export const MobileLayout = (props: MobileLayoutProps) => {
             </Box>
             {footer}
             <ScrollToTop />
+            <ErrorAlert />
             <BurgerMenu />
         </Box>
     );
