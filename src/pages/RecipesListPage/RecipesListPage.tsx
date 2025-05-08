@@ -1,6 +1,5 @@
 import { memo, useEffect } from 'react';
 
-import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { LinksCarousel } from '~/components/LinksCarousel/LinksCarousel';
 import { useGetRecipeByCategoryQuery } from '~/query/services/recipes';
 import { useRouteSegments } from '~/shared/hooks/useRouteSegments';
@@ -11,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { setCategoriesFilter, setFilteredData } from '~/store/recipesListPage-slice';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
-export const RecipesListPage = memo(() => {
+const RecipesListPage = memo(() => {
     const { screenSize } = useScreenSize();
 
     const dispatch = useAppDispatch();
@@ -23,7 +22,7 @@ export const RecipesListPage = memo(() => {
     const subcategoryId = subCategories.find((el) => el.category === subcategory)?._id || '';
     const categoryInfo = categories.find((el) => el.category === category);
 
-    const { data, isLoading } = useGetRecipeByCategoryQuery({
+    const { data } = useGetRecipeByCategoryQuery({
         subcategoryId: subcategoryId,
         limit: 8,
     });
@@ -37,7 +36,7 @@ export const RecipesListPage = memo(() => {
     const description = categoryInfo?.description;
     const links = categoryInfo?.subCategories || [];
 
-    if (isLoading) return <FullScreenSpinner />;
+    // if (isLoading) return <FullScreenSpinner />;
     return (
         <CuisinePageLayout searchTitle={title} searchDescription={description}>
             <LinksCarousel category={category} size={screenSize} links={links} />
@@ -45,3 +44,5 @@ export const RecipesListPage = memo(() => {
         </CuisinePageLayout>
     );
 });
+
+export default RecipesListPage;

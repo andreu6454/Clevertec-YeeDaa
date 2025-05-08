@@ -1,8 +1,11 @@
+import { lazy, Suspense } from 'react';
 import { Navigate, Route } from 'react-router';
 
-import RecipePage from '~/pages/RecipePage/RecipePage';
-import { RecipesListPage } from '~/pages/RecipesListPage/RecipesListPage';
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { CategoryType } from '~/shared/types/categoryTypes';
+
+const RecipesListPage = lazy(() => import('~/pages/RecipesListPage/RecipesListPage'));
+const RecipePage = lazy(() => import('~/pages/RecipePage/RecipePage'));
 
 interface CreateRoutesProps {
     data: CategoryType[];
@@ -17,10 +20,21 @@ export const createRoutes = ({ data }: CreateRoutesProps) =>
                 <Route
                     path={`${subItem.category}/`}
                     key={subItem.category}
-                    element={<RecipesListPage />}
+                    element={
+                        <Suspense fallback={<FullScreenSpinner />}>
+                            <RecipesListPage />
+                        </Suspense>
+                    }
                 />
             ))}
 
-            <Route path=':subcategory/:recipeId' element={<RecipePage />} />
+            <Route
+                path=':subcategory/:recipeId'
+                element={
+                    <Suspense fallback={<FullScreenSpinner />}>
+                        <RecipePage />
+                    </Suspense>
+                }
+            />
         </Route>
     ));

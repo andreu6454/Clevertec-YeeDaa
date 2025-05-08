@@ -10,7 +10,7 @@ export const BurgerMenuContent = () => {
     const allCategories = useAppSelector(allCategoriesSelector);
 
     return (
-        <Flex direction='column' width='100%' height='100%'>
+        <Flex onClick={(e) => e.stopPropagation()} direction='column' width='100%' height='100%'>
             <Box paddingX='20px' marginY='12px'>
                 <Breadcrumbs pathNames={allCategories} />
             </Box>
