@@ -2,16 +2,14 @@ import { Tags } from '~/shared/ui/Tags/Tags';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
-import { filterCategorySelector } from '~/store/recipesListPage-slice';
+import { categoryIdsSelector } from '~/store/recipesListPage-slice';
 
 export const CategoryFilterHeader = () => {
-    const categories = useAppSelector(filterCategorySelector);
+    const categories = useAppSelector(categoryIdsSelector);
 
     const allCategories = useAppSelector(allCategoriesSelector);
 
-    const tagsTitles = categories.map(
-        (t) => allCategories.filter((el) => el.category === t)[0]?.title,
-    );
+    const tagsTitles = categories.map((t) => allCategories.filter((el) => el._id === t)[0]?.title);
 
     if (categories.length === 0) {
         return (

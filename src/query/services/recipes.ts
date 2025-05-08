@@ -3,9 +3,10 @@ import { ApiGroupNames } from '~/query/constants/api-group-names';
 import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
-import { RecipeResponse } from '~/query/types/types';
+import { RecipeParams, RecipeResponse } from '~/query/types/types';
 import { Recipe } from '~/shared/types/recipeTypes';
 import { setRecipePageTitle } from '~/store/app-slice';
+import { setInputLoading, setRecipesData } from '~/store/recipesListPage-slice';
 
 export const recipeApi = apiSlice
     .enhanceEndpoints({
@@ -92,6 +93,24 @@ export const recipeApi = apiSlice
                     }
                 },
             }),
+            getRecipesWithParams: builder.query<RecipeResponse, RecipeParams>({
+                query: (params) => ({
+                    url: ApiEndpoints.RECIPES,
+                    apiGroupName: ApiGroupNames.RECIPES,
+                    name: EndpointNames.GET_RECIPES_WITH_PARAMS,
+                    method: 'GET',
+                    params: params,
+                }),
+                async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                    dispatch(setInputLoading());
+                    try {
+                        const { data } = await queryFulfilled;
+                        dispatch(setRecipesData(data));
+                    } catch {
+                        console.log('Response error');
+                    }
+                },
+            }),
         }),
     });
 
@@ -101,5 +120,7 @@ export const {
     useGetJuiciestRecipesQuery,
     useGetRecipeByCategoryQuery,
     useGetJuiciestPageRecipesQuery,
+    useLazyGetRecipesWithParamsQuery,
+    useGetRecipesWithParamsQuery,
     useGetRecipeByIdQuery,
 } = recipeApi;

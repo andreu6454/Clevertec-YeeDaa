@@ -8,7 +8,6 @@ import {
     allergensSearchFilterOnSelector,
     allergensSelector,
     setAllergens,
-    setFilteredData,
 } from '~/store/recipesListPage-slice';
 
 export const NewAllergenInput = () => {
@@ -24,7 +23,6 @@ export const NewAllergenInput = () => {
 
     const handleAddAllergen = () => {
         if (value.trim()) {
-            // Проверяем, что значение не пустое
             dispatch(setAllergens([...allergens, value.trim()]));
             setValue('');
         }
@@ -35,7 +33,7 @@ export const NewAllergenInput = () => {
             event.preventDefault(); // Предотвращаем перенос строки
             handleAddAllergen();
             if (isSearchAllergenFilterOn) {
-                dispatch(setFilteredData());
+                // dispatch(setFilteredData());
             }
         }
     };
@@ -44,7 +42,7 @@ export const NewAllergenInput = () => {
         dispatch(setAllergens([...allergens, value]));
         setValue('');
         if (isSearchAllergenFilterOn) {
-            dispatch(setFilteredData());
+            // dispatch(setFilteredData());
         }
     };
 

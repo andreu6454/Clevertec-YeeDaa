@@ -1,4 +1,5 @@
 import { Flex } from '@chakra-ui/react';
+import { memo } from 'react';
 
 import { meatFilters } from '~/shared/data/recipeFilters';
 import { CustomCheckbox } from '~/shared/ui/Checkbox/Checkbox';
@@ -6,18 +7,18 @@ import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { meatFiltersSelector, setMeatFilters } from '~/store/recipesListPage-slice';
 
-export const MeatFilter = () => {
+export const MeatFilter = memo(() => {
     const dispatch = useAppDispatch();
     const meatFiltersData = useAppSelector(meatFiltersSelector);
 
     const mappedFilters = meatFilters.map((el) => {
-        const isChecked = meatFiltersData.includes(el.general);
+        const isChecked = meatFiltersData.includes(el.title);
 
         const onChangeHandler = () => {
             if (isChecked) {
-                dispatch(setMeatFilters(meatFiltersData.filter((item) => item !== el.general)));
+                dispatch(setMeatFilters(meatFiltersData.filter((item) => item !== el.title)));
             } else {
-                dispatch(setMeatFilters([...meatFiltersData, el.general]));
+                dispatch(setMeatFilters([...meatFiltersData, el.title]));
             }
         };
 
@@ -37,4 +38,4 @@ export const MeatFilter = () => {
             {mappedFilters}
         </Flex>
     );
-};
+});

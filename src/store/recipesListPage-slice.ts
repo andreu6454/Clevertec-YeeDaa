@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { recipeData } from '~/shared/data/recipeData';
-import { Recipe } from '~/shared/types/recipeTypes';
+import { RecipeResponse } from '~/query/types/types';
+import { CategoryType } from '~/shared/types/categoryTypes';
 
 import { ApplicationState } from './configure-store';
 
 const initialState = {
     isLoading: false,
     error: '' as string | null,
-    recipes: [] as Recipe[],
-    category: [] as string[],
-    currentPageCategories: [] as string[],
-    subcategory: '',
-    filteredData: recipeData,
+    recipesData: {} as RecipeResponse,
+    isInputLoading: false,
+    currentPageCategory: {} as CategoryType,
+    categoryIds: [] as string[],
+    subCategoriesIds: [] as string[],
     isAllergenFilterOn: false,
     isSearchAllergenFilterOn: false,
     searchInputValue: '',
@@ -34,18 +34,25 @@ export const recipesListPageSlice = createSlice({
         setRecipesListPageLoader(state, { payload: isLoading }: PayloadAction<boolean>) {
             state.isLoading = isLoading;
         },
+        setRecipesData(state, { payload: data }: PayloadAction<RecipeResponse>) {
+            state.recipesData = data;
+            state.isInputLoading = false;
+        },
+        setInputLoading(state) {
+            state.isInputLoading = true;
+        },
         setSearchInputValue(state, { payload: searchInputValue }: PayloadAction<string | null>) {
             state.searchInputValue = searchInputValue || '';
         },
-        setCurrentPageCategory(state, { payload: searchInputValue }: PayloadAction<string[]>) {
-            state.currentPageCategories = searchInputValue || [];
+        setCurrentPageCategory(state, { payload: category }: PayloadAction<CategoryType>) {
+            state.currentPageCategory = category || {};
         },
         setCategoriesFilter(
             state,
-            { payload }: PayloadAction<{ categories: string[]; subcategory: string }>,
+            { payload }: PayloadAction<{ categories: string[]; subcategory: string[] }>,
         ) {
-            state.category = payload.categories || [];
-            state.subcategory = payload.subcategory || '';
+            state.categoryIds = payload.categories || [];
+            state.subCategoriesIds = payload.subcategory || '';
             state.isSearchCompleted = false;
         },
         setMeatFilters(state, { payload: meatFilters }: PayloadAction<string[]>) {
@@ -76,56 +83,20 @@ export const recipesListPageSlice = createSlice({
                 allergens: [],
             };
 
-            if (state.currentPageCategories[0] === undefined) {
-                state.category = [];
-            } else {
-                state.category = [state.currentPageCategories[0]];
-            }
+            state.categoryIds = [];
+            state.subCategoriesIds = [];
 
-            state.subcategory = state.currentPageCategories[1] || '';
+            if (state?.currentPageCategory?._id) {
+                state.categoryIds.push(state.currentPageCategory._id);
+                state.subCategoriesIds.push(state.currentPageCategory.subCategories[0]._id);
+            }
 
             state.isSearchCompleted = false;
             state.searchInputValue = '';
-            // state.filteredData = filterRecipesByCategory(state.recipes, {
-            //     categories: state.category,
-            //     subcategory: state.subcategory || '',
-            // });
-        },
-        setFilteredData: (state) => {
-            state.searchError = false;
-
-            // state.filteredData = filterRecipesByCategory(state.recipes, {
-            //     categories: state.category,
-            //     subcategory: state.subcategory || '',
-            // });
-
-            // state.filteredData = filterByMeat(state.filteredData, state.filters.meatFilters); // для фильтрации по мясу
-
-            // state.filteredData = filterBySideDish(
-            //     state.filteredData,
-            //     state.filters.sideDishFilters,
-            // ); // для фильтра по гарниру
-
-            // state.filteredData = filterByTitle(state.filteredData, state.searchInputValue); // для фильтра по гарниру
-
-            // if (state.isAllergenFilterOn || state.isSearchAllergenFilterOn) {
-            //     state.filteredData = filterByAllergens(
-            //         state.filteredData,
-            //         state.filters.allergens,
-            //         allergenFilters,
-            //     ); // для фильтрации по аллергенам
-            // }
-
-            // if (state.filteredData.length === 0) {
-            //     state.searchError = true;
-            // }
-            state.isSearchCompleted = true; // для поиска на главной странице
         },
     },
 });
 
-export const recipesSelector = (state: ApplicationState) => state.recipesListPage.recipes;
-export const filteredDataSelector = (state: ApplicationState) => state.recipesListPage.filteredData;
 export const meatFiltersSelector = (state: ApplicationState) =>
     state.recipesListPage.filters.meatFilters;
 export const sideDishFiltersSelector = (state: ApplicationState) =>
@@ -141,14 +112,20 @@ export const searchInputSelector = (state: ApplicationState) =>
 export const searchCompletedSelector = (state: ApplicationState) =>
     state.recipesListPage.isSearchCompleted;
 export const searchErrorSelector = (state: ApplicationState) => state.recipesListPage.searchError;
-export const filterCategorySelector = (state: ApplicationState) => state.recipesListPage.category;
+export const subCategoriesIdsSelector = (state: ApplicationState) =>
+    state.recipesListPage.subCategoriesIds;
+export const categoryIdsSelector = (state: ApplicationState) => state.recipesListPage.categoryIds;
+export const recipesDataSelector = (state: ApplicationState) => state.recipesListPage.recipesData;
+export const inputLoadingSelector = (state: ApplicationState) =>
+    state.recipesListPage.isInputLoading;
 
 export const {
     setRecipesListPageError,
     setRecipesListPageLoader,
+    setInputLoading,
+    setRecipesData,
     setCurrentPageCategory,
     setCategoriesFilter,
-    setFilteredData,
     setMeatFilters,
     setSideDishFilters,
     setSearchInputValue,

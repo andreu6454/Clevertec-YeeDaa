@@ -1,17 +1,18 @@
 import { ChevronDownIcon, Menu, MenuList } from '@chakra-ui/icons';
 import { Button, MenuButton } from '@chakra-ui/react';
+import { memo } from 'react';
 
 import { CategoryFilterHeader } from '~/components/Filters/FiltersMenuContent/CategoryFilter/CategoryFilterHeader/CategoryFilterHeader';
 import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTitle';
 import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { filterCategorySelector, setCategoriesFilter } from '~/store/recipesListPage-slice';
+import { categoryIdsSelector, setCategoriesFilter } from '~/store/recipesListPage-slice';
 
-export const CategoryFilter = () => {
+export const CategoryFilter = memo(() => {
     const dispatch = useAppDispatch();
 
     const allCategories = useAppSelector(allCategoriesSelector);
-    const categories = useAppSelector(filterCategorySelector);
+    const categories = useAppSelector(categoryIdsSelector);
 
     const mappedCategories = allCategories.map((el, index) => {
         const isChecked = categories.includes(el.category);
@@ -20,14 +21,14 @@ export const CategoryFilter = () => {
                 dispatch(
                     setCategoriesFilter({
                         categories: categories.filter((item) => item !== el.category),
-                        subcategory: '',
+                        subcategory: [''],
                     }),
                 );
             } else {
                 dispatch(
                     setCategoriesFilter({
                         categories: [...categories, el.category],
-                        subcategory: '',
+                        subcategory: [''],
                     }),
                 );
             }
@@ -35,7 +36,7 @@ export const CategoryFilter = () => {
         return (
             <CheckboxWithTitle
                 dataTestId={el.title === 'Веганская кухня' ? 'checkbox-веганская кухня' : ''}
-                key={el.title + 'menuitem'}
+                key={el.title + ' categoryFilter' + index}
                 title={el.title}
                 isChecked={isChecked}
                 onChange={onChangeHandler}
@@ -65,4 +66,4 @@ export const CategoryFilter = () => {
             <MenuList width='100%'>{mappedCategories}</MenuList>
         </Menu>
     );
-};
+});

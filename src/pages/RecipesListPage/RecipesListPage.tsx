@@ -7,7 +7,7 @@ import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { setCategoriesFilter, setFilteredData } from '~/store/recipesListPage-slice';
+import { setCategoriesFilter } from '~/store/recipesListPage-slice';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
 const RecipesListPage = memo(() => {
@@ -28,8 +28,8 @@ const RecipesListPage = memo(() => {
     });
 
     useEffect(() => {
-        dispatch(setCategoriesFilter({ categories: [category], subcategory: subcategory }));
-        dispatch(setFilteredData());
+        dispatch(setCategoriesFilter({ categories: [category], subcategory: [subcategory] }));
+        // dispatch(setFilteredData());
     }, [category, subcategory, dispatch]);
 
     const title = categoryInfo?.title || '';

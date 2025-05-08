@@ -45,6 +45,7 @@ export const appSlice = createSlice({
         },
     },
 });
+
 export const appLoadingSelector = (state: ApplicationState) => state.app.isLoading;
 export const appErrorSelector = (state: ApplicationState) => state.app.error;
 export const isBurgerOpenSelector = (state: ApplicationState) => state.app.isBurgerOpen;

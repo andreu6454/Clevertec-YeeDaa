@@ -13,4 +13,16 @@ export type RecipeResponse = {
     meta: Meta;
 };
 
+export type RecipeParams = {
+    page?: number;
+    limit?: number;
+    allergens?: string;
+    searchString?: string;
+    meat?: string;
+    garnish?: string;
+    subcategoriesIds?: string;
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+};
+
 export type CategoryResponse = CategoryType[] | SubCategoryType[];

@@ -3,10 +3,10 @@ import { memo } from 'react';
 
 import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { filterCategorySelector, setCategoriesFilter } from '~/store/recipesListPage-slice';
+import { categoryIdsSelector, setCategoriesFilter } from '~/store/recipesListPage-slice';
 
 export const ChosenCategories = memo(() => {
-    const categories = useAppSelector(filterCategorySelector);
+    const categories = useAppSelector(categoryIdsSelector);
     const allCategories = useAppSelector(allCategoriesSelector);
     const dispatch = useAppDispatch();
 
@@ -15,7 +15,7 @@ export const ChosenCategories = memo(() => {
             dispatch(
                 setCategoriesFilter({
                     categories: categories.filter((element) => el != element),
-                    subcategory: '',
+                    subcategory: [''],
                 }),
             );
         };
