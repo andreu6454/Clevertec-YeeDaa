@@ -1,14 +1,15 @@
 import { Tags } from '~/shared/ui/Tags/Tags';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
-import { allCategoriesSelector } from '~/store/categories-slice';
+import { categoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
 import { categoryIdsSelector } from '~/store/recipesListPage-slice';
 
 export const CategoryFilterHeader = () => {
     const categories = useAppSelector(categoryIdsSelector);
 
-    const allCategories = useAppSelector(allCategoriesSelector);
+    const allCategories = useAppSelector(categoriesSelector);
 
+    console.log(categories);
     const tagsTitles = categories.map((t) => allCategories.filter((el) => el._id === t)[0]?.title);
 
     if (categories.length === 0) {

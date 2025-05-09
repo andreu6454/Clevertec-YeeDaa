@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from 'react';
 import AddIcon from '~/assets/svg/addIcon.svg';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
-    allergensSearchFilterOnSelector,
+    allergenFilterOnSelector,
     allergensSelector,
     setAllergens,
 } from '~/store/recipesListPage-slice';
@@ -13,7 +13,7 @@ import {
 export const NewAllergenInput = () => {
     const [value, setValue] = useState('');
     const allergens = useAppSelector(allergensSelector);
-    const isSearchAllergenFilterOn = useAppSelector(allergensSearchFilterOnSelector);
+    const isSearchAllergenFilterOn = useAppSelector(allergenFilterOnSelector);
 
     const dispatch = useAppDispatch();
 

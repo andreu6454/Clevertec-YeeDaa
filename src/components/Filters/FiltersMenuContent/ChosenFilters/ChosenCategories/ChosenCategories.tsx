@@ -1,21 +1,30 @@
 import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { allCategoriesSelector } from '~/store/categories-slice';
+import { categoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { categoryIdsSelector, setCategoriesFilter } from '~/store/recipesListPage-slice';
+import {
+    categoryIdsSelector,
+    setCategoriesFilter,
+    subCategoriesIdsSelector,
+} from '~/store/recipesListPage-slice';
 
 export const ChosenCategories = memo(() => {
     const categories = useAppSelector(categoryIdsSelector);
-    const allCategories = useAppSelector(allCategoriesSelector);
+    const subCategories = useAppSelector(subCategoriesIdsSelector);
+    const allCategories = useAppSelector(categoriesSelector);
     const dispatch = useAppDispatch();
 
     return categories.map((el) => {
+        const category = allCategories.find((item) => item._id === el);
+
         const onClickHandler = () => {
             dispatch(
                 setCategoriesFilter({
-                    categories: categories.filter((element) => el != element),
-                    subcategory: [''],
+                    categories: categories.filter((item) => item !== el),
+                    subcategory: subCategories.filter(
+                        (item) => item !== category?.subCategories[0]._id,
+                    ),
                 }),
             );
         };
@@ -34,7 +43,7 @@ export const ChosenCategories = memo(() => {
                 colorScheme='green'
                 color='#207e00'
             >
-                <TagLabel>{allCategories.filter((cat) => cat.category === el)[0]?.title}</TagLabel>
+                <TagLabel>{allCategories.filter((cat) => cat._id === el)[0]?.title}</TagLabel>
                 <TagCloseButton />
             </Tag>
         );

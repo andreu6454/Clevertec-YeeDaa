@@ -8,14 +8,19 @@ interface CuisinePageLayoutProps {
     searchTitle: string;
     searchDescription?: string;
     children: ReactNode | ReactNode[];
+    onSearchHandle: () => void;
 }
 
 export const CuisinePageLayout = memo((props: CuisinePageLayoutProps) => {
-    const { searchTitle, searchDescription, children } = props;
+    const { searchTitle, searchDescription, children, onSearchHandle } = props;
 
     return (
         <Flex width='100%' flexDirection='column' alignItems='center'>
-            <SearchBlock title={searchTitle} description={searchDescription} />
+            <SearchBlock
+                onSearchHandle={onSearchHandle}
+                title={searchTitle}
+                description={searchDescription}
+            />
             {children}
             <RecommendationBlock />
         </Flex>

@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { RecipeParams } from '~/query/types/types';
 import { useAppSelector } from '~/store/hooks';
 import {
@@ -11,8 +13,8 @@ import {
 export const useGetQueryParams = (
     page?: number,
     limit?: number,
-    sortBy?: 'asc' | 'desc',
-    sortOrder?: string,
+    sortBy?: string,
+    sortOrder?: 'asc' | 'desc',
 ): RecipeParams => {
     const allergens = useAppSelector(allergensSelector);
     const searchString = useAppSelector(searchInputSelector);
@@ -20,18 +22,27 @@ export const useGetQueryParams = (
     const garnish = useAppSelector(sideDishFiltersSelector);
     const subcategoriesIds = useAppSelector(subCategoriesIdsSelector);
 
-    const queryParams: Record<string, string> = {};
+    return useMemo(() => {
+        const queryParams: RecipeParams = {};
 
-    if (page) queryParams.page = page.toString();
-    if (limit) queryParams.limit = limit.toString();
-    if (allergens.length > 0)
-        queryParams.allergens = allergens.toString().replace(' ', '').toLowerCase();
-    if (searchString) queryParams.searchString = searchString.toLowerCase();
-    if (meat.length > 0) queryParams.meat = meat.toString().replace(' ', '').toLowerCase();
-    if (garnish.length > 0) queryParams.garnish = garnish.toString().replace(' ', '').toLowerCase();
-    if (subcategoriesIds.length > 0) queryParams.subcategoriesIds = subcategoriesIds.join(',');
-    if (sortBy) queryParams.sortBy = sortBy;
-    if (sortOrder) queryParams.sortOrder = sortOrder;
+        if (page !== undefined) queryParams.page = page;
+        if (limit !== undefined) queryParams.limit = limit;
+        if (allergens.length > 0) {
+            queryParams.allergens = allergens.join(',').replace(/\s/g, '').toLowerCase();
+        }
+        if (searchString) queryParams.searchString = searchString.toLowerCase();
+        if (meat.length > 0) {
+            queryParams.meat = meat.join(',').replace(/\s/g, '').toLowerCase();
+        }
+        if (garnish.length > 0) {
+            queryParams.garnish = garnish.join(',').replace(/\s/g, '').toLowerCase();
+        }
+        if (subcategoriesIds.length > 0) {
+            queryParams.subcategoriesIds = subcategoriesIds.join(',');
+        }
+        if (sortBy) queryParams.sortBy = sortBy;
+        if (sortOrder) queryParams.sortOrder = sortOrder;
 
-    return queryParams;
+        return queryParams;
+    }, [page, limit, sortBy, sortOrder, allergens, searchString, meat, garnish, subcategoriesIds]);
 };

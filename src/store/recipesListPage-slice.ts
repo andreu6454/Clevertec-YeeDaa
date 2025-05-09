@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RecipeResponse } from '~/query/types/types';
-import { CategoryType } from '~/shared/types/categoryTypes';
+import { CategoryType, SubCategoryType } from '~/shared/types/categoryTypes';
 
 import { ApplicationState } from './configure-store';
 
@@ -11,6 +11,7 @@ const initialState = {
     recipesData: {} as RecipeResponse,
     isInputLoading: false,
     currentPageCategory: {} as CategoryType,
+    currentPageSubCategory: {} as SubCategoryType,
     categoryIds: [] as string[],
     subCategoriesIds: [] as string[],
     isAllergenFilterOn: false,
@@ -44,15 +45,40 @@ export const recipesListPageSlice = createSlice({
         setSearchInputValue(state, { payload: searchInputValue }: PayloadAction<string | null>) {
             state.searchInputValue = searchInputValue || '';
         },
-        setCurrentPageCategory(state, { payload: category }: PayloadAction<CategoryType>) {
-            state.currentPageCategory = category || {};
+        setCurrentPageCategory(
+            state,
+            { payload: category }: PayloadAction<CategoryType | undefined>,
+        ) {
+            if (category) {
+                state.currentPageCategory = category;
+            }
+        },
+        setCurrentPageSubCategory(
+            state,
+            { payload: subCategory }: PayloadAction<SubCategoryType | undefined>,
+        ) {
+            if (subCategory) {
+                state.currentPageSubCategory = subCategory;
+            }
+        },
+        setCurrentPageCategories(state) {
+            if (state.currentPageCategory.title) {
+                state.categoryIds = [state.currentPageCategory.subCategories[0].rootCategoryId];
+                state.subCategoriesIds = [];
+                for (const subCategory of state.currentPageCategory.subCategories) {
+                    state.subCategoriesIds.push(subCategory._id);
+                }
+            } else {
+                state.categoryIds = [];
+                state.subCategoriesIds = [];
+            }
         },
         setCategoriesFilter(
             state,
             { payload }: PayloadAction<{ categories: string[]; subcategory: string[] }>,
         ) {
-            state.categoryIds = payload.categories || [];
-            state.subCategoriesIds = payload.subcategory || '';
+            state.categoryIds = payload.categories;
+            state.subCategoriesIds = payload.subcategory;
             state.isSearchCompleted = false;
         },
         setMeatFilters(state, { payload: meatFilters }: PayloadAction<string[]>) {
@@ -83,14 +109,7 @@ export const recipesListPageSlice = createSlice({
                 allergens: [],
             };
 
-            state.categoryIds = [];
-            state.subCategoriesIds = [];
-
-            if (state?.currentPageCategory?._id) {
-                state.categoryIds.push(state.currentPageCategory._id);
-                state.subCategoriesIds.push(state.currentPageCategory.subCategories[0]._id);
-            }
-
+            state.recipesData = {} as RecipeResponse;
             state.isSearchCompleted = false;
             state.searchInputValue = '';
         },
@@ -103,7 +122,7 @@ export const sideDishFiltersSelector = (state: ApplicationState) =>
     state.recipesListPage.filters.sideDishFilters;
 export const allergenFilterOnSelector = (state: ApplicationState) =>
     state.recipesListPage.isAllergenFilterOn;
-export const allergensSearchFilterOnSelector = (state: ApplicationState) =>
+export const searchAllergenFilterOnSelector = (state: ApplicationState) =>
     state.recipesListPage.isSearchAllergenFilterOn;
 export const allergensSelector = (state: ApplicationState) =>
     state.recipesListPage.filters.allergens;
@@ -118,6 +137,8 @@ export const categoryIdsSelector = (state: ApplicationState) => state.recipesLis
 export const recipesDataSelector = (state: ApplicationState) => state.recipesListPage.recipesData;
 export const inputLoadingSelector = (state: ApplicationState) =>
     state.recipesListPage.isInputLoading;
+export const currentPageSubCategorySelector = (state: ApplicationState) =>
+    state.recipesListPage.currentPageSubCategory;
 
 export const {
     setRecipesListPageError,
@@ -125,13 +146,15 @@ export const {
     setInputLoading,
     setRecipesData,
     setCurrentPageCategory,
+    setCurrentPageSubCategory,
+    setCurrentPageCategories,
+    setIsSearchAllergenFilterOn,
     setCategoriesFilter,
     setMeatFilters,
     setSideDishFilters,
     setSearchInputValue,
     setAllergens,
     setIsAllergenFilterOn,
-    setIsSearchAllergenFilterOn,
     setClearFilters,
 } = recipesListPageSlice.actions;
 

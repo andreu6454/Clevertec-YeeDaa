@@ -4,4 +4,5 @@ export enum EndpointNames {
     GET_LATEST_RECIPES = 'getLatestRecipes',
     GET_JUICIEST_RECIPES = 'getJuiciestRecipes',
     GET_CATEGORIES = 'getCategories',
+    GET_RECIPES_WITH_PARAMS = 'getRecipesByParams',
 }

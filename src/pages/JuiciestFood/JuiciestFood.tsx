@@ -35,7 +35,7 @@ export const JuiciestFood = memo(() => {
 
     if (isLoading) return <FullScreenSpinner />;
     return (
-        <CuisinePageLayout searchTitle='Самое сочное'>
+        <CuisinePageLayout onSearchHandle={() => {}} searchTitle='Самое сочное'>
             <RecipesContainer
                 isLoading={isButtonLoading}
                 isLastPage={isLastPage}

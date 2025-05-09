@@ -9,8 +9,6 @@ import {
     searchCompletedSelector,
     searchErrorSelector,
     searchInputSelector,
-    setClearFilters,
-    setFilteredData,
     setSearchInputValue,
 } from '~/store/recipesListPage-slice';
 
@@ -18,6 +16,8 @@ interface SearchProps {
     setFocus: () => void;
     setBlur: () => void;
     isSearchFilterOn: boolean;
+    onSearchHandle: () => void;
+    allergensLength?: number;
 }
 
 const Sizes = {
@@ -41,7 +41,7 @@ const Sizes = {
 
 export const Search = memo((props: SearchProps) => {
     const { screenSize } = useScreenSize();
-    const { setBlur, setFocus, isSearchFilterOn } = props;
+    const { setBlur, setFocus, isSearchFilterOn, onSearchHandle, allergensLength = 0 } = props;
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [error, setError] = useState(false);
@@ -73,18 +73,18 @@ export const Search = memo((props: SearchProps) => {
             return;
         }
         setError(false);
-        if (searchValue.length === 0 && !isSearchFilterOn) {
-            dispatch(setClearFilters());
-        }
+        // if (searchValue.length === 0 && !isSearchFilterOn && allergensLength === 0) {
+        //     dispatch(setClearFilters());
+        // }
     }, [searchValue, isSearchFilterOn]);
 
     const onClickHandle = () => {
-        if (!isSearchFilterOn) {
+        if (!isSearchFilterOn && allergensLength === 0) {
             setFocus();
             inputRef.current?.focus();
         }
-        if (searchValue.length >= 3) {
-            dispatch(setFilteredData());
+        if (searchValue.length >= 2 || allergensLength > 0) {
+            onSearchHandle();
             inputRef.current?.blur();
         }
     };
@@ -129,7 +129,7 @@ export const Search = memo((props: SearchProps) => {
                     pointerEvents={error ? 'none' : 'auto'}
                     data-test-id='search-button'
                     onClick={onClickHandle}
-                    disabled={error && !!searchValue}
+                    disabled={error && (!!searchValue || !(allergensLength > 0))}
                     variant='ghost'
                     size={Sizes[screenSize].size}
                     aria-label='search'

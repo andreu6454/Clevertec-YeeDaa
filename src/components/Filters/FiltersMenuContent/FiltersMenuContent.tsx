@@ -18,6 +18,7 @@ import {
     categoryIdsSelector,
     meatFiltersSelector,
     setClearFilters,
+    setCurrentPageCategories,
     sideDishFiltersSelector,
 } from '~/store/recipesListPage-slice';
 
@@ -54,6 +55,7 @@ export const FiltersMenuContent = memo(() => {
     };
 
     const onClearFilterClickHandler = () => {
+        dispatch(setCurrentPageCategories());
         dispatch(setClearFilters());
     };
 
