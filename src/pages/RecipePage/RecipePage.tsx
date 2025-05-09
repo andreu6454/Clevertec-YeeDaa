@@ -40,17 +40,17 @@ const RecipePage = () => {
         skip: !recipeId,
     });
 
-    if (!data || data.categoriesIds.length === 0) return null;
-
     const categoriesForRender = Array.from(
         new Set(
-            data.categoriesIds.map(
+            data?.categoriesIds.map(
                 (el) => getCategoryById(categories, subCategories, el)?.category || '',
             ),
         ),
     );
 
     if (isLoading) return <FullScreenSpinner />;
+
+    if (!data) return null;
     if (isError) {
         dispatch(setAppError('error'));
         window.history.back();

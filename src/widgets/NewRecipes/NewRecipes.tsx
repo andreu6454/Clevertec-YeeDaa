@@ -3,7 +3,6 @@ import { memo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { CardWithImage } from '~/components/CardWithImage/CardWithImage';
-import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { useGetNewestRecipesQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
@@ -27,7 +26,7 @@ export const NewRecipes = memo(() => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const { data, error, isLoading } = useGetNewestRecipesQuery();
+    const { data, error } = useGetNewestRecipesQuery();
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 
@@ -37,7 +36,7 @@ export const NewRecipes = memo(() => {
         dispatch(setAppError('error'));
     }
 
-    if (isLoading) return <FullScreenSpinner />;
+    // if (isLoading) return <FullScreenSpinner />;
     if (!data) {
         return null;
     }

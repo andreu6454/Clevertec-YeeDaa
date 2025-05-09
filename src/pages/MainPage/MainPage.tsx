@@ -30,11 +30,11 @@ export const MainPage: FC = memo(() => {
 
         if (data?.data && page > 1) {
             setAllRecipes((prev) => [...prev, ...data.data]);
-            setIsButtonLoading(false);
         } else if (data?.data) {
             setAllRecipes(data.data);
-            setIsButtonLoading(false);
         }
+
+        setIsButtonLoading(false);
     }, [data]);
 
     const onLoadMoreClick = () => {
