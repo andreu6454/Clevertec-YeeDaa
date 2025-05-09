@@ -4,14 +4,17 @@ import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpin
 import { useGetJuiciestPageRecipesQuery } from '~/query/services/recipes';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
 import { Recipe } from '~/shared/types/recipeTypes';
+import { setAppError } from '~/store/app-slice';
+import { useAppDispatch } from '~/store/hooks';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
-export const JuiciestFood = memo(() => {
+export const JuiciestFoodPage = memo(() => {
     const [page, setPage] = useState<number>(1);
     const [isLastPage, setIsLastPage] = useState<boolean>(false);
     const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
 
-    const { data, isLoading } = useGetJuiciestPageRecipesQuery(page);
+    const { data, isLoading, isError } = useGetJuiciestPageRecipesQuery(page);
+    const dispatch = useAppDispatch();
 
     const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
 
@@ -34,6 +37,9 @@ export const JuiciestFood = memo(() => {
     };
 
     if (isLoading) return <FullScreenSpinner />;
+    if (isError) {
+        dispatch(setAppError('error'));
+    }
     return (
         <CuisinePageLayout onSearchHandle={() => {}} searchTitle='Самое сочное'>
             <RecipesContainer

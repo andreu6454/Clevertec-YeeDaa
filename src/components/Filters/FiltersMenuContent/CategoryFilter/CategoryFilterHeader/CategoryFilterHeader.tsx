@@ -9,7 +9,6 @@ export const CategoryFilterHeader = () => {
 
     const allCategories = useAppSelector(categoriesSelector);
 
-    console.log(categories);
     const tagsTitles = categories.map((t) => allCategories.filter((el) => el._id === t)[0]?.title);
 
     if (categories.length === 0) {

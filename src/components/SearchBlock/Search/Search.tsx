@@ -6,6 +6,7 @@ import SearchIcon from '~/assets/svg/searchIcon.svg';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
+    resultEmptySelector,
     searchCompletedSelector,
     searchErrorSelector,
     searchInputSelector,
@@ -50,6 +51,7 @@ export const Search = memo((props: SearchProps) => {
     const searchValue = useAppSelector(searchInputSelector);
     const searchError = useAppSelector(searchErrorSelector);
     const searchCompleted = useAppSelector(searchCompletedSelector);
+    const isResultEmpty = useAppSelector(resultEmptySelector);
 
     const onSearchChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearchInputValue(e.currentTarget.value));
@@ -93,7 +95,7 @@ export const Search = memo((props: SearchProps) => {
 
     if (searchError) {
         borderColor = 'red';
-    } else if (searchCompleted && !searchError && searchValue.length !== 0) {
+    } else if (searchCompleted && !searchError && searchValue.length !== 0 && !isResultEmpty) {
         borderColor = '#2db100';
     } else {
         borderColor = 'rgba(0, 0, 0, 0.48)';

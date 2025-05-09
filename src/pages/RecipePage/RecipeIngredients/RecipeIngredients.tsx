@@ -92,7 +92,6 @@ export const RecipeIngredients = memo((props: RecipeIngredientsProps) => {
                                     height='40px'
                                     defaultValue={count.toString()}
                                     min={1}
-                                    max={10}
                                 >
                                     <NumberInputField />
                                     <NumberInputStepper>

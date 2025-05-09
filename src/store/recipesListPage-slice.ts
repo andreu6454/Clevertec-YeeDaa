@@ -19,6 +19,7 @@ const initialState = {
     searchInputValue: '',
     searchError: false,
     isSearchCompleted: false,
+    isResultEmpty: false,
     filters: {
         meatFilters: [] as string[],
         sideDishFilters: [] as string[],
@@ -36,7 +37,13 @@ export const recipesListPageSlice = createSlice({
             state.isLoading = isLoading;
         },
         setRecipesData(state, { payload: data }: PayloadAction<RecipeResponse>) {
-            state.recipesData = data;
+            if (data.data.length > 0) {
+                state.isResultEmpty = false;
+                state.recipesData = data;
+            } else {
+                state.isResultEmpty = true;
+            }
+            state.isSearchCompleted = true;
             state.isInputLoading = false;
         },
         setInputLoading(state) {
@@ -109,6 +116,7 @@ export const recipesListPageSlice = createSlice({
                 allergens: [],
             };
 
+            state.isResultEmpty = false;
             state.recipesData = {} as RecipeResponse;
             state.isSearchCompleted = false;
             state.searchInputValue = '';
@@ -137,8 +145,7 @@ export const categoryIdsSelector = (state: ApplicationState) => state.recipesLis
 export const recipesDataSelector = (state: ApplicationState) => state.recipesListPage.recipesData;
 export const inputLoadingSelector = (state: ApplicationState) =>
     state.recipesListPage.isInputLoading;
-export const currentPageSubCategorySelector = (state: ApplicationState) =>
-    state.recipesListPage.currentPageSubCategory;
+export const resultEmptySelector = (state: ApplicationState) => state.recipesListPage.isResultEmpty;
 
 export const {
     setRecipesListPageError,

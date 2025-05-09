@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { LinksCarousel } from '~/components/LinksCarousel/LinksCarousel';
@@ -10,6 +10,7 @@ import { useGetQueryParams } from '~/shared/hooks/useGetQueryParams';
 import { useRouteSegments } from '~/shared/hooks/useRouteSegments';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
+import { setAppError } from '~/store/app-slice';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
@@ -30,12 +31,15 @@ const RecipesListPage = memo(() => {
     const subCategoriesIds = useAppSelector(subCategoriesIdsSelector);
     const isInputLoading = useAppSelector(inputLoadingSelector);
 
+    const [page] = useState<number>(1);
+    const [isLastPage, setIsLastPage] = useState<boolean>(false);
+
     const { category, subcategory } = useRouteSegments();
 
     const subcategoryId = subCategories.find((el) => el.category === subcategory)?._id || '';
     const categoryInfo = categories.find((el) => el.category === category);
 
-    const [triggerGetRecipes, { isFetching }] = useLazyGetRecipesWithParamsQuery();
+    const [triggerGetRecipes, { isFetching, isError }] = useLazyGetRecipesWithParamsQuery();
     const searchRecipes = useAppSelector(recipesDataSelector);
     const queryParams = useGetQueryParams();
 
@@ -49,10 +53,16 @@ const RecipesListPage = memo(() => {
         dispatch(setCurrentPageCategory(categoryInfo));
     }, [category, subcategory, dispatch]);
 
-    const { data } = useGetRecipeByCategoryQuery({
+    const { data, isError: isByCategoryError } = useGetRecipeByCategoryQuery({
         subcategoryId: subcategoryId,
         limit: 8,
     });
+
+    useEffect(() => {
+        if (data && page >= data?.meta.totalPages) {
+            setIsLastPage(true);
+        }
+    }, [data, page]);
 
     useEffect(() => {
         if (subCategoriesIds.length > 1 && !isFetching) {
@@ -71,7 +81,9 @@ const RecipesListPage = memo(() => {
     const links = categoryInfo?.subCategories || [];
 
     if (isInputLoading) return <FullScreenSpinner />;
-
+    if (isError || isByCategoryError) {
+        dispatch(setAppError('error'));
+    }
     return (
         <CuisinePageLayout
             onSearchHandle={onSearchHandle}
@@ -79,7 +91,10 @@ const RecipesListPage = memo(() => {
             searchDescription={description}
         >
             <LinksCarousel category={category} size={screenSize} links={links} />
-            <RecipesContainer data={searchRecipes?.data ? searchRecipes.data : data?.data || []} />
+            <RecipesContainer
+                isLastPage={isLastPage}
+                data={searchRecipes?.data ? searchRecipes.data : data?.data || []}
+            />
         </CuisinePageLayout>
     );
 });

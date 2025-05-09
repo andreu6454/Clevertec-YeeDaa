@@ -85,7 +85,12 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                 padding={sizes[screenSize].pdImage}
             >
                 {(screenSize === 'Tablet' || screenSize === 'Mobile') && (
-                    <CardBadge type='dishType' size='small' bgColor='green' dishType='asdasd' />
+                    <CardBadge
+                        type='dishType'
+                        size='small'
+                        bgColor='green'
+                        dishType={categoryTitle}
+                    />
                 )}
                 {/*{(size === 'Desktop' || size === 'Laptop') && (*/}
                 {/*    <CardBadge*/}

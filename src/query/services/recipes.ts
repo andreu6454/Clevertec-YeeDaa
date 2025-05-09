@@ -105,7 +105,6 @@ export const recipeApi = apiSlice
                     dispatch(setInputLoading());
                     try {
                         const { data } = await queryFulfilled;
-                        console.log(3);
                         dispatch(setRecipesData(data));
                     } catch {
                         console.log('Response error');
