@@ -30,13 +30,10 @@ export const NewRecipes = memo(() => {
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 
-    // if (isLoading) return <FullScreenSpinner />;
-
     if (error) {
         dispatch(setAppError('error'));
     }
 
-    // if (isLoading) return <FullScreenSpinner />;
     if (!data) {
         return null;
     }

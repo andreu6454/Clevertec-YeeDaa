@@ -25,8 +25,6 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
     const { screenSize, isTablet, isDesktop } = useScreenSize();
     const navigate = useNavigate();
 
-    // const searchError = useAppSelector(searchErrorSelector);
-
     const mappedCards = data.map((recipe, index) => {
         const category = getCategoryById(categories, subCategories, recipe.categoriesIds[0]);
         const onClickHandler = () => {
@@ -91,8 +89,10 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
             {!isLastPage && (
                 <Flex width='100%' justifyContent='center'>
                     <Button
+                        width='149px'
                         data-test-id='load-more-button'
                         onClick={onClickHandler}
+                        isDisabled={isLoading}
                         backgroundColor='#b1ff2e'
                         color='#000'
                         size='md'

@@ -69,12 +69,6 @@ export const SearchBlock = memo((props: FoodSearchCardProps) => {
         onSearchHandle();
     };
 
-    // useEffect(() => {
-    //     if(isAllergensFilterOn && !isFiltersOpen){
-    //         onSearchHandleWithCategories();
-    //     }
-    // }, [allergens]);
-
     const onClickHandler = () => {
         dispatch(setCurrentPageCategories());
         dispatch(setClearFilters());

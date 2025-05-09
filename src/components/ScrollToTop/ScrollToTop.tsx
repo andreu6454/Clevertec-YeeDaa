@@ -24,14 +24,10 @@ export const ScrollToTop = () => {
             dispatch(setCurrentPageCategory(undefined));
             dispatch(setCurrentPageSubCategory(undefined));
         } else {
-            dispatch(
-                setCurrentPageCategory(
-                    allCategories.find((el) => el.category === category) || undefined,
-                ),
-            );
+            dispatch(setCurrentPageCategory(allCategories.find((el) => el.category === category)));
             dispatch(
                 setCurrentPageSubCategory(
-                    allSubCategories.find((el) => el.category === subcategory) || undefined,
+                    allSubCategories.find((el) => el.category === subcategory),
                 ),
             );
         }

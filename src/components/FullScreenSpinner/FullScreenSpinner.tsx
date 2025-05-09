@@ -3,10 +3,11 @@ import { useEffect } from 'react';
 
 export const FullScreenSpinner = () => {
     useEffect(() => {
+        const prevOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
 
         return () => {
-            document.body.style.overflow = '';
+            document.body.style.overflow = prevOverflow;
         };
     }, []);
 
@@ -22,7 +23,6 @@ export const FullScreenSpinner = () => {
             height='100vh'
             alignItems='center'
             justifyContent='center'
-            // onClick={(e) => e.stopPropagation()}
         >
             <Flex
                 alignItems='center'

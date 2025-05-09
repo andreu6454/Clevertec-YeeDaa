@@ -16,8 +16,6 @@ import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
     inputLoadingSelector,
     recipesDataSelector,
-    setCategoriesFilter,
-    setCurrentPageCategory,
     subCategoriesIdsSelector,
 } from '~/store/recipesListPage-slice';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
@@ -42,16 +40,6 @@ const RecipesListPage = memo(() => {
     const [triggerGetRecipes, { isFetching, isError }] = useLazyGetRecipesWithParamsQuery();
     const searchRecipes = useAppSelector(recipesDataSelector);
     const queryParams = useGetQueryParams();
-
-    useEffect(() => {
-        dispatch(
-            setCategoriesFilter({
-                categories: [categoryInfo?._id || ''],
-                subcategory: [subcategoryId],
-            }),
-        );
-        dispatch(setCurrentPageCategory(categoryInfo));
-    }, [category, subcategory, dispatch]);
 
     const { data, isError: isByCategoryError } = useGetRecipeByCategoryQuery({
         subcategoryId: subcategoryId,

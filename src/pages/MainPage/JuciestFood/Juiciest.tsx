@@ -5,6 +5,7 @@ import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftIm
 import { useGetJuiciestRecipesQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
+import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
 import { setAppError } from '~/store/app-slice';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
@@ -38,7 +39,14 @@ export const Juiciest = () => {
         const category = getCategoryById(categories, subCategories, recipe.categoriesIds[0]);
 
         const onClickHandler = () => {
-            navigate(`/the-juiciest/${recipe._id}`);
+            navigate(
+                getNavigateLinkToRecipe(
+                    categories,
+                    subCategories,
+                    recipe.categoriesIds[0],
+                    recipe._id,
+                ),
+            );
         };
         return (
             <CardWithLeftImage

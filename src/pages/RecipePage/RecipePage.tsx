@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { RecipeAuthor } from '~/pages/RecipePage/RecipeAuthor/RecipeAuthor';
@@ -30,9 +30,11 @@ const gaps = {
 };
 
 const RecipePage = () => {
-    const { recipeId } = useParams();
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { screenSize, isMobile } = useScreenSize();
+
+    const { recipeId } = useParams();
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 
@@ -53,7 +55,7 @@ const RecipePage = () => {
     if (!data) return null;
     if (isError) {
         dispatch(setAppError('error'));
-        window.history.back();
+        navigate(-1);
     }
 
     return (

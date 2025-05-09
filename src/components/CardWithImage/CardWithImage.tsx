@@ -60,7 +60,7 @@ const sizes = {
 export const CardWithImage = memo((props: CardWithImageProps) => {
     const { onClickHandler, recipe, categoryTitle } = props;
 
-    const { screenSize } = useScreenSize();
+    const { screenSize, isDesktopLaptop, isTabletMobile } = useScreenSize();
 
     return (
         <Card
@@ -84,7 +84,7 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                 backgroundImage={'https://training-api.clevertec.ru' + recipe.image}
                 padding={sizes[screenSize].pdImage}
             >
-                {(screenSize === 'Tablet' || screenSize === 'Mobile') && (
+                {isTabletMobile && (
                     <CardBadge
                         type='dishType'
                         size='small'
@@ -92,15 +92,6 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                         dishType={categoryTitle}
                     />
                 )}
-                {/*{(size === 'Desktop' || size === 'Laptop') && (*/}
-                {/*    <CardBadge*/}
-                {/*        type='recommendation'*/}
-                {/*        size='small'*/}
-                {/*        bgColor='green'*/}
-                {/*        avatar={AlexAvatar}*/}
-                {/*        name='Alex Cook'*/}
-                {/*    />*/}
-                {/*)}*/}
             </Box>
             <Box padding={sizes[screenSize].padding}>
                 <Box
@@ -117,7 +108,7 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                     >
                         {recipe.title}
                     </Typography>
-                    {(screenSize === 'Desktop' || screenSize === 'Laptop') && (
+                    {isDesktopLaptop && (
                         <Typography
                             Size={TypographySizes.sm}
                             overflow='hidden'
@@ -130,7 +121,7 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                 </Box>
 
                 <Flex justifyContent='space-between' alignItems='center'>
-                    {(screenSize === 'Desktop' || screenSize === 'Laptop') && (
+                    {isDesktopLaptop && (
                         <CardBadge
                             type='dishType'
                             size='medium'

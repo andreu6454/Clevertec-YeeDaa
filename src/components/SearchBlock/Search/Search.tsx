@@ -75,9 +75,6 @@ export const Search = memo((props: SearchProps) => {
             return;
         }
         setError(false);
-        // if (searchValue.length === 0 && !isSearchFilterOn && allergensLength === 0) {
-        //     dispatch(setClearFilters());
-        // }
     }, [searchValue, isSearchFilterOn]);
 
     const onClickHandle = () => {
@@ -93,7 +90,7 @@ export const Search = memo((props: SearchProps) => {
 
     let borderColor: string;
 
-    if (searchError) {
+    if (searchError || isResultEmpty) {
         borderColor = 'red';
     } else if (searchCompleted && !searchError && searchValue.length !== 0 && !isResultEmpty) {
         borderColor = '#2db100';
@@ -110,7 +107,6 @@ export const Search = memo((props: SearchProps) => {
             <Input
                 ref={inputRef}
                 data-test-id='search-input'
-                // border={(error && !searchValue) ? '' : ''}
                 value={searchValue}
                 onChange={onSearchChangeHandle}
                 onFocus={setFocus}

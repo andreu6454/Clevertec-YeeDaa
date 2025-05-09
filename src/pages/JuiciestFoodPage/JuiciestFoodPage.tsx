@@ -9,9 +9,9 @@ import { useAppDispatch } from '~/store/hooks';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
 export const JuiciestFoodPage = memo(() => {
-    const [page, setPage] = useState<number>(1);
-    const [isLastPage, setIsLastPage] = useState<boolean>(false);
-    const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
+    const [page, setPage] = useState(1);
+    const [isLastPage, setIsLastPage] = useState(false);
+    const [isButtonLoading, setIsButtonLoading] = useState(false);
 
     const { data, isLoading, isError } = useGetJuiciestPageRecipesQuery(page);
     const dispatch = useAppDispatch();

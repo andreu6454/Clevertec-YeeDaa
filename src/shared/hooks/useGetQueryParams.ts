@@ -27,17 +27,17 @@ export const useGetQueryParams = (
 
         if (page !== undefined) queryParams.page = page;
         if (limit !== undefined) queryParams.limit = limit;
-        if (allergens.length > 0) {
+        if (allergens.length) {
             queryParams.allergens = allergens.join(',').replace(/\s/g, '').toLowerCase();
         }
         if (searchString) queryParams.searchString = searchString.toLowerCase();
-        if (meat.length > 0) {
+        if (meat.length) {
             queryParams.meat = meat.join(',').replace(/\s/g, '').toLowerCase();
         }
-        if (garnish.length > 0) {
+        if (garnish.length) {
             queryParams.garnish = garnish.join(',').replace(/\s/g, '').toLowerCase();
         }
-        if (subcategoriesIds.length > 0) {
+        if (subcategoriesIds.length) {
             queryParams.subcategoriesIds = subcategoriesIds.join(',');
         }
         if (sortBy) queryParams.sortBy = sortBy;

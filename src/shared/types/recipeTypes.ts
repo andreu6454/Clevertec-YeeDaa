@@ -1,11 +1,8 @@
-export interface Recipe {
+export type Recipe = {
     title: string;
     description: string;
     time: string;
     image: string;
-    meat?: string;
-    garnish?: string;
-    portions?: number;
     authorId: string;
     categoriesIds: string[];
     steps: StepType[];
@@ -16,7 +13,10 @@ export interface Recipe {
     bookmarks: number;
     createdAt: string;
     _id: string;
-}
+    meat?: string;
+    garnish?: string;
+    portions?: number;
+};
 
 export type StepType = {
     stepNumber: number;

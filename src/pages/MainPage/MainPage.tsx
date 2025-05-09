@@ -27,13 +27,11 @@ export const MainPage: FC = memo(() => {
 
     useEffect(() => {
         if (!data.data) return;
-
         if (data?.data && page > 1) {
             setAllRecipes((prev) => [...prev, ...data.data]);
         } else if (data?.data) {
             setAllRecipes(data.data);
         }
-
         setIsButtonLoading(false);
     }, [data]);
 

@@ -1,6 +1,6 @@
 import { Box, Card, Image } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
@@ -65,14 +65,21 @@ const sizes = {
 export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
     const { onClickHandler, index, recipe, categoryTitle } = props;
 
-    const { screenSize } = useScreenSize();
+    const { screenSize, isTabletMobile } = useScreenSize();
 
-    const [isSmall, setIsSmall] = useState(screenSize === 'Mobile' || screenSize === 'Tablet');
     const searchInputValue = useAppSelector(searchInputSelector);
 
-    useEffect(() => {
-        setIsSmall(screenSize === 'Mobile' || screenSize === 'Tablet');
-    }, [screenSize]);
+    const recipeTitle = recipe.title
+        .split(new RegExp(`(${searchInputValue})`, 'i'))
+        .map((part, i) =>
+            part.toLowerCase() === searchInputValue.toLowerCase() ? (
+                <Box as='span' key={i} color='#2db100'>
+                    {part}
+                </Box>
+            ) : (
+                part
+            ),
+        );
 
     return (
         <Card
@@ -94,19 +101,10 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                 height='100%'
                 backgroundSize='100% 100%'
                 backgroundImage={'https://training-api.clevertec.ru' + recipe.image}
-                alignItems={!isSmall ? 'flex-end' : 'flex-start'}
+                alignItems={!isTabletMobile ? 'flex-end' : 'flex-start'}
                 padding={sizes[screenSize].padding}
             >
-                {/*{!isSmall && (*/}
-                {/*    <CardBadge*/}
-                {/*        size='medium'*/}
-                {/*        type='recommendation'*/}
-                {/*        bgColor='green'*/}
-                {/*        avatar={ElenaAvatar}*/}
-                {/*        name='Елена высоцкая'*/}
-                {/*    />*/}
-                {/*)}*/}
-                {isSmall && (
+                {isTabletMobile && (
                     <CardBadge
                         size='small'
                         type='dishType'
@@ -123,7 +121,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                 padding={sizes[screenSize].padding}
             >
                 <Flex height='24px' justifyContent='space-between' alignItems='center'>
-                    {!isSmall && (
+                    {!isTabletMobile && (
                         <CardBadge
                             size='medium'
                             type='dishType'
@@ -146,21 +144,11 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                         Size={sizes[screenSize].textTitleSize}
                         overflow='hidden'
                         textOverflow='ellipsis'
-                        noOfLines={isSmall ? 2 : 1}
+                        noOfLines={isTabletMobile ? 2 : 1}
                     >
-                        {recipe.title
-                            .split(new RegExp(`(${searchInputValue})`, 'i'))
-                            .map((part, i) =>
-                                part.toLowerCase() === searchInputValue.toLowerCase() ? (
-                                    <Box as='span' key={i} color='#2db100'>
-                                        {part}
-                                    </Box> //подсветка найденной части
-                                ) : (
-                                    part
-                                ),
-                            )}
+                        {recipeTitle}
                     </Typography>
-                    {!isSmall && (
+                    {!isTabletMobile && (
                         <Typography
                             Size={TypographySizes.sm}
                             overflow='hidden'
@@ -174,20 +162,20 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                 <Flex justifyContent='flex-end' gap='8px'>
                     <Button
                         display='flex'
-                        padding={isSmall ? '6px 0 6px 6px' : ''}
+                        padding={isTabletMobile ? '6px 0 6px 6px' : ''}
                         leftIcon={<Image src={BookmarkIcon} />}
-                        size={!isSmall ? 'sm' : 'xs'}
+                        size={!isTabletMobile ? 'sm' : 'xs'}
                         variant='outline'
                         colorScheme='black'
                         alignItems='center'
                         justifyContent='center'
                     >
-                        {!isSmall && 'Сохранить'}
+                        {!isTabletMobile && 'Сохранить'}
                     </Button>
                     <Button
                         data-test-id={`card-link-${index}`}
                         onClick={onClickHandler}
-                        size={!isSmall ? 'sm' : 'xs'}
+                        size={!isTabletMobile ? 'sm' : 'xs'}
                         backgroundColor='#000'
                         color='#fff'
                     >
