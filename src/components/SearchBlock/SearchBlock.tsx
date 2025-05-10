@@ -49,7 +49,7 @@ const Sizes = {
 interface FoodSearchCardProps {
     title: string;
     description?: string;
-    onSearchHandle: () => void;
+    onSearchHandle?: () => void;
 }
 
 export const SearchBlock = memo((props: FoodSearchCardProps) => {
@@ -66,7 +66,7 @@ export const SearchBlock = memo((props: FoodSearchCardProps) => {
 
     const onSearchHandleWithCategories = () => {
         dispatch(setCurrentPageCategories());
-        onSearchHandle();
+        onSearchHandle?.();
     };
 
     const onClickHandler = () => {

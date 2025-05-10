@@ -14,27 +14,13 @@ export const recipeApi = apiSlice
     })
     .injectEndpoints({
         endpoints: (builder) => ({
-            getRecipes: builder.query<RecipeResponse, void>({
-                query: () => ({
+            getRecipes: builder.query<RecipeResponse, RecipeParams>({
+                query: (params) => ({
                     url: ApiEndpoints.RECIPES,
-                    method: 'GET',
                     apiGroupName: ApiGroupNames.RECIPES,
                     name: EndpointNames.GET_RECIPES,
-                }),
-                providesTags: [Tags.RECIPES],
-            }),
-            getNewestRecipes: builder.query<RecipeResponse, void>({
-                query: () => ({
-                    url: ApiEndpoints.RECIPES,
                     method: 'GET',
-                    apiGroupName: ApiGroupNames.RECIPES,
-                    name: EndpointNames.GET_LATEST_RECIPES,
-                    params: {
-                        sortBy: 'createdAt',
-                        sortOrder: 'desc',
-                        page: 1,
-                        limit: 10,
-                    },
+                    params: params,
                 }),
             }),
             getRecipeByCategory: builder.query<
@@ -47,34 +33,6 @@ export const recipeApi = apiSlice
                     name: EndpointNames.GET_RECIPES_BY_CATEGORY,
                     params: {
                         limit: params.limit,
-                    },
-                }),
-            }),
-            getJuiciestRecipes: builder.query<RecipeResponse, number>({
-                query: (page = 1) => ({
-                    url: ApiEndpoints.RECIPES,
-                    method: 'GET',
-                    apiGroupName: ApiGroupNames.RECIPES,
-                    name: EndpointNames.GET_JUICIEST_RECIPES,
-                    params: {
-                        sortBy: 'likes',
-                        sortOrder: 'desc',
-                        page: page,
-                        limit: 8,
-                    },
-                }),
-            }),
-            getJuiciestPageRecipes: builder.query<RecipeResponse, number>({
-                query: (page = 1) => ({
-                    url: ApiEndpoints.RECIPES,
-                    method: 'GET',
-                    apiGroupName: ApiGroupNames.RECIPES,
-                    name: EndpointNames.GET_JUICIEST_RECIPES,
-                    params: {
-                        sortBy: 'likes',
-                        sortOrder: 'desc',
-                        page: page,
-                        limit: 8,
                     },
                 }),
             }),
@@ -116,11 +74,7 @@ export const recipeApi = apiSlice
 
 export const {
     useGetRecipesQuery,
-    useGetNewestRecipesQuery,
-    useGetJuiciestRecipesQuery,
     useGetRecipeByCategoryQuery,
-    useGetJuiciestPageRecipesQuery,
     useLazyGetRecipesWithParamsQuery,
-    useGetRecipesWithParamsQuery,
     useGetRecipeByIdQuery,
 } = recipeApi;

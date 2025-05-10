@@ -8,7 +8,7 @@ interface CuisinePageLayoutProps {
     searchTitle: string;
     searchDescription?: string;
     children: ReactNode | ReactNode[];
-    onSearchHandle: () => void;
+    onSearchHandle?: () => void;
 }
 
 export const CuisinePageLayout = memo((props: CuisinePageLayoutProps) => {

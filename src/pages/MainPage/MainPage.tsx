@@ -64,7 +64,7 @@ export const MainPage: FC = memo(() => {
     return (
         <Flex width='100%' flexDirection='column' alignItems='center'>
             <SearchBlock onSearchHandle={onSearchHandle} title='Приятного аппетита!' />
-            {allRecipes.length === 0 ? (
+            {!allRecipes.length ? (
                 <Flex width='100%' flexDirection='column' alignItems='center' gap='40px'>
                     <NewRecipes />
                     <Juiciest />

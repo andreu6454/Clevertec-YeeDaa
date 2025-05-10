@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { CardWithImage } from '~/components/CardWithImage/CardWithImage';
-import { useGetNewestRecipesQuery } from '~/query/services/recipes';
+import { useGetRecipesQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
@@ -26,7 +26,12 @@ export const NewRecipes = memo(() => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const { data, error } = useGetNewestRecipesQuery();
+    const { data, error } = useGetRecipesQuery({
+        sortBy: 'createdAt',
+        sortOrder: 'desc',
+        page: 1,
+        limit: 10,
+    });
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 

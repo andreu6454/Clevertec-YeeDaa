@@ -2,7 +2,7 @@ import { Button, Flex, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
-import { useGetJuiciestRecipesQuery } from '~/query/services/recipes';
+import { useGetRecipesQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
@@ -24,7 +24,12 @@ export const Juiciest = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const { data, error } = useGetJuiciestRecipesQuery(1);
+    const { data, error } = useGetRecipesQuery({
+        sortBy: 'likes',
+        sortOrder: 'desc',
+        page: 1,
+        limit: 8,
+    });
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 
