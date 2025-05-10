@@ -2,39 +2,49 @@ import { Button, Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
-import { recipeData } from '~/shared/data/recipeData';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getCategoryById } from '~/shared/services/getCategoryById';
+import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
+import { Recipe } from '~/shared/types/recipeTypes';
+import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
-import { searchErrorSelector } from '~/store/recipesListPage-slice';
 
 interface RecipesContainerProps {
-    data: typeof recipeData;
+    data: Recipe[];
+    onClickHandler?: () => void;
+    isLastPage?: boolean;
+    isLoading?: boolean;
 }
 
 export const RecipesContainer = (props: RecipesContainerProps) => {
-    const { data } = props;
+    const { data, onClickHandler, isLastPage, isLoading = false } = props;
+
+    const categories = useAppSelector(categoriesSelector);
+    const subCategories = useAppSelector(subCategoriesSelector);
+
     const { screenSize, isTablet, isDesktop } = useScreenSize();
     const navigate = useNavigate();
 
-    const searchError = useAppSelector(searchErrorSelector);
-
     const mappedCards = data.map((recipe, index) => {
+        const category = getCategoryById(categories, subCategories, recipe.categoriesIds[0]);
         const onClickHandler = () => {
-            navigate(`/${recipe.category[0]}/${recipe.subcategory[0]}/${recipe.id}`);
+            navigate(
+                getNavigateLinkToRecipe(
+                    categories,
+                    subCategories,
+                    recipe.categoriesIds[0],
+                    recipe._id,
+                ),
+            );
         };
 
         return (
             <CardWithLeftImage
                 index={index}
                 onClickHandler={onClickHandler}
-                bookMarks={recipe.bookmarks}
-                likes={recipe.likes}
-                key={recipe.title}
-                image={recipe.image}
-                title={recipe.title}
-                description={recipe.description}
-                dishType={recipe.category[0]}
-                size={screenSize}
+                key={recipe.title + index}
+                recipe={recipe}
+                categoryTitle={category?.category || ''}
             />
         );
     });
@@ -76,13 +86,19 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
                 {mappedCards}
             </Flex>
 
-            {!searchError && (
-                <Flex>
-                    <Flex width='100%' justifyContent='center'>
-                        <Button backgroundColor='#b1ff2e' color='#000' size='md'>
-                            Загрузить еще
-                        </Button>
-                    </Flex>
+            {!isLastPage && (
+                <Flex width='100%' justifyContent='center'>
+                    <Button
+                        width='149px'
+                        data-test-id='load-more-button'
+                        onClick={onClickHandler}
+                        isDisabled={isLoading}
+                        backgroundColor='#b1ff2e'
+                        color='#000'
+                        size='md'
+                    >
+                        {isLoading ? 'Загрузка' : 'Загрузить еще'}
+                    </Button>
                 </Flex>
             )}
         </Flex>

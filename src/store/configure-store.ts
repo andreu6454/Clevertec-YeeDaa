@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { apiSlice } from '~/query/create-api';
+import categoriesReducer, { categoriesSlice } from '~/store/categories-slice';
 import recipesListPageReducer, { recipesListPageSlice } from '~/store/recipesListPage-slice';
 
 import appReducer, { appSlice } from './app-slice';
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
     [appSlice.name]: appReducer,
     [recipesListPageSlice.name]: recipesListPageReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
+    [categoriesSlice.reducerPath]: categoriesReducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;

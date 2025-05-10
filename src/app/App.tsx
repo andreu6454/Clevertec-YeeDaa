@@ -1,6 +1,7 @@
 import './App.css';
 
 import { AppRouter } from '~/app/router/AppRouter';
+import { WithDataFetching } from '~/shared/HOC/WithDataFetching';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { DesktopLaptopLayout } from '~/shared/layouts/DesktopLaptopLayout';
 import { MobileLayout } from '~/shared/layouts/MobileLayout';
@@ -17,14 +18,22 @@ function App() {
             data-test-id='app'
             header={<Header />}
             navbar={<Navbar />}
-            content={<AppRouter />}
+            content={
+                <WithDataFetching>
+                    <AppRouter />
+                </WithDataFetching>
+            }
             sidebar={<Sidebar />}
         />
     ) : (
         <MobileLayout
             data-test-id='app'
             header={<Header />}
-            content={<AppRouter />}
+            content={
+                <WithDataFetching>
+                    <AppRouter />
+                </WithDataFetching>
+            }
             footer={<Footer />}
         />
     );

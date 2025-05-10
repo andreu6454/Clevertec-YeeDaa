@@ -28,13 +28,16 @@ interface CardWithIconProps {
     icon: string;
     title: string;
     size: 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile';
+    onClick?: () => void;
 }
 
 export const CardWithIcon = (props: CardWithIconProps) => {
-    const { icon, title, size } = props;
+    const { icon, title, size, onClick } = props;
 
     return (
         <Card
+            cursor='pointer'
+            onClick={onClick}
             _hover={{
                 boxShadow:
                     '0 4px 8px -2px rgba(32, 126, 0, 0.1), 0 6px 12px -2px rgba(32, 126, 0, 0.15)',

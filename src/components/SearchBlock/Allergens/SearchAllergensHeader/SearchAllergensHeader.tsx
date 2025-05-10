@@ -1,11 +1,11 @@
 import { Tags } from '~/shared/ui/Tags/Tags';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppSelector } from '~/store/hooks';
-import { allergensSearchFilterOnSelector, allergensSelector } from '~/store/recipesListPage-slice';
+import { allergensSelector } from '~/store/recipesListPage-slice';
 
 export const SearchAllergensHeader = () => {
     const allergens = useAppSelector(allergensSelector);
-    const isSearchAllergenFilterOn = useAppSelector(allergensSearchFilterOnSelector);
+    const isSearchAllergenFilterOn = useAppSelector(allergensSelector);
 
     if (allergens.length === 0 || !isSearchAllergenFilterOn) {
         return (

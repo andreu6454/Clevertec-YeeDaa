@@ -1,83 +1,81 @@
-import { IconButton, useBoolean } from '@chakra-ui/icons';
-import { Flex, Image, Text } from '@chakra-ui/react';
+import { useBoolean } from '@chakra-ui/icons';
+import { Flex } from '@chakra-ui/react';
+import { memo } from 'react';
 
 import { Filters } from '~/components/Filters/Filters';
 import { SearchAllergens } from '~/components/SearchBlock/Allergens/SearchAllergens';
-import { Search } from '~/components/SearchBlock/Search/Search';
+import { SearchButtons } from '~/components/SearchBlock/SearchButtons/SearchButtons';
+import { SearchLoader } from '~/components/SearchBlock/SearchLoader/SearchLoader';
+import { SearchEmptyTitle } from '~/components/SearchBlock/SearchTitle/SearchEmptyTitle';
+import { SearchTitle } from '~/components/SearchBlock/SearchTitle/SearchTitle';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { openFilters } from '~/store/app-slice';
-import { useAppDispatch } from '~/store/hooks';
-import { setClearFilters } from '~/store/recipesListPage-slice';
-
-import SearchFilterIcon from '../../assets/svg/searchFilters.svg';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import {
+    allergensSelector,
+    inputLoadingSelector,
+    resultEmptySelector,
+    setClearFilters,
+    setCurrentPageCategories,
+} from '~/store/recipesListPage-slice';
 
 const Sizes = {
     Desktop: {
         width: '898px',
         height: '248px',
-        size: 'lg',
-        mbText: '32px',
         paddingY: '32px 0 32px 0',
-        fSize: '48px',
-        lHeight: '100%',
         inputWidth: '458px',
-        textDescriptionSize: TypographySizes.md,
     },
     Laptop: {
         width: '578px',
         height: '248px',
-        size: 'lg',
-        mbText: '32px',
         paddingY: '32px 0 32px 0',
-        fSize: '48px',
-        lHeight: '100%',
         inputWidth: '458px',
-        textDescriptionSize: TypographySizes.md,
     },
     Tablet: {
         width: '727px',
         height: '80px',
-        size: 'sm',
-        mbText: '16px',
         paddingY: '16px 0 32px 0',
-        fSize: '24px',
-        lHeight: '133%',
         inputWidth: '404px',
-        textDescriptionSize: TypographySizes.sm,
     },
     Mobile: {
         width: '328px',
         height: '80px',
-        size: 'sm',
-        mbText: '16px',
         paddingY: '16px 0 32px 0',
-        fSize: '24px',
-        lHeight: '133%',
         inputWidth: '284px',
-        textDescriptionSize: TypographySizes.sm,
     },
 };
 
 interface FoodSearchCardProps {
     title: string;
     description?: string;
+    onSearchHandle?: () => void;
 }
 
-export const SearchBlock = (props: FoodSearchCardProps) => {
-    const { title, description } = props;
+export const SearchBlock = memo((props: FoodSearchCardProps) => {
+    const { title, description, onSearchHandle } = props;
 
+    const allergens = useAppSelector(allergensSelector);
     const [isSearchFilterOn, { on: setFocus, off: setBlur }] = useBoolean(false);
+    const isInputLoading = useAppSelector(inputLoadingSelector);
+    const isResultEmpty = useAppSelector(resultEmptySelector);
 
     const { screenSize, isDesktop, isLaptop } = useScreenSize();
 
     const dispatch = useAppDispatch();
 
+    const onSearchHandleWithCategories = () => {
+        dispatch(setCurrentPageCategories());
+        onSearchHandle?.();
+    };
+
     const onClickHandler = () => {
+        dispatch(setCurrentPageCategories());
         dispatch(setClearFilters());
         dispatch(openFilters());
     };
 
+    if (isInputLoading) return <SearchLoader title={title} />;
     return (
         <Flex
             boxShadow={
@@ -92,46 +90,21 @@ export const SearchBlock = (props: FoodSearchCardProps) => {
             alignItems='center'
         >
             <Filters />
-            <Flex
-                direction='column'
-                alignItems='center'
-                textAlign='center'
-                gap='12px'
-                marginBottom={Sizes[screenSize].mbText}
-            >
-                <Text
-                    fontWeight='700'
-                    fontSize={Sizes[screenSize].fSize}
-                    lineHeight={Sizes[screenSize].lHeight}
-                    textAlign='center'
-                >
-                    {title}
-                </Text>
-                {description && (
-                    <Typography
-                        Size={Sizes[screenSize].textDescriptionSize}
-                        width={isDesktop || isLaptop ? '696px' : '100%'}
-                        color='rgba(0, 0, 0, 0.48)'
-                        textAlign='center'
-                    >
-                        {description}
-                    </Typography>
-                )}
-            </Flex>
-            <Flex gap='12px' marginBottom='12px'>
-                <IconButton
-                    data-test-id='filter-button'
-                    onClick={onClickHandler}
-                    borderColor='rgba(0, 0, 0, 0.48)'
-                    size={Sizes[screenSize].size}
-                    variant='outline'
-                    aria-label='filter'
-                >
-                    <Image src={SearchFilterIcon} />
-                </IconButton>
-                <Search setBlur={setBlur} setFocus={setFocus} isSearchFilterOn={isSearchFilterOn} />
-            </Flex>
+
+            {isResultEmpty ? (
+                <SearchEmptyTitle />
+            ) : (
+                <SearchTitle title={title} description={description} />
+            )}
+            <SearchButtons
+                isSearchFilterOn={isSearchFilterOn}
+                onClickHandler={onClickHandler}
+                onSearchHandleWithCategories={onSearchHandleWithCategories}
+                setBlur={setBlur}
+                setFocus={setFocus}
+                allergensLength={allergens.length}
+            />
             {(isDesktop || isLaptop) && <SearchAllergens />}
         </Flex>
     );
-};
+});

@@ -1,10 +1,12 @@
 import { Tab, TabList } from '@chakra-ui/icons';
 import { Tabs } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
+import { SubCategoryType } from '~/shared/types/categoryTypes';
+
 interface LinksCarouselProps {
-    links: Array<{ title: string; link: string }>;
+    links: SubCategoryType[];
     size: 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile';
     category: string;
 }
@@ -34,16 +36,22 @@ const sizes = {
 export const LinksCarousel = (props: LinksCarouselProps) => {
     const { links, size, category } = props;
 
+    const [activeIndex, setActiveIndex] = useState<number>();
+
     const location = useLocation();
     const navigate = useNavigate();
     const currentPath = location.pathname.split('/')[2];
 
-    const activeIndex = links.findIndex((link) => link.link === currentPath);
+    useEffect(() => {
+        const currentIndex = links.findIndex((link) => link.category === currentPath);
+        setActiveIndex(currentIndex);
+    }, [currentPath, links]);
+
     const [tabIndex, setTabIndex] = useState(activeIndex);
 
     const handleTabsChange = (index: number) => {
         setTabIndex(index);
-        navigate(`/${category}/${links[index].link}`);
+        navigate(`/${category}/${links[index].category}`);
     };
 
     return (
@@ -65,15 +73,15 @@ export const LinksCarousel = (props: LinksCarouselProps) => {
         >
             <TabList>
                 {links.map((link, index) => {
-                    const isActive = currentPath === link.link;
+                    const isActive = activeIndex === index;
                     return (
                         <Tab
-                            data-test-id={`tab-${link.link}-${index}`}
+                            data-test-id={`tab-${link.category}-${index}`}
                             _selected={{
                                 color: '#2db100',
                                 borderBottom: '2px solid #2db100',
                             }}
-                            key={link.link}
+                            key={link.category}
                             whiteSpace='nowrap'
                             padding={sizes[size].padding}
                             borderBottom={isActive ? '2px solid #' : ''}

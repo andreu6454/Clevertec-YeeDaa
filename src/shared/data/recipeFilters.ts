@@ -40,7 +40,7 @@ export const allergenFilters = [
     {
         title: 'Томат (Помидор)',
         general: 'tomato',
-        ingredients: ['Томат', 'Помидор', 'томатный соус'],
+        ingredients: ['Помидор', 'Томат', 'томатный соус'],
     },
     { title: 'Цитрусовые', general: 'citrus', ingredients: ['Цитрусовые'] },
     { title: 'Клубника (ягоды)', general: 'berries', ingredients: ['Клубника', 'ягоды'] },

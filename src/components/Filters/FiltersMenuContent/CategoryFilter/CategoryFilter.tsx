@@ -1,32 +1,42 @@
 import { ChevronDownIcon, Menu, MenuList } from '@chakra-ui/icons';
 import { Button, MenuButton } from '@chakra-ui/react';
+import { memo } from 'react';
 
 import { CategoryFilterHeader } from '~/components/Filters/FiltersMenuContent/CategoryFilter/CategoryFilterHeader/CategoryFilterHeader';
-import { navBarData } from '~/shared/data/navBarData';
 import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTitle';
+import { categoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { filterCategorySelector, setCategoriesFilter } from '~/store/recipesListPage-slice';
+import {
+    categoryIdsSelector,
+    setCategoriesFilter,
+    subCategoriesIdsSelector,
+} from '~/store/recipesListPage-slice';
 
-export const CategoryFilter = () => {
+export const CategoryFilter = memo(() => {
     const dispatch = useAppDispatch();
 
-    const categories = useAppSelector(filterCategorySelector);
+    const allCategories = useAppSelector(categoriesSelector);
+    const categories = useAppSelector(categoryIdsSelector);
+    const subCategories = useAppSelector(subCategoriesIdsSelector);
 
-    const mappedCategories = navBarData.map((el, index) => {
-        const isChecked = categories.includes(el.general);
+    const mappedCategories = allCategories.map((el, index) => {
+        const isChecked = categories.includes(el._id);
+
         const onChangeHandler = () => {
             if (isChecked) {
                 dispatch(
                     setCategoriesFilter({
-                        categories: categories.filter((item) => item !== el.general),
-                        subcategory: '',
+                        categories: categories.filter((item) => item !== el._id),
+                        subcategory: subCategories.filter(
+                            (item) => item !== el.subCategories[0]._id,
+                        ),
                     }),
                 );
             } else {
                 dispatch(
                     setCategoriesFilter({
-                        categories: [...categories, el.general],
-                        subcategory: '',
+                        categories: [...categories, el._id],
+                        subcategory: [...subCategories, el.subCategories[0]._id],
                     }),
                 );
             }
@@ -34,7 +44,7 @@ export const CategoryFilter = () => {
         return (
             <CheckboxWithTitle
                 dataTestId={el.title === 'Веганская кухня' ? 'checkbox-веганская кухня' : ''}
-                key={el.title + 'menuitem'}
+                key={el.title + ' categoryFilter' + index}
                 title={el.title}
                 isChecked={isChecked}
                 onChange={onChangeHandler}
@@ -64,4 +74,4 @@ export const CategoryFilter = () => {
             <MenuList width='100%'>{mappedCategories}</MenuList>
         </Menu>
     );
-};
+});

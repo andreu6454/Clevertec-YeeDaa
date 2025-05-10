@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/icons';
 import { ReactNode } from 'react';
 
+import { ErrorAlert } from '~/components/ErrorAlert/ErrorAlert';
 import { ScrollToTop } from '~/components/ScrollToTop/ScrollToTop';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { BurgerMenu } from '~/widgets/BurgerMenu/BurgerMenu';
@@ -27,6 +28,7 @@ export const MobileLayout = (props: MobileLayoutProps) => {
             </Box>
             {footer}
             <ScrollToTop />
+            <ErrorAlert />
             <BurgerMenu />
         </Box>
     );

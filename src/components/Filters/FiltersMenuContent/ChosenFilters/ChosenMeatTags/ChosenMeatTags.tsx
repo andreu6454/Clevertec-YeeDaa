@@ -28,7 +28,7 @@ export const ChosenMeatTags = memo(() => {
                 colorScheme='green'
             >
                 <TagLabel>
-                    {meatFilters.filter((element) => element.general === el)[0]?.title}
+                    {meatFilters.filter((element) => element.title === el)[0]?.title}
                 </TagLabel>
                 <TagCloseButton onClick={onClickHandler} />
             </Tag>

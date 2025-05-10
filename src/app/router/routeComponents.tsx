@@ -1,31 +1,40 @@
+import { lazy, Suspense } from 'react';
 import { Navigate, Route } from 'react-router';
 
-import RecipePage from '~/pages/RecipePage/RecipePage';
-import { RecipesListPage } from '~/pages/RecipesListPage/RecipesListPage';
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
+import { CategoryType } from '~/shared/types/categoryTypes';
 
-type NavItem = {
-    icon: string;
-    title: string;
-    general: string;
-    links: Array<{
-        title: string;
-        link: string;
-    }>;
-};
+const RecipesListPage = lazy(() => import('~/pages/RecipesListPage/RecipesListPage'));
+const RecipePage = lazy(() => import('~/pages/RecipePage/RecipePage'));
 
 interface CreateRoutesProps {
-    data: NavItem[];
+    data: CategoryType[];
 }
 
 export const createRoutes = ({ data }: CreateRoutesProps) =>
     data.map((category) => (
-        <Route path={`/${category.general}`} key={category.general}>
-            <Route index element={<Navigate to={category.links[0].link} replace />} />
+        <Route path={`/${category.category}`} key={category.category}>
+            <Route index element={<Navigate to={category.subCategories[0].category} replace />} />
 
-            {category.links.map((subItem) => (
-                <Route path={`${subItem.link}/`} key={subItem.link} element={<RecipesListPage />} />
+            {category.subCategories.map((subItem) => (
+                <Route
+                    path={`${subItem.category}/`}
+                    key={subItem.category}
+                    element={
+                        <Suspense fallback={<FullScreenSpinner />}>
+                            <RecipesListPage />
+                        </Suspense>
+                    }
+                />
             ))}
 
-            <Route path=':subcategory/:recipeId' element={<RecipePage />} />
+            <Route
+                path=':subcategory/:recipeId'
+                element={
+                    <Suspense fallback={<FullScreenSpinner />}>
+                        <RecipePage />
+                    </Suspense>
+                }
+            />
         </Route>
     ));

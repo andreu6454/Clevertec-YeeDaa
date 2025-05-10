@@ -9,16 +9,15 @@ import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTit
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
-    allergensSearchFilterOnSelector,
     allergensSelector,
+    searchAllergenFilterOnSelector,
     setAllergens,
-    setFilteredData,
     setIsSearchAllergenFilterOn,
 } from '~/store/recipesListPage-slice';
 
 export const SearchAllergens = memo(() => {
     const dispatch = useAppDispatch();
-    const isSearchAllergenFilterOn = useAppSelector(allergensSearchFilterOnSelector);
+    const isSearchAllergenFilterOn = useAppSelector(searchAllergenFilterOnSelector);
     const allergens = useAppSelector(allergensSelector);
 
     const border = allergens.length === 0 ? '1px solid rgba(0, 0, 0, 0.08)' : '1px solid #d7ff94';
@@ -27,15 +26,14 @@ export const SearchAllergens = memo(() => {
     };
 
     const mappedAllergens = allergenFilters.map((el, index) => {
-        const isChecked = allergens.includes(el.title);
+        const isChecked = allergens.includes(el.ingredients[0]);
 
         const onChangeHandler = () => {
             if (isChecked) {
-                dispatch(setAllergens(allergens.filter((item) => item !== el.title)));
+                dispatch(setAllergens(allergens.filter((item) => item !== el.ingredients[0])));
             } else {
-                dispatch(setAllergens([...allergens, el.title]));
+                dispatch(setAllergens([...allergens, el.ingredients[0]]));
             }
-            dispatch(setFilteredData());
         };
 
         return (

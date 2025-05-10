@@ -7,8 +7,8 @@ import { Breadcrumbs } from '~/components/Breadcrumbs/Breadcrumbs';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { isBurgerOpenSelector, isLoginSelector } from '~/store/app-slice';
+import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
-import { pathNames } from '~/widgets/header/pathNames';
 
 import AvatarDesktop from '../../assets/AvatarDesktop.png';
 import LoginIcon from '../../assets/svg/login.svg';
@@ -20,6 +20,7 @@ export const HeaderDesktop = memo(() => {
     const { isDesktopLaptop } = useScreenSize();
     const isLogin = useAppSelector(isLoginSelector);
     const isBurgerOpen = useAppSelector(isBurgerOpenSelector);
+    const allCategories = useAppSelector(allCategoriesSelector);
 
     const handleClick = () => {
         navigate('/', { replace: true });
@@ -40,7 +41,7 @@ export const HeaderDesktop = memo(() => {
             </Link>
             {!isBurgerOpen && (
                 <Flex justifyContent='flex-start' width='100%' height='24px'>
-                    <Breadcrumbs pathNames={pathNames} />
+                    <Breadcrumbs pathNames={allCategories} />
                 </Flex>
             )}
             {isLogin && (

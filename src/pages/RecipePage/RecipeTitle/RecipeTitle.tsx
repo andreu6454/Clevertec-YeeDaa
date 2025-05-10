@@ -98,7 +98,7 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
                 borderRadius='8px'
                 width={sizes[screenSize].imgWidth}
                 height={sizes[screenSize].imgHeight}
-                src={image}
+                src={'https://training-api.clevertec.ru' + image}
             />
             <Flex width={sizes[screenSize].width} direction='column' justifyContent='space-beetwen'>
                 <Flex height='100%' width='100%' direction='column' gap='32px'>

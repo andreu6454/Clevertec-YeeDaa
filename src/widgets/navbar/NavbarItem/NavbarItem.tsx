@@ -3,13 +3,14 @@ import { AccordionButton, AccordionItem, Flex, Link, Text } from '@chakra-ui/rea
 import { memo } from 'react';
 import { useNavigate } from 'react-router';
 
+import { SubCategoryType } from '~/shared/types/categoryTypes';
 import { AccordionLink } from '~/shared/ui/AccordionLink/AccordionLink';
 
 interface NavbarItemProps {
     title: string;
     icon: string;
     general: string;
-    links: Array<{ title: string; link: string }>;
+    links: SubCategoryType[];
     isDesktopLaptop: boolean;
 }
 
@@ -20,9 +21,9 @@ export const NavbarItem = memo((props: NavbarItemProps) => {
     const mappedLinks = links.map((link, index) => (
         <AccordionLink
             title={link.title}
-            key={`${general}-${link.link}${index}`}
-            link={`${general}/${link.link}`}
-            linkforTest={link.link}
+            key={`${general}-${link.category}${index}`}
+            link={`${general}/${link.category}`}
+            linkforTest={link.category}
         />
     ));
     const handleClick = () => {
@@ -56,7 +57,11 @@ export const NavbarItem = memo((props: NavbarItemProps) => {
                         alignItems='center'
                         onClick={handleClick}
                     >
-                        <Image marginRight='12px' src={icon} boxSize='24px' />
+                        <Image
+                            marginRight='12px'
+                            src={'https://training-api.clevertec.ru' + icon}
+                            boxSize='24px'
+                        />
                         <Text
                             data-test-id='${category}'
                             width={isDesktopLaptop ? '150px' : '222px'}

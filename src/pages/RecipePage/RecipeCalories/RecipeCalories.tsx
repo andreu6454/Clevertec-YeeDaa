@@ -7,7 +7,7 @@ import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 interface RecipeCaloriesProps {
     nutritionValue: {
         calories: number;
-        proteins: number;
+        protein: number;
         fats: number;
         carbohydrates: number;
     };
@@ -46,7 +46,7 @@ export const RecipeCalories = memo((props: RecipeCaloriesProps) => {
                 />
                 <CaloriesCard
                     screenSize={screenSize}
-                    count={nutritionValue.proteins}
+                    count={nutritionValue.protein}
                     title='белки'
                     units='ГРАММ'
                 />

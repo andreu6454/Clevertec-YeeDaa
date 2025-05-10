@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/icons';
 import { ReactNode } from 'react';
 
+import { ErrorAlert } from '~/components/ErrorAlert/ErrorAlert';
 import { ScrollToTop } from '~/components/ScrollToTop/ScrollToTop';
 import Footer from '~/widgets/footer/Footer';
 
@@ -31,6 +32,7 @@ export const DesktopLaptopLayout = (props: DesktopLaptopLayoutProps) => {
                 {sidebar}
             </Box>
             <ScrollToTop />
+            <ErrorAlert />
             <Footer />
         </Box>
     );

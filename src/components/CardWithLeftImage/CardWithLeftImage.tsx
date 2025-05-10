@@ -1,26 +1,22 @@
 import { Box, Card, Image } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { Recipe } from '~/shared/types/recipeTypes';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppSelector } from '~/store/hooks';
 import { searchInputSelector } from '~/store/recipesListPage-slice';
 
-import ElenaAvatar from '../../assets/images/elenaAvatar.png';
 import BookmarkIcon from '../../assets/svg/bookmark.svg';
 
 interface CardWithLeftImageProps {
-    size: 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile';
-    image: string;
-    title: string;
-    description: string;
-    dishType: string;
-    bookMarks: number;
-    likes: number;
+    recipe: Recipe;
     onClickHandler?: () => void;
     index: number;
+    categoryTitle: string;
 }
 
 const sizes = {
@@ -67,15 +63,23 @@ const sizes = {
 };
 
 export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
-    const { size, image, dishType, description, title, onClickHandler, bookMarks, likes, index } =
-        props;
+    const { onClickHandler, index, recipe, categoryTitle } = props;
 
-    const [isSmall, setIsSmall] = useState(size === 'Mobile' || size === 'Tablet');
+    const { screenSize, isTabletMobile } = useScreenSize();
+
     const searchInputValue = useAppSelector(searchInputSelector);
 
-    useEffect(() => {
-        setIsSmall(size === 'Mobile' || size === 'Tablet');
-    }, [size]);
+    const recipeTitle = recipe.title
+        .split(new RegExp(`(${searchInputValue})`, 'i'))
+        .map((part, i) =>
+            part.toLowerCase() === searchInputValue.toLowerCase() ? (
+                <Box as='span' key={i} color='#2db100'>
+                    {part}
+                </Box>
+            ) : (
+                part
+            ),
+        );
 
     return (
         <Card
@@ -85,100 +89,93 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                     '0 4px 8px -2px rgba(32, 126, 0, 0.1), 0 6px 12px -2px rgba(32, 126, 0, 0.15)',
                 transition: 'all 0.3s ease',
             }}
-            width={sizes[size].width}
-            height={sizes[size].height}
+            width={sizes[screenSize].width}
+            height={sizes[screenSize].height}
             direction='row'
             flexShrink={0}
             borderRadius='8px'
         >
             <Flex
                 borderLeftRadius='8px'
-                width={sizes[size].imgWidth}
+                width={sizes[screenSize].imgWidth}
                 height='100%'
                 backgroundSize='100% 100%'
-                backgroundImage={image}
-                alignItems={!isSmall ? 'flex-end' : 'flex-start'}
-                padding={sizes[size].padding}
+                backgroundImage={'https://training-api.clevertec.ru' + recipe.image}
+                alignItems={!isTabletMobile ? 'flex-end' : 'flex-start'}
+                padding={sizes[screenSize].padding}
             >
-                {!isSmall && (
+                {isTabletMobile && (
                     <CardBadge
-                        size='medium'
-                        type='recommendation'
-                        bgColor='green'
-                        avatar={ElenaAvatar}
-                        name='Елена высоцкая'
+                        size='small'
+                        type='dishType'
+                        bgColor='yellow'
+                        dishType={categoryTitle}
                     />
-                )}
-                {isSmall && (
-                    <CardBadge size='small' type='dishType' bgColor='yellow' dishType={dishType} />
                 )}
             </Flex>
             <Flex
                 direction='column'
-                gap={sizes[size].gap}
-                width={sizes[size].containerWidth}
+                gap={sizes[screenSize].gap}
+                width={sizes[screenSize].containerWidth}
                 height='100%'
-                padding={sizes[size].padding}
+                padding={sizes[screenSize].padding}
             >
                 <Flex height='24px' justifyContent='space-between' alignItems='center'>
-                    {!isSmall && (
+                    {!isTabletMobile && (
                         <CardBadge
                             size='medium'
                             type='dishType'
                             bgColor='yellow'
-                            dishType={dishType}
+                            dishType={categoryTitle}
                         />
                     )}
                     <Flex>
-                        <ReactionCount size='small' variant='bookmark' count={bookMarks} />
-                        <ReactionCount size='small' variant='emoji' count={likes} />
+                        <ReactionCount size='small' variant='bookmark' count={recipe.bookmarks} />
+                        <ReactionCount size='small' variant='emoji' count={recipe.likes} />
                     </Flex>
                 </Flex>
-                <Flex direction='column' width={sizes[size].textWidth} height='100px' gap='8px'>
+                <Flex
+                    direction='column'
+                    width={sizes[screenSize].textWidth}
+                    height='100px'
+                    gap='8px'
+                >
                     <Typography
-                        Size={sizes[size].textTitleSize}
+                        Size={sizes[screenSize].textTitleSize}
                         overflow='hidden'
                         textOverflow='ellipsis'
-                        noOfLines={isSmall ? 2 : 1}
+                        noOfLines={isTabletMobile ? 2 : 1}
                     >
-                        {title.split(new RegExp(`(${searchInputValue})`, 'i')).map((part, i) =>
-                            part.toLowerCase() === searchInputValue.toLowerCase() ? (
-                                <Box as='span' key={i} color='#2db100'>
-                                    {part}
-                                </Box> //подсветка найденной части
-                            ) : (
-                                part
-                            ),
-                        )}
+                        {recipeTitle}
                     </Typography>
-                    {!isSmall && (
+                    {!isTabletMobile && (
                         <Typography
                             Size={TypographySizes.sm}
                             overflow='hidden'
                             textOverflow='ellipsis'
                             noOfLines={3}
                         >
-                            {description}
+                            {recipe.description}
                         </Typography>
                     )}
                 </Flex>
                 <Flex justifyContent='flex-end' gap='8px'>
                     <Button
                         display='flex'
-                        padding={isSmall ? '6px 0 6px 6px' : ''}
+                        padding={isTabletMobile ? '6px 0 6px 6px' : ''}
                         leftIcon={<Image src={BookmarkIcon} />}
-                        size={!isSmall ? 'sm' : 'xs'}
+                        size={!isTabletMobile ? 'sm' : 'xs'}
                         variant='outline'
                         colorScheme='black'
                         alignItems='center'
                         justifyContent='center'
                     >
-                        {!isSmall && 'Сохранить'}
+                        {!isTabletMobile && 'Сохранить'}
                     </Button>
                     <Button
                         data-test-id={`card-link-${index}`}
                         onClick={onClickHandler}
-                        size={!isSmall ? 'sm' : 'xs'}
+                        size={!isTabletMobile ? 'sm' : 'xs'}
                         backgroundColor='#000'
                         color='#fff'
                     >

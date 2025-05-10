@@ -27,13 +27,13 @@ export const AllergensFilter = memo(() => {
     };
 
     const mappedAllergens = allergenFilters.map((el, index) => {
-        const isChecked = allergens.includes(el.title);
+        const isChecked = allergens.includes(el.ingredients[0]);
 
         const onChangeHandler = () => {
             if (isChecked) {
-                dispatch(setAllergens(allergens.filter((item) => item !== el.title)));
+                dispatch(setAllergens(allergens.filter((item) => item !== el.ingredients[0])));
             } else {
-                dispatch(setAllergens([...allergens, el.title]));
+                dispatch(setAllergens([...allergens, el.ingredients[0]]));
             }
         };
 

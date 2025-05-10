@@ -29,7 +29,7 @@ export const ChosenSideDishTags = memo(() => {
                 color='#207e00'
             >
                 <TagLabel>
-                    {sideDishFilters.filter((element) => element.general === el)[0]?.title}
+                    {sideDishFilters.filter((element) => element.title === el)[0]?.title}
                 </TagLabel>
                 <TagCloseButton />
             </Tag>

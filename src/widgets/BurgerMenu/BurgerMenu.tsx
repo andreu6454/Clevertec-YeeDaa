@@ -34,10 +34,11 @@ export const BurgerMenu = memo(() => {
             width='100vw'
             height='100vh'
             justify='flex-end'
-            zIndex={11}
+            zIndex={9}
             pointerEvents='auto'
         >
             <Flex
+                zIndex={9}
                 borderRadius='0 0 12px 12px'
                 position='fixed'
                 right={0}
@@ -47,7 +48,6 @@ export const BurgerMenu = memo(() => {
                 height={isMobile ? '652px' : '868px'}
                 width='344px'
                 pointerEvents='auto'
-                onClick={(e) => e.stopPropagation()}
                 sx={{
                     '&::-webkit-scrollbar': {
                         display: 'none',

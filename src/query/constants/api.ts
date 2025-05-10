@@ -1,3 +1,5 @@
 export enum ApiEndpoints {
-    POSTS = '/posts/',
+    RECIPES = '/recipe',
+    RECIPES_BY_CATEGORY = '/recipe/category/',
+    CATEGORIES = '/category',
 }

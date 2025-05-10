@@ -1,5 +1,6 @@
 import { Image } from '@chakra-ui/icons';
 import { Button, Flex, Text } from '@chakra-ui/react';
+import { memo } from 'react';
 
 import { AllergensFilter } from '~/components/Filters/FiltersMenuContent/AllergensFilter/AllergensFilter';
 import { AuthorFilter } from '~/components/Filters/FiltersMenuContent/AuthorFilter/AuthorFilter';
@@ -7,29 +8,35 @@ import { CategoryFilter } from '~/components/Filters/FiltersMenuContent/Category
 import { ChosenFilters } from '~/components/Filters/FiltersMenuContent/ChosenFilters/ChosenFilters';
 import { MeatFilter } from '~/components/Filters/FiltersMenuContent/MeatFilter/MeatFilter';
 import { SideDishFilter } from '~/components/Filters/FiltersMenuContent/SideDishFilter/SideDishFilter';
+import { useLazyGetRecipesWithParamsQuery } from '~/query/services/recipes';
+import { useGetQueryParams } from '~/shared/hooks/useGetQueryParams';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { closeFilters } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
     allergensSelector,
-    filterCategorySelector,
+    categoryIdsSelector,
     meatFiltersSelector,
     setClearFilters,
-    setFilteredData,
+    setCurrentPageCategories,
     sideDishFiltersSelector,
 } from '~/store/recipesListPage-slice';
 
 import CloseIcon from '../../../assets/svg/close.svg';
 
-export const FiltersMenuContent = () => {
+export const FiltersMenuContent = memo(() => {
     const dispatch = useAppDispatch();
 
     const { isDesktopLaptop } = useScreenSize();
 
+    const queryParams = useGetQueryParams();
+
+    const [triggerGetRecipes] = useLazyGetRecipesWithParamsQuery();
+
     const allergens = useAppSelector(allergensSelector);
     const meatFilters = useAppSelector(meatFiltersSelector);
     const sideDishFilters = useAppSelector(sideDishFiltersSelector);
-    const categories = useAppSelector(filterCategorySelector);
+    const categories = useAppSelector(categoryIdsSelector);
 
     const isDisableFilterButton = !(
         meatFilters.length > 0 ||
@@ -43,11 +50,12 @@ export const FiltersMenuContent = () => {
     };
 
     const onFilterClickHandler = () => {
-        dispatch(setFilteredData());
+        triggerGetRecipes(queryParams, false);
         dispatch(closeFilters());
     };
 
     const onClearFilterClickHandler = () => {
+        dispatch(setCurrentPageCategories());
         dispatch(setClearFilters());
     };
 
@@ -107,4 +115,4 @@ export const FiltersMenuContent = () => {
             </Flex>
         </Flex>
     );
-};
+});

@@ -6,11 +6,10 @@ import SearchIcon from '~/assets/svg/searchIcon.svg';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
+    resultEmptySelector,
     searchCompletedSelector,
     searchErrorSelector,
     searchInputSelector,
-    setClearFilters,
-    setFilteredData,
     setSearchInputValue,
 } from '~/store/recipesListPage-slice';
 
@@ -18,6 +17,8 @@ interface SearchProps {
     setFocus: () => void;
     setBlur: () => void;
     isSearchFilterOn: boolean;
+    onSearchHandle: () => void;
+    allergensLength?: number;
 }
 
 const Sizes = {
@@ -41,7 +42,7 @@ const Sizes = {
 
 export const Search = memo((props: SearchProps) => {
     const { screenSize } = useScreenSize();
-    const { setBlur, setFocus, isSearchFilterOn } = props;
+    const { setBlur, setFocus, isSearchFilterOn, onSearchHandle, allergensLength = 0 } = props;
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [error, setError] = useState(false);
@@ -50,6 +51,7 @@ export const Search = memo((props: SearchProps) => {
     const searchValue = useAppSelector(searchInputSelector);
     const searchError = useAppSelector(searchErrorSelector);
     const searchCompleted = useAppSelector(searchCompletedSelector);
+    const isResultEmpty = useAppSelector(resultEmptySelector);
 
     const onSearchChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setSearchInputValue(e.currentTarget.value));
@@ -73,27 +75,24 @@ export const Search = memo((props: SearchProps) => {
             return;
         }
         setError(false);
-        if (searchValue.length === 0 && !isSearchFilterOn) {
-            dispatch(setClearFilters());
-        }
     }, [searchValue, isSearchFilterOn]);
 
     const onClickHandle = () => {
-        if (!isSearchFilterOn) {
+        if (!isSearchFilterOn && allergensLength === 0) {
             setFocus();
             inputRef.current?.focus();
         }
-        if (searchValue.length >= 3) {
-            dispatch(setFilteredData());
+        if (searchValue.length >= 2 || allergensLength > 0) {
+            onSearchHandle();
             inputRef.current?.blur();
         }
     };
 
     let borderColor: string;
 
-    if (searchError) {
+    if (searchError || isResultEmpty) {
         borderColor = 'red';
-    } else if (searchCompleted && !searchError && searchValue.length !== 0) {
+    } else if (searchCompleted && !searchError && searchValue.length !== 0 && !isResultEmpty) {
         borderColor = '#2db100';
     } else {
         borderColor = 'rgba(0, 0, 0, 0.48)';
@@ -108,7 +107,6 @@ export const Search = memo((props: SearchProps) => {
             <Input
                 ref={inputRef}
                 data-test-id='search-input'
-                // border={(error && !searchValue) ? '' : ''}
                 value={searchValue}
                 onChange={onSearchChangeHandle}
                 onFocus={setFocus}
@@ -129,7 +127,7 @@ export const Search = memo((props: SearchProps) => {
                     pointerEvents={error ? 'none' : 'auto'}
                     data-test-id='search-button'
                     onClick={onClickHandle}
-                    disabled={error && !!searchValue}
+                    disabled={error && (!!searchValue || !(allergensLength > 0))}
                     variant='ghost'
                     size={Sizes[screenSize].size}
                     aria-label='search'

@@ -5,16 +5,15 @@ import { ChangeEvent, useState } from 'react';
 import AddIcon from '~/assets/svg/addIcon.svg';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
-    allergensSearchFilterOnSelector,
+    allergenFilterOnSelector,
     allergensSelector,
     setAllergens,
-    setFilteredData,
 } from '~/store/recipesListPage-slice';
 
 export const NewAllergenInput = () => {
     const [value, setValue] = useState('');
     const allergens = useAppSelector(allergensSelector);
-    const isSearchAllergenFilterOn = useAppSelector(allergensSearchFilterOnSelector);
+    const isSearchAllergenFilterOn = useAppSelector(allergenFilterOnSelector);
 
     const dispatch = useAppDispatch();
 
@@ -24,7 +23,6 @@ export const NewAllergenInput = () => {
 
     const handleAddAllergen = () => {
         if (value.trim()) {
-            // Проверяем, что значение не пустое
             dispatch(setAllergens([...allergens, value.trim()]));
             setValue('');
         }
@@ -35,7 +33,7 @@ export const NewAllergenInput = () => {
             event.preventDefault(); // Предотвращаем перенос строки
             handleAddAllergen();
             if (isSearchAllergenFilterOn) {
-                dispatch(setFilteredData());
+                // dispatch(setFilteredData());
             }
         }
     };
@@ -44,7 +42,7 @@ export const NewAllergenInput = () => {
         dispatch(setAllergens([...allergens, value]));
         setValue('');
         if (isSearchAllergenFilterOn) {
-            dispatch(setFilteredData());
+            // dispatch(setFilteredData());
         }
     };
 

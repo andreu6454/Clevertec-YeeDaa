@@ -10,6 +10,7 @@ interface CardWithoutImageProps {
     description: string;
     dishType: string;
     size: 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile';
+    onClick?: () => void;
 }
 
 const sizes = {
@@ -40,9 +41,11 @@ const sizes = {
 };
 
 export const CardWithoutImage = (props: CardWithoutImageProps) => {
-    const { title, description, dishType, size } = props;
+    const { title, description, dishType, size, onClick } = props;
     return (
         <Card
+            cursor='pointer'
+            onClick={onClick}
             _hover={{
                 boxShadow:
                     '0 4px 8px -2px rgba(32, 126, 0, 0.1), 0 6px 12px -2px rgba(32, 126, 0, 0.15)',

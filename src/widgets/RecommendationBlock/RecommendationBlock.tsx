@@ -1,11 +1,17 @@
 import { Flex, Text } from '@chakra-ui/react';
+import { memo, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { CardWithIcon } from '~/components/CardWithIcon/CardWithIcon';
 import { CardWithoutImage } from '~/components/CardWithoutImage/CardWithoutImage';
+import { useGetRecipeByCategoryQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-
-import PotIcon from '../../assets/svg/navbarIcons/firstCourses.svg';
-import KitchenIcon from '../../assets/svg/navbarIcons/secondCourses.svg';
+import { getCategoryById } from '~/shared/services/getCategoryById';
+import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
+import { CategoryType } from '~/shared/types/categoryTypes';
+import { setAppError } from '~/store/app-slice';
+import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 const sizes = {
     Desktop: {
@@ -42,17 +48,52 @@ const sizes = {
     },
 };
 
-interface RecommendationBlockProps {
-    title: string;
-    description: string;
-}
-
-export const RecommendationBlock = (props: RecommendationBlockProps) => {
-    const { title, description } = props;
-
+export const RecommendationBlock = memo(() => {
     const { screenSize, isLaptop } = useScreenSize();
-
     const direction = screenSize === 'Mobile' || screenSize === 'Tablet' ? 'column' : 'row';
+
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const [randomCategory, setRandomCategory] = useState<{
+        id: string;
+        category: CategoryType;
+    } | null>(null);
+
+    const categories = useAppSelector(categoriesSelector);
+    const subCategories = useAppSelector(subCategoriesSelector);
+
+    useEffect(() => {
+        if (subCategories.length > 0) {
+            const randomSubCategory =
+                subCategories[Math.floor(Math.random() * subCategories.length)];
+            const foundCategory = getCategoryById(categories, subCategories, randomSubCategory._id);
+
+            setRandomCategory({
+                id: randomSubCategory._id,
+                category: foundCategory as CategoryType,
+            });
+        }
+    }, [categories, subCategories]); // Добавляем зависимости
+
+    const { data, error } = useGetRecipeByCategoryQuery(
+        { subcategoryId: randomCategory?.id || '', limit: 5 },
+        {
+            skip: !randomCategory?.id,
+        },
+    );
+
+    const recipes = data?.data;
+
+    const length = recipes?.length || 0;
+
+    // if (isLoading) return <FullScreenSpinner />;
+
+    if (error) {
+        dispatch(setAppError('error'));
+    }
+
+    if (!recipes) return null;
     return (
         <Flex
             borderTop='1px solid rgba(0, 0, 0, 0.08)'
@@ -74,7 +115,7 @@ export const RecommendationBlock = (props: RecommendationBlockProps) => {
                     lineHeight={sizes[screenSize].lTitleHeight}
                     whiteSpace='pre-line'
                 >
-                    {title}
+                    {randomCategory?.category.title}
                 </Text>
                 <Text
                     width={sizes[screenSize].width}
@@ -83,7 +124,7 @@ export const RecommendationBlock = (props: RecommendationBlockProps) => {
                     lineHeight={sizes[screenSize].lDescHeight}
                     color='rgba(0, 0, 0, 0.64)'
                 >
-                    {description}
+                    {randomCategory?.category.description}
                 </Text>
             </Flex>
             <Flex
@@ -91,36 +132,123 @@ export const RecommendationBlock = (props: RecommendationBlockProps) => {
                 direction={screenSize === 'Mobile' ? 'column' : 'row'}
                 alignItems='center'
             >
-                <CardWithoutImage
-                    size={screenSize}
-                    title='Бананово-молочное желе'
-                    description='Молочное желе – это просто, вкусно и полезно, ведь для его приготовления в качестве основы используется молоко.'
-                    dishType='child'
-                />
-                <CardWithoutImage
-                    size={screenSize}
-                    title='Нежный сливочно-сырный крем для кексов'
-                    description='Сливочно-сырным кремом можно украсить кексы, либо другую выпечку, а также этим кремом можно наполнить заварные пирожные.'
-                    dishType='child'
-                />
+                {length > 0 && (
+                    <CardWithoutImage
+                        onClick={() => {
+                            navigate(
+                                getNavigateLinkToRecipe(
+                                    categories,
+                                    subCategories,
+                                    recipes[0].categoriesIds[0],
+                                    recipes[0]._id,
+                                ),
+                            );
+                        }}
+                        size={screenSize}
+                        title={recipes[0].title}
+                        description={recipes[0].description}
+                        dishType={
+                            getCategoryById(categories, subCategories, recipes[0].categoriesIds[0])
+                                ?.category || ''
+                        }
+                    />
+                )}
+                {length > 1 && (
+                    <CardWithoutImage
+                        onClick={() => {
+                            navigate(
+                                getNavigateLinkToRecipe(
+                                    categories,
+                                    subCategories,
+                                    recipes[0].categoriesIds[1],
+                                    recipes[1]._id,
+                                ),
+                            );
+                        }}
+                        size={screenSize}
+                        title={recipes[1].title}
+                        description={recipes[1].description}
+                        dishType={
+                            getCategoryById(categories, subCategories, recipes[1].categoriesIds[0])
+                                ?.category || ''
+                        }
+                    />
+                )}
                 <Flex gap='12px' justifyContent='space-between' direction='column'>
-                    <CardWithIcon
-                        size={screenSize}
-                        icon={KitchenIcon}
-                        title='Стейк для вегетарианцев'
-                    />
-                    <CardWithIcon
-                        size={screenSize}
-                        icon={KitchenIcon}
-                        title='Котлеты из гречки и фасоли'
-                    />
-                    <CardWithIcon
-                        size={screenSize}
-                        icon={PotIcon}
-                        title='Сырный суп с лапшой и брокколи'
-                    />
+                    {length > 2 && (
+                        <CardWithIcon
+                            onClick={() => {
+                                navigate(
+                                    getNavigateLinkToRecipe(
+                                        categories,
+                                        subCategories,
+                                        recipes[2].categoriesIds[0],
+                                        recipes[2]._id,
+                                    ),
+                                );
+                            }}
+                            size={screenSize}
+                            icon={
+                                'https://training-api.clevertec.ru' +
+                                    getCategoryById(
+                                        categories,
+                                        subCategories,
+                                        recipes[2].categoriesIds[0],
+                                    )?.icon || ''
+                            }
+                            title={recipes[2].title}
+                        />
+                    )}
+                    {length > 3 && (
+                        <CardWithIcon
+                            onClick={() => {
+                                navigate(
+                                    getNavigateLinkToRecipe(
+                                        categories,
+                                        subCategories,
+                                        recipes[3].categoriesIds[0],
+                                        recipes[3]._id,
+                                    ),
+                                );
+                            }}
+                            size={screenSize}
+                            icon={
+                                'https://training-api.clevertec.ru' +
+                                    getCategoryById(
+                                        categories,
+                                        subCategories,
+                                        recipes[3].categoriesIds[0],
+                                    )?.icon || ''
+                            }
+                            title={recipes[3].title}
+                        />
+                    )}
+                    {length > 4 && (
+                        <CardWithIcon
+                            onClick={() => {
+                                navigate(
+                                    getNavigateLinkToRecipe(
+                                        categories,
+                                        subCategories,
+                                        recipes[4].categoriesIds[0],
+                                        recipes[4]._id,
+                                    ),
+                                );
+                            }}
+                            size={screenSize}
+                            icon={
+                                'https://training-api.clevertec.ru' +
+                                    getCategoryById(
+                                        categories,
+                                        subCategories,
+                                        recipes[4].categoriesIds[0],
+                                    )?.icon || ''
+                            }
+                            title={recipes[4].title}
+                        />
+                    )}
                 </Flex>
             </Flex>
         </Flex>
     );
-};
+});

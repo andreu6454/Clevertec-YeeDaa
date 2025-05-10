@@ -1,44 +1,90 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { LinksCarousel } from '~/components/LinksCarousel/LinksCarousel';
-import { navBarData } from '~/shared/data/navBarData';
+import {
+    useGetRecipeByCategoryQuery,
+    useLazyGetRecipesWithParamsQuery,
+} from '~/query/services/recipes';
+import { useGetQueryParams } from '~/shared/hooks/useGetQueryParams';
 import { useRouteSegments } from '~/shared/hooks/useRouteSegments';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
+import { setAppError } from '~/store/app-slice';
+import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
-    filteredDataSelector,
-    setCategoriesFilter,
-    setFilteredData,
+    inputLoadingSelector,
+    recipesDataSelector,
+    subCategoriesIdsSelector,
 } from '~/store/recipesListPage-slice';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
-export const RecipesListPage = memo(() => {
+const RecipesListPage = memo(() => {
     const { screenSize } = useScreenSize();
 
     const dispatch = useAppDispatch();
+    const subCategories = useAppSelector(subCategoriesSelector);
+    const categories = useAppSelector(categoriesSelector);
+    const subCategoriesIds = useAppSelector(subCategoriesIdsSelector);
+    const isInputLoading = useAppSelector(inputLoadingSelector);
+
+    const [page] = useState<number>(1);
+    const [isLastPage, setIsLastPage] = useState<boolean>(false);
 
     const { category, subcategory } = useRouteSegments();
 
+    const subcategoryId = subCategories.find((el) => el.category === subcategory)?._id || '';
+    const categoryInfo = categories.find((el) => el.category === category);
+
+    const [triggerGetRecipes, { isFetching, isError }] = useLazyGetRecipesWithParamsQuery();
+    const searchRecipes = useAppSelector(recipesDataSelector);
+    const queryParams = useGetQueryParams();
+
+    const { data, isError: isByCategoryError } = useGetRecipeByCategoryQuery({
+        subcategoryId: subcategoryId,
+        limit: 8,
+    });
+
     useEffect(() => {
-        dispatch(setCategoriesFilter({ categories: [category], subcategory: subcategory }));
-        dispatch(setFilteredData());
-    }, [category, subcategory]);
+        if (data && page >= data?.meta.totalPages) {
+            setIsLastPage(true);
+        }
+    }, [data, page]);
 
-    const title = navBarData.filter((el) => el.general === category)[0].title;
-    const links = navBarData.filter((el) => el.general === category)[0].links;
+    useEffect(() => {
+        if (subCategoriesIds.length > 1 && !isFetching) {
+            triggerGetRecipes(queryParams, false);
+        }
+    }, [subCategoriesIds]);
 
-    const recipes = useAppSelector(filteredDataSelector);
+    const onSearchHandle = () => {
+        if (subCategoriesIds.length > 1 && !isFetching) {
+            triggerGetRecipes(queryParams, false);
+        }
+    };
 
+    const title = categoryInfo?.title || '';
+    const description = categoryInfo?.description;
+    const links = categoryInfo?.subCategories || [];
+
+    if (isInputLoading) return <FullScreenSpinner />;
+    if (isError || isByCategoryError) {
+        dispatch(setAppError('error'));
+    }
     return (
         <CuisinePageLayout
+            onSearchHandle={onSearchHandle}
             searchTitle={title}
-            searchDescription='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
-            recTitle='Десерты, выпечка'
-            recDescription='Без них невозможно представить себе ни современную, ни традиционную кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб — рецепты изделий из теста многообразны и невероятно популярны..'
+            searchDescription={description}
         >
             <LinksCarousel category={category} size={screenSize} links={links} />
-            <RecipesContainer data={recipes} />
+            <RecipesContainer
+                isLastPage={isLastPage}
+                data={searchRecipes?.data ? searchRecipes.data : data?.data || []}
+            />
         </CuisinePageLayout>
     );
 });
+
+export default RecipesListPage;
