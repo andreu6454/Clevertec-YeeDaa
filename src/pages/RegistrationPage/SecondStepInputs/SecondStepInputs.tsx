@@ -1,50 +1,51 @@
-import { Input } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
+import { memo } from 'react';
+import { FieldErrors, FieldValues, SetFieldValue, UseFormRegister } from 'react-hook-form';
 
-import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { RegisterFormDataType } from '~/pages/RegistrationPage/RegistrationPage';
+import { AuthFormInput } from '~/shared/ui/AuthFormInput/AuthFormInput';
+import { AuthPasswordInput } from '~/shared/ui/AuthPasswordInput/AuthPasswordInput';
 
-export const SecondStepInputs = () => (
-    <Flex flexDirection='column' gap='24px'>
-        <Flex flexDirection='column' gap='4px'>
-            <Typography Size={TypographySizes.md} fontWeight={400}>
-                Логин для входа на сайт
-            </Typography>
-            <Input
-                size='lg'
-                width='100%'
-                variant='outlined'
-                border='1px solid #d7ff94'
-                border-radius='6px'
+type SecondStepInputsProps = {
+    register: UseFormRegister<RegisterFormDataType>;
+    errors: FieldErrors<RegisterFormDataType>;
+    setValue: SetFieldValue<FieldValues>;
+};
+
+export const SecondStepInputs = memo((props: SecondStepInputsProps) => {
+    const { register, errors, setValue } = props;
+
+    return (
+        <Flex flexDirection='column' gap='24px'>
+            <AuthFormInput
+                register={register('login')}
                 placeholder='Логин'
+                error={errors.login?.message}
+                isInvalid={!!errors.login}
+                label='Логин для входа на сайт'
+                hint={errors.login ? 'Логин не менее 5 символов, только латиница и !@#$&_+-.' : ''}
+                testId='login'
+                setValue={setValue}
             />
-        </Flex>
-        <Flex flexDirection='column' gap='4px'>
-            <Typography Size={TypographySizes.md} fontWeight={400}>
-                Пароль
-            </Typography>
-            <Input
-                size='lg'
-                width='100%'
-                variant='outlined'
-                border='1px solid #d7ff94'
-                border-radius='6px'
-                placeholder='Пароль'
-                type='password'
+            <AuthPasswordInput
+                register={register('password')}
+                placeholder='Введите пароль'
+                label='Пароль'
+                error={errors.password?.message}
+                isInvalid={!!errors.password}
+                hint={
+                    errors.password ? 'Пароль не менее 8 символов, с заглавной буквой и цифрой' : ''
+                }
+                testId='password'
             />
-        </Flex>
-        <Flex flexDirection='column' gap='4px'>
-            <Typography Size={TypographySizes.md} fontWeight={400}>
-                Повторите пароль
-            </Typography>
-            <Input
-                size='lg'
-                width='100%'
-                variant='outlined'
-                border='1px solid #d7ff94'
-                border-radius='6px'
+            <AuthPasswordInput
+                register={register('repeatPassword')}
                 placeholder='Повторите пароль'
-                type='password'
+                label='Повторите пароль'
+                error={errors.repeatPassword?.message}
+                isInvalid={!!errors.repeatPassword}
+                testId='repeatPassword'
             />
         </Flex>
-    </Flex>
-);
+    );
+});

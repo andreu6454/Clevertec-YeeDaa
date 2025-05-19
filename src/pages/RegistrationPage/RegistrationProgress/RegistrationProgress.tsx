@@ -9,7 +9,7 @@ type RegistrationProgressProps = {
 export const RegistrationProgress = (props: RegistrationProgressProps) => {
     const { step } = props;
 
-    const progress = [0, 50, 90, 100];
+    const progress = [50, 90, 100, 100];
 
     return (
         <Box>

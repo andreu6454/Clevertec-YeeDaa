@@ -1,48 +1,48 @@
-import { Input } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
+import { memo } from 'react';
+import { FieldErrors, FieldValues, SetFieldValue, UseFormRegister } from 'react-hook-form';
 
-import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { RegisterFormDataType } from '~/pages/RegistrationPage/RegistrationPage';
+import { AuthFormInput } from '~/shared/ui/AuthFormInput/AuthFormInput';
 
-export const FirstStepInputs = () => (
-    <Flex flexDirection='column' gap='24px'>
-        <Flex flexDirection='column' gap='4px'>
-            <Typography Size={TypographySizes.md} fontWeight={400}>
-                Ваше имя
-            </Typography>
-            <Input
-                size='lg'
-                width='100%'
-                variant='outlined'
-                border='1px solid #d7ff94'
-                border-radius='6px'
-                placeholder='Екатерина'
+type FirstStepInputsProps = {
+    register: UseFormRegister<RegisterFormDataType>;
+    errors: FieldErrors<RegisterFormDataType>;
+    setValue: SetFieldValue<FieldValues>;
+};
+
+export const FirstStepInputs = memo((props: FirstStepInputsProps) => {
+    const { register, errors, setValue } = props;
+
+    return (
+        <Flex flexDirection='column' gap='24px'>
+            <AuthFormInput
+                register={register('firstName')}
+                placeholder='Введите имя'
+                error={errors.firstName?.message}
+                isInvalid={!!errors.firstName}
+                label='Ваше имя'
+                testId='first?Name'
+                setValue={setValue}
+            />
+            <AuthFormInput
+                register={register('lastName')}
+                placeholder='Введите фамилию'
+                error={errors.lastName?.message}
+                isInvalid={!!errors.lastName}
+                label='Вашa фамилия'
+                testId='lastname'
+                setValue={setValue}
+            />
+            <AuthFormInput
+                register={register('email')}
+                placeholder='Введите e-mail'
+                error={errors.email?.message}
+                isInvalid={!!errors.email}
+                label='Ваш e-mail'
+                testId='email'
+                setValue={setValue}
             />
         </Flex>
-        <Flex flexDirection='column' gap='4px'>
-            <Typography Size={TypographySizes.md} fontWeight={400}>
-                Ваша фамилия
-            </Typography>
-            <Input
-                size='lg'
-                width='100%'
-                variant='outlined'
-                border='1px solid #d7ff94'
-                border-radius='6px'
-                placeholder='Константинопольская'
-            />
-        </Flex>
-        <Flex flexDirection='column' gap='4px'>
-            <Typography Size={TypographySizes.md} fontWeight={400}>
-                Ваш e-mail
-            </Typography>
-            <Input
-                size='lg'
-                width='100%'
-                variant='outlined'
-                border='1px solid #d7ff94'
-                border-radius='6px'
-                placeholder='ekaterinabaker@gmail.ru'
-            />
-        </Flex>
-    </Flex>
-);
+    );
+});

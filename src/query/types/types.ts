@@ -25,4 +25,21 @@ export type RecipeParams = {
     sortOrder?: 'asc' | 'desc';
 };
 
+export type SignUpParams = {
+    email: string;
+    login: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+};
+
+export type AuthSuccessResponse = {
+    statusText: string;
+    message: string;
+};
+
+export type LoginParams = {
+    login: string;
+    password: string;
+};
 export type CategoryResponse = CategoryType[] | SubCategoryType[];

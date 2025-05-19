@@ -3,8 +3,9 @@ import { Button, Flex } from '@chakra-ui/react';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 export const LoginButtonWithLink = () => (
-    <Flex flexDirection='column' width='100%' gap='16px' alignItems='center'>
+    <Flex flexDirection='column' width='100%' gap='16px' alignItems='center' marginTop='112px'>
         <Button
+            type='submit'
             width='100%'
             size='lg'
             variant='solid'

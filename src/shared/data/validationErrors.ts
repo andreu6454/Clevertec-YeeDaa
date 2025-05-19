@@ -1,0 +1,16 @@
+export const validationErrors = {
+    loginEmpty: 'Введите логин',
+    passwordEmpty: 'Введите пароль',
+    maxLength: 'Максимальная длина 50 символов',
+    incorrectFormat: 'Не соответствует формату',
+    capitalLetter: 'Пароль должен содержать хотя бы одну заглавную букву (A-Z)',
+    includeNumbers: 'Пароль должен содержать хотя бы одну цифру (0-9)',
+    emailEmpty: 'Введите e-mail',
+    firstNameEmpty: 'Введите имя',
+    firstLetterCyrillic: 'Должно начинаться с кириллицы А-Я',
+    onlyCyrillic: 'Только кириллица А-Я, и "-"',
+    lastNameEmpty: 'Введите фамилию',
+    incorrectEmail: 'Введите корректный e-mail',
+    repeatPassword: 'Повторите пароль',
+    matchPasswords: 'Пароли должны совпадать',
+};
