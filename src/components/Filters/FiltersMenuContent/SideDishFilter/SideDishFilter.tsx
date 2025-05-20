@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { sideDishFilters } from '~/shared/data/recipeFilters';
+import { sideDishFilters } from '~/shared/constants/recipeFilters';
 import { CustomCheckbox } from '~/shared/ui/Checkbox/Checkbox';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';

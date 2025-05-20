@@ -38,6 +38,15 @@ export type AuthSuccessResponse = {
     message: string;
 };
 
+export type ErrorResponse = {
+    data: {
+        message: string;
+        error?: string;
+        statusCode: number;
+    };
+    status: number;
+};
+
 export type LoginParams = {
     login: string;
     password: string;

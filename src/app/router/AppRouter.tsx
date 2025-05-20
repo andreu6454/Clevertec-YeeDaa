@@ -7,6 +7,7 @@ import { MainPage } from '~/pages/MainPage/MainPage.tsx';
 import RecipePage from '~/pages/RecipePage/RecipePage';
 import RecipesListPage from '~/pages/RecipesListPage/RecipesListPage';
 import { RegistrationPage } from '~/pages/RegistrationPage/RegistrationPage';
+import { VerificationPage } from '~/pages/VerificationPage/VerificationPage';
 import { WithAuthValidation } from '~/shared/HOC/WithAuthValidation';
 import { WithCategoryValidation } from '~/shared/HOC/WithCategoryValidation';
 import { WithMainLayout } from '~/shared/HOC/WithMainLayout';
@@ -38,6 +39,7 @@ export const AppRouter = () => (
             <Route path='/not-found' element={<ErrorPage />} />
         </Route>
         <Route path='/login' element={<LoginPage />} />
+        <Route path='/verification' element={<VerificationPage />} />
         <Route path='/register' element={<RegistrationPage />} />
         <Route path='*' element={<Navigate to='/not-found' />} />
     </Routes>

@@ -10,6 +10,7 @@ const initialState = {
     isBurgerOpen: false,
     isFiltersOpen: false,
     isLogin: false,
+    emailVerified: null as boolean | null,
     pageTitle: {
         _id: '',
         title: '',
@@ -24,6 +25,9 @@ export const appSlice = createSlice({
         },
         setAppLoader(state, { payload: isLoading }: PayloadAction<boolean>) {
             state.isLoading = isLoading;
+        },
+        setEmailVerification(state, { payload: isVerified }: PayloadAction<boolean>) {
+            state.emailVerified = isVerified;
         },
         openBurgerMenu(state: AppState) {
             state.isBurgerOpen = true;
@@ -52,10 +56,12 @@ export const isBurgerOpenSelector = (state: ApplicationState) => state.app.isBur
 export const isLoginSelector = (state: ApplicationState) => state.app.isLogin;
 export const isFiltersOpenSelector = (state: ApplicationState) => state.app.isFiltersOpen;
 export const recipePageTitleSelector = (state: ApplicationState) => state.app.pageTitle;
+export const emailVerifiedSelector = (state: ApplicationState) => state.app.emailVerified;
 
 export const {
     setAppError,
     setAppLoader,
+    setEmailVerification,
     closeBurgerMenu,
     openBurgerMenu,
     openFilters,

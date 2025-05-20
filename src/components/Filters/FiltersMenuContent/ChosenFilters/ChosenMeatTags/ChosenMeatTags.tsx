@@ -1,7 +1,7 @@
 import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { meatFilters } from '~/shared/data/recipeFilters';
+import { meatFilters } from '~/shared/constants/recipeFilters';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { meatFiltersSelector, setMeatFilters } from '~/store/recipesListPage-slice';
 

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { validationErrors } from '~/shared/data/validationErrors';
+import { validationErrors } from '~/shared/constants/validationErrors';
 
 export const userDataSchema = z.object({
     firstName: z

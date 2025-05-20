@@ -4,7 +4,7 @@ import { memo } from 'react';
 
 import { AllergensFilterHeader } from '~/components/Filters/FiltersMenuContent/AllergensFilter/AllergensFilterHeader/AllergensFilterHeader';
 import { NewAllergenInput } from '~/components/Filters/FiltersMenuContent/AllergensFilter/NewAllergenInput/NewAllergenInput';
-import { allergenFilters } from '~/shared/data/recipeFilters';
+import { allergenFilters } from '~/shared/constants/recipeFilters';
 import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTitle';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
