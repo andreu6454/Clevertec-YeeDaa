@@ -10,3 +10,6 @@ export const AUTH_LOGIN_STATUSES = {
         description: 'Проверьте почту и перейдите по ссылке',
     },
 };
+
+export const LOGIN_EXISTS = 'Пользователь с таким login уже существует.';
+export const EMAIL_EXISTS = 'Пользователь с таким email уже существует.';
