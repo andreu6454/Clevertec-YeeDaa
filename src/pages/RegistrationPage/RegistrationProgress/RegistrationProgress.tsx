@@ -1,5 +1,6 @@
 import { Box, Progress } from '@chakra-ui/icons';
 
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 type RegistrationProgressProps = {
@@ -15,7 +16,12 @@ export const RegistrationProgress = (props: RegistrationProgressProps) => {
     return (
         <Box>
             <Typography Size={TypographySizes.md}>{title[step]}</Typography>
-            <Progress colorScheme='green' size='sm' value={registrationProgress} />
+            <Progress
+                data-test-id={DATA_TEST_IDS.signUpProgress}
+                colorScheme='green'
+                size='sm'
+                value={registrationProgress}
+            />
         </Box>
     );
 };

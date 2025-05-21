@@ -1,5 +1,6 @@
 import { Button, Flex, Image, Text } from '@chakra-ui/react';
 
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CustomModal } from '~/shared/ui/CustomModal/CustomModal';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
@@ -37,7 +38,12 @@ export const LoginModalError = (props: LoginModalErrorProps) => {
     const { screenSize } = useScreenSize();
 
     return (
-        <CustomModal isOpen={isOpen} onClose={onClose} width={sizes[screenSize].width}>
+        <CustomModal
+            dataTestId={DATA_TEST_IDS.signInErrorModal}
+            isOpen={isOpen}
+            onClose={onClose}
+            width={sizes[screenSize].width}
+        >
             <Flex
                 flexDirection='column'
                 width={sizes[screenSize].width}
@@ -66,6 +72,7 @@ export const LoginModalError = (props: LoginModalErrorProps) => {
                 </Flex>
 
                 <Button
+                    data-test-id={DATA_TEST_IDS.repeatButton}
                     backgroundColor='black'
                     color='white'
                     variant='solid'

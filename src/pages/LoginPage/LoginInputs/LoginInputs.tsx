@@ -2,6 +2,7 @@ import { Flex } from '@chakra-ui/react';
 import { FieldErrors, FieldValues, SetFieldValue, UseFormRegister } from 'react-hook-form';
 
 import { LoginFormDataType } from '~/pages/LoginPage/LoginPage';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { AuthFormInput } from '~/shared/ui/AuthFormInput/AuthFormInput';
 import { AuthPasswordInput } from '~/shared/ui/AuthPasswordInput/AuthPasswordInput';
 
@@ -23,10 +24,11 @@ export const LoginInputs = (props: LoginInputsProps) => {
                 isInvalid={!!errors.login}
                 label='Логин для входа на сайт'
                 hint={errors.login ? 'Логин не менее 5 символов, только латиница' : ''}
-                testId='login'
+                dataTestId={DATA_TEST_IDS.loginInput}
                 setValue={setValue}
             />
             <AuthPasswordInput
+                data-test-id={DATA_TEST_IDS.passwordInput}
                 register={register('password')}
                 placeholder='Введите пароль'
                 label='Пароль'
@@ -35,7 +37,7 @@ export const LoginInputs = (props: LoginInputsProps) => {
                 hint={
                     errors.password ? 'Пароль не менее 8 символов, с заглавной буквой и цифрой' : ''
                 }
-                testId='password'
+                dataTestId={DATA_TEST_IDS.passwordInput}
             />
         </Flex>
     );

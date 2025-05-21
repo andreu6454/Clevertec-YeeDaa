@@ -4,12 +4,14 @@ import { memo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { LoginInputs } from '~/pages/LoginPage/LoginInputs/LoginInputs';
 import { LoginModalError } from '~/pages/LoginPage/LoginModalError/LoginModalError';
 import { PasswordRecovery } from '~/pages/LoginPage/PasswordRecovery/PasswordRecovery';
 import { useLoginMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';
 import { AUTH_LOGIN_STATUSES } from '~/shared/constants/authStatuses';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { AuthLayout } from '~/shared/layouts/AuthLayout/AuthLayout';
 import { signInSchema } from '~/shared/types/validationSchemas/loginSchema';
@@ -50,7 +52,7 @@ export const LoginPage = memo(() => {
         }
     }, [isEmailVerified]);
 
-    const [login] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
 
     const onSubmitHandler = handleSubmit(async (data) => {
         try {
@@ -59,12 +61,12 @@ export const LoginPage = memo(() => {
             navigate('/');
         } catch (error) {
             const responseError = error as ErrorResponse;
-            const statusCode = Number(responseError.data.statusCode);
+            const statusCode = Number(responseError.status);
 
             if (statusCode > 400 && statusCode < 500) {
                 alertToast(AUTH_LOGIN_STATUSES[statusCode as keyof typeof AUTH_LOGIN_STATUSES]);
             }
-            if (statusCode > 500) {
+            if (statusCode >= 500) {
                 onOpen();
             }
         }
@@ -73,9 +75,10 @@ export const LoginPage = memo(() => {
     return (
         <AuthLayout>
             <Flex flexDirection='column' width='100%' max-height='468px'>
-                <form onSubmit={onSubmitHandler}>
+                <form onSubmit={onSubmitHandler} data-test-id={DATA_TEST_IDS.signInForm}>
                     <LoginInputs setValue={setValue} register={register} errors={errors} />
                     <Button
+                        data-test-id={DATA_TEST_IDS.submitButton}
                         marginTop='112px'
                         type='submit'
                         width='100%'
@@ -90,6 +93,7 @@ export const LoginPage = memo(() => {
                 <PasswordRecovery />
             </Flex>
             <LoginModalError isOpen={isOpen} onClose={onClose} onSubmit={onSubmitHandler} />
+            {isLoading && <FullScreenSpinner />}
         </AuthLayout>
     );
 });

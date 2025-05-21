@@ -2,6 +2,7 @@ import { Button, useDisclosure } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import { RecoveryPasswordModal } from '~/pages/LoginPage/PasswordRecovery/RecoveryPasswordModal/RecoveryPasswordModal';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 
 export type PasswordRecovery = {
     email: string;
@@ -15,6 +16,7 @@ export const PasswordRecovery = () => {
     return (
         <>
             <Button
+                data-test-id={DATA_TEST_IDS.forgotPassword}
                 variant='ghost'
                 onClick={() => onOpen()}
                 paddingY={0}

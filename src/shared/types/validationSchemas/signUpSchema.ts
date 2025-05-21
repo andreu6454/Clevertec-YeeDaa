@@ -35,8 +35,10 @@ export const userPasswordSchema = z
             .string()
             .min(1, { message: validationErrors.passwordEmpty })
             .max(50, { message: validationErrors.maxLength })
-            .regex(/^[A-Za-z0-9!@#$&_+\-.:]{8,}$/, { message: validationErrors.incorrectFormat }),
-        passwordConfirm: z.string().min(1, { message: validationErrors.passwordConfirm }),
+            .regex(/^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9!@#$&_+\-.:]{8,}$/, {
+                message: validationErrors.incorrectFormat,
+            }),
+        passwordConfirm: z.string().min(1, { message: validationErrors.passwordEmpty }),
     })
     .refine((data) => data.password === data.passwordConfirm, {
         message: validationErrors.matchPasswords,

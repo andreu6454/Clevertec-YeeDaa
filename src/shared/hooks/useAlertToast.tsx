@@ -9,6 +9,8 @@ import {
     UseToastOptions,
 } from '@chakra-ui/react';
 
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+
 const DURATION = 15000;
 
 const ALERT_WIDTH = {
@@ -42,7 +44,7 @@ export const useAlertToast = () => {
                     py={3}
                     px={4}
                     bottom={{ base: INDENT_BOTTOM.sm, lg: INDENT_BOTTOM.lg }}
-                    data-test-id='error-notification'
+                    data-test-id={DATA_TEST_IDS.errorNotification}
                 >
                     <AlertIcon color='white' />
 
@@ -58,7 +60,7 @@ export const useAlertToast = () => {
                         position='absolute'
                         right={3}
                         onClick={onClose}
-                        data-test-id='close-alert-button'
+                        data-test-id={DATA_TEST_IDS.closeAlert}
                     />
                 </Alert>
             ),

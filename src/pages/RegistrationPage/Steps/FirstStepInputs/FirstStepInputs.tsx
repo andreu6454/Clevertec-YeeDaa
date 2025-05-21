@@ -3,6 +3,7 @@ import { memo } from 'react';
 import { FieldErrors, FieldValues, SetFieldValue, UseFormRegister } from 'react-hook-form';
 
 import { RegisterFormDataType } from '~/pages/RegistrationPage/RegistrationPage';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { AuthFormInput } from '~/shared/ui/AuthFormInput/AuthFormInput';
 
 type FirstStepInputsProps = {
@@ -22,7 +23,7 @@ export const FirstStepInputs = memo((props: FirstStepInputsProps) => {
                 error={errors.firstName?.message}
                 isInvalid={!!errors.firstName}
                 label='Ваше имя'
-                testId='first?Name'
+                dataTestId={DATA_TEST_IDS.firstNameInput}
                 setValue={setValue}
             />
             <AuthFormInput
@@ -31,7 +32,7 @@ export const FirstStepInputs = memo((props: FirstStepInputsProps) => {
                 error={errors.lastName?.message}
                 isInvalid={!!errors.lastName}
                 label='Вашa фамилия'
-                testId='lastname'
+                dataTestId={DATA_TEST_IDS.lastNameInput}
                 setValue={setValue}
             />
             <AuthFormInput
@@ -40,7 +41,7 @@ export const FirstStepInputs = memo((props: FirstStepInputsProps) => {
                 error={errors.email?.message}
                 isInvalid={!!errors.email}
                 label='Ваш e-mail'
-                testId='email'
+                dataTestId={DATA_TEST_IDS.emailInput}
                 setValue={setValue}
             />
         </Flex>

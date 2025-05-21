@@ -10,21 +10,22 @@ import {
 import { useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+
 type AuthPasswordInputProps = {
     register: UseFormRegisterReturn;
     isInvalid: boolean;
     label: string;
     placeholder: string;
-    testId: string;
+    dataTestId: string;
     hint?: string;
     error?: string;
 };
 
 export const AuthPasswordInput = (props: AuthPasswordInputProps) => {
-    const { register, hint, error, label, placeholder, testId, isInvalid } = props;
+    const { register, hint, error, label, placeholder, dataTestId, isInvalid } = props;
 
     const [show, setShow] = useState(false);
-    const handleClick = () => setShow(!show);
 
     return (
         <FormControl isInvalid={isInvalid}>
@@ -36,7 +37,7 @@ export const AuthPasswordInput = (props: AuthPasswordInputProps) => {
                     {...register}
                     type={show ? 'text' : 'password'}
                     size='lg'
-                    data-test-id={testId}
+                    data-test-id={dataTestId}
                     variant='outlined'
                     width='100%'
                     border='1px solid #d7ff94'
@@ -44,8 +45,10 @@ export const AuthPasswordInput = (props: AuthPasswordInputProps) => {
                 />
                 <InputRightElement>
                     <IconButton
+                        data-test-id={DATA_TEST_IDS.passwordVisibility}
                         variant='ghost'
-                        onClick={handleClick}
+                        onMouseDown={() => setShow(true)}
+                        onMouseUp={() => setShow(false)}
                         aria-label='password'
                         icon={show ? <ViewIcon /> : <ViewOffIcon />}
                     />

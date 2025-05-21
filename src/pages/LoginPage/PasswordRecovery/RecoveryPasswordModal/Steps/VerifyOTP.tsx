@@ -1,10 +1,12 @@
 import { PinInput } from '@chakra-ui/icons';
-import { Box, Flex, Image, PinInputField } from '@chakra-ui/react';
+import { Box, Flex, Image, PinInputField, Text } from '@chakra-ui/react';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import OTPCode from '~/assets/otpCode.png';
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { useVerifyOtpMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
@@ -45,7 +47,7 @@ export const VerifyOtp = (props: VerifyOtpProps) => {
         setIsError(false);
     };
 
-    const [verifyOtp] = useVerifyOtpMutation();
+    const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
     const alertToast = useAlertToast();
 
     const onCompleteHandler = async (data: string) => {
@@ -55,13 +57,14 @@ export const VerifyOtp = (props: VerifyOtpProps) => {
             setStep(2);
         } catch (error) {
             const responseError = error as ErrorResponse;
-            const statusCode = Number(responseError.data.statusCode);
+            const statusCode = Number(responseError.status);
 
             if (statusCode === 403) {
                 setPin('');
                 setIsError(true);
             }
-            if (statusCode > 500) {
+            if (statusCode >= 500) {
+                setPin('');
                 alertToast({
                     status: 'error',
                     title: 'Ошибка сервера',
@@ -86,6 +89,17 @@ export const VerifyOtp = (props: VerifyOtpProps) => {
             />
 
             <Box>
+                {isError && (
+                    <Text
+                        fontWeight='700'
+                        fontSize='24px'
+                        lineHeight='133%'
+                        textAlign='center'
+                        marginBottom='16px'
+                    >
+                        Неверный код
+                    </Text>
+                )}
                 <Typography
                     Size={TypographySizes.md}
                     color='rgba(0, 0, 0, 0.64)'
@@ -115,18 +129,37 @@ export const VerifyOtp = (props: VerifyOtpProps) => {
                     value={pin}
                     onComplete={onCompleteHandler}
                 >
-                    <PinInputField borderColor={isError ? '#e53e3e' : ''} />
-                    <PinInputField borderColor={isError ? '#e53e3e' : ''} />
-                    <PinInputField borderColor={isError ? '#e53e3e' : ''} />
-                    <PinInputField borderColor={isError ? '#e53e3e' : ''} />
-                    <PinInputField borderColor={isError ? '#e53e3e' : ''} />
-                    <PinInputField borderColor={isError ? '#e53e3e' : ''} />
+                    <PinInputField
+                        data-test-id={DATA_TEST_IDS.verificationCodeInput + '1'}
+                        borderColor={isError ? '#e53e3e' : ''}
+                    />
+                    <PinInputField
+                        data-test-id={DATA_TEST_IDS.verificationCodeInput + '2'}
+                        borderColor={isError ? '#e53e3e' : ''}
+                    />
+                    <PinInputField
+                        data-test-id={DATA_TEST_IDS.verificationCodeInput + '3'}
+                        borderColor={isError ? '#e53e3e' : ''}
+                    />
+                    <PinInputField
+                        data-test-id={DATA_TEST_IDS.verificationCodeInput + '4'}
+                        borderColor={isError ? '#e53e3e' : ''}
+                    />
+                    <PinInputField
+                        data-test-id={DATA_TEST_IDS.verificationCodeInput + '5'}
+                        borderColor={isError ? '#e53e3e' : ''}
+                    />
+                    <PinInputField
+                        data-test-id={DATA_TEST_IDS.verificationCodeInput + '6'}
+                        borderColor={isError ? '#e53e3e' : ''}
+                    />
                 </PinInput>
             </Flex>
 
             <Typography Size={TypographySizes.xs} textAlign='center' color='rgba(0, 0, 0, 0.48)'>
                 Не пришло письмо? Проверьте папку Спам.
             </Typography>
+            {isLoading && <FullScreenSpinner />}
         </Flex>
     );
 };

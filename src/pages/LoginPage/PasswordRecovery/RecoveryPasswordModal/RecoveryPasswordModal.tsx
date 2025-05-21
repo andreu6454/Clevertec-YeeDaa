@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { ForgotPassword } from '~/pages/LoginPage/PasswordRecovery/RecoveryPasswordModal/Steps/ForgotPassword';
 import { ResetPassword } from '~/pages/LoginPage/PasswordRecovery/RecoveryPasswordModal/Steps/RessetPassword';
 import { VerifyOtp } from '~/pages/LoginPage/PasswordRecovery/RecoveryPasswordModal/Steps/VerifyOTP';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CustomModal } from '~/shared/ui/CustomModal/CustomModal';
 
@@ -33,8 +34,24 @@ export const RecoveryPasswordModal = (props: RecoveryPasswordModalProps) => {
         <ResetPassword email={email} onClose={onClose} />,
     ];
 
+    const dataTestIds = [
+        DATA_TEST_IDS.sendEmailModal,
+        DATA_TEST_IDS.verificationCodeModal,
+        DATA_TEST_IDS.resetCredentialsModal,
+    ];
+
+    const onCLoseHandler = () => {
+        setStep(0);
+        onClose();
+    };
+
     return (
-        <CustomModal isOpen={isOpen} onClose={onClose} width={width[screenSize]}>
+        <CustomModal
+            dataTestId={dataTestIds[step]}
+            isOpen={isOpen}
+            onClose={onCLoseHandler}
+            width={width[screenSize]}
+        >
             {recoverySteps[step]}
         </CustomModal>
     );

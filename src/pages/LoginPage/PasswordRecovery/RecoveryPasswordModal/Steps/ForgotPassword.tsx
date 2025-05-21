@@ -1,12 +1,13 @@
 import { Button, Flex, Image } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import RecoveryImage from '~/assets/loginError.png';
 import { PasswordRecovery } from '~/pages/LoginPage/PasswordRecovery/PasswordRecovery';
 import { useForgotPasswordMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { passwordRecoverySchema } from '~/shared/types/validationSchemas/signUpSchema';
@@ -39,6 +40,7 @@ const sizes = {
 
 export const ForgotPassword = (props: ForgotPasswordProps) => {
     const { setStep, setEmail } = props;
+    const [error, setError] = useState(false);
 
     const { screenSize } = useScreenSize();
 
@@ -48,6 +50,7 @@ export const ForgotPassword = (props: ForgotPasswordProps) => {
         register,
         handleSubmit,
         setValue,
+        reset,
         formState: { errors },
     } = useForm<PasswordRecovery>({
         mode: 'onBlur',
@@ -58,14 +61,17 @@ export const ForgotPassword = (props: ForgotPasswordProps) => {
 
     const onSubmitHandler = handleSubmit(async (data) => {
         try {
+            setError(false);
             await forgotPassword(data).unwrap();
             setEmail(data.email);
             setStep(1);
         } catch (error) {
             const responseError = error as ErrorResponse;
-            const statusCode = Number(responseError.data.statusCode);
+            const statusCode = Number(responseError.status);
 
             if (statusCode === 403) {
+                setError(true);
+                reset();
                 alertToast({
                     status: 'error',
                     title: 'Такого e-mail нет',
@@ -73,7 +79,8 @@ export const ForgotPassword = (props: ForgotPasswordProps) => {
                         'Попробуйте другой e-mail или проверьте правильность его написания',
                 });
             }
-            if (statusCode > 500) {
+            if (statusCode >= 500) {
+                reset();
                 alertToast({
                     status: 'error',
                     title: 'Ошибка сервера',
@@ -105,7 +112,7 @@ export const ForgotPassword = (props: ForgotPasswordProps) => {
                         fontWeight={400}
                         textAlign='center'
                     >
-                        Для восстановления входа введитe <br />
+                        Для восстановления входа введите <br />
                         ваш e-mail, куда можно отправить уникальный код
                     </Typography>
 
@@ -113,14 +120,15 @@ export const ForgotPassword = (props: ForgotPasswordProps) => {
                         register={register('email')}
                         placeholder='Введите e-mail'
                         error={errors.email?.message}
-                        isInvalid={!!errors.email}
+                        isInvalid={!!errors.email || error}
                         label='Ваш e-mail'
-                        testId='email'
+                        dataTestId={DATA_TEST_IDS.emailInput}
                         setValue={setValue}
                     />
                 </Flex>
 
                 <Button
+                    data-test-id={DATA_TEST_IDS.submitButton}
                     type='submit'
                     backgroundColor='black'
                     color='white'

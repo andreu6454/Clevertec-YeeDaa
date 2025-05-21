@@ -2,9 +2,11 @@ import { Flex, useDisclosure } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm, UseFormRegister } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import { ZodType } from 'zod';
 
-import { AccountRecoveryType } from '~/pages/LoginPage/PasswordRecovery/RecoveryPasswordModal/Steps/ResetPassword';
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
+import { AccountRecoveryType } from '~/pages/LoginPage/PasswordRecovery/RecoveryPasswordModal/Steps/RessetPassword';
 import { RegisterSuccessModal } from '~/pages/RegistrationPage/Modals/RegisterSuccessModal';
 import { VerificationErrorModal } from '~/pages/RegistrationPage/Modals/VerificationErrorModal';
 import { RegistrationButtons } from '~/pages/RegistrationPage/RegistrationButtons/RegistrationButtons';
@@ -14,6 +16,7 @@ import { SecondStepInputs } from '~/pages/RegistrationPage/Steps/SecondStepInput
 import { useSignUpMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';
 import { EMAIL_EXISTS, LOGIN_EXISTS } from '~/shared/constants/authStatuses';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { AuthLayout } from '~/shared/layouts/AuthLayout/AuthLayout';
 import { userDataSchema, userPasswordSchema } from '~/shared/types/validationSchemas/signUpSchema';
@@ -38,6 +41,7 @@ export const RegistrationPage = () => {
     const isVerified = useAppSelector(emailVerifiedSelector);
 
     const alertToast = useAlertToast();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isVerified === false) {
@@ -56,14 +60,13 @@ export const RegistrationPage = () => {
         register,
         handleSubmit,
         setValue,
-        reset,
         formState: { errors, dirtyFields },
     } = useForm<RegisterFormDataType>({
         resolver: zodResolver(signUpSchema[step]),
-        mode: 'onBlur',
+        mode: 'onChange',
     });
 
-    const [signUp] = useSignUpMutation();
+    const [signUp, { isLoading }] = useSignUpMutation();
 
     const onSubmitHandle = handleSubmit(async (data) => {
         if (step === 0) {
@@ -79,20 +82,16 @@ export const RegistrationPage = () => {
             onOpen();
         } catch (error) {
             const responseError = error as ErrorResponse;
-            const statusCode = Number(responseError.data.statusCode);
+            const statusCode = Number(responseError.status);
             const errorMessage = responseError.data.message;
 
             if (statusCode === 400 && errorMessage === LOGIN_EXISTS) {
-                reset();
-                setStep(0);
                 alertToast({
                     status: 'error',
                     title: LOGIN_EXISTS,
                 });
             }
             if (statusCode === 400 && errorMessage === EMAIL_EXISTS) {
-                reset();
-                setStep(0);
                 alertToast({
                     status: 'error',
                     title: EMAIL_EXISTS,
@@ -110,13 +109,13 @@ export const RegistrationPage = () => {
 
     const validatedCount = Object.keys(dirtyFields).reduce((acc, fieldName) => {
         const key = fieldName as keyof RegisterFormDataType;
-        if (dirtyFields[key]) {
+        if (dirtyFields[key] && !errors[key]) {
             return acc + 1;
         }
         return acc;
     }, 0);
 
-    const registrationProgress = (validatedCount * 100) / 6;
+    const registrationProgress = Math.round((validatedCount * 100) / 6);
 
     const stepsInputs = [
         <FirstStepInputs setValue={setValue} errors={errors} register={register} />,
@@ -126,11 +125,15 @@ export const RegistrationPage = () => {
             register={register as UseFormRegister<RegisterFormDataType | AccountRecoveryType>}
         />,
     ];
+    const onCloseHandler = () => {
+        onClose();
+        navigate('/login');
+    };
 
     return (
         <AuthLayout>
             <Flex flexDirection='column' width='100%'>
-                <form onSubmit={onSubmitHandle}>
+                <form onSubmit={onSubmitHandle} data-test-id={DATA_TEST_IDS.signUpForm}>
                     <Flex flexDirection='column' gap='24px'>
                         <RegistrationProgress
                             registrationProgress={registrationProgress}
@@ -141,8 +144,9 @@ export const RegistrationPage = () => {
                     <RegistrationButtons onSubmit={onSubmitHandle} step={step} />
                 </form>
             </Flex>
-            <RegisterSuccessModal isOpen={isOpen} onClose={onClose} email={email} />
+            <RegisterSuccessModal isOpen={isOpen} onClose={onCloseHandler} email={email} />
             <VerificationErrorModal isOpen={isVerificationOpen} onClose={onVerificationClose} />
+            {isLoading && <FullScreenSpinner />}
         </AuthLayout>
     );
 };

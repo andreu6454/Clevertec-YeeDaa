@@ -2,9 +2,11 @@ import { Button, Flex, Text } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { SecondStepInputs } from '~/pages/RegistrationPage/Steps/SecondStepInputs/SecondStepInputs';
 import { useResetPasswordMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { userPasswordSchema } from '~/shared/types/validationSchemas/signUpSchema';
@@ -56,7 +58,7 @@ export const ResetPassword = (props: ResetPasswordProps) => {
         resolver: zodResolver(userPasswordSchema),
     });
 
-    const [resetPassword] = useResetPasswordMutation();
+    const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
     const onSubmitHandler = handleSubmit(async (data) => {
         try {
@@ -68,9 +70,9 @@ export const ResetPassword = (props: ResetPasswordProps) => {
             onClose();
         } catch (error) {
             const responseError = error as ErrorResponse;
-            const statusCode = Number(responseError.data.statusCode);
+            const statusCode = Number(responseError.status);
 
-            if (statusCode > 500) {
+            if (statusCode >= 500) {
                 alertToast({
                     status: 'error',
                     title: 'Ошибка сервера',
@@ -95,6 +97,7 @@ export const ResetPassword = (props: ResetPasswordProps) => {
                 </Text>
                 <SecondStepInputs errors={errors} register={register} setValue={setValue} />
                 <Button
+                    data-test-id={DATA_TEST_IDS.submitButton}
                     type='submit'
                     backgroundColor='black'
                     color='white'
@@ -107,6 +110,7 @@ export const ResetPassword = (props: ResetPasswordProps) => {
                     Зарегистрироваться
                 </Button>
             </Flex>
+            {isLoading && <FullScreenSpinner />}
         </form>
     );
 };

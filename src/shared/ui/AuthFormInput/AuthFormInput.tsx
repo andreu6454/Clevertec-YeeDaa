@@ -7,14 +7,14 @@ type AuthFormInputProps = {
     isInvalid: boolean;
     label: string;
     placeholder: string;
-    testId: string;
     setValue: SetFieldValue<FieldValues>;
     hint?: string;
     error?: string;
+    dataTestId?: string;
 };
 
 export const AuthFormInput = (props: AuthFormInputProps) => {
-    const { register, hint, error, label, placeholder, testId, setValue, isInvalid } = props;
+    const { register, hint, error, label, placeholder, setValue, isInvalid, dataTestId } = props;
 
     const { name: fieldName } = register;
 
@@ -28,14 +28,14 @@ export const AuthFormInput = (props: AuthFormInputProps) => {
         <FormControl isInvalid={isInvalid}>
             <FormLabel marginBottom='4px'>{label}</FormLabel>
             <Input
+                data-test-id={dataTestId}
                 placeholder={placeholder}
                 {...register}
                 size='lg'
                 width='100%'
                 variant='outlined'
-                border='1px solid #d7ff94'
+                border={isInvalid ? '1px solid #e53e3e' : '1px solid #d7ff94'}
                 border-radius='6px'
-                data-test-id={testId}
                 onBlur={trimOnBlur}
             />
             <FormHelperText marginTop='4px'>{hint}</FormHelperText>
