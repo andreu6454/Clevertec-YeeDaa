@@ -29,6 +29,9 @@ export const appSlice = createSlice({
         setEmailVerification(state, { payload: isVerified }: PayloadAction<boolean>) {
             state.emailVerified = isVerified;
         },
+        setIsLogin(state, { payload: isLogin }: PayloadAction<boolean>) {
+            state.isLogin = isLogin;
+        },
         openBurgerMenu(state: AppState) {
             state.isBurgerOpen = true;
         },
@@ -62,6 +65,7 @@ export const {
     setAppError,
     setAppLoader,
     setEmailVerification,
+    setIsLogin,
     closeBurgerMenu,
     openBurgerMenu,
     openFilters,

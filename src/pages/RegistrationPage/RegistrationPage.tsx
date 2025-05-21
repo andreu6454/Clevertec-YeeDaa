@@ -1,9 +1,10 @@
 import { Flex, useDisclosure } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormRegister } from 'react-hook-form';
 import { ZodType } from 'zod';
 
+import { AccountRecoveryType } from '~/pages/LoginPage/PasswordRecovery/RecoveryPasswordModal/Steps/ResetPassword';
 import { RegisterSuccessModal } from '~/pages/RegistrationPage/Modals/RegisterSuccessModal';
 import { VerificationErrorModal } from '~/pages/RegistrationPage/Modals/VerificationErrorModal';
 import { RegistrationButtons } from '~/pages/RegistrationPage/RegistrationButtons/RegistrationButtons';
@@ -25,7 +26,7 @@ export type RegisterFormDataType = {
     email: string;
     login: string;
     password: string;
-    repeatPassword: string;
+    passwordConfirm: string;
 };
 
 const signUpSchema: ZodType[] = [userDataSchema, userPasswordSchema];
@@ -71,7 +72,7 @@ export const RegistrationPage = () => {
             setTempData({ ...data });
             return;
         }
-        const { repeatPassword, ...signUpData } = data;
+        const { passwordConfirm, ...signUpData } = data;
 
         try {
             await signUp({ ...tempData, ...signUpData }).unwrap();
@@ -119,7 +120,11 @@ export const RegistrationPage = () => {
 
     const stepsInputs = [
         <FirstStepInputs setValue={setValue} errors={errors} register={register} />,
-        <SecondStepInputs setValue={setValue} errors={errors} register={register} />,
+        <SecondStepInputs
+            setValue={setValue}
+            errors={errors}
+            register={register as UseFormRegister<RegisterFormDataType | AccountRecoveryType>}
+        />,
     ];
 
     return (

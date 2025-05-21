@@ -2,6 +2,12 @@ import { z } from 'zod';
 
 import { validationErrors } from '~/shared/constants/validationErrors';
 
+export const emailSchema = z
+    .string()
+    .min(1, { message: validationErrors.emailEmpty })
+    .max(50, { message: validationErrors.maxLength })
+    .email({ message: validationErrors.incorrectEmail });
+
 export const userDataSchema = z.object({
     firstName: z
         .string()
@@ -15,11 +21,7 @@ export const userDataSchema = z.object({
         .regex(/^[А-Яа-яЁё]/, { message: validationErrors.firstLetterCyrillic })
         .regex(/^[А-Яа-яЁё-]+$/, { message: validationErrors.onlyCyrillic })
         .max(50, { message: validationErrors.maxLength }),
-    email: z
-        .string()
-        .min(1, { message: validationErrors.emailEmpty })
-        .max(50, { message: validationErrors.maxLength })
-        .email({ message: validationErrors.incorrectEmail }),
+    email: emailSchema,
 });
 
 export const userPasswordSchema = z
@@ -34,9 +36,13 @@ export const userPasswordSchema = z
             .min(1, { message: validationErrors.passwordEmpty })
             .max(50, { message: validationErrors.maxLength })
             .regex(/^[A-Za-z0-9!@#$&_+\-.:]{8,}$/, { message: validationErrors.incorrectFormat }),
-        repeatPassword: z.string().min(1, { message: validationErrors.repeatPassword }),
+        passwordConfirm: z.string().min(1, { message: validationErrors.passwordConfirm }),
     })
-    .refine((data) => data.password === data.repeatPassword, {
+    .refine((data) => data.password === data.passwordConfirm, {
         message: validationErrors.matchPasswords,
-        path: ['repeatPassword'],
+        path: ['passwordConfirm'],
     });
+
+export const passwordRecoverySchema = z.object({
+    email: emailSchema,
+});

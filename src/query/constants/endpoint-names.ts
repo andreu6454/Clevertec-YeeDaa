@@ -5,4 +5,7 @@ export enum EndpointNames {
     GET_RECIPES_WITH_PARAMS = 'getRecipesByParams',
     SIGNUP = 'signUp',
     LOGIN = 'login',
+    FORGOT_PASSWORD = 'forgotPassword',
+    VERIFY_OTP = 'verifyOTP',
+    RESET_PASSWORD = 'resetPassword',
 }

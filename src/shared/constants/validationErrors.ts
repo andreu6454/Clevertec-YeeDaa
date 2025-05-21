@@ -11,6 +11,6 @@ export const validationErrors = {
     onlyCyrillic: 'Только кириллица А-Я, и "-"',
     lastNameEmpty: 'Введите фамилию',
     incorrectEmail: 'Введите корректный e-mail',
-    repeatPassword: 'Повторите пароль',
+    passwordConfirm: 'Повторите пароль',
     matchPasswords: 'Пароли должны совпадать',
 };

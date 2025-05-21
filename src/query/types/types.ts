@@ -52,3 +52,18 @@ export type LoginParams = {
     password: string;
 };
 export type CategoryResponse = CategoryType[] | SubCategoryType[];
+
+export type ForgotPasswordParams = {
+    email: string;
+};
+
+export type VerifyOtpParams = {
+    email: string;
+    otpToken: string;
+};
+export type ResetPasswordParams = {
+    login: string;
+    password: string;
+    passwordConfirm: string;
+    email: string;
+};

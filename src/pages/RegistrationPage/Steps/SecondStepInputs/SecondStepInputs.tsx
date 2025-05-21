@@ -2,13 +2,14 @@ import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 import { FieldErrors, FieldValues, SetFieldValue, UseFormRegister } from 'react-hook-form';
 
+import { AccountRecoveryType } from '~/pages/LoginPage/PasswordRecovery/RecoveryPasswordModal/Steps/ResetPassword';
 import { RegisterFormDataType } from '~/pages/RegistrationPage/RegistrationPage';
 import { AuthFormInput } from '~/shared/ui/AuthFormInput/AuthFormInput';
 import { AuthPasswordInput } from '~/shared/ui/AuthPasswordInput/AuthPasswordInput';
 
 type SecondStepInputsProps = {
-    register: UseFormRegister<RegisterFormDataType>;
-    errors: FieldErrors<RegisterFormDataType>;
+    register: UseFormRegister<RegisterFormDataType | AccountRecoveryType>;
+    errors: FieldErrors<RegisterFormDataType | AccountRecoveryType>;
     setValue: SetFieldValue<FieldValues>;
 };
 
@@ -16,7 +17,7 @@ export const SecondStepInputs = memo((props: SecondStepInputsProps) => {
     const { register, errors, setValue } = props;
 
     return (
-        <Flex flexDirection='column' gap='24px'>
+        <Flex flexDirection='column' gap='24px' width='100%'>
             <AuthFormInput
                 register={register('login')}
                 placeholder='Логин'
@@ -39,11 +40,11 @@ export const SecondStepInputs = memo((props: SecondStepInputsProps) => {
                 testId='password'
             />
             <AuthPasswordInput
-                register={register('repeatPassword')}
+                register={register('passwordConfirm')}
                 placeholder='Повторите пароль'
                 label='Повторите пароль'
-                error={errors.repeatPassword?.message}
-                isInvalid={!!errors.repeatPassword}
+                error={errors.passwordConfirm?.message}
+                isInvalid={!!errors.passwordConfirm}
                 testId='repeatPassword'
             />
         </Flex>
