@@ -28,7 +28,10 @@ export const AuthPasswordInput = (props: AuthPasswordInputProps) => {
     const [show, setShow] = useState(false);
 
     return (
-        <FormControl isInvalid={isInvalid}>
+        <FormControl
+            isInvalid={isInvalid}
+            maxWidth={{ base: '328px', md: '355px', lg: '451px', '2xl': '461px' }}
+        >
             <FormLabel mb='4px'>{label}</FormLabel>
             <InputGroup size='lg' width='100%'>
                 <Input

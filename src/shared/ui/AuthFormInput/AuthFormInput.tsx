@@ -25,7 +25,10 @@ export const AuthFormInput = (props: AuthFormInputProps) => {
     };
 
     return (
-        <FormControl isInvalid={isInvalid}>
+        <FormControl
+            isInvalid={isInvalid}
+            maxWidth={{ base: '328px', md: '355px', lg: '451px', '2xl': '461px' }}
+        >
             <FormLabel marginBottom='4px'>{label}</FormLabel>
             <Input
                 data-test-id={dataTestId}
