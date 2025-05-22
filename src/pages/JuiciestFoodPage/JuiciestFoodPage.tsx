@@ -34,7 +34,7 @@ export const JuiciestFoodPage = memo(() => {
         } else if (data && !isFetching) {
             setAllRecipes(data.data);
         }
-        if (data && page >= data?.meta.totalPages) {
+        if (data && page >= data?.meta?.totalPages) {
             setIsLastPage(true);
         }
     }, [data, page]);

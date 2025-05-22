@@ -22,7 +22,7 @@ const Size = {
     Mobile: 'sm',
 };
 
-export const SearchButtons = memo((props: SearchButtonsProps) => {
+export const SearchWithButtons = memo((props: SearchButtonsProps) => {
     const {
         onSearchHandleWithCategories,
         isSearchFilterOn,

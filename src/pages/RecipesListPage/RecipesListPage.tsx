@@ -37,17 +37,23 @@ const RecipesListPage = memo(() => {
     const subcategoryId = subCategories.find((el) => el.category === subcategory)?._id || '';
     const categoryInfo = categories.find((el) => el.category === category);
 
-    const [triggerGetRecipes, { isFetching, isError }] = useLazyGetRecipesWithParamsQuery();
+    const [triggerGetRecipes, { isFetching, isError, isLoading: IsLoadingWithParams }] =
+        useLazyGetRecipesWithParamsQuery();
     const searchRecipes = useAppSelector(recipesDataSelector);
     const queryParams = useGetQueryParams();
 
-    const { data, isError: isByCategoryError } = useGetRecipeByCategoryQuery({
+    const {
+        data,
+        isError: isByCategoryError,
+        isLoading,
+        isFetching: isFetchingByCategory,
+    } = useGetRecipeByCategoryQuery({
         subcategoryId: subcategoryId,
         limit: 8,
     });
 
     useEffect(() => {
-        if (data && page >= data?.meta.totalPages) {
+        if (data && page >= data?.meta?.totalPages) {
             setIsLastPage(true);
         }
     }, [data, page]);
@@ -68,7 +74,8 @@ const RecipesListPage = memo(() => {
     const description = categoryInfo?.description;
     const links = categoryInfo?.subCategories || [];
 
-    if (isInputLoading) return <FullScreenSpinner />;
+    if (isInputLoading || isLoading || IsLoadingWithParams || isFetchingByCategory)
+        return <FullScreenSpinner />;
     if (isError || isByCategoryError) {
         dispatch(setAppError('error'));
     }

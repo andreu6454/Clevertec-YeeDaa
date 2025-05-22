@@ -1,6 +1,8 @@
 import { Flex, Spinner } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
+import { ZIndex } from '~/shared/constants/style/zIndex';
+
 export const FullScreenSpinner = () => {
     useEffect(() => {
         const prevOverflow = document.body.style.overflow;
@@ -16,7 +18,7 @@ export const FullScreenSpinner = () => {
             position='fixed'
             top={0}
             left={0}
-            zIndex={10}
+            zIndex={ZIndex.appLoader}
             backdropFilter='blur(4px)'
             backgroundColor='rgba(0, 0, 0, 0.16)'
             width='100vw'

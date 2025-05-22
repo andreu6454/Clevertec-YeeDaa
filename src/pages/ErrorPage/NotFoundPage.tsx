@@ -34,7 +34,7 @@ const sizes = {
     },
 };
 
-export const ErrorPage = memo(() => {
+export const NotFoundPage = memo(() => {
     const { screenSize, isDesktopLaptop } = useScreenSize();
 
     return (

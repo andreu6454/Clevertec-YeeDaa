@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router';
 
-import { WithDataFetching } from '~/shared/HOC/WithDataFetching';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { DesktopLaptopLayout } from '~/shared/layouts/DesktopLaptopLayout';
 import { MobileLayout } from '~/shared/layouts/MobileLayout';
@@ -17,22 +16,14 @@ export const WithMainLayout = () => {
             data-test-id='app'
             header={<Header />}
             navbar={<Navbar />}
-            content={
-                <WithDataFetching>
-                    <Outlet />
-                </WithDataFetching>
-            }
+            content={<Outlet />}
             sidebar={<Sidebar />}
         />
     ) : (
         <MobileLayout
             data-test-id='app'
             header={<Header />}
-            content={
-                <WithDataFetching>
-                    <Outlet />
-                </WithDataFetching>
-            }
+            content={<Outlet />}
             footer={<Footer />}
         />
     );

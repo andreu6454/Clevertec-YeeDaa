@@ -1,18 +1,16 @@
-import { ReactNode, useEffect } from 'react';
-import { Navigate, useParams } from 'react-router';
+import { useEffect } from 'react';
+import { Navigate, Outlet, useParams } from 'react-router';
 
+import { APP_PATHS } from '~/shared/constants/pathes';
+import { isLoginSelector } from '~/store/app-slice';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { setCategoriesFilter, setCurrentPageCategory } from '~/store/recipesListPage-slice';
 
-type WithCategoryValidationProps = {
-    children: ReactNode;
-};
-
-export const WithCategoryValidation = (props: WithCategoryValidationProps) => {
-    const { children } = props;
+export const WithCategoryAndAuthValidation = () => {
     const dispatch = useAppDispatch();
     const { category, subcategory } = useParams();
+    const isAuthenticated = useAppSelector(isLoginSelector);
 
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
@@ -42,5 +40,9 @@ export const WithCategoryValidation = (props: WithCategoryValidationProps) => {
         return <Navigate to='/not-found' replace />;
     }
 
-    return children;
+    if (!isAuthenticated) {
+        return <Navigate to={APP_PATHS.login} replace />;
+    }
+
+    return <Outlet />;
 };

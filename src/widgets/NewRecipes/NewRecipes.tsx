@@ -3,6 +3,7 @@ import { memo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { CardWithImage } from '~/components/CardWithImage/CardWithImage';
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { useGetRecipesQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
@@ -26,7 +27,7 @@ export const NewRecipes = memo(() => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const { data, error } = useGetRecipesQuery({
+    const { data, error, isLoading } = useGetRecipesQuery({
         sortBy: 'createdAt',
         sortOrder: 'desc',
         page: 1,
@@ -43,7 +44,7 @@ export const NewRecipes = memo(() => {
         return null;
     }
     const mappedRecipes = [...data.data]
-        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        // .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         .map((recipe) => {
             const category = getCategoryById(categories, subCategories, recipe.categoriesIds[0]);
 
@@ -66,6 +67,8 @@ export const NewRecipes = memo(() => {
                 />
             );
         });
+
+    if (isLoading) return <FullScreenSpinner />;
 
     return (
         <Box width={width[screenSize]} height='max-content'>

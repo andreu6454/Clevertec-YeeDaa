@@ -1,16 +1,11 @@
-import { ReactNode } from 'react';
+import { Outlet } from 'react-router';
 
 import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { useGetCategoriesQuery } from '~/query/services/categories';
 import { setAppError } from '~/store/app-slice';
 import { useAppDispatch } from '~/store/hooks';
 
-type WithDataFetchingProps = {
-    children: ReactNode;
-};
-
-export const WithDataFetching = (props: WithDataFetchingProps) => {
-    const { children } = props;
+export const WithCategoriesFetching = () => {
     const { isLoading, isError } = useGetCategoriesQuery();
     const dispatch = useAppDispatch();
 
@@ -20,5 +15,5 @@ export const WithDataFetching = (props: WithDataFetchingProps) => {
     if (isError) {
         dispatch(setAppError('error'));
     }
-    return children;
+    return <Outlet />;
 };

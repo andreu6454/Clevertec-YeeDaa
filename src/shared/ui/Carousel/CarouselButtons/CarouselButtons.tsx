@@ -3,6 +3,7 @@ import { Image } from '@chakra-ui/react';
 
 import LeftArrowIcon from '~/assets/svg/leftArrowIcon.svg';
 import RightArrowIcon from '~/assets/svg/rightArrowIcon.svg';
+import { ZIndex } from '~/shared/constants/style/zIndex';
 
 interface CarouselButtonsProps {
     screenSize?: 'Desktop' | 'Mobile' | 'Tablet' | 'Laptop';
@@ -33,7 +34,7 @@ export const CarouselButtons = (props: CarouselButtonsProps) => {
                 width={isMobile || isTablet ? '0' : 'max-content'}
                 visibility={isMobile || isTablet ? 'hidden' : 'visible'}
                 data-test-id='carousel-back'
-                zIndex={3}
+                zIndex={ZIndex.carouselIcons}
                 aria-label='Previous'
                 icon={<Image src={LeftArrowIcon} />}
                 position='absolute'
@@ -44,7 +45,7 @@ export const CarouselButtons = (props: CarouselButtonsProps) => {
                 width={isMobile || isTablet ? '0' : 'max-content'}
                 visibility={isMobile || isTablet ? 'hidden' : 'visible'}
                 data-test-id='carousel-forward'
-                zIndex={3}
+                zIndex={ZIndex.carouselIcons}
                 aria-label='Previous'
                 icon={<Image src={RightArrowIcon} />}
                 position='absolute'

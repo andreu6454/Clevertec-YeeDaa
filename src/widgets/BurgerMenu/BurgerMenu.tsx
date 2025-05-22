@@ -1,6 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
+import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { useScrollLock } from '~/shared/hooks/useScrollLock';
 import { closeBurgerMenu, isBurgerOpenSelector } from '~/store/app-slice';
@@ -34,11 +35,11 @@ export const BurgerMenu = memo(() => {
             width='100vw'
             height='100vh'
             justify='flex-end'
-            zIndex={9}
+            zIndex={ZIndex.burger}
             pointerEvents='auto'
         >
             <Flex
-                zIndex={9}
+                zIndex={ZIndex.burger}
                 borderRadius='0 0 12px 12px'
                 position='fixed'
                 right={0}

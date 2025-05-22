@@ -37,6 +37,7 @@ export const LinksCarousel = (props: LinksCarouselProps) => {
     const { links, size, category } = props;
 
     const [activeIndex, setActiveIndex] = useState<number>();
+    const [tabIndex, setTabIndex] = useState(activeIndex);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -45,9 +46,8 @@ export const LinksCarousel = (props: LinksCarouselProps) => {
     useEffect(() => {
         const currentIndex = links.findIndex((link) => link.category === currentPath);
         setActiveIndex(currentIndex);
+        setTabIndex(currentIndex);
     }, [currentPath, links]);
-
-    const [tabIndex, setTabIndex] = useState(activeIndex);
 
     const handleTabsChange = (index: number) => {
         setTabIndex(index);

@@ -17,7 +17,6 @@ export const DesktopLaptopLayout = (props: DesktopLaptopLayoutProps) => {
     return (
         <Box overflowX='hidden' width='100%' min-height='100vh'>
             {header}
-            {/*<BackGround />*/}
             <Box
                 overflowY='auto'
                 padding='80px 272px 0 280px'

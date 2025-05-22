@@ -5,6 +5,7 @@ import { memo } from 'react';
 import { NewAllergenInput } from '~/components/Filters/FiltersMenuContent/AllergensFilter/NewAllergenInput/NewAllergenInput';
 import { SearchAllergensHeader } from '~/components/SearchBlock/Allergens/SearchAllergensHeader/SearchAllergensHeader';
 import { allergenFilters } from '~/shared/constants/recipeFilters';
+import { ZIndex } from '~/shared/constants/style/zIndex';
 import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTitle';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
@@ -83,7 +84,7 @@ export const SearchAllergens = memo(() => {
                 >
                     <SearchAllergensHeader />
                 </MenuButton>
-                <MenuList zIndex={2} width='100%' data-test-id='allergens-menu'>
+                <MenuList zIndex={ZIndex.allergens} width='100%' data-test-id='allergens-menu'>
                     {isSearchAllergenFilterOn && mappedAllergens}
                     {isSearchAllergenFilterOn && <NewAllergenInput />}
                 </MenuList>

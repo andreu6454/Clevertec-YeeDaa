@@ -4,7 +4,7 @@ import { memo } from 'react';
 
 import { Filters } from '~/components/Filters/Filters';
 import { SearchAllergens } from '~/components/SearchBlock/Allergens/SearchAllergens';
-import { SearchButtons } from '~/components/SearchBlock/SearchButtons/SearchButtons';
+import { SearchWithButtons } from '~/components/SearchBlock/SearchButtons/SearchWithButtons';
 import { SearchLoader } from '~/components/SearchBlock/SearchLoader/SearchLoader';
 import { SearchEmptyTitle } from '~/components/SearchBlock/SearchTitle/SearchEmptyTitle';
 import { SearchTitle } from '~/components/SearchBlock/SearchTitle/SearchTitle';
@@ -60,7 +60,7 @@ export const SearchBlock = memo((props: FoodSearchCardProps) => {
     const isInputLoading = useAppSelector(inputLoadingSelector);
     const isResultEmpty = useAppSelector(resultEmptySelector);
 
-    const { screenSize, isDesktop, isLaptop } = useScreenSize();
+    const { screenSize, isDesktop, isLaptop, isMobile } = useScreenSize();
 
     const dispatch = useAppDispatch();
 
@@ -75,7 +75,7 @@ export const SearchBlock = memo((props: FoodSearchCardProps) => {
         dispatch(openFilters());
     };
 
-    if (isInputLoading) return <SearchLoader title={title} />;
+    if (isInputLoading && !isMobile) return <SearchLoader title={title} />;
     return (
         <Flex
             boxShadow={
@@ -96,7 +96,7 @@ export const SearchBlock = memo((props: FoodSearchCardProps) => {
             ) : (
                 <SearchTitle title={title} description={description} />
             )}
-            <SearchButtons
+            <SearchWithButtons
                 isSearchFilterOn={isSearchFilterOn}
                 onClickHandler={onClickHandler}
                 onSearchHandleWithCategories={onSearchHandleWithCategories}

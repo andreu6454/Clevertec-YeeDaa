@@ -21,7 +21,7 @@ export const NavbarItem = memo((props: NavbarItemProps) => {
     const mappedLinks = links.map((link, index) => (
         <AccordionLink
             title={link.title}
-            key={`${general}-${link.category}${index}`}
+            key={`${general}-${link.category}${index} + NavbarItem`}
             link={`${general}/${link.category}`}
             linkforTest={link.category}
         />

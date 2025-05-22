@@ -28,13 +28,16 @@ const paddings = {
 export const AuthLayout = (props: AuthLayoutProps) => {
     const { children } = props;
 
-    const { isDesktopLaptop, screenSize } = useScreenSize();
+    const { isDesktopLaptop, screenSize, isDesktop } = useScreenSize();
+
+    const imageWidth = isDesktop ? '972px' : '732px';
 
     return (
         <Flex
             background='linear-gradient(208deg, #eaffc7 0%, #29813f 100%)'
             width='100%'
             height='100vh'
+            justifyContent='space-between'
             alignItems='center'
         >
             <Flex
@@ -43,14 +46,16 @@ export const AuthLayout = (props: AuthLayoutProps) => {
                 flexDirection='column'
                 alignItems='center'
             >
-                <Image width='271px' height='64px' src={LogoImage} />
-                <AuthLinks />
-                {children}
+                <Flex maxWidth='461px' flexDirection='column' alignItems='center'>
+                    <Image width='271px' height='64px' src={LogoImage} />
+                    <AuthLinks />
+                    {children}
+                </Flex>
             </Flex>
             {isDesktopLaptop && (
                 <Image
                     style={{
-                        width: '732px',
+                        width: imageWidth,
                         height: '100%',
                         display: 'block',
                     }}
