@@ -3180,15 +3180,12 @@ describe('application', () => {
         it('select allergens by category', () => {
             cy.viewport(1920, 750);
             setElementPosition();
-            cy.getByTestId(TEST_ID.Switch.AlergenSwitcher).should(
-                'not.have.attr',
-                'constants-checked',
-            );
+            cy.getByTestId(TEST_ID.Switch.AlergenSwitcher).should('not.have.attr', 'data-checked');
             cy.getByTestId(TEST_ID.Button.AlergenMenu).should('be.disabled');
             cy.getByTestId(TEST_ID.Link.Vegan).click();
             cy.wait(DELAY.LOAD);
             cy.getByTestId(TEST_ID.Switch.AlergenSwitcher).click();
-            cy.getByTestId(TEST_ID.Switch.AlergenSwitcher).should('have.attr', 'constants-checked');
+            cy.getByTestId(TEST_ID.Switch.AlergenSwitcher).should('have.attr', 'data-checked');
             cy.getByTestId(TEST_ID.Button.AlergenMenu)
                 .should('not.be.disabled')
                 .contains('Выберите из списка');
