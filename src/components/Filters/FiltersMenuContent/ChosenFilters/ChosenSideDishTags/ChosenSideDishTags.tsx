@@ -1,7 +1,7 @@
 import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { sideDishFilters } from '~/shared/data/recipeFilters';
+import { sideDishFilters } from '~/shared/constants/recipeFilters';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { setSideDishFilters, sideDishFiltersSelector } from '~/store/recipesListPage-slice';
 

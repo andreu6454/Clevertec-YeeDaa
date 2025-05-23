@@ -1,6 +1,7 @@
 import { Avatar, Box, IconButton } from '@chakra-ui/icons';
 import { memo } from 'react';
 
+import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import FooterButton from '~/widgets/footer/FooterButton/FooterButton';
 import { FooterIcon } from '~/widgets/footer/FooterIcon/FooterIcon';
@@ -18,7 +19,7 @@ const Footer = memo(() => {
                 position={isMobile || isTablet ? 'fixed' : 'absolute'}
                 width={isMobile || isTablet ? '100%' : '0'}
                 visibility={isMobile || isTablet ? 'visible' : 'hidden'}
-                zIndex={10}
+                zIndex={ZIndex.footer}
                 display='flex'
                 alignItems='center'
                 justifyContent='space-evenly'

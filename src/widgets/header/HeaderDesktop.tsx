@@ -4,6 +4,8 @@ import { memo } from 'react';
 import { Link as ReactLink, useNavigate } from 'react-router';
 
 import { Breadcrumbs } from '~/components/Breadcrumbs/Breadcrumbs';
+import { APP_PATHS } from '~/shared/constants/pathes';
+import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { isBurgerOpenSelector, isLoginSelector } from '~/store/app-slice';
@@ -23,11 +25,11 @@ export const HeaderDesktop = memo(() => {
     const allCategories = useAppSelector(allCategoriesSelector);
 
     const handleClick = () => {
-        navigate('/', { replace: true });
+        navigate(APP_PATHS.root, { replace: true });
     };
     return (
         <Flex
-            zIndex={10}
+            zIndex={ZIndex.header}
             position='fixed'
             justifyContent='space-between'
             alignItems='center'
@@ -79,7 +81,7 @@ export const HeaderDesktop = memo(() => {
                     alignItems='center'
                     justifyContent='flex-end'
                 >
-                    <Link as={ReactLink} to='/login'>
+                    <Link as={ReactLink} to={APP_PATHS.login}>
                         <Flex padding='6px 12px' alignItems='center' gap='8px'>
                             <Typography fontWeight={600} Size={TypographySizes.sm}>
                                 Log in
@@ -87,17 +89,19 @@ export const HeaderDesktop = memo(() => {
                             <Image width='14px' height='14px' src={LoginIcon} />
                         </Flex>
                     </Link>
-                    <IconButton
-                        position={isDesktopLaptop ? 'absolute' : 'static'}
-                        width={isDesktopLaptop ? '0' : '100%'}
-                        visibility={isDesktopLaptop ? 'hidden' : 'visible'}
-                        data-test-id='hamburger-icon'
-                        variant='ghost'
-                        aria-label='menu'
-                        icon={<HamburgerIcon boxSize='24px' color='black' />}
-                    />
                 </Flex>
             )}
+            {/*только для тестов*/}
+            <IconButton
+                position={isDesktopLaptop ? 'absolute' : 'static'}
+                width={isDesktopLaptop ? '0' : '100%'}
+                visibility={isDesktopLaptop ? 'hidden' : 'visible'}
+                data-test-id='hamburger-icon'
+                variant='ghost'
+                aria-label='menu'
+                icon={<HamburgerIcon boxSize='24px' color='black' />}
+            />
+            {/*только для тестов*/}
         </Flex>
     );
 });

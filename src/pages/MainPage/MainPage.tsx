@@ -61,6 +61,7 @@ export const MainPage: FC = memo(() => {
     if (isError) {
         dispatch(setAppError('error'));
     }
+
     return (
         <Flex width='100%' flexDirection='column' alignItems='center'>
             <SearchBlock onSearchHandle={onSearchHandle} title='Приятного аппетита!' />

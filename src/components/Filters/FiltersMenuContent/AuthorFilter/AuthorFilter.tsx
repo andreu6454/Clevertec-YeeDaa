@@ -1,7 +1,7 @@
 import { Select } from '@chakra-ui/icons';
 import { memo } from 'react';
 
-import { authorsFilters } from '~/shared/data/recipeFilters';
+import { authorsFilters } from '~/shared/constants/recipeFilters';
 
 export const AuthorFilter = memo(() => {
     const mappedOptions = authorsFilters.map((el) => (

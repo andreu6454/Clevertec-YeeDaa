@@ -25,4 +25,45 @@ export type RecipeParams = {
     sortOrder?: 'asc' | 'desc';
 };
 
+export type SignUpParams = {
+    email: string;
+    login: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+};
+
+export type AuthSuccessResponse = {
+    statusText: string;
+    message: string;
+};
+
+export type ErrorResponse = {
+    data: {
+        message: string;
+        error?: string;
+        statusCode: number;
+    };
+    status: number;
+};
+
+export type LoginParams = {
+    login: string;
+    password: string;
+};
 export type CategoryResponse = CategoryType[] | SubCategoryType[];
+
+export type ForgotPasswordParams = {
+    email: string;
+};
+
+export type VerifyOtpParams = {
+    email: string;
+    otpToken: string;
+};
+export type ResetPasswordParams = {
+    login: string;
+    password: string;
+    passwordConfirm: string;
+    email: string;
+};
