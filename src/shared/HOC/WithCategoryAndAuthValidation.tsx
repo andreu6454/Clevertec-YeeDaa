@@ -37,7 +37,7 @@ export const WithCategoryAndAuthValidation = () => {
     }
 
     if (!currentCategory || !currentSubcategory) {
-        return <Navigate to='/not-found' replace />;
+        return <Navigate to={APP_PATHS.notFound} replace />;
     }
 
     if (!isAuthenticated) {

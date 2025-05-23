@@ -4,6 +4,7 @@ import { memo } from 'react';
 import { Link as ReactLink, useNavigate } from 'react-router';
 
 import { Breadcrumbs } from '~/components/Breadcrumbs/Breadcrumbs';
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
@@ -24,7 +25,7 @@ export const HeaderDesktop = memo(() => {
     const allCategories = useAppSelector(allCategoriesSelector);
 
     const handleClick = () => {
-        navigate('/', { replace: true });
+        navigate(APP_PATHS.root, { replace: true });
     };
     return (
         <Flex
@@ -80,7 +81,7 @@ export const HeaderDesktop = memo(() => {
                     alignItems='center'
                     justifyContent='flex-end'
                 >
-                    <Link as={ReactLink} to='/login'>
+                    <Link as={ReactLink} to={APP_PATHS.login}>
                         <Flex padding='6px 12px' alignItems='center' gap='8px'>
                             <Typography fontWeight={600} Size={TypographySizes.sm}>
                                 Log in

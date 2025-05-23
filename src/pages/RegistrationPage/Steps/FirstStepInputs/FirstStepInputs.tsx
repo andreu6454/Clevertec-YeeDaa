@@ -1,5 +1,4 @@
 import { Flex } from '@chakra-ui/react';
-import { memo } from 'react';
 import { FieldErrors, FieldValues, SetFieldValue, UseFormRegister } from 'react-hook-form';
 
 import { RegisterFormDataType } from '~/pages/RegistrationPage/RegistrationPage';
@@ -12,7 +11,7 @@ type FirstStepInputsProps = {
     setValue: SetFieldValue<FieldValues>;
 };
 
-export const FirstStepInputs = memo((props: FirstStepInputsProps) => {
+export const FirstStepInputs = (props: FirstStepInputsProps) => {
     const { register, errors, setValue } = props;
 
     return (
@@ -46,4 +45,4 @@ export const FirstStepInputs = memo((props: FirstStepInputsProps) => {
             />
         </Flex>
     );
-});
+};

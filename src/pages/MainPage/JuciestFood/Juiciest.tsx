@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
 import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { useGetRecipesQuery } from '~/query/services/recipes';
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
@@ -35,7 +36,7 @@ export const Juiciest = () => {
     const subCategories = useAppSelector(subCategoriesSelector);
 
     const onClickHandler = () => {
-        navigate('/the-juiciest');
+        navigate(APP_PATHS.theJuiciest);
     };
 
     const { screenSize, isDesktop, isLaptop, isTablet, isDesktopLaptop, isTabletMobile } =
@@ -106,7 +107,6 @@ export const Juiciest = () => {
                     data-test-id='juiciest-link-mobile'
                     onClick={onClickHandler}
                     backgroundColor='#b1ff2e'
-                    // width={isTablet ? 0 : ''}
                     visibility={isDesktop || isLaptop ? 'hidden' : 'visible'}
                     color='#000'
                     size='md'
@@ -114,18 +114,6 @@ export const Juiciest = () => {
                 >
                     Вся подборка
                 </Button>
-                {/*{isTablet && (*/}
-                {/*    <Button // кнопка для тестов*/}
-                {/*        data-test-id={isTablet && 'juiciest-link'}*/}
-                {/*        onClick={onClickHandler}*/}
-                {/*        backgroundColor='#b1ff2e'*/}
-                {/*        color='#000'*/}
-                {/*        size='md'*/}
-                {/*        rightIcon={<Image src={ArrowRightIcon} />}*/}
-                {/*    >*/}
-                {/*        Вся подборка*/}
-                {/*    </Button>*/}
-                {/*)}*/}
             </Flex>
         </Flex>
     );

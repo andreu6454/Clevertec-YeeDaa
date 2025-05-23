@@ -18,7 +18,7 @@ export const CustomModal = (props: CustomModalProps) => {
     return (
         <Modal isOpen={isOpen} onClose={onClose} data-testid={testID}>
             <ModalOverlay />
-            <ModalContent width={width} data-test-id={dataTestId}>
+            <ModalContent borderRadius='16px' width={width} data-test-id={dataTestId}>
                 <CloseButton
                     data-test-id={DATA_TEST_IDS.closeButton}
                     size='sm'

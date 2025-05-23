@@ -12,7 +12,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 
-type AuthPasswordInputProps = {
+export type AuthPasswordInputProps = {
     register: UseFormRegisterReturn;
     isInvalid: boolean;
     label: string;
@@ -20,17 +20,18 @@ type AuthPasswordInputProps = {
     dataTestId: string;
     hint?: string;
     error?: string;
+    width?: string;
 };
 
 export const AuthPasswordInput = (props: AuthPasswordInputProps) => {
-    const { register, hint, error, label, placeholder, dataTestId, isInvalid } = props;
+    const { register, hint, error, label, placeholder, dataTestId, isInvalid, width } = props;
 
     const [show, setShow] = useState(false);
 
     return (
         <FormControl
             isInvalid={isInvalid}
-            maxWidth={{ base: '328px', md: '355px', lg: '451px', '2xl': '461px' }}
+            width={width ? width : { base: '328px', md: '355px', lg: '451px', '2xl': '461px' }}
         >
             <FormLabel mb='4px'>{label}</FormLabel>
             <InputGroup size='lg' width='100%'>
@@ -44,7 +45,12 @@ export const AuthPasswordInput = (props: AuthPasswordInputProps) => {
                     variant='outlined'
                     width='100%'
                     border='1px solid #d7ff94'
+                    color='#134b00'
                     border-radius='6px'
+                    _placeholder={{
+                        color: '#134b00',
+                        opacity: 1,
+                    }}
                 />
                 <InputRightElement>
                     <IconButton

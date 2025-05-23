@@ -12,10 +12,14 @@ type SecondStepInputsProps = {
     register: UseFormRegister<RegisterFormDataType | AccountRecoveryType>;
     errors: FieldErrors<RegisterFormDataType | AccountRecoveryType>;
     setValue: SetFieldValue<FieldValues>;
+    modal?: boolean;
 };
 
 export const SecondStepInputs = memo((props: SecondStepInputsProps) => {
-    const { register, errors, setValue } = props;
+    const { register, errors, setValue, modal } = props;
+
+    const loginHint = 'Логин не менее 5 символов, только латиница и !@#$&_+-.';
+    const passwordHint = 'Пароль не менее 8 символов, с заглавной буквой и цифрой';
 
     return (
         <Flex flexDirection='column' gap='24px' width='100%'>
@@ -25,9 +29,10 @@ export const SecondStepInputs = memo((props: SecondStepInputsProps) => {
                 error={errors.login?.message}
                 isInvalid={!!errors.login}
                 label='Логин для входа на сайт'
-                hint={errors.login ? 'Логин не менее 5 символов, только латиница и !@#$&_+-.' : ''}
+                hint={(errors.login ? loginHint : '') || (modal ? loginHint : '')}
                 dataTestId={DATA_TEST_IDS.loginInput}
                 setValue={setValue}
+                width={modal ? '100%' : ''}
             />
             <AuthPasswordInput
                 register={register('password')}
@@ -35,10 +40,9 @@ export const SecondStepInputs = memo((props: SecondStepInputsProps) => {
                 label='Пароль'
                 error={errors.password?.message}
                 isInvalid={!!errors.password}
-                hint={
-                    errors.password ? 'Пароль не менее 8 символов, с заглавной буквой и цифрой' : ''
-                }
+                hint={(errors.password ? passwordHint : '') || (modal ? passwordHint : '')}
                 dataTestId={DATA_TEST_IDS.passwordInput}
+                width={modal ? '100%' : ''}
             />
             <AuthPasswordInput
                 register={register('passwordConfirm')}
@@ -47,6 +51,7 @@ export const SecondStepInputs = memo((props: SecondStepInputsProps) => {
                 error={errors.passwordConfirm?.message}
                 isInvalid={!!errors.passwordConfirm}
                 dataTestId={DATA_TEST_IDS.confirmPasswordInput}
+                width={modal ? '100%' : ''}
             />
         </Flex>
     );

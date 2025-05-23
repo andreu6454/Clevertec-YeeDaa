@@ -42,7 +42,7 @@ export const ForgotPassword = (props: ForgotPasswordProps) => {
     const { setStep, setEmail } = props;
     const [error, setError] = useState(false);
 
-    const { screenSize } = useScreenSize();
+    const { screenSize, isDesktopLaptop } = useScreenSize();
 
     const alertToast = useAlertToast();
 
@@ -112,18 +112,19 @@ export const ForgotPassword = (props: ForgotPasswordProps) => {
                         fontWeight={400}
                         textAlign='center'
                     >
-                        Для восстановления входа введите <br />
+                        Для восстановления входа введите {isDesktopLaptop && <br />}
                         ваш e-mail, куда можно отправить уникальный код
                     </Typography>
 
                     <AuthFormInput
                         register={register('email')}
-                        placeholder='Введите e-mail'
+                        placeholder='e-mail'
                         error={errors.email?.message}
                         isInvalid={!!errors.email || error}
                         label='Ваш e-mail'
                         dataTestId={DATA_TEST_IDS.emailInput}
                         setValue={setValue}
+                        width='100%'
                     />
                 </Flex>
 

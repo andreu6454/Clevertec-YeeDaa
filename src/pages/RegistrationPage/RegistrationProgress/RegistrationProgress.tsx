@@ -18,9 +18,14 @@ export const RegistrationProgress = (props: RegistrationProgressProps) => {
             <Typography Size={TypographySizes.md}>{title[step]}</Typography>
             <Progress
                 data-test-id={DATA_TEST_IDS.signUpProgress}
-                colorScheme='green'
+                colorScheme='lime'
                 size='sm'
                 value={registrationProgress}
+                sx={{
+                    '& > div': {
+                        background: '#c4ff61',
+                    },
+                }}
             />
         </Box>
     );

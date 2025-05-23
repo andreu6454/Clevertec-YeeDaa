@@ -95,7 +95,7 @@ export const ResetPassword = (props: ResetPasswordProps) => {
                     Восстановление <br />
                     аккаунта
                 </Text>
-                <SecondStepInputs errors={errors} register={register} setValue={setValue} />
+                <SecondStepInputs modal errors={errors} register={register} setValue={setValue} />
                 <Button
                     data-test-id={DATA_TEST_IDS.submitButton}
                     type='submit'

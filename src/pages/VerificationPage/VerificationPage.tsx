@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { setEmailVerification } from '~/store/app-slice';
 import { useAppDispatch } from '~/store/hooks';
 
@@ -16,15 +17,15 @@ export const VerificationPage = () => {
     useEffect(() => {
         if (emailVerified === 'true') {
             dispatch(setEmailVerification(true));
-            navigate('/login');
+            navigate(APP_PATHS.login);
             return;
         }
         if (emailVerified === 'false') {
             dispatch(setEmailVerification(false));
-            navigate('/register');
+            navigate(APP_PATHS.signUp);
             return;
         }
-        navigate('/register');
+        navigate(APP_PATHS.signUp);
         return;
     }, [emailVerified, navigate]);
 

@@ -4,6 +4,7 @@ import { FC, memo, ReactNode } from 'react';
 import { Link, useLocation } from 'react-router';
 
 import { CategoryResponse } from '~/query/types/types';
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { closeBurgerMenu, recipePageTitleSelector } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
@@ -70,10 +71,12 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
                     onClick={closeMenuHandler}
                     color={location.pathname !== '/' ? 'blackAlpha.700' : ''}
                     as={Link}
-                    to='/'
+                    to={APP_PATHS.root}
                 >
                     {homeElement}
-                    {location.pathname !== '/' && <ChevronRightIcon color='gray.500' mx='4px' />}
+                    {location.pathname !== APP_PATHS.root && (
+                        <ChevronRightIcon color='gray.500' mx='4px' />
+                    )}
                 </ChahkraLink>
                 {mappedPaths}
             </Box>

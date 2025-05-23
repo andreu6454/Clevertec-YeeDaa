@@ -12,6 +12,7 @@ import { useLoginMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';
 import { AUTH_LOGIN_STATUSES } from '~/shared/constants/authStatuses';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { AuthLayout } from '~/shared/layouts/AuthLayout/AuthLayout';
 import { signInSchema } from '~/shared/types/validationSchemas/loginSchema';
@@ -58,7 +59,7 @@ export const LoginPage = memo(() => {
         try {
             await login(data).unwrap();
             dispatch(setIsLogin(true));
-            navigate('/');
+            navigate(APP_PATHS.root);
         } catch (error) {
             const responseError = error as ErrorResponse;
             const statusCode = Number(responseError.status);

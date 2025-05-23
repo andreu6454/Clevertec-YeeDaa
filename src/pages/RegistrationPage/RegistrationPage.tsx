@@ -17,9 +17,11 @@ import { useSignUpMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';
 import { EMAIL_EXISTS, LOGIN_EXISTS } from '~/shared/constants/authStatuses';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { AuthLayout } from '~/shared/layouts/AuthLayout/AuthLayout';
 import { userDataSchema, userPasswordSchema } from '~/shared/types/validationSchemas/signUpSchema';
+import { getValidatedCount } from '~/shared/utils/getValidatedCount';
 import { emailVerifiedSelector } from '~/store/app-slice';
 import { useAppSelector } from '~/store/hooks';
 
@@ -32,6 +34,7 @@ export type RegisterFormDataType = {
     passwordConfirm: string;
 };
 
+const INPUT_COUNT = 6;
 const signUpSchema: ZodType[] = [userDataSchema, userPasswordSchema];
 
 export const RegistrationPage = () => {
@@ -107,15 +110,9 @@ export const RegistrationPage = () => {
         }
     });
 
-    const validatedCount = Object.keys(dirtyFields).reduce((acc, fieldName) => {
-        const key = fieldName as keyof RegisterFormDataType;
-        if (dirtyFields[key] && !errors[key]) {
-            return acc + 1;
-        }
-        return acc;
-    }, 0);
+    const validatedCount = getValidatedCount<RegisterFormDataType>(dirtyFields, errors);
 
-    const registrationProgress = Math.round((validatedCount * 100) / 6);
+    const registrationProgress = Math.round((validatedCount * 100) / INPUT_COUNT);
 
     const stepsInputs = [
         <FirstStepInputs setValue={setValue} errors={errors} register={register} />,
@@ -127,7 +124,7 @@ export const RegistrationPage = () => {
     ];
     const onCloseHandler = () => {
         onClose();
-        navigate('/login');
+        navigate(APP_PATHS.login);
     };
 
     return (

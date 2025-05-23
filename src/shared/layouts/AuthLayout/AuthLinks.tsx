@@ -2,6 +2,7 @@ import { Tab, TabList } from '@chakra-ui/icons';
 import { Tabs } from '@chakra-ui/react';
 import { useLocation, useNavigate } from 'react-router';
 
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
 const sizes = {
@@ -37,13 +38,13 @@ export const AuthLinks = () => {
     const path = useLocation();
     const navigate = useNavigate();
 
-    const activeIndex = path.pathname === '/login' ? 0 : 1;
+    const activeIndex = path.pathname === APP_PATHS.login ? 0 : 1;
 
     const onLoginClick = () => {
-        navigate('/login');
+        navigate(APP_PATHS.login);
     };
     const onRegisterClick = () => {
-        navigate('/register');
+        navigate(APP_PATHS.signUp);
     };
 
     return (

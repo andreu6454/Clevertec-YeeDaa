@@ -3,6 +3,7 @@ import { Flex, Link, Text } from '@chakra-ui/react';
 import { memo } from 'react';
 import { Link as ReactLink } from 'react-router';
 
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
 import ErrorPageImage from '../../assets/errorPageImage.png';
@@ -88,7 +89,7 @@ export const NotFoundPage = memo(() => {
                             data-test-id='error-page-go-home'
                             as={ReactLink}
                             textDecoration='underline'
-                            to='/'
+                            to={APP_PATHS.root}
                         >
                             здесь.
                         </Link>

@@ -43,30 +43,28 @@ export const NewRecipes = memo(() => {
     if (!data) {
         return null;
     }
-    const mappedRecipes = [...data.data]
-        // .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-        .map((recipe) => {
-            const category = getCategoryById(categories, subCategories, recipe.categoriesIds[0]);
+    const mappedRecipes = [...data.data].map((recipe) => {
+        const category = getCategoryById(categories, subCategories, recipe.categoriesIds[0]);
 
-            const onClickHandler = () => {
-                navigate(
-                    getNavigateLinkToRecipe(
-                        categories,
-                        subCategories,
-                        recipe.categoriesIds[0],
-                        recipe._id,
-                    ),
-                );
-            };
-            return (
-                <CardWithImage
-                    onClickHandler={onClickHandler}
-                    key={recipe.title}
-                    recipe={recipe}
-                    categoryTitle={category?.category || ''}
-                />
+        const onClickHandler = () => {
+            navigate(
+                getNavigateLinkToRecipe(
+                    categories,
+                    subCategories,
+                    recipe.categoriesIds[0],
+                    recipe._id,
+                ),
             );
-        });
+        };
+        return (
+            <CardWithImage
+                onClickHandler={onClickHandler}
+                key={recipe.title}
+                recipe={recipe}
+                categoryTitle={category?.category || ''}
+            />
+        );
+    });
 
     if (isLoading) return <FullScreenSpinner />;
 

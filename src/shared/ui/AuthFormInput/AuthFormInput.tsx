@@ -1,20 +1,16 @@
 import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/icons';
 import { FormHelperText } from '@chakra-ui/react';
-import { FieldValues, SetFieldValue, UseFormRegisterReturn } from 'react-hook-form';
+import { FieldValues, SetFieldValue } from 'react-hook-form';
 
-type AuthFormInputProps = {
-    register: UseFormRegisterReturn;
-    isInvalid: boolean;
-    label: string;
-    placeholder: string;
+import { AuthPasswordInputProps } from '~/shared/ui/AuthPasswordInput/AuthPasswordInput';
+
+type AuthFormInputProps = AuthPasswordInputProps & {
     setValue: SetFieldValue<FieldValues>;
-    hint?: string;
-    error?: string;
-    dataTestId?: string;
 };
 
 export const AuthFormInput = (props: AuthFormInputProps) => {
-    const { register, hint, error, label, placeholder, setValue, isInvalid, dataTestId } = props;
+    const { register, hint, error, label, placeholder, setValue, isInvalid, dataTestId, width } =
+        props;
 
     const { name: fieldName } = register;
 
@@ -27,7 +23,7 @@ export const AuthFormInput = (props: AuthFormInputProps) => {
     return (
         <FormControl
             isInvalid={isInvalid}
-            maxWidth={{ base: '328px', md: '355px', lg: '451px', '2xl': '461px' }}
+            width={width ? width : { base: '328px', md: '355px', lg: '451px', '2xl': '461px' }}
         >
             <FormLabel marginBottom='4px'>{label}</FormLabel>
             <Input
@@ -38,11 +34,16 @@ export const AuthFormInput = (props: AuthFormInputProps) => {
                 width='100%'
                 variant='outlined'
                 border={isInvalid ? '1px solid #e53e3e' : '1px solid #d7ff94'}
+                color='#134b00'
                 border-radius='6px'
                 onBlur={trimOnBlur}
+                _placeholder={{
+                    color: '#134b00',
+                    opacity: 1,
+                }}
             />
-            <FormHelperText marginTop='4px'>{hint}</FormHelperText>
-            <FormErrorMessage position='absolute'>{error}</FormErrorMessage>
+            {hint && <FormHelperText marginTop='4px'>{hint}</FormHelperText>}
+            {error && <FormErrorMessage position='absolute'>{error}</FormErrorMessage>}
         </FormControl>
     );
 };

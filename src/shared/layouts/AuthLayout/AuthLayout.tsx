@@ -1,6 +1,6 @@
 import { Image } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { AuthLinks } from '~/shared/layouts/AuthLayout/AuthLinks';
@@ -8,13 +8,9 @@ import { AuthLinks } from '~/shared/layouts/AuthLayout/AuthLinks';
 import AuthImage from '../../../assets/AuthImage.png';
 import LogoImage from '../../../assets/svg/LogoLarge.svg';
 
-type AuthLayoutProps = {
-    children: ReactNode;
-};
-
 const width = {
-    Desktop: 'calc(100% - 972px)',
-    Laptop: 'calc(100% - 732px)',
+    Desktop: '50%',
+    Laptop: '50%',
     Tablet: '100%',
     Mobile: '100%',
 };
@@ -25,12 +21,8 @@ const paddings = {
     Mobile: '0 16px 0 16px',
 };
 
-export const AuthLayout = (props: AuthLayoutProps) => {
-    const { children } = props;
-
-    const { isDesktopLaptop, screenSize, isDesktop } = useScreenSize();
-
-    const imageWidth = isDesktop ? '972px' : '732px';
+export const AuthLayout: FC<{ children: ReactNode }> = ({ children }) => {
+    const { isDesktopLaptop, screenSize } = useScreenSize();
 
     return (
         <Flex
@@ -55,7 +47,7 @@ export const AuthLayout = (props: AuthLayoutProps) => {
             {isDesktopLaptop && (
                 <Image
                     style={{
-                        width: imageWidth,
+                        width: '50%',
                         height: '100%',
                         display: 'block',
                     }}
