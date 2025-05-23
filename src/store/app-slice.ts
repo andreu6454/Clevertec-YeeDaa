@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ApplicationState } from './configure-store';
-
 export type AppState = typeof initialState;
 
 const initialState = {
@@ -51,15 +49,15 @@ export const appSlice = createSlice({
             state.pageTitle = pageTitle;
         },
     },
+    selectors: {
+        appErrorSelector: (state) => state.error,
+        isBurgerOpenSelector: (state) => state.isBurgerOpen,
+        isLoginSelector: (state) => state.isLogin,
+        isFiltersOpenSelector: (state) => state.isFiltersOpen,
+        recipePageTitleSelector: (state) => state.pageTitle,
+        emailVerifiedSelector: (state) => state.emailVerified,
+    },
 });
-
-export const appLoadingSelector = (state: ApplicationState) => state.app.isLoading;
-export const appErrorSelector = (state: ApplicationState) => state.app.error;
-export const isBurgerOpenSelector = (state: ApplicationState) => state.app.isBurgerOpen;
-export const isLoginSelector = (state: ApplicationState) => state.app.isLogin;
-export const isFiltersOpenSelector = (state: ApplicationState) => state.app.isFiltersOpen;
-export const recipePageTitleSelector = (state: ApplicationState) => state.app.pageTitle;
-export const emailVerifiedSelector = (state: ApplicationState) => state.app.emailVerified;
 
 export const {
     setAppError,
@@ -72,4 +70,14 @@ export const {
     closeFilters,
     setRecipePageTitle,
 } = appSlice.actions;
+
+export const {
+    appErrorSelector,
+    isBurgerOpenSelector,
+    isLoginSelector,
+    isFiltersOpenSelector,
+    recipePageTitleSelector,
+    emailVerifiedSelector,
+} = appSlice.selectors;
+
 export default appSlice.reducer;

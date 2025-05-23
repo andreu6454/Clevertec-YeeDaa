@@ -3,8 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RecipeResponse } from '~/query/types/types';
 import { CategoryType, SubCategoryType } from '~/shared/types/categoryTypes';
 
-import { ApplicationState } from './configure-store';
-
 const initialState = {
     isLoading: false,
     error: '' as string | null,
@@ -122,30 +120,22 @@ export const recipesListPageSlice = createSlice({
             state.searchInputValue = '';
         },
     },
+    selectors: {
+        meatFiltersSelector: (state) => state.filters.meatFilters,
+        sideDishFiltersSelector: (state) => state.filters.sideDishFilters,
+        allergensSelector: (state) => state.filters.allergens,
+        allergenFilterOnSelector: (state) => state.isAllergenFilterOn,
+        searchAllergenFilterOnSelector: (state) => state.isSearchAllergenFilterOn,
+        searchInputSelector: (state) => state.searchInputValue,
+        searchCompletedSelector: (state) => state.isSearchCompleted,
+        searchErrorSelector: (state) => state.searchError,
+        subCategoriesIdsSelector: (state) => state.subCategoriesIds,
+        categoryIdsSelector: (state) => state.categoryIds,
+        recipesDataSelector: (state) => state.recipesData,
+        inputLoadingSelector: (state) => state.isInputLoading,
+        resultEmptySelector: (state) => state.isResultEmpty,
+    },
 });
-
-export const meatFiltersSelector = (state: ApplicationState) =>
-    state.recipesListPage.filters.meatFilters;
-export const sideDishFiltersSelector = (state: ApplicationState) =>
-    state.recipesListPage.filters.sideDishFilters;
-export const allergenFilterOnSelector = (state: ApplicationState) =>
-    state.recipesListPage.isAllergenFilterOn;
-export const searchAllergenFilterOnSelector = (state: ApplicationState) =>
-    state.recipesListPage.isSearchAllergenFilterOn;
-export const allergensSelector = (state: ApplicationState) =>
-    state.recipesListPage.filters.allergens;
-export const searchInputSelector = (state: ApplicationState) =>
-    state.recipesListPage.searchInputValue;
-export const searchCompletedSelector = (state: ApplicationState) =>
-    state.recipesListPage.isSearchCompleted;
-export const searchErrorSelector = (state: ApplicationState) => state.recipesListPage.searchError;
-export const subCategoriesIdsSelector = (state: ApplicationState) =>
-    state.recipesListPage.subCategoriesIds;
-export const categoryIdsSelector = (state: ApplicationState) => state.recipesListPage.categoryIds;
-export const recipesDataSelector = (state: ApplicationState) => state.recipesListPage.recipesData;
-export const inputLoadingSelector = (state: ApplicationState) =>
-    state.recipesListPage.isInputLoading;
-export const resultEmptySelector = (state: ApplicationState) => state.recipesListPage.isResultEmpty;
 
 export const {
     setRecipesListPageError,
@@ -164,5 +154,21 @@ export const {
     setIsAllergenFilterOn,
     setClearFilters,
 } = recipesListPageSlice.actions;
+
+export const {
+    meatFiltersSelector,
+    sideDishFiltersSelector,
+    allergensSelector,
+    allergenFilterOnSelector,
+    searchAllergenFilterOnSelector,
+    searchInputSelector,
+    searchCompletedSelector,
+    searchErrorSelector,
+    subCategoriesIdsSelector,
+    categoryIdsSelector,
+    recipesDataSelector,
+    inputLoadingSelector,
+    resultEmptySelector,
+} = recipesListPageSlice.selectors;
 
 export default recipesListPageSlice.reducer;
