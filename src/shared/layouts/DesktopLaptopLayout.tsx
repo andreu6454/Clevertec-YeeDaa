@@ -19,7 +19,7 @@ export const DesktopLaptopLayout = (props: DesktopLaptopLayoutProps) => {
             {header}
             <Box
                 overflowY='auto'
-                padding='80px 272px 0 280px'
+                padding='80px 208px 0 280px'
                 min-height='100vh'
                 width='100%'
                 display='flex'

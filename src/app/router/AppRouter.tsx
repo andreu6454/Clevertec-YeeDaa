@@ -4,6 +4,7 @@ import { NotFoundPage } from '~/pages/ErrorPage/NotFoundPage';
 import { JuiciestFoodPage } from '~/pages/JuiciestFoodPage/JuiciestFoodPage';
 import { LoginPage } from '~/pages/LoginPage/LoginPage';
 import { MainPage } from '~/pages/MainPage/MainPage.tsx';
+import { NewRecipePage } from '~/pages/NewRecipePage/NewRecipePage';
 import RecipePage from '~/pages/RecipePage/RecipePage';
 import RecipesListPage from '~/pages/RecipesListPage/RecipesListPage';
 import { RegistrationPage } from '~/pages/RegistrationPage/RegistrationPage';
@@ -30,6 +31,7 @@ export const AppRouter = () => (
                     <Route index element={<MainPage />} />
                     <Route path={APP_PATHS.recipePage} element={<RecipePage />} />
                     <Route path={APP_PATHS.theJuiciest} element={<JuiciestFoodPage />} />
+                    <Route path={APP_PATHS.newRecipe} element={<NewRecipePage />} />
                 </Route>
                 <Route element={<WithCategoryAndAuthValidation />}>
                     <Route path={APP_PATHS.category} element={<RecipesListPage />} />

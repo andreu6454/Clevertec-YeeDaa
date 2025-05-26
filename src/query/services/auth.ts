@@ -35,6 +35,13 @@ export const authApi = apiSlice
                     apiGroupName: ApiGroupNames.LOGIN,
                     name: EndpointNames.LOGIN,
                 }),
+                transformResponse: (response: AuthSuccessResponse, meta) => {
+                    const jwtToken = meta?.response?.headers.get('authentication-access');
+                    if (jwtToken) {
+                        localStorage.setItem('jwtToken', jwtToken);
+                    }
+                    return response;
+                },
             }),
             forgotPassword: builder.mutation<AuthSuccessResponse, ForgotPasswordParams>({
                 query: (body) => ({
@@ -63,6 +70,18 @@ export const authApi = apiSlice
                     name: EndpointNames.RESET_PASSWORD,
                 }),
             }),
+            checkAuth: builder.query<AuthSuccessResponse, void>({
+                query: () => ({
+                    url: '/auth/check-auth',
+                    method: 'GET',
+                }),
+            }),
+            refreshToken: builder.query<AuthSuccessResponse, void>({
+                query: () => ({
+                    url: '/auth/refresh',
+                    method: 'GET',
+                }),
+            }),
         }),
     });
 
@@ -72,4 +91,6 @@ export const {
     useForgotPasswordMutation,
     useVerifyOtpMutation,
     useResetPasswordMutation,
+    useCheckAuthQuery,
+    useRefreshTokenQuery,
 } = authApi;

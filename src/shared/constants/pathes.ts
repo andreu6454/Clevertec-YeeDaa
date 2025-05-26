@@ -8,4 +8,5 @@ export const APP_PATHS = {
     login: '/login',
     verification: '/verification',
     signUp: '/register',
+    newRecipe: '/new-recipe',
 };

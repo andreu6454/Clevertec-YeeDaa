@@ -37,11 +37,15 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
 
             if (path === 'the-juiciest') {
                 displayName = 'Самое сочное';
-            } // для "самое сочное"
+            }
+
+            if (path === 'new-recipe') {
+                displayName = 'Новый рецепт';
+            }
 
             if (path === 'not-found') {
                 displayName = 'Страница не существует';
-            } // для "404"
+            }
 
             return (
                 <Box display='flex' alignItems='center' key={displayName}>
