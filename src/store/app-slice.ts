@@ -9,6 +9,7 @@ const initialState = {
     isFiltersOpen: false,
     isLogin: false,
     emailVerified: null as boolean | null,
+    token: '',
     pageTitle: {
         _id: '',
         title: '',
@@ -48,6 +49,9 @@ export const appSlice = createSlice({
         ) {
             state.pageTitle = pageTitle;
         },
+        setAccessToken(state: AppState, { payload: token }: PayloadAction<string>) {
+            state.token = token;
+        },
     },
     selectors: {
         appErrorSelector: (state) => state.error,
@@ -68,6 +72,7 @@ export const {
     openBurgerMenu,
     openFilters,
     closeFilters,
+    setAccessToken,
     setRecipePageTitle,
 } = appSlice.actions;
 

@@ -10,17 +10,18 @@ interface CheckboxWithTitleProps {
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     isChecked: boolean;
     title: string;
+    width?: string;
 }
 
 export const CheckboxWithTitle = (props: CheckboxWithTitleProps) => {
-    const { dataTestId, title, isChecked, index, onChange } = props;
+    const { dataTestId, title, isChecked, index, onChange, width = '269px' } = props;
 
     return (
         <Flex
             padding='6px 16px'
             alignItems='center'
             as='div'
-            width='269px'
+            width={width}
             height='32px'
             backgroundColor={index % 2 === 0 ? 'rgba(0, 0, 0, 0.06)' : '#fff'}
             gap='8px'

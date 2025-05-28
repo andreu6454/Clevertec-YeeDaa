@@ -11,6 +11,7 @@ import {
     SignUpParams,
     VerifyOtpParams,
 } from '~/query/types/types';
+import { setAccessToken } from '~/store/app-slice';
 
 export const authApi = apiSlice
     .enhanceEndpoints({
@@ -32,15 +33,24 @@ export const authApi = apiSlice
                     url: ApiEndpoints.LOGIN,
                     method: 'POST',
                     body,
+                    credentials: 'include',
                     apiGroupName: ApiGroupNames.LOGIN,
                     name: EndpointNames.LOGIN,
                 }),
-                transformResponse: (response: AuthSuccessResponse, meta) => {
-                    const jwtToken = meta?.response?.headers.get('authentication-access');
-                    if (jwtToken) {
+                async onQueryStarted(_, { queryFulfilled, dispatch }) {
+                    try {
+                        const { meta } = await queryFulfilled;
+                        const jwtToken = meta?.response?.headers.get('Authentication-Access');
+
+                        if (!jwtToken) {
+                            throw new Error('нет токена');
+                        }
+
                         localStorage.setItem('jwtToken', jwtToken);
+                        dispatch(setAccessToken(jwtToken));
+                    } catch (error) {
+                        console.log(error);
                     }
-                    return response;
                 },
             }),
             forgotPassword: builder.mutation<AuthSuccessResponse, ForgotPasswordParams>({
@@ -74,12 +84,14 @@ export const authApi = apiSlice
                 query: () => ({
                     url: '/auth/check-auth',
                     method: 'GET',
+                    credentials: 'include',
                 }),
             }),
             refreshToken: builder.query<AuthSuccessResponse, void>({
                 query: () => ({
                     url: '/auth/refresh',
                     method: 'GET',
+                    credentials: 'include',
                 }),
             }),
         }),

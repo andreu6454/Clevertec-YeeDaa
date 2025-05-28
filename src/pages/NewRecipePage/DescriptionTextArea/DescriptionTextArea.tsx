@@ -1,22 +1,25 @@
 import { Textarea } from '@chakra-ui/react';
-import { UseFormRegister } from 'react-hook-form';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
-import { NewRecipePageDataType } from '~/pages/NewRecipePage/NewRecipePage';
+import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
 
 type DescriptionTextAreaProps = {
-    register: UseFormRegister<NewRecipePageDataType>;
+    register: UseFormRegister<NewRecipeDataType>;
+    errors: FieldErrors<NewRecipeDataType>;
 };
 
 export const DescriptionTextArea = (props: DescriptionTextAreaProps) => {
-    const { register } = props;
+    const { register, errors } = props;
+
+    const errorBorder = '2px solid #e53e3e';
 
     return (
         <Textarea
             {...register('description', { required: true })}
+            border={errors?.description?.message && errorBorder}
             width='100%'
             height='80px'
             placeholder='Краткое описание рецепта'
-            mb='24px'
         />
     );
 };

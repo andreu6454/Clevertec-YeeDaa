@@ -67,3 +67,9 @@ export type ResetPasswordParams = {
     passwordConfirm: string;
     email: string;
 };
+
+export type ImageUploadResponse = {
+    name: string;
+    url: string;
+    _id: string;
+};

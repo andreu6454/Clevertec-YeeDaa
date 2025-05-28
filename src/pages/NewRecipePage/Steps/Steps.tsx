@@ -1,32 +1,48 @@
 import { Image } from '@chakra-ui/icons';
-import { Button, Flex } from '@chakra-ui/react';
-import { Control, useFieldArray, UseFormRegister } from 'react-hook-form';
+import { Button, Flex, useDisclosure } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Control, FieldErrors, useFieldArray, UseFormRegister } from 'react-hook-form';
 
 import BlackPlusIcon from '~/assets/svg/blackPlusIcon.svg';
 import { IngredientDataType } from '~/pages/NewRecipePage/Ingredients/Ingredients';
-import { NewRecipePageDataType } from '~/pages/NewRecipePage/NewRecipePage';
+import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { UploadImageModal } from '~/shared/ui/UploadImageModal/UploadImageModal';
 
 import { Step } from './Step';
 
 export type StepType = {
     stepNumber: number;
     description: string;
-    image: string;
+    image?: string | undefined;
 };
 
 type StepsProps = {
-    control: Control<NewRecipePageDataType, IngredientDataType, NewRecipePageDataType>;
-    register: UseFormRegister<NewRecipePageDataType>;
+    control: Control<NewRecipeDataType, IngredientDataType, NewRecipeDataType>;
+    register: UseFormRegister<NewRecipeDataType>;
+    errors: FieldErrors<NewRecipeDataType>;
 };
 
 export const Steps = (props: StepsProps) => {
-    const { control, register } = props;
+    const { control, register, errors } = props;
+    const { isDesktopLaptop } = useScreenSize();
 
-    const { fields, append, remove } = useFieldArray({
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [stepId, setStepId] = useState<number | null>(null);
+
+    const { fields, append, remove, update } = useFieldArray({
         control,
         name: 'steps',
     });
+
+    const updateStepField = (index: number, fieldName: keyof StepType, value: string) => {
+        const step = fields[index];
+        update(index, {
+            ...step,
+            [fieldName]: value,
+        });
+    };
 
     const addStep = () => {
         append({ description: '', image: '', stepNumber: fields.length + 1 });
@@ -36,19 +52,40 @@ export const Steps = (props: StepsProps) => {
         remove(index);
     };
 
-    const mappedSteps = fields.map((field, index) => (
-        <Step
-            key={field.id}
-            stepNumber={field.stepNumber}
-            index={index}
-            remove={onRemoveHandler}
-            register={register}
-        />
-    ));
+    const onSaveHandle = (url: string) => {
+        if (!stepId) return;
+        updateStepField(stepId, 'image', url);
+    };
+
+    const mappedSteps = fields.map((field, index) => {
+        const isLast = index === fields.length - 1;
+
+        const onOpenHandler = () => {
+            setStepId(index);
+            onOpen();
+        };
+
+        return (
+            <Step
+                key={field.id}
+                isLast={isLast}
+                error={errors?.title?.message}
+                stepNumber={field.stepNumber}
+                index={index}
+                remove={onRemoveHandler}
+                register={register}
+                onOpenHandler={onOpenHandler}
+                preview={fields?.[index]?.image || ''}
+            />
+        );
+    });
 
     return (
-        <Flex width='658px' flexDirection='column' gap='16px'>
-            <Typography fontWeight='600' Size={TypographySizes.md}>
+        <Flex width={{ base: '100%', md: '604px', xl: '658px' }} flexDirection='column' gap='16px'>
+            <Typography
+                fontWeight='600'
+                Size={isDesktopLaptop ? TypographySizes.md : TypographySizes.sm}
+            >
                 Добавьте шаги приготовления
             </Typography>
             {mappedSteps}
@@ -64,6 +101,7 @@ export const Steps = (props: StepsProps) => {
                     Новый шаг
                 </Button>
             </Flex>
+            <UploadImageModal isOpen={isOpen} onClose={onClose} onSaveHandle={onSaveHandle} />
         </Flex>
     );
 };
