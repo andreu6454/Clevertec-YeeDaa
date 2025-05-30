@@ -11,4 +11,7 @@ export enum ApiEndpoints {
     MEASURE_UNITS = '/measure-units',
     CHECK_AUTH = '/auth/check-auth',
     REFRESH_TOKEN = '/auth/refresh',
+    LIKE = '/like',
+    BOOKMARK = '/bookmark',
+    RECIPE_DRAFT = '/recipe/draft',
 }

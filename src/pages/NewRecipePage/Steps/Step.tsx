@@ -74,6 +74,8 @@ export const Step = (props: StepProps) => {
                     placeholder='Шаг'
                     width='100%'
                     height='84px'
+                    color='rgba(0, 0, 0, 0.92)'
+                    _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
                 />
             </Flex>
         </Flex>

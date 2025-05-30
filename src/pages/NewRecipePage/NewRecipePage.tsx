@@ -1,6 +1,7 @@
 import { Image } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
@@ -13,10 +14,14 @@ import { Portions } from '~/pages/NewRecipePage/Portions/Portions';
 import { RecipeSaveModal } from '~/pages/NewRecipePage/RecipeSaveModal/RecipeSaveModal';
 import { Steps, StepType } from '~/pages/NewRecipePage/Steps/Steps';
 import { TitleInput } from '~/pages/NewRecipePage/TitleInput/TitleInput';
-import { useCreateRecipeMutation } from '~/query/services/newRecipe';
+import { useCreateDraftMutation, useCreateRecipeMutation } from '~/query/services/newRecipe';
+import { ErrorResponse } from '~/query/types/types';
+import { APP_PATHS } from '~/shared/constants/pathes';
+import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useBlockerWithModal } from '~/shared/hooks/useBrokerWithModal';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { newRecipeSchema } from '~/shared/types/validationSchemas/newRecipeSchema';
+import { replaceEmptyStringsWithNull } from '~/shared/utils/replaceEmptyStringsWithNull';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
 
@@ -40,6 +45,8 @@ export const NewRecipePage = () => {
         handleSubmit,
         setValue,
         getValues,
+        clearErrors,
+        trigger,
         formState: { errors, dirtyFields },
     } = useForm<NewRecipeDataType>({
         defaultValues: {
@@ -52,22 +59,41 @@ export const NewRecipePage = () => {
         resolver: zodResolver(newRecipeSchema),
     });
 
+    const [crateRecipe] = useCreateRecipeMutation();
+    const [createDraft] = useCreateDraftMutation();
+    const [isRedirectBlocked, setIsRedirectBlocked] = useState<boolean>(false);
+
     const navigate = useNavigate();
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 
-    const { isOpen, continueNavigation, cancelNavigation } = useBlockerWithModal(!!dirtyFields);
+    const { isOpen, onClose, continueNavigation, cancelNavigation } =
+        useBlockerWithModal(isRedirectBlocked);
 
-    const [crateRecipe] = useCreateRecipeMutation();
+    const errorAlert = useAlertToast();
+
+    useEffect(() => {
+        if (Object.keys(dirtyFields).length) {
+            setIsRedirectBlocked(true);
+        }
+    }, [!!Object.keys(dirtyFields).length]);
 
     const onSubmit = handleSubmit(async (data: NewRecipeDataType) => {
-        const formData = {
-            ...data,
-            ingredients: data.ingredients.slice(0, -1),
-        };
+        const finalData = replaceEmptyStringsWithNull(data);
 
         try {
-            const result = await crateRecipe(formData).unwrap();
+            setIsRedirectBlocked(false);
+            const result = await crateRecipe(finalData).unwrap();
+            continueNavigation();
+
+            errorAlert(
+                {
+                    status: 'success',
+                    title: 'Рецепт успешно опубликован',
+                },
+                false,
+            );
+
             navigate(
                 getNavigateLinkToRecipe(
                     categories,
@@ -77,12 +103,79 @@ export const NewRecipePage = () => {
                 ),
             );
             continueNavigation();
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            setIsRedirectBlocked(true);
+            const responseError = error as ErrorResponse;
+            if (responseError?.status === 500) {
+                errorAlert(
+                    {
+                        status: 'error',
+                        title: 'Ошибка сервера',
+                        description: 'Попробуйте пока сохранить в черновик.',
+                    },
+                    false,
+                );
+            }
+            if (responseError?.status === 409) {
+                errorAlert(
+                    {
+                        status: 'error',
+                        title: 'Ошибка',
+                        description: 'Рецепт с таким названием уже существует',
+                    },
+                    false,
+                );
+            }
         }
-
-        console.log(formData);
     });
+
+    const onSaveHandler = async () => {
+        clearErrors();
+        const isValid = await trigger('title');
+
+        if (!isValid) return;
+
+        const finalData = replaceEmptyStringsWithNull(getValues());
+
+        try {
+            setIsRedirectBlocked(false);
+            await createDraft(finalData).unwrap();
+
+            onClose();
+            navigate(APP_PATHS.root);
+
+            errorAlert(
+                {
+                    status: 'success',
+                    title: 'Черновик успешно сохранен',
+                },
+                false,
+            );
+        } catch (error) {
+            setIsRedirectBlocked(true);
+            const responseError = error as ErrorResponse;
+            if (responseError?.status === 500) {
+                errorAlert(
+                    {
+                        status: 'error',
+                        title: 'Ошибка сохранения',
+                        description: 'Не удалось сохранить черновик',
+                    },
+                    false,
+                );
+            }
+            if (responseError?.status === 409) {
+                errorAlert(
+                    {
+                        status: 'error',
+                        title: 'Ошибка',
+                        description: 'Черновик с таким названием уже существует',
+                    },
+                    false,
+                );
+            }
+        }
+    };
 
     return (
         <form onSubmit={onSubmit}>
@@ -118,6 +211,7 @@ export const NewRecipePage = () => {
                     flexDirection={{ base: 'column', md: 'row' }}
                 >
                     <Button
+                        onClick={onSaveHandler}
                         size='lg'
                         border='1px solid rgba(0, 0, 0, 0.48)'
                         borderRadius='6px'
@@ -139,7 +233,7 @@ export const NewRecipePage = () => {
                 <RecipeSaveModal
                     isOpen={isOpen}
                     onClose={cancelNavigation}
-                    handleSaveRecipe={() => {}}
+                    handleSaveRecipe={onSaveHandler}
                     continueNavigation={continueNavigation}
                 />
             </Flex>

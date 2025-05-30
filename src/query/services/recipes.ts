@@ -22,6 +22,7 @@ export const recipeApi = apiSlice
                     method: 'GET',
                     params: params,
                 }),
+                providesTags: [Tags.RECIPES],
             }),
             getRecipeByCategory: builder.query<
                 RecipeResponse,
@@ -35,9 +36,12 @@ export const recipeApi = apiSlice
                         limit: params.limit,
                     },
                 }),
+                providesTags: [Tags.RECIPES],
             }),
             getRecipeById: builder.query<Recipe, string>({
-                query: (id) => `/recipe/${id}`,
+                query: (id) => ({
+                    url: `/recipe/${id}`,
+                }),
                 async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
                     try {
                         const { data } = await queryFulfilled;
@@ -50,6 +54,7 @@ export const recipeApi = apiSlice
                         console.log('Response error');
                     }
                 },
+                providesTags: [Tags.RECIPES],
             }),
             getRecipesWithParams: builder.query<RecipeResponse, RecipeParams>({
                 query: (params) => ({
@@ -68,6 +73,25 @@ export const recipeApi = apiSlice
                         console.log('Response error');
                     }
                 },
+                providesTags: [Tags.RECIPES],
+            }),
+            likeRecipe: builder.mutation<Recipe, string>({
+                query: (id) => ({
+                    url: ApiEndpoints.RECIPES + `/${id}` + ApiEndpoints.LIKE,
+                    method: 'POST',
+                    credentials: 'include',
+                    apiGroupName: ApiGroupNames.RECIPES,
+                }),
+                invalidatesTags: [Tags.RECIPES],
+            }),
+            bookmarkRecipe: builder.mutation<Recipe, string>({
+                query: (id) => ({
+                    url: ApiEndpoints.RECIPES + `/${id}` + ApiEndpoints.BOOKMARK,
+                    method: 'POST',
+                    credentials: 'include',
+                    apiGroupName: ApiGroupNames.RECIPES,
+                }),
+                invalidatesTags: [Tags.RECIPES],
             }),
         }),
     });
@@ -77,4 +101,6 @@ export const {
     useGetRecipeByCategoryQuery,
     useLazyGetRecipesWithParamsQuery,
     useGetRecipeByIdQuery,
+    useBookmarkRecipeMutation,
+    useLikeRecipeMutation,
 } = recipeApi;

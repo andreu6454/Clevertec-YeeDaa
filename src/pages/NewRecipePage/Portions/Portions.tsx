@@ -24,6 +24,8 @@ export const Portions = (props: PortionsProps) => {
             <NumberInput size='md' width='90px' defaultValue={4}>
                 <NumberInputField
                     {...register('portions', { required: true, valueAsNumber: true })}
+                    color='rgba(0, 0, 0, 0.92)'
+                    _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
                 />
                 <NumberInputStepper>
                     <NumberIncrementStepper />

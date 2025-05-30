@@ -12,16 +12,17 @@ export const TitleInput = (props: TitleInputProps) => {
     const { register, errors } = props;
 
     const errorBorder = '2px solid #e53e3e';
+    const border = '1px solid #d7ff94';
 
     return (
         <Input
             {...register('title', { required: true })}
-            border={errors?.title?.message && errorBorder}
+            border={errors?.title?.message ? errorBorder : border}
             placeholder='Название рецепта'
             width='100%'
             size='lg'
-            borderColor='#d7ff94'
-            color='rgba(0, 0, 0, 0.64)'
+            color='rgba(0, 0, 0, 0.92)'
+            _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
         />
     );
 };

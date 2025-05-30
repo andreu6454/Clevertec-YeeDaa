@@ -10,4 +10,5 @@ export enum EndpointNames {
     RESET_PASSWORD = 'resetPassword',
     CREATE_RECIPE = 'createRecipe',
     MEASURE_UNITS = 'measureUnits',
+    CREATE_DRAFT = 'createDraft',
 }

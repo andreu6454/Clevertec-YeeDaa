@@ -46,7 +46,8 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                     size='md'
                     width='100%'
                     placeholder='Ингредиент'
-                    color='rgba(0, 0, 0, 0.64)'
+                    color='rgba(0, 0, 0, 0.92)'
+                    _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
                 />
             </FormControl>
 
@@ -66,7 +67,8 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                         size='md'
                         width='80px'
                         placeholder='100'
-                        color='rgba(0, 0, 0, 0.64)'
+                        color='rgba(0, 0, 0, 0.92)'
+                        _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
                     />
                 </FormControl>
                 <FormControl width={{ base: '192px', md: '215px' }}>
@@ -81,6 +83,8 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                                 ? errors?.ingredients?.[index]?.measureUnit?.message && errorBorder
                                 : border
                         }
+                        color='rgba(0, 0, 0, 0.92)'
+                        _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
                     >
                         {mappedUnits}
                     </Select>

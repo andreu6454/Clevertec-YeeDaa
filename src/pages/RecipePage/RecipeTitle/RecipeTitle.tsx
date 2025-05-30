@@ -6,6 +6,11 @@ import Bookmark from '~/assets/svg/bookmark.svg';
 import Clock from '~/assets/svg/clock.svg';
 import Like from '~/assets/svg/emojiHeartEyes.svg';
 import { CardBadge } from '~/components/CardBadge/CardBadge';
+import { useBookmarkRecipeMutation, useLikeRecipeMutation } from '~/query/services/recipes';
+import { ErrorResponse } from '~/query/types/types';
+import { useAlertToast } from '~/shared/hooks/useAlertToast';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
@@ -16,8 +21,8 @@ interface RecipeTitleProps {
     likes: number;
     title: string;
     time: string;
+    id: string;
     description: string;
-    screenSize: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
 }
 
 const sizes = {
@@ -80,7 +85,9 @@ const sizes = {
 };
 
 export const RecipeTitle = memo((props: RecipeTitleProps) => {
-    const { category, image, bookmarks, likes, title, description, time, screenSize } = props;
+    const { category, image, bookmarks, likes, title, description, time, id } = props;
+
+    const { screenSize } = useScreenSize();
 
     const mappedCategories = category.map((category) => (
         <CardBadge
@@ -92,13 +99,54 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
         />
     ));
 
+    const [like] = useLikeRecipeMutation();
+    const [bookmark] = useBookmarkRecipeMutation();
+
+    const errorAlert = useAlertToast();
+
+    const onLikeHandle = async () => {
+        try {
+            await like(id).unwrap();
+        } catch (error) {
+            const responseError = error as ErrorResponse;
+            if (responseError?.status === 500) {
+                errorAlert(
+                    {
+                        status: 'error',
+                        title: 'Ошибка сервера',
+                        description: 'Попробуйте немного позже',
+                    },
+                    false,
+                );
+            }
+        }
+    };
+
+    const onBookmarkHandle = async () => {
+        try {
+            await bookmark(id).unwrap();
+        } catch (error) {
+            const responseError = error as ErrorResponse;
+            if (responseError?.status === 500) {
+                errorAlert(
+                    {
+                        status: 'error',
+                        title: 'Ошибка сервера',
+                        description: 'Попробуйте немного позже',
+                    },
+                    false,
+                );
+            }
+        }
+    };
+
     return (
         <Flex direction={screenSize === 'Mobile' ? 'column' : 'row'} gap={sizes[screenSize].gap}>
             <Image
                 borderRadius='8px'
                 width={sizes[screenSize].imgWidth}
                 height={sizes[screenSize].imgHeight}
-                src={'https://training-api.clevertec.ru' + image}
+                src={getImageUrl(image)}
             />
             <Flex width={sizes[screenSize].width} direction='column' justifyContent='space-beetwen'>
                 <Flex height='100%' width='100%' direction='column' gap='32px'>
@@ -150,10 +198,11 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
                         alignItems='center'
                     >
                         <Image width='16px' height='16px' src={Clock} />
-                        <Typography Size={TypographySizes.sm}>{time}</Typography>
+                        <Typography Size={TypographySizes.sm}>{`${time} минут`}</Typography>
                     </Flex>
                     <Flex gap='12px'>
                         <Button
+                            onClick={onLikeHandle}
                             size={sizes[screenSize].btnSize}
                             border='1px solid rgba(0, 0, 0, 0.48)'
                             variant='outline'
@@ -162,6 +211,7 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
                             Оценить рецепт
                         </Button>
                         <Button
+                            onClick={onBookmarkHandle}
                             leftIcon={<Image width='14px' src={Bookmark} />}
                             size={sizes[screenSize].btnSize}
                             backgroundColor='#b1ff2e'

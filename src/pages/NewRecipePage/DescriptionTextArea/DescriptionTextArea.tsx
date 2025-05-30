@@ -20,6 +20,8 @@ export const DescriptionTextArea = (props: DescriptionTextAreaProps) => {
             width='100%'
             height='80px'
             placeholder='Краткое описание рецепта'
+            color='rgba(0, 0, 0, 0.92)'
+            _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
         />
     );
 };

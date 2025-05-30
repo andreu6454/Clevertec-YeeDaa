@@ -67,7 +67,7 @@ const RecipePage = () => {
             gap={gaps[screenSize]}
         >
             <RecipeTitle
-                screenSize={screenSize}
+                id={recipeId || ''}
                 title={data?.title}
                 description={data?.description}
                 time={data.time}

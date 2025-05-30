@@ -36,3 +36,26 @@ export type IngredientType = {
     count: number;
     measureUnit: string;
 };
+
+export type NullableStepType = {
+    stepNumber: number | null;
+    description: string | null;
+    image?: string | undefined | null;
+};
+
+export type NullableIngredientDataType = {
+    title: string | null;
+    count: number | null;
+    measureUnit: string | null;
+};
+
+export type NullableNewRecipesDataType = {
+    title: string;
+    description: string | null;
+    time: number;
+    categoriesIds: string[];
+    portions: number;
+    image: string | null;
+    steps: NullableStepType[];
+    ingredients: NullableIngredientDataType[];
+};

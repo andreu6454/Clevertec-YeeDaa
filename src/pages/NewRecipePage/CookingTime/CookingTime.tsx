@@ -22,7 +22,11 @@ export const CookingTime = (props: CookingTimeProps) => {
         <Flex width='100%' gap={{ base: '16px', xl: '24px' }} alignItems='center'>
             <Typography Size={TypographySizes.md}>Сколько времени готовить в минутах?</Typography>
             <NumberInput size='md' width='90px' defaultValue={30}>
-                <NumberInputField {...register('time', { required: true, valueAsNumber: true })} />
+                <NumberInputField
+                    {...register('time', { required: true, valueAsNumber: true })}
+                    color='rgba(0, 0, 0, 0.92)'
+                    _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
+                />
                 <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
