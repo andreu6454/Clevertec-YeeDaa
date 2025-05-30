@@ -7,9 +7,9 @@ const initialState = {
     error: '' as string | null,
     isBurgerOpen: false,
     isFiltersOpen: false,
-    isLogin: false,
     emailVerified: null as boolean | null,
     token: '',
+    userId: '',
     pageTitle: {
         _id: '',
         title: '',
@@ -28,8 +28,8 @@ export const appSlice = createSlice({
         setEmailVerification(state, { payload: isVerified }: PayloadAction<boolean>) {
             state.emailVerified = isVerified;
         },
-        setIsLogin(state, { payload: isLogin }: PayloadAction<boolean>) {
-            state.isLogin = isLogin;
+        setUserId(state, { payload: userId }: PayloadAction<string>) {
+            state.userId = userId;
         },
         openBurgerMenu(state: AppState) {
             state.isBurgerOpen = true;
@@ -56,7 +56,7 @@ export const appSlice = createSlice({
     selectors: {
         appErrorSelector: (state) => state.error,
         isBurgerOpenSelector: (state) => state.isBurgerOpen,
-        isLoginSelector: (state) => state.isLogin,
+        userIdSelector: (state) => state.userId,
         isFiltersOpenSelector: (state) => state.isFiltersOpen,
         recipePageTitleSelector: (state) => state.pageTitle,
         emailVerifiedSelector: (state) => state.emailVerified,
@@ -67,7 +67,7 @@ export const {
     setAppError,
     setAppLoader,
     setEmailVerification,
-    setIsLogin,
+    setUserId,
     closeBurgerMenu,
     openBurgerMenu,
     openFilters,
@@ -79,7 +79,7 @@ export const {
 export const {
     appErrorSelector,
     isBurgerOpenSelector,
-    isLoginSelector,
+    userIdSelector,
     isFiltersOpenSelector,
     recipePageTitleSelector,
     emailVerifiedSelector,

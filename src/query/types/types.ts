@@ -73,3 +73,17 @@ export type ImageUploadResponse = {
     url: string;
     _id: string;
 };
+
+export type MeasureUnit = {
+    _id: string;
+    name: string;
+};
+
+export type MeasureUnitsResponse = MeasureUnit[];
+
+export type jwtDecodedType = {
+    userId: string;
+    login: string;
+    exp: number;
+    iat: number;
+};

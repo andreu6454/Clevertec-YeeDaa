@@ -53,7 +53,7 @@ export const Steps = (props: StepsProps) => {
     };
 
     const onSaveHandle = (url: string) => {
-        if (!stepId) return;
+        if (stepId === null) return;
         updateStepField(stepId, 'image', url);
     };
 

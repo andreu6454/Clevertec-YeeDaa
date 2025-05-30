@@ -1,18 +1,10 @@
-import {
-    ChevronDownIcon,
-    DeleteIcon,
-    IconButton,
-    Image,
-    Input,
-    Menu,
-    MenuList,
-} from '@chakra-ui/icons';
-import { Button, Flex, FormControl, MenuButton } from '@chakra-ui/react';
+import { DeleteIcon, IconButton, Image, Input, Select } from '@chakra-ui/icons';
+import { Flex, FormControl } from '@chakra-ui/react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import BlackPlusIcon from '~/assets/svg/blackPlusIcon.svg';
 import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
-import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { useGetMeasureUnitsQuery } from '~/query/services/newRecipe';
 
 type IngredientInputsProps = {
     register: UseFormRegister<NewRecipeDataType>;
@@ -29,7 +21,15 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
 
     const errorBorder = '2px solid #e53e3e';
 
+    const { data } = useGetMeasureUnitsQuery();
+
+    const measureUnits = data;
+
     const border = '1px solid rgba(0, 0, 0, 0.08)';
+
+    const mappedUnits = measureUnits?.map((measureUnit) => (
+        <option key={'measureUnit' + measureUnit.name}>{measureUnit.name}</option>
+    ));
 
     return (
         <Flex alignItems='center' gap='16px' flexDirection={{ base: 'column', md: 'row' }}>
@@ -70,36 +70,20 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                     />
                 </FormControl>
                 <FormControl width={{ base: '192px', md: '215px' }}>
-                    <Menu>
-                        <MenuButton
-                            border={
-                                isRequired
-                                    ? errors?.ingredients?.[index]?.measureUnit?.message &&
-                                      errorBorder
-                                    : border
-                            }
-                            borderRadius='6px'
-                            textAlign='start'
-                            padding='10px 16px'
-                            variant='outlined'
-                            justifyContent='space-between'
-                            width='100%'
-                            height='40px'
-                            as={Button}
-                            rightIcon={<ChevronDownIcon />}
-                        >
-                            <Typography
-                                Size={TypographySizes.md}
-                                overflow='hidden'
-                                textOverflow='ellipsis'
-                                color='rgba(0, 0, 0, 0.64)'
-                                fontWeight={400}
-                            >
-                                Единица измерения
-                            </Typography>
-                        </MenuButton>
-                        <MenuList></MenuList>
-                    </Menu>
+                    <Select
+                        {...register(`ingredients.${index}.measureUnit` as const, {
+                            required: isRequired,
+                        })}
+                        size='md'
+                        placeholder='Единица измерения'
+                        border={
+                            isRequired
+                                ? errors?.ingredients?.[index]?.measureUnit?.message && errorBorder
+                                : border
+                        }
+                    >
+                        {mappedUnits}
+                    </Select>
                 </FormControl>
 
                 {isLast ? (

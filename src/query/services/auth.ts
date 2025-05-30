@@ -1,3 +1,5 @@
+import { jwtDecode } from 'jwt-decode';
+
 import { ApiEndpoints } from '~/query/constants/api';
 import { ApiGroupNames } from '~/query/constants/api-group-names';
 import { EndpointNames } from '~/query/constants/endpoint-names';
@@ -6,12 +8,13 @@ import { apiSlice } from '~/query/create-api';
 import {
     AuthSuccessResponse,
     ForgotPasswordParams,
+    jwtDecodedType,
     LoginParams,
     ResetPasswordParams,
     SignUpParams,
     VerifyOtpParams,
 } from '~/query/types/types';
-import { setAccessToken } from '~/store/app-slice';
+import { setAccessToken, setUserId } from '~/store/app-slice';
 
 export const authApi = apiSlice
     .enhanceEndpoints({
@@ -46,8 +49,10 @@ export const authApi = apiSlice
                             throw new Error('нет токена');
                         }
 
+                        const jwtDecoded = jwtDecode(jwtToken) as jwtDecodedType;
                         localStorage.setItem('jwtToken', jwtToken);
                         dispatch(setAccessToken(jwtToken));
+                        dispatch(setUserId(jwtDecoded.userId));
                     } catch (error) {
                         console.log(error);
                     }
@@ -82,17 +87,46 @@ export const authApi = apiSlice
             }),
             checkAuth: builder.query<AuthSuccessResponse, void>({
                 query: () => ({
-                    url: '/auth/check-auth',
+                    url: ApiEndpoints.CHECK_AUTH,
                     method: 'GET',
                     credentials: 'include',
                 }),
+                async onQueryStarted(_, { queryFulfilled, dispatch }) {
+                    try {
+                        const { data } = await queryFulfilled;
+
+                        if (data?.statusText === 'Успех!') {
+                            dispatch(setUserId('123'));
+                        }
+                    } catch (error) {
+                        console.log(error);
+                    }
+                },
             }),
             refreshToken: builder.query<AuthSuccessResponse, void>({
                 query: () => ({
-                    url: '/auth/refresh',
+                    url: ApiEndpoints.REFRESH_TOKEN,
                     method: 'GET',
                     credentials: 'include',
                 }),
+                async onQueryStarted(_, { queryFulfilled, dispatch }) {
+                    try {
+                        const { data, meta } = await queryFulfilled;
+                        const jwtToken = meta?.response?.headers.get('Authentication-Access');
+
+                        if (!jwtToken) {
+                            throw new Error('нет токена');
+                        }
+                        if (data?.statusText === 'Успех!') {
+                            const jwtDecoded = jwtDecode(jwtToken) as jwtDecodedType;
+                            localStorage.setItem('jwtToken', jwtToken);
+                            dispatch(setAccessToken(jwtToken));
+                            dispatch(setUserId(jwtDecoded.userId));
+                        }
+                    } catch (error) {
+                        console.log(error);
+                    }
+                },
             }),
         }),
     });

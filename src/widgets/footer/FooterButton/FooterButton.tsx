@@ -1,15 +1,17 @@
 import { Box } from '@chakra-ui/icons';
-import { Text } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/react';
 import { ReactNode } from 'react';
+import { Link as ReactLink } from 'react-router';
 
 interface FooterButtonProps {
     icon: ReactNode;
     title: string;
     isActive?: boolean;
+    path?: string;
 }
 
 const FooterButton = (props: FooterButtonProps) => {
-    const { icon, title, isActive } = props;
+    const { icon, title, isActive, path } = props;
 
     const backgroundGradient = isActive
         ? {
@@ -27,9 +29,13 @@ const FooterButton = (props: FooterButtonProps) => {
             alignItems='center'
             justifyContent='center'
         >
-            <Box>{icon}</Box>
+            <Box as={ReactLink} to={path}>
+                {icon}
+            </Box>
             {isActive ? (
-                <Text
+                <Link
+                    as={ReactLink}
+                    to={path}
                     fontWeight={500}
                     fontSize='12px'
                     lineHeight='133%'
@@ -37,9 +43,11 @@ const FooterButton = (props: FooterButtonProps) => {
                     color='#000'
                 >
                     {title}
-                </Text>
+                </Link>
             ) : (
-                <Text
+                <Link
+                    as={ReactLink}
+                    to={path}
                     fontWeight={400}
                     fontSize='12px'
                     lineHeight='133%'
@@ -47,7 +55,7 @@ const FooterButton = (props: FooterButtonProps) => {
                     color='rgba(0, 0, 0, 0.64)'
                 >
                     {title}
-                </Text>
+                </Link>
             )}
         </Box>
     );

@@ -2,6 +2,7 @@ import { Image } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 import SaveNote from '~/assets/svg/saveNote.svg';
 import { CategoriesSelector } from '~/pages/NewRecipePage/CategoriesSelector/CategoriesSelector';
@@ -9,9 +10,15 @@ import { CookingTime } from '~/pages/NewRecipePage/CookingTime/CookingTime';
 import { DescriptionTextArea } from '~/pages/NewRecipePage/DescriptionTextArea/DescriptionTextArea';
 import { ImageUploader } from '~/pages/NewRecipePage/ImageUploader/ImageUploader';
 import { Portions } from '~/pages/NewRecipePage/Portions/Portions';
+import { RecipeSaveModal } from '~/pages/NewRecipePage/RecipeSaveModal/RecipeSaveModal';
 import { Steps, StepType } from '~/pages/NewRecipePage/Steps/Steps';
 import { TitleInput } from '~/pages/NewRecipePage/TitleInput/TitleInput';
+import { useCreateRecipeMutation } from '~/query/services/newRecipe';
+import { useBlockerWithModal } from '~/shared/hooks/useBrokerWithModal';
+import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { newRecipeSchema } from '~/shared/types/validationSchemas/newRecipeSchema';
+import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
+import { useAppSelector } from '~/store/hooks';
 
 import { IngredientDataType, Ingredients } from './Ingredients/Ingredients';
 
@@ -33,7 +40,7 @@ export const NewRecipePage = () => {
         handleSubmit,
         setValue,
         getValues,
-        formState: { errors },
+        formState: { errors, dirtyFields },
     } = useForm<NewRecipeDataType>({
         defaultValues: {
             steps: [{ stepNumber: 1, image: '', description: '' }],
@@ -45,25 +52,40 @@ export const NewRecipePage = () => {
         resolver: zodResolver(newRecipeSchema),
     });
 
-    // const [crateRecipe] = useCreateRecipeMutation()
+    const navigate = useNavigate();
+    const categories = useAppSelector(categoriesSelector);
+    const subCategories = useAppSelector(subCategoriesSelector);
 
-    const onSubmit = handleSubmit((data: NewRecipeDataType) => {
+    const { isOpen, continueNavigation, cancelNavigation } = useBlockerWithModal(!!dirtyFields);
+
+    const [crateRecipe] = useCreateRecipeMutation();
+
+    const onSubmit = handleSubmit(async (data: NewRecipeDataType) => {
         const formData = {
             ...data,
             ingredients: data.ingredients.slice(0, -1),
         };
-        //
-        // try {
-        //
-        // } catch (e) {
-        //
-        // }
+
+        try {
+            const result = await crateRecipe(formData).unwrap();
+            navigate(
+                getNavigateLinkToRecipe(
+                    categories,
+                    subCategories,
+                    result.categoriesIds[0],
+                    result._id,
+                ),
+            );
+            continueNavigation();
+        } catch (e) {
+            console.log(e);
+        }
 
         console.log(formData);
     });
 
     return (
-        <form>
+        <form onSubmit={onSubmit}>
             <Flex
                 direction='column'
                 paddingTop={{ base: '16px', xl: '56px' }}
@@ -114,6 +136,12 @@ export const NewRecipePage = () => {
                         Опубликовать рецепт
                     </Button>
                 </Flex>
+                <RecipeSaveModal
+                    isOpen={isOpen}
+                    onClose={cancelNavigation}
+                    handleSaveRecipe={() => {}}
+                    continueNavigation={continueNavigation}
+                />
             </Flex>
         </form>
     );

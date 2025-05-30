@@ -1,6 +1,7 @@
 import { Avatar, Box, IconButton } from '@chakra-ui/icons';
 import { memo } from 'react';
 
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import FooterButton from '~/widgets/footer/FooterButton/FooterButton';
@@ -31,6 +32,7 @@ const Footer = memo(() => {
                 <FooterButton
                     isActive={true}
                     title='Главная'
+                    path={APP_PATHS.root}
                     icon={<FooterIcon marginY='4px' image={HomeIcon} />}
                 />
                 <FooterButton
@@ -39,6 +41,7 @@ const Footer = memo(() => {
                 />
                 <FooterButton
                     title='Записать'
+                    path={APP_PATHS.newRecipe}
                     icon={<FooterIcon marginY='4px' image={EditIcon} />}
                 />
                 <FooterButton

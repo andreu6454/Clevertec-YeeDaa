@@ -8,7 +8,7 @@ import { APP_PATHS } from '~/shared/constants/pathes';
 import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
-import { isBurgerOpenSelector, isLoginSelector } from '~/store/app-slice';
+import { isBurgerOpenSelector, userIdSelector } from '~/store/app-slice';
 import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
 
@@ -20,7 +20,7 @@ export const HeaderDesktop = memo(() => {
     const navigate = useNavigate();
 
     const { isDesktopLaptop } = useScreenSize();
-    const isLogin = useAppSelector(isLoginSelector);
+    const isLogin = useAppSelector(userIdSelector);
     const isBurgerOpen = useAppSelector(isBurgerOpenSelector);
     const allCategories = useAppSelector(allCategoriesSelector);
 

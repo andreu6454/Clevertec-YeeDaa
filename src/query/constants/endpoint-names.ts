@@ -9,4 +9,5 @@ export enum EndpointNames {
     VERIFY_OTP = 'verifyOTP',
     RESET_PASSWORD = 'resetPassword',
     CREATE_RECIPE = 'createRecipe',
+    MEASURE_UNITS = 'measureUnits',
 }

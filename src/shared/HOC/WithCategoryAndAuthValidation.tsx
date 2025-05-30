@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Navigate, Outlet, useParams } from 'react-router';
 
 import { APP_PATHS } from '~/shared/constants/pathes';
-import { isLoginSelector } from '~/store/app-slice';
+import { userIdSelector } from '~/store/app-slice';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { setCategoriesFilter, setCurrentPageCategory } from '~/store/recipesListPage-slice';
@@ -10,7 +10,7 @@ import { setCategoriesFilter, setCurrentPageCategory } from '~/store/recipesList
 export const WithCategoryAndAuthValidation = () => {
     const dispatch = useAppDispatch();
     const { category, subcategory } = useParams();
-    const isAuthenticated = useAppSelector(isLoginSelector);
+    const isAuthenticated = useAppSelector(userIdSelector);
 
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);

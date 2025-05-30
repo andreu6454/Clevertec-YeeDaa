@@ -45,7 +45,7 @@ export const Ingredients = (props: IngredientsProps) => {
                 errors={errors}
                 register={register}
                 isLast={isLast}
-                isRequired={!isLast}
+                isRequired={(isLast && index === 0) || !isLast}
                 index={index}
                 remove={remove}
             />

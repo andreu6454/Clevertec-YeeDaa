@@ -55,7 +55,7 @@ export const Step = (props: StepProps) => {
                     >
                         <Typography Size={TypographySizes.sm}>{`Шаг ${stepNumber}`}</Typography>
                     </Box>
-                    {!isLast && (
+                    {!(isLast && index === 0) && (
                         <IconButton
                             aria-label='Удалить ингредиент'
                             icon={<DeleteIcon color='#2db100' />}

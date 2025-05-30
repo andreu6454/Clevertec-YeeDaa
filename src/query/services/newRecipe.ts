@@ -4,11 +4,12 @@ import { ApiGroupNames } from '~/query/constants/api-group-names';
 import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
-import { ImageUploadResponse } from '~/query/types/types';
+import { ImageUploadResponse, MeasureUnitsResponse } from '~/query/types/types';
+import { Recipe } from '~/shared/types/recipeTypes';
 
 export const newRecipeApi = apiSlice
     .enhanceEndpoints({
-        addTagTypes: [Tags.NEW_RECIPES],
+        addTagTypes: [Tags.NEW_RECIPES, Tags.RECIPES],
     })
     .injectEndpoints({
         endpoints: (builder) => ({
@@ -20,7 +21,7 @@ export const newRecipeApi = apiSlice
                     credentials: 'include',
                 }),
             }),
-            createRecipe: builder.mutation<string, NewRecipeDataType>({
+            createRecipe: builder.mutation<Recipe, NewRecipeDataType>({
                 query: (body) => ({
                     url: ApiEndpoints.RECIPES,
                     method: 'POST',
@@ -30,7 +31,17 @@ export const newRecipeApi = apiSlice
                     name: EndpointNames.CREATE_RECIPE,
                 }),
             }),
+            getMeasureUnits: builder.query<MeasureUnitsResponse, void>({
+                query: () => ({
+                    url: ApiEndpoints.MEASURE_UNITS,
+                    method: 'get',
+                    credentials: 'include',
+                    apiGroupName: ApiGroupNames.RECIPES,
+                    name: EndpointNames.MEASURE_UNITS,
+                }),
+            }),
         }),
     });
 
-export const { useUploadImageMutation, useCreateRecipeMutation } = newRecipeApi;
+export const { useUploadImageMutation, useCreateRecipeMutation, useGetMeasureUnitsQuery } =
+    newRecipeApi;
