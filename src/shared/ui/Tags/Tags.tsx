@@ -12,12 +12,12 @@ export const Tags = (props: TagsProps) => {
 
     let elementForMap = elements;
 
-    if (cutOn && elements.length - cutOn >= 1) {
+    if (cutOn && elements?.length - cutOn >= 1) {
         const restNumber = `+${elements.length - cutOn}`;
         elementForMap = [...elements.slice(0, cutOn), restNumber];
     }
 
-    const mappedTags = elementForMap.map((el) => (
+    const mappedTags = elementForMap?.map((el) => (
         <Tag
             key={el + 'tag'}
             color='#2db100'

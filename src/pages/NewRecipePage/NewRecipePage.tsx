@@ -3,7 +3,7 @@ import { Button, Flex } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import SaveNote from '~/assets/svg/saveNote.svg';
 import { CategoriesSelector } from '~/pages/NewRecipePage/CategoriesSelector/CategoriesSelector';
@@ -14,16 +14,22 @@ import { Portions } from '~/pages/NewRecipePage/Portions/Portions';
 import { RecipeSaveModal } from '~/pages/NewRecipePage/RecipeSaveModal/RecipeSaveModal';
 import { Steps, StepType } from '~/pages/NewRecipePage/Steps/Steps';
 import { TitleInput } from '~/pages/NewRecipePage/TitleInput/TitleInput';
-import { useCreateDraftMutation, useCreateRecipeMutation } from '~/query/services/newRecipe';
+import {
+    useCreateDraftMutation,
+    useCreateRecipeMutation,
+    useUpdateRecipeMutation,
+} from '~/query/services/newRecipe';
 import { ErrorResponse } from '~/query/types/types';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useBlockerWithModal } from '~/shared/hooks/useBrokerWithModal';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
+import { Recipe } from '~/shared/types/recipeTypes';
 import { newRecipeSchema } from '~/shared/types/validationSchemas/newRecipeSchema';
 import { replaceEmptyStringsWithNull } from '~/shared/utils/replaceEmptyStringsWithNull';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
+import { recipeSelector } from '~/store/recipe-slice';
 
 import { IngredientDataType, Ingredients } from './Ingredients/Ingredients';
 
@@ -47,6 +53,7 @@ export const NewRecipePage = () => {
         getValues,
         clearErrors,
         trigger,
+        reset,
         formState: { errors, dirtyFields },
     } = useForm<NewRecipeDataType>({
         defaultValues: {
@@ -59,8 +66,13 @@ export const NewRecipePage = () => {
         resolver: zodResolver(newRecipeSchema),
     });
 
+    const { pathname } = useLocation();
+    const isNewRecipePage = pathname === APP_PATHS.newRecipe;
+    const recipe = useAppSelector(recipeSelector);
+
     const [crateRecipe] = useCreateRecipeMutation();
     const [createDraft] = useCreateDraftMutation();
+    const [updateRecipe] = useUpdateRecipeMutation();
     const [isRedirectBlocked, setIsRedirectBlocked] = useState<boolean>(false);
 
     const navigate = useNavigate();
@@ -82,8 +94,17 @@ export const NewRecipePage = () => {
         const finalData = replaceEmptyStringsWithNull(data);
 
         try {
+            let result = {} as Recipe;
             setIsRedirectBlocked(false);
-            const result = await crateRecipe(finalData).unwrap();
+
+            if (isNewRecipePage) {
+                result = await crateRecipe(finalData).unwrap();
+            } else {
+                const updateRecipeParams = { id: recipe._id, recipe: finalData };
+                console.log(updateRecipeParams);
+                result = await updateRecipe(updateRecipeParams).unwrap();
+            }
+
             continueNavigation();
 
             errorAlert(
@@ -176,6 +197,11 @@ export const NewRecipePage = () => {
             }
         }
     };
+
+    useEffect(() => {
+        const recipeForReset = { ...recipe, time: Number(recipe.time) };
+        if (!isNewRecipePage && recipe) reset(recipeForReset);
+    }, [isNewRecipePage, recipe, reset]);
 
     return (
         <form onSubmit={onSubmit}>

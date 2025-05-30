@@ -9,4 +9,5 @@ export const APP_PATHS = {
     verification: '/verification',
     signUp: '/register',
     newRecipe: '/new-recipe',
+    editRecipe: '/edit-recipe/:category/:subcategory/:recipeId',
 };

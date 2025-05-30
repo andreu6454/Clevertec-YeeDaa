@@ -15,13 +15,13 @@ export const CategoryHeader = (props: CategoryHeaderProps) => {
 
     const subCategories = useSelector(subCategoriesSelector);
 
-    const categoriesForMap = categoriesIds.map(
+    const categoriesForMap = categoriesIds?.map(
         (el) => subCategories.find((cat) => el === cat._id)?.title,
     );
 
     const tagsPerView = isDesktopLaptop ? 2 : 1;
 
-    if (categoriesForMap.length === 0) {
+    if (categoriesForMap?.length === 0) {
         return (
             <Typography
                 color='rgba(0, 0, 0, 0.64)'

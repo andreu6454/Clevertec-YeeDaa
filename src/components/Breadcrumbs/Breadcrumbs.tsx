@@ -47,6 +47,10 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
                 displayName = 'Страница не существует';
             }
 
+            if (path === 'edit-recipe') {
+                return null;
+            }
+
             return (
                 <Box display='flex' alignItems='center' key={displayName}>
                     {isLast ? (

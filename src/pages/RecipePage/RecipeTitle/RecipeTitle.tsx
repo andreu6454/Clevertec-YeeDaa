@@ -6,6 +6,7 @@ import Bookmark from '~/assets/svg/bookmark.svg';
 import Clock from '~/assets/svg/clock.svg';
 import Like from '~/assets/svg/emojiHeartEyes.svg';
 import { CardBadge } from '~/components/CardBadge/CardBadge';
+import { DeleteAndEditButtons } from '~/pages/RecipePage/RecipeTitle/DeleteAndEditButtons';
 import { useBookmarkRecipeMutation, useLikeRecipeMutation } from '~/query/services/recipes';
 import { ErrorResponse } from '~/query/types/types';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
@@ -13,6 +14,8 @@ import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { userIdSelector } from '~/store/app-slice';
+import { useAppSelector } from '~/store/hooks';
 
 interface RecipeTitleProps {
     category: Array<string>;
@@ -23,6 +26,8 @@ interface RecipeTitleProps {
     time: string;
     id: string;
     description: string;
+    authorId: string;
+    subCategoryId: string;
 }
 
 const sizes = {
@@ -85,7 +90,18 @@ const sizes = {
 };
 
 export const RecipeTitle = memo((props: RecipeTitleProps) => {
-    const { category, image, bookmarks, likes, title, description, time, id } = props;
+    const {
+        category,
+        image,
+        bookmarks,
+        likes,
+        title,
+        description,
+        time,
+        id,
+        authorId,
+        subCategoryId,
+    } = props;
 
     const { screenSize } = useScreenSize();
 
@@ -98,6 +114,9 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
             dishType={category}
         />
     ));
+
+    const userId = useAppSelector(userIdSelector);
+    const isAuthor = userId === authorId;
 
     const [like] = useLikeRecipeMutation();
     const [bookmark] = useBookmarkRecipeMutation();
@@ -200,25 +219,29 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
                         <Image width='16px' height='16px' src={Clock} />
                         <Typography Size={TypographySizes.sm}>{`${time} минут`}</Typography>
                     </Flex>
-                    <Flex gap='12px'>
-                        <Button
-                            onClick={onLikeHandle}
-                            size={sizes[screenSize].btnSize}
-                            border='1px solid rgba(0, 0, 0, 0.48)'
-                            variant='outline'
-                            leftIcon={<Image width='14px' src={Like} />}
-                        >
-                            Оценить рецепт
-                        </Button>
-                        <Button
-                            onClick={onBookmarkHandle}
-                            leftIcon={<Image width='14px' src={Bookmark} />}
-                            size={sizes[screenSize].btnSize}
-                            backgroundColor='#b1ff2e'
-                        >
-                            Сохранить в закладки
-                        </Button>
-                    </Flex>
+                    {isAuthor ? (
+                        <DeleteAndEditButtons subCategoryId={subCategoryId} recipeId={id} />
+                    ) : (
+                        <Flex gap='12px'>
+                            <Button
+                                onClick={onLikeHandle}
+                                size={sizes[screenSize].btnSize}
+                                border='1px solid rgba(0, 0, 0, 0.48)'
+                                variant='outline'
+                                leftIcon={<Image width='14px' src={Like} />}
+                            >
+                                Оценить рецепт
+                            </Button>
+                            <Button
+                                onClick={onBookmarkHandle}
+                                leftIcon={<Image width='14px' src={Bookmark} />}
+                                size={sizes[screenSize].btnSize}
+                                backgroundColor='#b1ff2e'
+                            >
+                                Сохранить в закладки
+                            </Button>
+                        </Flex>
+                    )}
                 </Flex>
             </Flex>
         </Flex>

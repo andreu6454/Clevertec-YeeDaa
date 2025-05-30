@@ -33,6 +33,7 @@ export const AppRouter = createBrowserRouter(
                         <Route path={APP_PATHS.recipePage} element={<RecipePage />} />
                         <Route path={APP_PATHS.theJuiciest} element={<JuiciestFoodPage />} />
                         <Route path={APP_PATHS.newRecipe} element={<NewRecipePage />} />
+                        <Route path={APP_PATHS.editRecipe} element={<NewRecipePage />} />
                     </Route>
                     <Route element={<WithCategoryAndAuthValidation />}>
                         <Route path={APP_PATHS.category} element={<RecipesListPage />} />

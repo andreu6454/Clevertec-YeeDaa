@@ -11,4 +11,6 @@ export enum EndpointNames {
     CREATE_RECIPE = 'createRecipe',
     MEASURE_UNITS = 'measureUnits',
     CREATE_DRAFT = 'createDraft',
+    DELETE_RECIPE = 'deleteRecipe',
+    UPDATE_RECIPE = 'updateRecipe',
 }

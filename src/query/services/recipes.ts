@@ -6,11 +6,12 @@ import { apiSlice } from '~/query/create-api';
 import { RecipeParams, RecipeResponse } from '~/query/types/types';
 import { Recipe } from '~/shared/types/recipeTypes';
 import { setRecipePageTitle } from '~/store/app-slice';
+import { setRecipe } from '~/store/recipe-slice';
 import { setInputLoading, setRecipesData } from '~/store/recipesListPage-slice';
 
 export const recipeApi = apiSlice
     .enhanceEndpoints({
-        addTagTypes: [Tags.RECIPES],
+        addTagTypes: [Tags.RECIPES, Tags.RECIPE_BY_ID],
     })
     .injectEndpoints({
         endpoints: (builder) => ({
@@ -50,11 +51,12 @@ export const recipeApi = apiSlice
                             title: data.title,
                         };
                         dispatch(setRecipePageTitle(title));
+                        dispatch(setRecipe(data));
                     } catch {
                         console.log('Response error');
                     }
                 },
-                providesTags: [Tags.RECIPES],
+                providesTags: [Tags.RECIPE_BY_ID],
             }),
             getRecipesWithParams: builder.query<RecipeResponse, RecipeParams>({
                 query: (params) => ({

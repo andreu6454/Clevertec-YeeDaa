@@ -30,7 +30,7 @@ export const CategoriesSelector = (props: CategoriesSelectorProps) => {
     }, [trigger]);
 
     const mappedCategories = subCategories.map((category, index) => {
-        const isChecked = selectedCategories.includes(category._id);
+        const isChecked = selectedCategories?.includes(category._id);
 
         const onChangeHandle = () => {
             if (isChecked) {

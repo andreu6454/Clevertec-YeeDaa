@@ -1,5 +1,5 @@
 import { CategoryType, SubCategoryType } from '~/shared/types/categoryTypes';
-import { Recipe } from '~/shared/types/recipeTypes';
+import { NullableNewRecipesDataType, Recipe } from '~/shared/types/recipeTypes';
 
 export type Meta = {
     total: number;
@@ -87,3 +87,5 @@ export type jwtDecodedType = {
     exp: number;
     iat: number;
 };
+
+export type UpdateRecipeParams = { id: string; recipe: NullableNewRecipesDataType };
