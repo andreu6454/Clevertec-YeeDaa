@@ -38,7 +38,7 @@ export const RecipeSaveModal = (props: RecipeSaveModalProps) => {
 
     return (
         <CustomModal
-            dataTestId={DATA_TEST_IDS.signInErrorModal}
+            dataTestId={DATA_TEST_IDS.recipePreventiveModal}
             isOpen={isOpen}
             onClose={onClose}
             width={sizes[screenSize].width}

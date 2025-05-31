@@ -4,6 +4,7 @@ import { memo } from 'react';
 import { Link as ReactLink, useNavigate } from 'react-router';
 
 import { Breadcrumbs } from '~/components/Breadcrumbs/Breadcrumbs';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
@@ -38,7 +39,13 @@ export const HeaderDesktop = memo(() => {
             backgroundColor='#ffffd3'
             height='80px'
         >
-            <Link paddingLeft='54px' width='280px' onClick={handleClick} flexShrink={0}>
+            <Link
+                data-test-id={DATA_TEST_IDS.headerLogo}
+                paddingLeft='54px'
+                width='280px'
+                onClick={handleClick}
+                flexShrink={0}
+            >
                 <Image width='135.2px' height='32px' src={LogoLarge} alt='yee-daa' />
             </Link>
             {!isBurgerOpen && (

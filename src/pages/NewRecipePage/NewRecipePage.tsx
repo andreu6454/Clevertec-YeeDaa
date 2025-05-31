@@ -11,7 +11,7 @@ import { CookingTime } from '~/pages/NewRecipePage/CookingTime/CookingTime';
 import { DescriptionTextArea } from '~/pages/NewRecipePage/DescriptionTextArea/DescriptionTextArea';
 import { ImageUploader } from '~/pages/NewRecipePage/ImageUploader/ImageUploader';
 import { Portions } from '~/pages/NewRecipePage/Portions/Portions';
-import { RecipeSaveModal } from '~/pages/NewRecipePage/RecipeSaveModal/RecipeSaveModal';
+import { RecipeSaveModal } from '~/pages/NewRecipePage/RecipeSaveDraftModal/RecipeSaveModal';
 import { Steps, StepType } from '~/pages/NewRecipePage/Steps/Steps';
 import { TitleInput } from '~/pages/NewRecipePage/TitleInput/TitleInput';
 import {
@@ -20,6 +20,7 @@ import {
     useUpdateRecipeMutation,
 } from '~/query/services/newRecipe';
 import { ErrorResponse } from '~/query/types/types';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useBlockerWithModal } from '~/shared/hooks/useBrokerWithModal';
@@ -236,6 +237,7 @@ export const NewRecipePage = () => {
                     flexDirection={{ base: 'column', md: 'row' }}
                 >
                     <Button
+                        data-test-id={DATA_TEST_IDS.recipeSaveDraft}
                         onClick={onSaveHandler}
                         size='lg'
                         border='1px solid rgba(0, 0, 0, 0.48)'
@@ -246,6 +248,7 @@ export const NewRecipePage = () => {
                         Сохранить черновик
                     </Button>
                     <Button
+                        data-test-id={DATA_TEST_IDS.recipePublishButton}
                         type='submit'
                         onClick={onSubmit}
                         size='lg'

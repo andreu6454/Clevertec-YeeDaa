@@ -5,6 +5,7 @@ import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import BlackPlusIcon from '~/assets/svg/blackPlusIcon.svg';
 import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
 import { useGetMeasureUnitsQuery } from '~/query/services/newRecipe';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 
 type IngredientInputsProps = {
     register: UseFormRegister<NewRecipeDataType>;
@@ -38,6 +39,7 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                     {...register(`ingredients.${index}.title` as const, {
                         required: isRequired,
                     })}
+                    data-test-id={`recipe-ingredients-title-${index}`}
                     border={
                         isRequired
                             ? errors?.ingredients?.[index]?.title?.message && errorBorder
@@ -59,6 +61,7 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                             valueAsNumber: true,
                             required: isRequired,
                         })}
+                        data-test-id={`recipe-ingredients-count-${index}`}
                         border={
                             isRequired
                                 ? errors?.ingredients?.[index]?.count?.message && errorBorder
@@ -76,6 +79,7 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                         {...register(`ingredients.${index}.measureUnit` as const, {
                             required: isRequired,
                         })}
+                        data-test-id={`recipe-ingredients-measureUnit-${index}`}
                         size='md'
                         placeholder='Единица измерения'
                         border={
@@ -92,6 +96,7 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
 
                 {isLast ? (
                     <IconButton
+                        data-test-id={DATA_TEST_IDS.recipeAddIngredients}
                         aria-label='Добавить ингридиет'
                         width='32px'
                         height='32px'
@@ -101,6 +106,7 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                     />
                 ) : (
                     <IconButton
+                        data-test-id={`recipe-ingredients-remove-ingredients-${index}`}
                         aria-label='Удалить ингредиент'
                         icon={<DeleteIcon color='#2db100' />}
                         onClick={() => remove(index)}

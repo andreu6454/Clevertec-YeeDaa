@@ -39,6 +39,7 @@ export const Step = (props: StepProps) => {
                 />
             ) : (
                 <UploadImage
+                    dataTestId={`recipe-steps-image-block-${index}`}
                     onClick={onOpenHandler}
                     width={{ base: '100%', md: '346px' }}
                     height='100%'

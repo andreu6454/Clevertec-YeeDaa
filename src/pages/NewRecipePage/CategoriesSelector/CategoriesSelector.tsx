@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 import { CategoryHeader } from '~/pages/NewRecipePage/CategoriesSelector/CategoryHeader';
 import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTitle';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
@@ -65,7 +66,7 @@ export const CategoriesSelector = (props: CategoriesSelectorProps) => {
                 Выберите не менее 3-х тегов
             </Typography>
             <Box width={{ base: '196px', md: '232px', xl: '350px' }} flexShrink={0}>
-                <Menu matchWidth>
+                <Menu matchWidth data-test-id={DATA_TEST_IDS.recipeCategories}>
                     <MenuButton
                         border={
                             errors?.categoriesIds?.message

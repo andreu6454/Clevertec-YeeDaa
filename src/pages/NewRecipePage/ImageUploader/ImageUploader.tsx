@@ -3,6 +3,7 @@ import { Flex, useDisclosure } from '@chakra-ui/react';
 import { FieldErrors, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 
 import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import UploadImage from '~/shared/ui/UploadImage/UploadImage';
 import { UploadImageModal } from '~/shared/ui/UploadImageModal/UploadImageModal';
@@ -47,6 +48,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         >
             {image ? (
                 <Image
+                    data-test-id={DATA_TEST_IDS.recipeImageBlockPreview}
                     src={imageUrl}
                     onClick={handleOpen}
                     width='100%'
@@ -54,10 +56,17 @@ export const ImageUploader = (props: ImageUploaderProps) => {
                     cursor='pointer'
                 />
             ) : (
-                <UploadImage onClick={handleOpen} width='100%' height='100%' cursor='pointer' />
+                <UploadImage
+                    dataTestId={DATA_TEST_IDS.recipeImageBlock}
+                    onClick={handleOpen}
+                    width='100%'
+                    height='100%'
+                    cursor='pointer'
+                />
             )}
 
             <UploadImageModal
+                dataTestId={DATA_TEST_IDS.recipeImageBlockInput}
                 image={image ? imageUrl : ''}
                 onDeleteHandle={onDeleteHandle}
                 isOpen={isOpen}

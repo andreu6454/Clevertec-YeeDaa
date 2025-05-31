@@ -9,6 +9,7 @@ import {
 import { UseFormRegister } from 'react-hook-form';
 
 import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 type CookingTimeProps = {
@@ -24,6 +25,7 @@ export const CookingTime = (props: CookingTimeProps) => {
             <NumberInput size='md' width='90px' defaultValue={30}>
                 <NumberInputField
                     {...register('time', { required: true, valueAsNumber: true })}
+                    data-test-id={DATA_TEST_IDS.recipeTime}
                     color='rgba(0, 0, 0, 0.92)'
                     _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
                 />

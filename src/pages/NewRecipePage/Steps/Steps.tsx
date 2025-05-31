@@ -113,6 +113,7 @@ export const Steps = (props: StepsProps) => {
                 </Button>
             </Flex>
             <UploadImageModal
+                dataTestId={`recipe-steps-image-block-${stepId}-input-file`}
                 image={previewImage}
                 onDeleteHandle={onDeleteHandle}
                 isOpen={isOpen}

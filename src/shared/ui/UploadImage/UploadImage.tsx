@@ -3,10 +3,11 @@ import { Flex, Image } from '@chakra-ui/react';
 
 import UploadImageSVG from '~/assets/svg/uploadImage.svg';
 
-type UploadImageProps = FlexProps;
+type UploadImageProps = FlexProps & { dataTestId?: string };
 
 const UploadImage = (props: UploadImageProps) => (
     <Flex
+        data-test-id={props.dataTestId}
         {...props}
         backgroundColor='rgba(0, 0, 0, 0.08)'
         alignItems='center'

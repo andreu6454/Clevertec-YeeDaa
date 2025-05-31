@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import SaveNotes from '~/assets/svg/saveNote.svg';
 import { useDeleteRecipeMutation } from '~/query/services/newRecipe';
 import { ErrorResponse } from '~/query/types/types';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
@@ -60,6 +61,7 @@ export const DeleteAndEditButtons = ({ recipeId, subCategoryId }: DeleteAndEditB
     return (
         <Flex gap='16px'>
             <IconButton
+                data-test-id={DATA_TEST_IDS.recipeDeleteButton}
                 onClick={onDeleteHandler}
                 aria-label='удалить рецепт'
                 variant='ghost'

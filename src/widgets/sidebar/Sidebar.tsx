@@ -2,6 +2,7 @@ import { IconButton } from '@chakra-ui/icons';
 import { Flex, Image, Link } from '@chakra-ui/react';
 import { Link as ReactLink, useNavigate } from 'react-router';
 
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { ReactionsBar } from '~/widgets/ReactionsBar/ReactionsBar';
 
@@ -39,6 +40,7 @@ export const Sidebar = () => {
                 gap='12px'
             >
                 <IconButton
+                    data-test-id={DATA_TEST_IDS.addRecipeButton}
                     onClick={onClickHandler}
                     size='lg'
                     rounded='50%'

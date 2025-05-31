@@ -3,6 +3,7 @@ import { Button, Flex, Input, Text } from '@chakra-ui/react';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { useUploadImageMutation } from '~/query/services/newRecipe';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { CustomModal } from '~/shared/ui/CustomModal/CustomModal';
 import UploadImage from '~/shared/ui/UploadImage/UploadImage';
 
@@ -10,12 +11,13 @@ type UploadImageModalProps = {
     isOpen: boolean;
     onClose: () => void;
     onSaveHandle: (url: string) => void;
-    image?: string | null;
     onDeleteHandle: () => void;
+    image?: string | null;
+    dataTestId?: string;
 };
 
 export const UploadImageModal = (props: UploadImageModalProps) => {
-    const { isOpen, onClose, onSaveHandle, image, onDeleteHandle } = props;
+    const { isOpen, onClose, onSaveHandle, image, onDeleteHandle, dataTestId } = props;
 
     const [previewImage, setPreviewImage] = useState<string | null>();
     const [imageFile, setImageFile] = useState<File | null>(null);
@@ -62,12 +64,13 @@ export const UploadImageModal = (props: UploadImageModalProps) => {
     };
 
     return (
-        <CustomModal isOpen={isOpen} onClose={onClose}>
+        <CustomModal dataTestId={DATA_TEST_IDS.recipeImageModal} isOpen={isOpen} onClose={onClose}>
             <Flex padding='32px' flexDirection='column' alignItems='center' gap='32px'>
                 <Text fontWeight='700' fontSize='24px' lineHeight='133%' textAlign='center'>
                     Изображение
                 </Text>
                 <Input
+                    data-test-id={dataTestId}
                     type='file'
                     onChange={handleFileChange}
                     accept='image/*'
@@ -76,9 +79,22 @@ export const UploadImageModal = (props: UploadImageModalProps) => {
                     p={1}
                 />
                 <label htmlFor='image-upload'>
-                    {!previewImage && <UploadImage width='206px' height='206px' />}
+                    {!previewImage && (
+                        <UploadImage
+                            dataTestId={DATA_TEST_IDS.recipeImageModalBlock}
+                            width='206px'
+                            height='206px'
+                        />
+                    )}
                 </label>
-                {previewImage && <Image width='206px' height='206px' src={previewImage} />}
+                {previewImage && (
+                    <Image
+                        data-test-id={DATA_TEST_IDS.recipeImageModalPreview}
+                        width='206px'
+                        height='206px'
+                        src={previewImage}
+                    />
+                )}
                 {previewImage && (
                     <Flex flexDirection='column' width='100%' gap='16px'>
                         <Button
