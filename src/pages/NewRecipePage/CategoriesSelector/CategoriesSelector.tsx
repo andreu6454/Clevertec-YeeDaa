@@ -1,7 +1,7 @@
 import { Box, ChevronDownIcon, Menu, MenuList } from '@chakra-ui/icons';
 import { Button, Flex, MenuButton } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { Control, FieldErrors, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
+import { Control, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
 import { CategoryHeader } from '~/pages/NewRecipePage/CategoriesSelector/CategoryHeader';
@@ -13,14 +13,14 @@ import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { subCategoriesSelector } from '~/store/categories-slice';
 
 type CategoriesSelectorProps = {
+    hasError: boolean;
     control: Control<NewRecipeDataType, string, NewRecipeDataType>;
     setValue: UseFormSetValue<NewRecipeDataType>;
     getValues: UseFormGetValues<NewRecipeDataType>;
-    errors: FieldErrors<NewRecipeDataType>;
 };
 
 export const CategoriesSelector = (props: CategoriesSelectorProps) => {
-    const { setValue, getValues, errors } = props;
+    const { setValue, getValues, hasError } = props;
     const { isDesktopLaptop } = useScreenSize();
     const [selectedCategories, setSelectedCategories] = useState(getValues('categoriesIds') || []);
     const [trigger, setTrigger] = useState(false);
@@ -58,7 +58,7 @@ export const CategoriesSelector = (props: CategoriesSelectorProps) => {
         );
     });
 
-    const errorBorder = '2px solid #e53e3e';
+    const errorBorder = '2px solid rgb(229, 62, 62)';
 
     return (
         <Flex height='48px' gap={{ base: '16px', xl: '24px' }} alignItems='center' width='100%'>
@@ -66,13 +66,11 @@ export const CategoriesSelector = (props: CategoriesSelectorProps) => {
                 Выберите не менее 3-х тегов
             </Typography>
             <Box width={{ base: '196px', md: '232px', xl: '350px' }} flexShrink={0}>
-                <Menu matchWidth data-test-id={DATA_TEST_IDS.recipeCategories}>
+                <Menu matchWidth>
                     <MenuButton
-                        border={
-                            errors?.categoriesIds?.message
-                                ? errorBorder
-                                : '1px solid rgba(0, 0, 0, 0.08)'
-                        }
+                        data-test-id={DATA_TEST_IDS.recipeCategories}
+                        border={hasError ? errorBorder : '1px solid rgba(0, 0, 0, 0.08)'}
+                        borderColor={hasError ? 'rgb(229, 62, 62)' : '#e2e8f0'}
                         borderRadius='6px'
                         textAlign='start'
                         padding='10px 16px'

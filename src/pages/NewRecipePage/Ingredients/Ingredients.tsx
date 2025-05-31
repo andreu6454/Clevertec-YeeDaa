@@ -1,6 +1,6 @@
 import { Image } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
-import { Control, FieldErrors, useFieldArray, UseFormRegister } from 'react-hook-form';
+import { Control, useFieldArray, UseFormRegister } from 'react-hook-form';
 
 import PlusIcon from '~/assets/svg/plusIcon.svg';
 import { IngredientInputs } from '~/pages/NewRecipePage/Ingredients/ingredientInputs';
@@ -18,11 +18,11 @@ export type IngredientDataType = {
 type IngredientsProps = {
     control: Control<NewRecipeDataType, IngredientDataType, NewRecipeDataType>;
     register: UseFormRegister<NewRecipeDataType>;
-    errors: FieldErrors<NewRecipeDataType>;
+    hasError: boolean;
 };
 
 export const Ingredients = (props: IngredientsProps) => {
-    const { control, register, errors } = props;
+    const { control, register, hasError } = props;
 
     const { isMobile } = useScreenSize();
 
@@ -42,7 +42,7 @@ export const Ingredients = (props: IngredientsProps) => {
             <IngredientInputs
                 addIngredient={addIngredient}
                 key={field.id}
-                errors={errors}
+                hasError={hasError}
                 register={register}
                 isLast={isLast}
                 isRequired={(isLast && index === 0) || !isLast}

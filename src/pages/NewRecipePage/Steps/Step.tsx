@@ -15,13 +15,14 @@ type StepProps = {
     onOpenHandler: () => void;
     preview: string;
     isLast?: boolean;
-    error?: string;
+    hasError: boolean;
 };
 
 export const Step = (props: StepProps) => {
-    const { stepNumber, register, index, remove, preview, onOpenHandler, error, isLast } = props;
+    const { stepNumber, register, index, remove, preview, onOpenHandler, hasError } = props;
 
-    const errorBorder = '2px solid #e53e3e';
+    const errorBorder = '2px solid rgb(229, 62, 62)';
+    const border = '1px solid #e2e8f0';
 
     return (
         <Flex
@@ -44,6 +45,7 @@ export const Step = (props: StepProps) => {
                     width={{ base: '100%', md: '346px' }}
                     height='100%'
                     cursor='pointer'
+                    flexShrink={0}
                 />
             )}
             <Flex flexDirection='column' padding='20px' gap='16px' width='100%'>
@@ -56,8 +58,9 @@ export const Step = (props: StepProps) => {
                     >
                         <Typography Size={TypographySizes.sm}>{`Шаг ${stepNumber}`}</Typography>
                     </Box>
-                    {!(isLast && index === 0) && (
+                    {!(index === 0) && (
                         <IconButton
+                            data-test-id={`recipe-steps-remove-button-${index}`}
                             aria-label='Удалить ингредиент'
                             icon={<DeleteIcon color='#2db100' />}
                             onClick={() => remove(index)}
@@ -71,7 +74,9 @@ export const Step = (props: StepProps) => {
                         required: 'Обязательное поле',
                         min: { value: 1, message: 'Минимальное значение 1' },
                     })}
-                    border={error && errorBorder}
+                    data-test-id={`recipe-steps-description-${index}`}
+                    border={hasError ? errorBorder : border}
+                    borderColor={hasError ? 'rgb(229, 62, 62)' : '#e2e8f0'}
                     placeholder='Шаг'
                     width='100%'
                     height='84px'

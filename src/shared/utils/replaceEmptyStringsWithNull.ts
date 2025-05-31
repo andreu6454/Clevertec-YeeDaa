@@ -19,13 +19,11 @@ export const replaceEmptyStringsWithNull = (obj: NewRecipeDataType) => {
     }));
 
     if (obj.ingredients.length > 1) {
-        newObject.ingredients = obj.ingredients
-            .map((el) => ({
-                title: el.title === '' ? null : el.title,
-                measureUnit: el.measureUnit === '' ? null : el.title,
-                count: el.count ? el.count : 1,
-            }))
-            .slice(0, -1);
+        newObject.ingredients = obj.ingredients.map((el) => ({
+            title: el.title === '' ? null : el.title,
+            measureUnit: el.measureUnit === '' ? null : el.measureUnit,
+            count: el.count ? el.count : 1,
+        }));
     } else {
         newObject.ingredients = obj.ingredients.map((el) => ({
             title: el.title === '' ? null : el.title,

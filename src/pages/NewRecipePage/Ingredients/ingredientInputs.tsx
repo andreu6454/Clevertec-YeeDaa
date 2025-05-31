@@ -1,6 +1,6 @@
 import { DeleteIcon, IconButton, Image, Input, Select } from '@chakra-ui/icons';
 import { Flex, FormControl } from '@chakra-ui/react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
 
 import BlackPlusIcon from '~/assets/svg/blackPlusIcon.svg';
 import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
@@ -9,7 +9,7 @@ import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 
 type IngredientInputsProps = {
     register: UseFormRegister<NewRecipeDataType>;
-    errors: FieldErrors<NewRecipeDataType>;
+    hasError: boolean;
     isRequired?: boolean;
     isLast?: boolean;
     index: number;
@@ -18,14 +18,13 @@ type IngredientInputsProps = {
 };
 
 export const IngredientInputs = (props: IngredientInputsProps) => {
-    const { register, errors, isRequired = true, isLast, index, addIngredient, remove } = props;
-
-    const errorBorder = '2px solid #e53e3e';
+    const { register, hasError, isRequired = true, isLast, index, addIngredient, remove } = props;
 
     const { data } = useGetMeasureUnitsQuery();
 
     const measureUnits = data;
 
+    const errorBorder = '2px solid rgb(229, 62, 62)';
     const border = '1px solid rgba(0, 0, 0, 0.08)';
 
     const mappedUnits = measureUnits?.map((measureUnit) => (
@@ -40,16 +39,14 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                         required: isRequired,
                     })}
                     data-test-id={`recipe-ingredients-title-${index}`}
-                    border={
-                        isRequired
-                            ? errors?.ingredients?.[index]?.title?.message && errorBorder
-                            : border
-                    }
+                    border={isRequired ? (hasError ? errorBorder : border) : border}
+                    borderColor={hasError ? 'rgb(229, 62, 62)' : '#e2e8f0'}
                     size='md'
                     width='100%'
                     placeholder='Ингредиент'
                     color='rgba(0, 0, 0, 0.92)'
                     _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
+                    _focus={{ borderColor: hasError ? 'rgb(229, 62, 62)' : 'rgb(49, 130, 206)' }}
                 />
             </FormControl>
 
@@ -62,16 +59,16 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                             required: isRequired,
                         })}
                         data-test-id={`recipe-ingredients-count-${index}`}
-                        border={
-                            isRequired
-                                ? errors?.ingredients?.[index]?.count?.message && errorBorder
-                                : border
-                        }
+                        border={isRequired ? (hasError ? errorBorder : border) : border}
+                        borderColor={hasError ? 'rgb(229, 62, 62)' : '#e2e8f0'}
                         size='md'
                         width='80px'
                         placeholder='100'
                         color='rgba(0, 0, 0, 0.92)'
                         _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
+                        _focus={{
+                            borderColor: hasError ? 'rgb(229, 62, 62)' : 'rgb(49, 130, 206)',
+                        }}
                     />
                 </FormControl>
                 <FormControl width={{ base: '192px', md: '215px' }}>
@@ -82,11 +79,8 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                         data-test-id={`recipe-ingredients-measureUnit-${index}`}
                         size='md'
                         placeholder='Единица измерения'
-                        border={
-                            isRequired
-                                ? errors?.ingredients?.[index]?.measureUnit?.message && errorBorder
-                                : border
-                        }
+                        border={isRequired ? (hasError ? errorBorder : border) : border}
+                        borderColor={hasError ? 'rgb(229, 62, 62)' : '#e2e8f0'}
                         color='rgba(0, 0, 0, 0.92)'
                         _placeholder={{ color: 'rgba(0, 0, 0, 0.64)' }}
                     >

@@ -55,6 +55,7 @@ export const appSlice = createSlice({
     },
     selectors: {
         appErrorSelector: (state) => state.error,
+        appLoaderSelector: (state) => state.isLoading,
         isBurgerOpenSelector: (state) => state.isBurgerOpen,
         userIdSelector: (state) => state.userId,
         isFiltersOpenSelector: (state) => state.isFiltersOpen,
@@ -79,6 +80,7 @@ export const {
 export const {
     appErrorSelector,
     isBurgerOpenSelector,
+    appLoaderSelector,
     userIdSelector,
     isFiltersOpenSelector,
     recipePageTitleSelector,

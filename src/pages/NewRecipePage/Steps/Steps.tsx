@@ -1,11 +1,12 @@
 import { Image } from '@chakra-ui/icons';
 import { Button, Flex, useDisclosure } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { Control, FieldErrors, useFieldArray, UseFormRegister } from 'react-hook-form';
+import { Control, useFieldArray, UseFormGetValues, UseFormRegister } from 'react-hook-form';
 
 import BlackPlusIcon from '~/assets/svg/blackPlusIcon.svg';
 import { IngredientDataType } from '~/pages/NewRecipePage/Ingredients/Ingredients';
 import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
+import { useUploadImageMutation } from '~/query/services/newRecipe';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
@@ -22,45 +23,66 @@ export type StepType = {
 type StepsProps = {
     control: Control<NewRecipeDataType, IngredientDataType, NewRecipeDataType>;
     register: UseFormRegister<NewRecipeDataType>;
-    errors: FieldErrors<NewRecipeDataType>;
+    hasError: boolean;
+    getValues: UseFormGetValues<NewRecipeDataType>;
 };
 
 export const Steps = (props: StepsProps) => {
-    const { control, register, errors } = props;
+    const { control, register, hasError, getValues } = props;
     const { isDesktopLaptop } = useScreenSize();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [stepId, setStepId] = useState<number | null>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const [uploadImage] = useUploadImageMutation();
 
-    const { fields, append, remove, update } = useFieldArray({
+    const { fields, append, remove, update, replace } = useFieldArray({
         control,
         name: 'steps',
     });
 
     const updateStepField = (index: number, fieldName: keyof StepType, value: string) => {
-        const step = fields[index];
         update(index, {
-            ...step,
+            ...getValues(`steps.${index}`),
             [fieldName]: value,
         });
     };
 
     useEffect(() => {
-        if (stepId) setPreviewImage(getImageUrl(fields[stepId]?.image as string));
+        if (stepId !== null) {
+            setPreviewImage((fields[stepId].image as string) || null);
+        }
     }, [stepId]);
 
     const addStep = () => {
         append({ description: '', image: '', stepNumber: fields.length + 1 });
     };
 
-    const onRemoveHandler = (index: number) => {
+    const onRemoveStepHandler = (index: number) => {
         remove(index);
+        const updatedSteps = getValues('steps').map((step, i) => ({
+            ...step,
+            stepNumber: i + 1,
+        }));
+
+        replace(updatedSteps);
     };
 
-    const onSaveHandle = (url: string) => {
+    const onSaveHandle = async (imageFile: File) => {
         if (stepId === null) return;
-        updateStepField(stepId, 'image', url);
+        try {
+            onClose();
+            const formData = new FormData();
+            formData.append('file', imageFile);
+
+            const result = await uploadImage(formData).unwrap();
+            updateStepField(stepId, 'image', result.url);
+            setPreviewImage(null);
+
+            onClose();
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     const onDeleteHandle = () => {
@@ -80,10 +102,10 @@ export const Steps = (props: StepsProps) => {
             <Step
                 key={field.id}
                 isLast={isLast}
-                error={errors?.title?.message}
+                hasError={hasError}
                 stepNumber={field.stepNumber}
                 index={index}
-                remove={onRemoveHandler}
+                remove={onRemoveStepHandler}
                 register={register}
                 onOpenHandler={onOpenHandler}
                 preview={fields?.[index]?.image || ''}
@@ -114,7 +136,7 @@ export const Steps = (props: StepsProps) => {
             </Flex>
             <UploadImageModal
                 dataTestId={`recipe-steps-image-block-${stepId}-input-file`}
-                image={previewImage}
+                image={previewImage ? getImageUrl(previewImage) : undefined}
                 onDeleteHandle={onDeleteHandle}
                 isOpen={isOpen}
                 onClose={onClose}

@@ -35,6 +35,7 @@ export const useAlertToast = () => {
             containerStyle: {
                 position: 'relative',
                 right: isLeftSideToast ? { base: 0, lg: '25%' } : 0,
+                bottom: { base: INDENT_BOTTOM.sm, lg: INDENT_BOTTOM.lg },
             },
             render: ({ status, title, description, onClose }) => (
                 <Alert
@@ -43,7 +44,6 @@ export const useAlertToast = () => {
                     w={{ base: ALERT_WIDTH.sm, lg: ALERT_WIDTH.lg }}
                     py={3}
                     px={4}
-                    bottom={{ base: INDENT_BOTTOM.sm, lg: INDENT_BOTTOM.lg }}
                     data-test-id={DATA_TEST_IDS.errorNotification}
                 >
                     <AlertIcon color='white' />

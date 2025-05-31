@@ -7,6 +7,7 @@ import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
 import {
     AuthSuccessResponse,
+    ErrorResponse,
     ForgotPasswordParams,
     jwtDecodedType,
     LoginParams,
@@ -14,7 +15,7 @@ import {
     SignUpParams,
     VerifyOtpParams,
 } from '~/query/types/types';
-import { setAccessToken, setUserId } from '~/store/app-slice';
+import { setAccessToken, setAppLoader, setUserId } from '~/store/app-slice';
 
 export const authApi = apiSlice
     .enhanceEndpoints({
@@ -85,7 +86,7 @@ export const authApi = apiSlice
                     name: EndpointNames.RESET_PASSWORD,
                 }),
             }),
-            checkAuth: builder.query<AuthSuccessResponse, void>({
+            checkAuth: builder.query<AuthSuccessResponse, undefined>({
                 query: () => ({
                     url: ApiEndpoints.CHECK_AUTH,
                     method: 'GET',
@@ -93,12 +94,27 @@ export const authApi = apiSlice
                 }),
                 async onQueryStarted(_, { queryFulfilled, dispatch }) {
                     try {
+                        dispatch(setAppLoader(true));
                         const { data } = await queryFulfilled;
 
                         if (data?.statusText === 'Успех!') {
                             dispatch(setUserId('123'));
+                            dispatch(
+                                authApi.endpoints.refreshToken.initiate(undefined, {
+                                    forceRefetch: true,
+                                }),
+                            );
                         }
+                        dispatch(setAppLoader(false));
                     } catch (error) {
+                        const responseError = error as ErrorResponse;
+                        if (responseError.status === 403) {
+                            dispatch(
+                                authApi.endpoints.refreshToken.initiate(undefined, {
+                                    forceRefetch: true,
+                                }),
+                            );
+                        }
                         console.log(error);
                     }
                 },
@@ -119,11 +135,16 @@ export const authApi = apiSlice
                         }
                         if (data?.statusText === 'Успех!') {
                             const jwtDecoded = jwtDecode(jwtToken) as jwtDecodedType;
+                            console.log(jwtDecoded);
                             localStorage.setItem('jwtToken', jwtToken);
                             dispatch(setAccessToken(jwtToken));
                             dispatch(setUserId(jwtDecoded.userId));
                         }
                     } catch (error) {
+                        const responseError = error as ErrorResponse;
+                        if (responseError.status === 403) {
+                            dispatch(setUserId('forbidden403'));
+                        }
                         console.log(error);
                     }
                 },

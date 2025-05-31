@@ -27,6 +27,7 @@ import { useBlockerWithModal } from '~/shared/hooks/useBrokerWithModal';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { Recipe } from '~/shared/types/recipeTypes';
 import { newRecipeSchema } from '~/shared/types/validationSchemas/newRecipeSchema';
+import { checkFormErrors } from '~/shared/utils/checkFormErrors';
 import { replaceEmptyStringsWithNull } from '~/shared/utils/replaceEmptyStringsWithNull';
 import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
@@ -71,10 +72,12 @@ export const NewRecipePage = () => {
     const isNewRecipePage = pathname === APP_PATHS.newRecipe;
     const recipe = useAppSelector(recipeSelector);
 
-    const [crateRecipe] = useCreateRecipeMutation();
-    const [createDraft] = useCreateDraftMutation();
-    const [updateRecipe] = useUpdateRecipeMutation();
+    const [crateRecipe, { isSuccess: isSuccessCreateRecipe }] = useCreateRecipeMutation();
+    const [createDraft, { isSuccess: isSuccessCreateDraft }] = useCreateDraftMutation();
+    const [updateRecipe, { isSuccess: isSuccessUpdateRecipe }] = useUpdateRecipeMutation();
+
     const [isRedirectBlocked, setIsRedirectBlocked] = useState<boolean>(false);
+    const isSuccess = isSuccessCreateRecipe || isSuccessCreateDraft || isSuccessUpdateRecipe;
 
     const navigate = useNavigate();
     const categories = useAppSelector(categoriesSelector);
@@ -86,14 +89,13 @@ export const NewRecipePage = () => {
     const errorAlert = useAlertToast();
 
     useEffect(() => {
-        if (Object.keys(dirtyFields).length) {
+        if (Object.keys(dirtyFields).length && !isSuccess) {
             setIsRedirectBlocked(true);
         }
-    }, [!!Object.keys(dirtyFields).length]);
+    }, [dirtyFields]);
 
     const onSubmit = handleSubmit(async (data: NewRecipeDataType) => {
         const finalData = replaceEmptyStringsWithNull(data);
-
         try {
             let result = {} as Recipe;
             setIsRedirectBlocked(false);
@@ -151,6 +153,7 @@ export const NewRecipePage = () => {
     });
 
     const onSaveHandler = async () => {
+        onClose();
         clearErrors();
         const isValid = await trigger('title');
 
@@ -161,8 +164,6 @@ export const NewRecipePage = () => {
         try {
             setIsRedirectBlocked(false);
             await createDraft(finalData).unwrap();
-
-            onClose();
             navigate(APP_PATHS.root);
 
             errorAlert(
@@ -179,8 +180,8 @@ export const NewRecipePage = () => {
                 errorAlert(
                     {
                         status: 'error',
-                        title: 'Ошибка сохранения',
-                        description: 'Не удалось сохранить черновик',
+                        title: 'Ошибка сервера',
+                        description: 'Не удалось сохранить черновик рецепта',
                     },
                     false,
                 );
@@ -190,7 +191,7 @@ export const NewRecipePage = () => {
                     {
                         status: 'error',
                         title: 'Ошибка',
-                        description: 'Черновик с таким названием уже существует',
+                        description: 'Рецепт с таким названием уже существует',
                     },
                     false,
                 );
@@ -199,12 +200,15 @@ export const NewRecipePage = () => {
     };
 
     useEffect(() => {
-        const recipeForReset = { ...recipe, time: Number(recipe.time) };
+        const recipeForReset = {
+            ...recipe,
+            time: Number(recipe.time),
+        };
         if (!isNewRecipePage && recipe) reset(recipeForReset);
     }, [isNewRecipePage, recipe, reset]);
 
     return (
-        <form onSubmit={onSubmit}>
+        <form data-test-id={DATA_TEST_IDS.recipeForm} onSubmit={onSubmit}>
             <Flex
                 direction='column'
                 paddingTop={{ base: '16px', xl: '56px' }}
@@ -214,22 +218,38 @@ export const NewRecipePage = () => {
                 gap={{ base: '32px', xl: '40px' }}
             >
                 <Flex flexDirection={{ base: 'column', md: 'row' }} gap='24px'>
-                    <ImageUploader setValue={setValue} getValues={getValues} errors={errors} />
+                    <ImageUploader
+                        setValue={setValue}
+                        getValues={getValues}
+                        hasError={checkFormErrors(errors)}
+                    />
                     <Flex direction='column' width='100%' gap={{ base: '16px', xl: '32px' }}>
                         <CategoriesSelector
+                            hasError={checkFormErrors(errors)}
                             control={control}
                             setValue={setValue}
                             getValues={getValues}
-                            errors={errors}
                         />
-                        <TitleInput register={register} errors={errors} />
-                        <DescriptionTextArea register={register} errors={errors} />
-                        <Portions register={register} />
-                        <CookingTime register={register} />
+                        <TitleInput hasError={checkFormErrors(errors)} register={register} />
+                        <DescriptionTextArea
+                            hasError={checkFormErrors(errors)}
+                            register={register}
+                        />
+                        <Portions hasError={checkFormErrors(errors)} register={register} />
+                        <CookingTime hasError={checkFormErrors(errors)} register={register} />
                     </Flex>
                 </Flex>
-                <Ingredients control={control} register={register} errors={errors} />
-                <Steps control={control} register={register} errors={errors} />
+                <Ingredients
+                    control={control}
+                    register={register}
+                    hasError={checkFormErrors(errors)}
+                />
+                <Steps
+                    getValues={getValues}
+                    control={control}
+                    register={register}
+                    hasError={checkFormErrors(errors)}
+                />
                 <Flex
                     gap='20px'
                     width='100%'

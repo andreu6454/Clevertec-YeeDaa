@@ -22,6 +22,7 @@ export const DATA_TEST_IDS = {
     resetCredentialsModal: 'reset-credentials-modal',
     errorNotification: 'error-notification',
     closeAlert: 'close-alert-button',
+    recipeForm: 'recipe-form',
     recipeImageBlock: 'recipe-image-block',
     recipeImageBlockInput: 'recipe-image-block-input-file',
     recipeImageBlockPreview: 'recipe-image-block-preview-image',

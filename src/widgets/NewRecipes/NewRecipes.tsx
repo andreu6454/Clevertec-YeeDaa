@@ -40,7 +40,7 @@ export const NewRecipes = memo(() => {
         dispatch(setAppError('error'));
     }
 
-    if (!data) {
+    if (!data || !data?.data) {
         return null;
     }
     const mappedRecipes = [...data.data].map((recipe) => {

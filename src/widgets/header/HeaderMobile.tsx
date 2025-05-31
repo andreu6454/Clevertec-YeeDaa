@@ -42,13 +42,7 @@ export const HeaderMobile = () => {
             backgroundColor={isBurgerOpen ? 'white' : '#ffffd3'}
             height='64px'
         >
-            <Link
-                data-test-id={DATA_TEST_IDS.headerLogo}
-                paddingLeft='54px'
-                width='280px'
-                onClick={handleClick}
-                flexShrink={0}
-            >
+            <Link data-test-id={DATA_TEST_IDS.headerLogo} onClick={handleClick} flexShrink={0}>
                 <Image height='32px' src={image} alt='yee-daa' />
             </Link>
             <Box display='flex' alignItems='center' justifyContent='space-between'>

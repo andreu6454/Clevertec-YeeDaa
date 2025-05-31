@@ -20,11 +20,12 @@ export const CheckboxWithTitle = (props: CheckboxWithTitleProps) => {
         <Flex
             padding='6px 16px'
             alignItems='center'
-            as='div'
+            as='label'
             width={width}
             height='32px'
             backgroundColor={index % 2 === 0 ? 'rgba(0, 0, 0, 0.06)' : '#fff'}
             gap='8px'
+            cursor='pointer'
         >
             <Checkbox
                 data-test-id={dataTestId}

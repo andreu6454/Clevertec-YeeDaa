@@ -5,15 +5,7 @@ const ingredientSchema = z.object({
     count: z.number().min(1, 'error'),
     measureUnit: z.string().min(1, 'error'),
 });
-const IngredientsSchema = z
-    .array(ingredientSchema)
-    .transform((arr) => {
-        if (arr.length > 1) {
-            return arr.slice(0, -1);
-        }
-        return arr;
-    })
-    .pipe(z.array(ingredientSchema).min(1, { message: 'error' }));
+const IngredientsSchema = z.array(ingredientSchema).min(1, { message: 'error' });
 const stepSchema = z.object({
     stepNumber: z.number().min(0, 'error'),
     description: z.string().min(1, 'error'),
