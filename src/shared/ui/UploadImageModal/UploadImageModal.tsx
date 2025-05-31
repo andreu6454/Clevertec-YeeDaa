@@ -1,6 +1,6 @@
 import { Image } from '@chakra-ui/icons';
 import { Button, Flex, Input, Text } from '@chakra-ui/react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { useUploadImageMutation } from '~/query/services/newRecipe';
 import { CustomModal } from '~/shared/ui/CustomModal/CustomModal';
@@ -10,16 +10,22 @@ type UploadImageModalProps = {
     isOpen: boolean;
     onClose: () => void;
     onSaveHandle: (url: string) => void;
+    image?: string | null;
+    onDeleteHandle: () => void;
 };
 
 export const UploadImageModal = (props: UploadImageModalProps) => {
-    const { isOpen, onClose, onSaveHandle } = props;
+    const { isOpen, onClose, onSaveHandle, image, onDeleteHandle } = props;
 
-    const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const [previewImage, setPreviewImage] = useState<string | null>();
+    const [imageFile, setImageFile] = useState<File | null>(null);
+
+    useEffect(() => {
+        setPreviewImage(image);
+    }, [image]);
 
     const [uploadImage] = useUploadImageMutation();
 
-    const [imageFile, setImageFile] = useState<File | null>(null);
     const handleSaveImage = async () => {
         if (imageFile) {
             try {
@@ -48,6 +54,13 @@ export const UploadImageModal = (props: UploadImageModalProps) => {
         }
     };
 
+    const handleDeleteImage = () => {
+        setPreviewImage(null);
+        onDeleteHandle();
+        setImageFile(null);
+        onClose();
+    };
+
     return (
         <CustomModal isOpen={isOpen} onClose={onClose}>
             <Flex padding='32px' flexDirection='column' alignItems='center' gap='32px'>
@@ -67,15 +80,20 @@ export const UploadImageModal = (props: UploadImageModalProps) => {
                 </label>
                 {previewImage && <Image width='206px' height='206px' src={previewImage} />}
                 {previewImage && (
-                    <Button
-                        onClick={handleSaveImage}
-                        width='100%'
-                        size='lg'
-                        backgroundColor='#000'
-                        color='#fff'
-                    >
-                        Сохранить
-                    </Button>
+                    <Flex flexDirection='column' width='100%' gap='16px'>
+                        <Button
+                            onClick={handleSaveImage}
+                            width='100%'
+                            size='lg'
+                            backgroundColor='#000'
+                            color='#fff'
+                        >
+                            Сохранить
+                        </Button>
+                        <Button onClick={handleDeleteImage} variant='ghost' width='100%' size='lg'>
+                            Удалить
+                        </Button>
+                    </Flex>
                 )}
             </Flex>
         </CustomModal>

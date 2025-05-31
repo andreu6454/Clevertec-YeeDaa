@@ -3,7 +3,7 @@ import { Button, Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
-import { useLikeRecipeMutation } from '~/query/services/recipes';
+import { useBookmarkRecipeMutation } from '~/query/services/recipes';
 import { ErrorResponse } from '~/query/types/types';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
@@ -85,12 +85,12 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
             ),
         );
 
-    const [like] = useLikeRecipeMutation();
+    const [bookmark] = useBookmarkRecipeMutation();
     const errorAlert = useAlertToast();
 
-    const onLikeHandle = async () => {
+    const onBookmarkHandle = async () => {
         try {
-            await like(recipe._id).unwrap();
+            await bookmark(recipe._id).unwrap();
         } catch (error) {
             const responseError = error as ErrorResponse;
             if (responseError?.status === 500) {
@@ -186,7 +186,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                 </Flex>
                 <Flex justifyContent='flex-end' gap='8px'>
                     <Button
-                        onClick={onLikeHandle}
+                        onClick={onBookmarkHandle}
                         display='flex'
                         padding={isTabletMobile ? '6px 0 6px 6px' : ''}
                         leftIcon={<Image src={BookmarkIcon} />}

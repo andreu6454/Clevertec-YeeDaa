@@ -54,7 +54,7 @@ export const newRecipeApi = apiSlice
                 query: ({ id, recipe }) => ({
                     url: ApiEndpoints.RECIPES + `/${id}`,
                     method: 'PATCH',
-                    recipe,
+                    body: recipe,
                     credentials: 'include',
                     apiGroupName: ApiGroupNames.RECIPES,
                     name: EndpointNames.UPDATE_RECIPE,

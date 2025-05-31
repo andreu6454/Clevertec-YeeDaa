@@ -101,7 +101,6 @@ export const NewRecipePage = () => {
                 result = await crateRecipe(finalData).unwrap();
             } else {
                 const updateRecipeParams = { id: recipe._id, recipe: finalData };
-                console.log(updateRecipeParams);
                 result = await updateRecipe(updateRecipeParams).unwrap();
             }
 

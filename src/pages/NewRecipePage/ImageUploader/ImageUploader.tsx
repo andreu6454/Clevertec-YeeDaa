@@ -17,11 +17,16 @@ export const ImageUploader = (props: ImageUploaderProps) => {
     const { setValue, getValues, errors } = props;
 
     const image = getValues('image');
+    const imageUrl = getImageUrl(image);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const onSaveHandle = async (url: string) => {
         setValue('image', url);
+    };
+
+    const onDeleteHandle = () => {
+        setValue('image', '');
     };
 
     const handleOpen = () => {
@@ -42,7 +47,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         >
             {image ? (
                 <Image
-                    src={getImageUrl(image)}
+                    src={imageUrl}
                     onClick={handleOpen}
                     width='100%'
                     height='100%'
@@ -52,7 +57,13 @@ export const ImageUploader = (props: ImageUploaderProps) => {
                 <UploadImage onClick={handleOpen} width='100%' height='100%' cursor='pointer' />
             )}
 
-            <UploadImageModal isOpen={isOpen} onClose={onClose} onSaveHandle={onSaveHandle} />
+            <UploadImageModal
+                image={image ? imageUrl : ''}
+                onDeleteHandle={onDeleteHandle}
+                isOpen={isOpen}
+                onClose={onClose}
+                onSaveHandle={onSaveHandle}
+            />
         </Flex>
     );
 };

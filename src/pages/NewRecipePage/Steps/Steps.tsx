@@ -1,12 +1,13 @@
 import { Image } from '@chakra-ui/icons';
 import { Button, Flex, useDisclosure } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Control, FieldErrors, useFieldArray, UseFormRegister } from 'react-hook-form';
 
 import BlackPlusIcon from '~/assets/svg/blackPlusIcon.svg';
 import { IngredientDataType } from '~/pages/NewRecipePage/Ingredients/Ingredients';
 import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { UploadImageModal } from '~/shared/ui/UploadImageModal/UploadImageModal';
 
@@ -30,6 +31,7 @@ export const Steps = (props: StepsProps) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [stepId, setStepId] = useState<number | null>(null);
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
 
     const { fields, append, remove, update } = useFieldArray({
         control,
@@ -44,6 +46,10 @@ export const Steps = (props: StepsProps) => {
         });
     };
 
+    useEffect(() => {
+        if (stepId) setPreviewImage(getImageUrl(fields[stepId]?.image as string));
+    }, [stepId]);
+
     const addStep = () => {
         append({ description: '', image: '', stepNumber: fields.length + 1 });
     };
@@ -55,6 +61,11 @@ export const Steps = (props: StepsProps) => {
     const onSaveHandle = (url: string) => {
         if (stepId === null) return;
         updateStepField(stepId, 'image', url);
+    };
+
+    const onDeleteHandle = () => {
+        if (stepId === null) return;
+        updateStepField(stepId, 'image', '');
     };
 
     const mappedSteps = fields.map((field, index) => {
@@ -101,7 +112,13 @@ export const Steps = (props: StepsProps) => {
                     Новый шаг
                 </Button>
             </Flex>
-            <UploadImageModal isOpen={isOpen} onClose={onClose} onSaveHandle={onSaveHandle} />
+            <UploadImageModal
+                image={previewImage}
+                onDeleteHandle={onDeleteHandle}
+                isOpen={isOpen}
+                onClose={onClose}
+                onSaveHandle={onSaveHandle}
+            />
         </Flex>
     );
 };
