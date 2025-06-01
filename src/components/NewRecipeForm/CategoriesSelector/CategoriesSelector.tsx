@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import { Control, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { CategoryHeader } from '~/pages/NewRecipePage/CategoriesSelector/CategoryHeader';
-import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
+import { CategoryHeader } from '~/components/NewRecipeForm/CategoriesSelector/CategoryHeader';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTitle';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { subCategoriesSelector } from '~/store/categories-slice';
+
+import { NewRecipeDataType } from '../NewRecipeForm';
 
 type CategoriesSelectorProps = {
     hasError: boolean;

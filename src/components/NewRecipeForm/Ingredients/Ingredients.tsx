@@ -3,11 +3,11 @@ import { Flex } from '@chakra-ui/react';
 import { Control, useFieldArray, UseFormRegister } from 'react-hook-form';
 
 import PlusIcon from '~/assets/svg/plusIcon.svg';
-import { IngredientInputs } from '~/pages/NewRecipePage/Ingredients/ingredientInputs';
+import { IngredientInputs } from '~/components/NewRecipeForm/Ingredients/ingredientInputs';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
-import { NewRecipeDataType } from '../NewRecipePage';
+import { NewRecipeDataType } from '../NewRecipeForm';
 
 export type IngredientDataType = {
     title: string;
@@ -19,10 +19,11 @@ type IngredientsProps = {
     control: Control<NewRecipeDataType, IngredientDataType, NewRecipeDataType>;
     register: UseFormRegister<NewRecipeDataType>;
     hasError: boolean;
+    setIsRedirectBlocked: (arg: boolean) => void;
 };
 
 export const Ingredients = (props: IngredientsProps) => {
-    const { control, register, hasError } = props;
+    const { control, register, hasError, setIsRedirectBlocked } = props;
 
     const { isMobile } = useScreenSize();
 
@@ -40,6 +41,7 @@ export const Ingredients = (props: IngredientsProps) => {
 
         return (
             <IngredientInputs
+                setIsRedirectBlocked={setIsRedirectBlocked}
                 addIngredient={addIngredient}
                 key={field.id}
                 hasError={hasError}

@@ -8,9 +8,10 @@ import {
 } from '@chakra-ui/react';
 import { UseFormRegister } from 'react-hook-form';
 
-import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+
+import { NewRecipeDataType } from '../NewRecipeForm';
 
 type PortionsProps = {
     register: UseFormRegister<NewRecipeDataType>;

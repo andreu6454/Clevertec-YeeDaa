@@ -5,6 +5,7 @@ import { memo } from 'react';
 import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { useBookmarkRecipeMutation } from '~/query/services/recipes';
 import { ErrorResponse } from '~/query/types/types';
+import { NEW_RECIPE_STATUSES } from '~/shared/constants/newRecipeStatutes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';
@@ -97,8 +98,8 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                 errorAlert(
                     {
                         status: 'error',
-                        title: 'Ошибка сервера',
-                        description: 'Попробуйте немного позже',
+                        title: NEW_RECIPE_STATUSES.serverError,
+                        description: NEW_RECIPE_STATUSES.tryLater,
                     },
                     false,
                 );

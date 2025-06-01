@@ -2,10 +2,11 @@ import { Box, DeleteIcon, IconButton, Image } from '@chakra-ui/icons';
 import { Flex, Textarea } from '@chakra-ui/react';
 import { UseFormRegister } from 'react-hook-form';
 
-import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import UploadImage from '~/shared/ui/UploadImage/UploadImage';
+
+import { NewRecipeDataType } from '../NewRecipeForm';
 
 type StepProps = {
     stepNumber: number;
@@ -27,7 +28,7 @@ export const Step = (props: StepProps) => {
     return (
         <Flex
             border='1px solid rgba(0, 0, 0, 0.08)'
-            height={{ base: '353px', md: '160px' }}
+            height={{ base: '328px', md: '160px' }}
             borderRadius='8px'
             flexDirection={{ base: 'column', md: 'row' }}
         >
@@ -35,6 +36,7 @@ export const Step = (props: StepProps) => {
                 <Image
                     data-test-id={`recipe-steps-image-block-${index}-preview-image`}
                     onClick={onOpenHandler}
+                    height={{ base: '160px', md: '100%' }}
                     width={{ base: '100%', md: '346px' }}
                     borderRadius='8px'
                     src={getImageUrl(preview)}
@@ -44,7 +46,7 @@ export const Step = (props: StepProps) => {
                     dataTestId={`recipe-steps-image-block-${index}`}
                     onClick={onOpenHandler}
                     width={{ base: '100%', md: '346px' }}
-                    height='100%'
+                    height={{ base: '160px', md: '100%' }}
                     cursor='pointer'
                     flexShrink={0}
                 />

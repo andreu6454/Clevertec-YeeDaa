@@ -1,8 +1,9 @@
 import { Textarea } from '@chakra-ui/react';
 import { UseFormRegister } from 'react-hook-form';
 
-import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+
+import { NewRecipeDataType } from '../NewRecipeForm';
 
 type DescriptionTextAreaProps = {
     register: UseFormRegister<NewRecipeDataType>;

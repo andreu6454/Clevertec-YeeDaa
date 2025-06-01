@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import { Control, useFieldArray, UseFormGetValues, UseFormRegister } from 'react-hook-form';
 
 import BlackPlusIcon from '~/assets/svg/blackPlusIcon.svg';
-import { IngredientDataType } from '~/pages/NewRecipePage/Ingredients/Ingredients';
-import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
+import { IngredientDataType } from '~/components/NewRecipeForm/Ingredients/Ingredients';
 import { useUploadImageMutation } from '~/query/services/newRecipe';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { UploadImageModal } from '~/shared/ui/UploadImageModal/UploadImageModal';
 
+import { NewRecipeDataType } from '../NewRecipeForm';
 import { Step } from './Step';
 
 export type StepType = {

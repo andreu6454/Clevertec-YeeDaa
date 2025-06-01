@@ -4,9 +4,10 @@ import { UseFormRegister } from 'react-hook-form';
 
 import BlackPlusIcon from '~/assets/svg/blackPlusIcon.svg';
 import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
-import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
 import { useGetMeasureUnitsQuery } from '~/query/services/newRecipe';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+
+import { NewRecipeDataType } from '../NewRecipeForm';
 
 type IngredientInputsProps = {
     register: UseFormRegister<NewRecipeDataType>;
@@ -16,10 +17,20 @@ type IngredientInputsProps = {
     index: number;
     addIngredient: () => void;
     remove: (index: number) => void;
+    setIsRedirectBlocked: (arg: boolean) => void;
 };
 
 export const IngredientInputs = (props: IngredientInputsProps) => {
-    const { register, hasError, isRequired = true, isLast, index, addIngredient, remove } = props;
+    const {
+        register,
+        hasError,
+        isRequired = true,
+        isLast,
+        index,
+        addIngredient,
+        remove,
+        setIsRedirectBlocked,
+    } = props;
 
     const { data: measureUnits, isLoading } = useGetMeasureUnitsQuery();
 
@@ -32,6 +43,10 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
 
     if (isLoading) return <FullScreenSpinner />;
     if (!measureUnits) return null;
+
+    const onFocusHandler = () => {
+        setIsRedirectBlocked(true);
+    };
 
     return (
         <Flex alignItems='center' gap='16px' flexDirection={{ base: 'column', md: 'row' }}>
@@ -78,6 +93,7 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
                         {...register(`ingredients.${index}.measureUnit` as const, {
                             required: isRequired,
                         })}
+                        onFocus={onFocusHandler}
                         data-test-id={`recipe-ingredients-measureUnit-${index}`}
                         size='md'
                         placeholder='Единица измерения'
