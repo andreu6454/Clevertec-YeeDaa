@@ -135,7 +135,6 @@ export const authApi = apiSlice
                         }
                         if (data?.statusText === 'Успех!') {
                             const jwtDecoded = jwtDecode(jwtToken) as jwtDecodedType;
-                            console.log(jwtDecoded);
                             localStorage.setItem('jwtToken', jwtToken);
                             dispatch(setAccessToken(jwtToken));
                             dispatch(setUserId(jwtDecoded.userId));
