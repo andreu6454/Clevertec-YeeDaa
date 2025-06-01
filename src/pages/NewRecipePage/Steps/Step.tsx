@@ -33,6 +33,7 @@ export const Step = (props: StepProps) => {
         >
             {preview ? (
                 <Image
+                    data-test-id={`recipe-steps-image-block-${index}-preview-image`}
                     onClick={onOpenHandler}
                     width={{ base: '100%', md: '346px' }}
                     borderRadius='8px'

@@ -16,7 +16,10 @@ interface SmartBreadcrumbsProps {
 export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
     ({ pathNames, homeElement = 'Главная' }) => {
         const location = useLocation();
-        const pathnames = location.pathname.split('/').filter(Boolean);
+        const pathnames = location.pathname
+            .split('/')
+            .filter(Boolean)
+            .filter((path) => path !== 'edit-recipe');
         const dispatch = useAppDispatch();
         const pageTitle = useAppSelector(recipePageTitleSelector);
 

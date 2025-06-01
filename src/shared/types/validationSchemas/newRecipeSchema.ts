@@ -9,7 +9,7 @@ const IngredientsSchema = z.array(ingredientSchema).min(1, { message: 'error' })
 const stepSchema = z.object({
     stepNumber: z.number().min(0, 'error'),
     description: z.string().min(1, 'error'),
-    image: z.string().optional(),
+    image: z.union([z.string(), z.null()]).optional(),
 });
 
 export const newRecipeSchema = z.object({

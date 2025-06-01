@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router';
 
 import SaveNote from '~/assets/svg/saveNote.svg';
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { CategoriesSelector } from '~/pages/NewRecipePage/CategoriesSelector/CategoriesSelector';
 import { CookingTime } from '~/pages/NewRecipePage/CookingTime/CookingTime';
 import { DescriptionTextArea } from '~/pages/NewRecipePage/DescriptionTextArea/DescriptionTextArea';
@@ -17,6 +18,7 @@ import { TitleInput } from '~/pages/NewRecipePage/TitleInput/TitleInput';
 import {
     useCreateDraftMutation,
     useCreateRecipeMutation,
+    useGetMeasureUnitsQuery,
     useUpdateRecipeMutation,
 } from '~/query/services/newRecipe';
 import { ErrorResponse } from '~/query/types/types';
@@ -75,6 +77,7 @@ export const NewRecipePage = () => {
     const [crateRecipe, { isSuccess: isSuccessCreateRecipe }] = useCreateRecipeMutation();
     const [createDraft, { isSuccess: isSuccessCreateDraft }] = useCreateDraftMutation();
     const [updateRecipe, { isSuccess: isSuccessUpdateRecipe }] = useUpdateRecipeMutation();
+    const { isLoading } = useGetMeasureUnitsQuery();
 
     const [isRedirectBlocked, setIsRedirectBlocked] = useState<boolean>(false);
     const isSuccess = isSuccessCreateRecipe || isSuccessCreateDraft || isSuccessUpdateRecipe;
@@ -96,6 +99,7 @@ export const NewRecipePage = () => {
 
     const onSubmit = handleSubmit(async (data: NewRecipeDataType) => {
         const finalData = replaceEmptyStringsWithNull(data);
+
         try {
             let result = {} as Recipe;
             setIsRedirectBlocked(false);
@@ -204,9 +208,14 @@ export const NewRecipePage = () => {
             ...recipe,
             time: Number(recipe.time),
         };
-        if (!isNewRecipePage && recipe) reset(recipeForReset);
-    }, [isNewRecipePage, recipe, reset]);
+        if (!isNewRecipePage && recipe && !isLoading) {
+            reset(recipeForReset);
+        }
+    }, [isNewRecipePage, recipe, reset, isLoading]);
 
+    if (isLoading) {
+        return <FullScreenSpinner />;
+    }
     return (
         <form data-test-id={DATA_TEST_IDS.recipeForm} onSubmit={onSubmit}>
             <Flex

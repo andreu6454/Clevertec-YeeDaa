@@ -45,6 +45,11 @@ export const ImageUploader = (props: ImageUploaderProps) => {
     };
 
     const handleOpen = () => {
+        if (image) {
+            setValue('image', image, { shouldDirty: true });
+        } else {
+            setValue('image', '', { shouldDirty: true });
+        }
         onOpen();
     };
 

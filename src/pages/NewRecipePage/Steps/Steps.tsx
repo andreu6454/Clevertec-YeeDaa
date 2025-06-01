@@ -17,7 +17,7 @@ import { Step } from './Step';
 export type StepType = {
     stepNumber: number;
     description: string;
-    image?: string | undefined;
+    image?: string | null | undefined;
 };
 
 type StepsProps = {

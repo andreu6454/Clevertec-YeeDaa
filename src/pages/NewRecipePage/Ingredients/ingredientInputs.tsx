@@ -3,6 +3,7 @@ import { Flex, FormControl } from '@chakra-ui/react';
 import { UseFormRegister } from 'react-hook-form';
 
 import BlackPlusIcon from '~/assets/svg/blackPlusIcon.svg';
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
 import { useGetMeasureUnitsQuery } from '~/query/services/newRecipe';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
@@ -20,9 +21,7 @@ type IngredientInputsProps = {
 export const IngredientInputs = (props: IngredientInputsProps) => {
     const { register, hasError, isRequired = true, isLast, index, addIngredient, remove } = props;
 
-    const { data } = useGetMeasureUnitsQuery();
-
-    const measureUnits = data;
+    const { data: measureUnits, isLoading } = useGetMeasureUnitsQuery();
 
     const errorBorder = '2px solid rgb(229, 62, 62)';
     const border = '1px solid rgba(0, 0, 0, 0.08)';
@@ -30,6 +29,9 @@ export const IngredientInputs = (props: IngredientInputsProps) => {
     const mappedUnits = measureUnits?.map((measureUnit) => (
         <option key={'measureUnit' + measureUnit.name}>{measureUnit.name}</option>
     ));
+
+    if (isLoading) return <FullScreenSpinner />;
+    if (!measureUnits) return null;
 
     return (
         <Flex alignItems='center' gap='16px' flexDirection={{ base: 'column', md: 'row' }}>

@@ -22,13 +22,14 @@ type CategoriesSelectorProps = {
 export const CategoriesSelector = (props: CategoriesSelectorProps) => {
     const { setValue, getValues, hasError } = props;
     const { isDesktopLaptop } = useScreenSize();
-    const [selectedCategories, setSelectedCategories] = useState(getValues('categoriesIds') || []);
+    const categoriesFromForm = getValues('categoriesIds');
+    const [selectedCategories, setSelectedCategories] = useState(categoriesFromForm || []);
     const [trigger, setTrigger] = useState(false);
     const subCategories = useSelector(subCategoriesSelector);
 
     useEffect(() => {
-        setSelectedCategories(getValues('categoriesIds'));
-    }, [trigger]);
+        setSelectedCategories(categoriesFromForm);
+    }, [trigger, categoriesFromForm]);
 
     const mappedCategories = subCategories.map((category, index) => {
         const isChecked = selectedCategories?.includes(category._id);
