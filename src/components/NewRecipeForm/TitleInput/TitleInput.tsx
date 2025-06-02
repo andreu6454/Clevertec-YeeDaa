@@ -10,9 +10,7 @@ type TitleInputProps = {
     hasError: boolean;
 };
 
-export const TitleInput = (props: TitleInputProps) => {
-    const { register, hasError } = props;
-
+export const TitleInput = ({ register, hasError }: TitleInputProps) => {
     const errorBorder = '2px solid rgb(229, 62, 62)';
     const border = '1px solid #d7ff94';
 

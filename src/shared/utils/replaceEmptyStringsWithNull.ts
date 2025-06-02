@@ -24,13 +24,13 @@ export const replaceEmptyStringsWithNull = (obj: NewRecipeDataType) => {
         newObject.ingredients = obj.ingredients.map((el: IngredientDataType) => ({
             title: el.title === '' ? null : el.title,
             measureUnit: el.measureUnit === '' ? null : el.measureUnit,
-            count: el.count ? el.count : 1,
+            count: el.count ?? 1,
         }));
     } else {
         newObject.ingredients = obj.ingredients.map((el: IngredientDataType) => ({
             title: el.title === '' ? null : el.title,
             measureUnit: el.measureUnit === '' ? null : el.measureUnit,
-            count: el.count ? el.count : 1,
+            count: el.count ?? 1,
         }));
     }
 

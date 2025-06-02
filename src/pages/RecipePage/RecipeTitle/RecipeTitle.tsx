@@ -9,7 +9,7 @@ import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { DeleteAndEditButtons } from '~/pages/RecipePage/RecipeTitle/DeleteAndEditButtons';
 import { useBookmarkRecipeMutation, useLikeRecipeMutation } from '~/query/services/recipes';
 import { ErrorResponse } from '~/query/types/types';
-import { NEW_RECIPE_STATUSES } from '~/shared/constants/newRecipeStatutes';
+import { NEW_RECIPE_ALERTS } from '~/shared/constants/newRecipeAlerts';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';
@@ -130,14 +130,7 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
         } catch (error) {
             const responseError = error as ErrorResponse;
             if (responseError?.status === 500) {
-                errorAlert(
-                    {
-                        status: 'error',
-                        title: NEW_RECIPE_STATUSES.serverError,
-                        description: NEW_RECIPE_STATUSES.tryLater,
-                    },
-                    false,
-                );
+                errorAlert(NEW_RECIPE_ALERTS.serverError, false);
             }
         }
     };
@@ -148,14 +141,7 @@ export const RecipeTitle = memo((props: RecipeTitleProps) => {
         } catch (error) {
             const responseError = error as ErrorResponse;
             if (responseError?.status === 500) {
-                errorAlert(
-                    {
-                        status: 'error',
-                        title: NEW_RECIPE_STATUSES.serverError,
-                        description: NEW_RECIPE_STATUSES.tryLater,
-                    },
-                    false,
-                );
+                errorAlert(NEW_RECIPE_ALERTS.serverError, false);
             }
         }
     };

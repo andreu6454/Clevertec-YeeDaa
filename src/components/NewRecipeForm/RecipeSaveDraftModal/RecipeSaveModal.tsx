@@ -13,47 +13,32 @@ type RecipeSaveModalProps = {
     continueNavigation: () => void;
 };
 
-const sizes = {
-    Desktop: {
-        width: '396px',
-        imgSize: '206px',
-    },
-    Laptop: {
-        width: '396px',
-        imgSize: '206px',
-    },
-    Tablet: {
-        width: '316px',
-        imgSize: '108px',
-    },
-    Mobile: {
-        width: '316px',
-        imgSize: '108px',
-    },
-};
-
-export const RecipeSaveModal = (props: RecipeSaveModalProps) => {
-    const { isOpen, onClose, handleSaveRecipe, continueNavigation } = props;
-    const { screenSize } = useScreenSize();
+export const RecipeSaveModal = ({
+    isOpen,
+    onClose,
+    handleSaveRecipe,
+    continueNavigation,
+}: RecipeSaveModalProps) => {
+    const { isDesktopLaptop } = useScreenSize();
 
     return (
         <CustomModal
             dataTestId={DATA_TEST_IDS.recipePreventiveModal}
             isOpen={isOpen}
             onClose={onClose}
-            width={sizes[screenSize].width}
+            width={isDesktopLaptop ? '396px' : '316px'}
         >
             <Flex
                 flexDirection='column'
-                width={sizes[screenSize].width}
+                width={{ base: '316px', xl: '396px' }}
                 padding='32px'
                 alignItems='center'
                 gap='32px'
             >
                 <Image
                     src={ModalImage}
-                    width={sizes[screenSize].imgSize}
-                    height={sizes[screenSize].imgSize}
+                    width={{ base: '118px', xl: '206px' }}
+                    height={{ base: '118px', xl: '206px' }}
                 />
                 <Flex width='100%' flexDirection='column' gap='16px'>
                     <Text fontWeight='700' fontSize='24px' lineHeight='133%' textAlign='center'>

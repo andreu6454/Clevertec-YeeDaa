@@ -22,9 +22,12 @@ type IngredientsProps = {
     setIsRedirectBlocked: (arg: boolean) => void;
 };
 
-export const Ingredients = (props: IngredientsProps) => {
-    const { control, register, hasError, setIsRedirectBlocked } = props;
-
+export const Ingredients = ({
+    control,
+    register,
+    hasError,
+    setIsRedirectBlocked,
+}: IngredientsProps) => {
     const { isMobile } = useScreenSize();
 
     const { fields, append, remove } = useFieldArray({

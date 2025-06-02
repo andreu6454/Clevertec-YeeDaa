@@ -15,8 +15,8 @@ type StepProps = {
     index: number;
     onOpenHandler: () => void;
     preview: string;
-    isLast?: boolean;
     hasError: boolean;
+    isLast?: boolean;
 };
 
 export const Step = (props: StepProps) => {

@@ -6,6 +6,7 @@ import SaveNotes from '~/assets/svg/saveNote.svg';
 import { useDeleteRecipeMutation } from '~/query/services/newRecipe';
 import { ErrorResponse } from '~/query/types/types';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+import { NEW_RECIPE_ALERTS } from '~/shared/constants/newRecipeAlerts';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
@@ -28,25 +29,12 @@ export const DeleteAndEditButtons = ({ recipeId, subCategoryId }: DeleteAndEditB
     const onDeleteHandler = async () => {
         try {
             await deleteRecipe(recipeId).unwrap();
-            alert(
-                {
-                    status: 'success',
-                    title: 'Рецепт успешно удален',
-                },
-                false,
-            );
+            alert(NEW_RECIPE_ALERTS.recipeDeleteSuccess, false);
             navigate(APP_PATHS.root);
         } catch (error) {
             const responseError = error as ErrorResponse;
             if (responseError?.status === 500) {
-                alert(
-                    {
-                        status: 'error',
-                        title: 'Ошибка сервера',
-                        description: 'Не удалось удалить рецепт',
-                    },
-                    false,
-                );
+                alert(NEW_RECIPE_ALERTS.recipeDeleteError, false);
             }
         }
     };

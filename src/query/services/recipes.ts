@@ -1,4 +1,4 @@
-import { ApiEndpoints } from '~/query/constants/api';
+import { ApiEndpoints, METHODS } from '~/query/constants/api';
 import { ApiGroupNames } from '~/query/constants/api-group-names';
 import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
@@ -20,7 +20,7 @@ export const recipeApi = apiSlice
                     url: ApiEndpoints.RECIPES,
                     apiGroupName: ApiGroupNames.RECIPES,
                     name: EndpointNames.GET_RECIPES,
-                    method: 'GET',
+                    method: METHODS.get,
                     params: params,
                 }),
                 providesTags: [Tags.RECIPES],
@@ -33,6 +33,7 @@ export const recipeApi = apiSlice
                     url: `${ApiEndpoints.RECIPES_BY_CATEGORY}${params.subcategoryId}`,
                     apiGroupName: ApiGroupNames.RECIPES,
                     name: EndpointNames.GET_RECIPES_BY_CATEGORY,
+                    method: METHODS.get,
                     params: {
                         limit: params.limit,
                     },
@@ -41,7 +42,8 @@ export const recipeApi = apiSlice
             }),
             getRecipeById: builder.query<Recipe, string>({
                 query: (id) => ({
-                    url: `/recipe/${id}`,
+                    url: `${ApiEndpoints.RECIPES}/${id}`,
+                    method: METHODS.get,
                 }),
                 async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
                     try {
@@ -63,7 +65,7 @@ export const recipeApi = apiSlice
                     url: ApiEndpoints.RECIPES,
                     apiGroupName: ApiGroupNames.RECIPES,
                     name: EndpointNames.GET_RECIPES_WITH_PARAMS,
-                    method: 'GET',
+                    method: METHODS.get,
                     params: params,
                 }),
                 async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
@@ -80,20 +82,20 @@ export const recipeApi = apiSlice
             likeRecipe: builder.mutation<Recipe, string>({
                 query: (id) => ({
                     url: ApiEndpoints.RECIPES + `/${id}` + ApiEndpoints.LIKE,
-                    method: 'POST',
+                    method: METHODS.post,
                     credentials: 'include',
                     apiGroupName: ApiGroupNames.RECIPES,
                 }),
-                invalidatesTags: [Tags.RECIPES],
+                invalidatesTags: [Tags.RECIPES, Tags.RECIPE_BY_ID],
             }),
             bookmarkRecipe: builder.mutation<Recipe, string>({
                 query: (id) => ({
                     url: ApiEndpoints.RECIPES + `/${id}` + ApiEndpoints.BOOKMARK,
-                    method: 'POST',
+                    method: METHODS.post,
                     credentials: 'include',
                     apiGroupName: ApiGroupNames.RECIPES,
                 }),
-                invalidatesTags: [Tags.RECIPES],
+                invalidatesTags: [Tags.RECIPES, Tags.RECIPE_BY_ID],
             }),
         }),
     });

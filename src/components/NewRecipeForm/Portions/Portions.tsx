@@ -18,9 +18,7 @@ type PortionsProps = {
     hasError: boolean;
 };
 
-export const Portions = (props: PortionsProps) => {
-    const { register, hasError } = props;
-
+export const Portions = ({ register, hasError }: PortionsProps) => {
     const errorBorder = '2px solid rgb(229, 62, 62)';
     const border = '1px solid #e2e8f0';
 

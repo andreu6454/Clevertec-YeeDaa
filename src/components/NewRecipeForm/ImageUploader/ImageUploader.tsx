@@ -16,11 +16,10 @@ type ImageUploaderProps = {
     hasError: boolean;
 };
 
-export const ImageUploader = (props: ImageUploaderProps) => {
-    const { setValue, getValues, hasError } = props;
-
+export const ImageUploader = ({ setValue, getValues, hasError }: ImageUploaderProps) => {
     const image = getValues('image');
     const imageUrl = getImageUrl(image);
+    const shouldDirty = { shouldDirty: true };
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -33,7 +32,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
             formData.append('file', imageFile);
 
             const result = await uploadImage(formData).unwrap();
-            setValue('image', result.url, { shouldDirty: true });
+            setValue('image', result.url, shouldDirty);
 
             onClose();
         } catch (e) {
@@ -47,9 +46,9 @@ export const ImageUploader = (props: ImageUploaderProps) => {
 
     const handleOpen = () => {
         if (image) {
-            setValue('image', image, { shouldDirty: true });
+            setValue('image', image, shouldDirty);
         } else {
-            setValue('image', '', { shouldDirty: true });
+            setValue('image', '', shouldDirty);
         }
         onOpen();
     };

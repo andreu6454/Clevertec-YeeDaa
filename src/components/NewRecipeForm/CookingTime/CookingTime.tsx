@@ -18,9 +18,7 @@ type CookingTimeProps = {
     hasError: boolean;
 };
 
-export const CookingTime = (props: CookingTimeProps) => {
-    const { register, hasError } = props;
-
+export const CookingTime = ({ register, hasError }: CookingTimeProps) => {
     const errorBorder = '2px solid rgb(229, 62, 62)';
     const border = '1px solid #e2e8f0';
 

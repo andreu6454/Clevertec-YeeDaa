@@ -27,8 +27,7 @@ type StepsProps = {
     getValues: UseFormGetValues<NewRecipeDataType>;
 };
 
-export const Steps = (props: StepsProps) => {
-    const { control, register, hasError, getValues } = props;
+export const Steps = ({ control, register, hasError, getValues }: StepsProps) => {
     const { isDesktopLaptop } = useScreenSize();
 
     const { isOpen, onOpen, onClose } = useDisclosure();

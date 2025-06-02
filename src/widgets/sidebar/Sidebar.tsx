@@ -1,6 +1,6 @@
 import { IconButton } from '@chakra-ui/icons';
 import { Flex, Image, Link } from '@chakra-ui/react';
-import { Link as ReactLink, useNavigate } from 'react-router';
+import { Link as ReactLink, useLocation, useNavigate } from 'react-router';
 
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
@@ -10,10 +10,12 @@ import NoteIcon from '../../assets/svg/noteIcon.svg';
 
 export const Sidebar = () => {
     const navigate = useNavigate();
-
+    const { pathname } = useLocation();
     const onClickHandler = () => {
         navigate(APP_PATHS.newRecipe);
     };
+
+    const isNewRecipePage = pathname === APP_PATHS.newRecipe;
 
     return (
         <Flex
@@ -24,9 +26,9 @@ export const Sidebar = () => {
             width='208px'
             flexDirection='column'
             alignItems='center'
-            justifyContent='space-between'
+            justifyContent={isNewRecipePage ? 'flex-end' : 'space-between'}
         >
-            <ReactionsBar />
+            {!isNewRecipePage && <ReactionsBar />}
             <Flex
                 width='208px'
                 height='208px'

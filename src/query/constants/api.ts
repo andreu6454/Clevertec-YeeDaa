@@ -15,3 +15,10 @@ export enum ApiEndpoints {
     BOOKMARK = '/bookmark',
     RECIPE_DRAFT = '/recipe/draft',
 }
+
+export const METHODS = {
+    get: 'GET',
+    post: 'POST',
+    patch: 'PATCH',
+    delete: 'DELETE',
+};

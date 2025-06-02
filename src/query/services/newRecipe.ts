@@ -1,4 +1,4 @@
-import { ApiEndpoints } from '~/query/constants/api';
+import { ApiEndpoints, METHODS } from '~/query/constants/api';
 import { ApiGroupNames } from '~/query/constants/api-group-names';
 import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
@@ -15,7 +15,7 @@ export const newRecipeApi = apiSlice
             uploadImage: builder.mutation<ImageUploadResponse, FormData>({
                 query: (formData) => ({
                     url: ApiEndpoints.UPLOAD_IMAGE,
-                    method: 'POST',
+                    method: METHODS.post,
                     body: formData,
                     credentials: 'include',
                 }),
@@ -23,7 +23,7 @@ export const newRecipeApi = apiSlice
             createRecipe: builder.mutation<Recipe, NullableNewRecipesDataType>({
                 query: (body) => ({
                     url: ApiEndpoints.RECIPES,
-                    method: 'POST',
+                    method: METHODS.post,
                     body,
                     credentials: 'include',
                     apiGroupName: ApiGroupNames.RECIPES,
@@ -33,7 +33,7 @@ export const newRecipeApi = apiSlice
             createDraft: builder.mutation<Recipe, NullableNewRecipesDataType>({
                 query: (body) => ({
                     url: ApiEndpoints.RECIPE_DRAFT,
-                    method: 'POST',
+                    method: METHODS.post,
                     body,
                     credentials: 'include',
                     apiGroupName: ApiGroupNames.RECIPES,
@@ -43,7 +43,7 @@ export const newRecipeApi = apiSlice
             deleteRecipe: builder.mutation<void, string>({
                 query: (id) => ({
                     url: ApiEndpoints.RECIPES + `/${id}`,
-                    method: 'DELETE',
+                    method: METHODS.delete,
                     credentials: 'include',
                     apiGroupName: ApiGroupNames.RECIPES,
                     name: EndpointNames.DELETE_RECIPE,
@@ -53,7 +53,7 @@ export const newRecipeApi = apiSlice
             updateRecipe: builder.mutation<Recipe, UpdateRecipeParams>({
                 query: ({ id, recipe }) => ({
                     url: ApiEndpoints.RECIPES + `/${id}`,
-                    method: 'PATCH',
+                    method: METHODS.patch,
                     body: recipe,
                     credentials: 'include',
                     apiGroupName: ApiGroupNames.RECIPES,
@@ -64,7 +64,7 @@ export const newRecipeApi = apiSlice
             getMeasureUnits: builder.query<MeasureUnitsResponse, void>({
                 query: () => ({
                     url: ApiEndpoints.MEASURE_UNITS,
-                    method: 'get',
+                    method: METHODS.get,
                     credentials: 'include',
                     apiGroupName: ApiGroupNames.RECIPES,
                     name: EndpointNames.MEASURE_UNITS,

@@ -11,7 +11,7 @@ import {
     useUpdateRecipeMutation,
 } from '~/query/services/newRecipe';
 import { ErrorResponse } from '~/query/types/types';
-import { NEW_RECIPE_STATUSES } from '~/shared/constants/newRecipeStatutes';
+import { NEW_RECIPE_ALERTS } from '~/shared/constants/newRecipeAlerts';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
@@ -66,13 +66,7 @@ export const NewRecipePage = () => {
 
             continueNavigation();
 
-            errorAlert(
-                {
-                    status: 'success',
-                    title: NEW_RECIPE_STATUSES.successMessage,
-                },
-                false,
-            );
+            errorAlert(NEW_RECIPE_ALERTS.recipeSuccess, false);
 
             navigate(
                 getNavigateLinkToRecipe(
@@ -102,13 +96,7 @@ export const NewRecipePage = () => {
             await createDraft(finalData).unwrap();
             navigate(APP_PATHS.root);
 
-            errorAlert(
-                {
-                    status: 'success',
-                    title: NEW_RECIPE_STATUSES.draftSuccessMessage,
-                },
-                false,
-            );
+            errorAlert(NEW_RECIPE_ALERTS.draftSuccess, false);
         } catch (error) {
             setIsRedirectBlocked(true);
             const responseError = error as ErrorResponse;

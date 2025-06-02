@@ -132,7 +132,6 @@ export const NewRecipeForm = (props: NewRecipeFormProps) => {
                     <Flex direction='column' width='100%' gap={{ base: '16px', xl: '32px' }}>
                         <CategoriesSelector
                             hasError={checkFormErrors(errors)}
-                            control={control}
                             setValue={setValue}
                             getValues={getValues}
                         />

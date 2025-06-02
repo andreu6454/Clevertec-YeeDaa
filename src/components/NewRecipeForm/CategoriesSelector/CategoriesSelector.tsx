@@ -1,7 +1,7 @@
 import { Box, ChevronDownIcon, Menu, MenuList } from '@chakra-ui/icons';
 import { Button, Flex, MenuButton } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { Control, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
+import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
 import { CategoryHeader } from '~/components/NewRecipeForm/CategoriesSelector/CategoryHeader';
@@ -15,13 +15,11 @@ import { NewRecipeDataType } from '../NewRecipeForm';
 
 type CategoriesSelectorProps = {
     hasError: boolean;
-    control: Control<NewRecipeDataType, string, NewRecipeDataType>;
     setValue: UseFormSetValue<NewRecipeDataType>;
     getValues: UseFormGetValues<NewRecipeDataType>;
 };
 
-export const CategoriesSelector = (props: CategoriesSelectorProps) => {
-    const { setValue, getValues, hasError } = props;
+export const CategoriesSelector = ({ setValue, getValues, hasError }: CategoriesSelectorProps) => {
     const { isDesktopLaptop } = useScreenSize();
     const categoriesFromForm = getValues('categoriesIds');
     const [selectedCategories, setSelectedCategories] = useState(categoriesFromForm || []);
@@ -37,12 +35,11 @@ export const CategoriesSelector = (props: CategoriesSelectorProps) => {
 
         const onChangeHandle = () => {
             if (isChecked) {
-                setValue(
-                    'categoriesIds',
-                    selectedCategories.filter((id) => id !== category._id),
-                );
+                const filteredCategories = selectedCategories.filter((id) => id !== category._id);
+                setValue('categoriesIds', filteredCategories);
             } else {
-                setValue('categoriesIds', [...selectedCategories, category._id]);
+                const filteredCategories = [...selectedCategories, category._id];
+                setValue('categoriesIds', filteredCategories);
             }
             setTrigger((prev) => !prev);
         };

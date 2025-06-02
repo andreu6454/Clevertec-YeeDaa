@@ -10,9 +10,7 @@ type DescriptionTextAreaProps = {
     hasError: boolean;
 };
 
-export const DescriptionTextArea = (props: DescriptionTextAreaProps) => {
-    const { register, hasError } = props;
-
+export const DescriptionTextArea = ({ register, hasError }: DescriptionTextAreaProps) => {
     const errorBorder = '2px solid #e53e3e';
     const border = '1px solid #e2e8f0';
 
