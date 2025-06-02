@@ -1,4 +1,4 @@
-import { ApiEndpoints } from '~/query/constants/api';
+import { ApiEndpoints, METHODS } from '~/query/constants/api';
 import { ApiGroupNames } from '~/query/constants/api-group-names';
 import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
@@ -6,11 +6,12 @@ import { apiSlice } from '~/query/create-api';
 import { RecipeParams, RecipeResponse } from '~/query/types/types';
 import { Recipe } from '~/shared/types/recipeTypes';
 import { setRecipePageTitle } from '~/store/app-slice';
+import { setRecipe } from '~/store/recipe-slice';
 import { setInputLoading, setRecipesData } from '~/store/recipesListPage-slice';
 
 export const recipeApi = apiSlice
     .enhanceEndpoints({
-        addTagTypes: [Tags.RECIPES],
+        addTagTypes: [Tags.RECIPES, Tags.RECIPE_BY_ID],
     })
     .injectEndpoints({
         endpoints: (builder) => ({
@@ -19,9 +20,10 @@ export const recipeApi = apiSlice
                     url: ApiEndpoints.RECIPES,
                     apiGroupName: ApiGroupNames.RECIPES,
                     name: EndpointNames.GET_RECIPES,
-                    method: 'GET',
+                    method: METHODS.get,
                     params: params,
                 }),
+                providesTags: [Tags.RECIPES],
             }),
             getRecipeByCategory: builder.query<
                 RecipeResponse,
@@ -31,13 +33,18 @@ export const recipeApi = apiSlice
                     url: `${ApiEndpoints.RECIPES_BY_CATEGORY}${params.subcategoryId}`,
                     apiGroupName: ApiGroupNames.RECIPES,
                     name: EndpointNames.GET_RECIPES_BY_CATEGORY,
+                    method: METHODS.get,
                     params: {
                         limit: params.limit,
                     },
                 }),
+                providesTags: [Tags.RECIPES],
             }),
             getRecipeById: builder.query<Recipe, string>({
-                query: (id) => `/recipe/${id}`,
+                query: (id) => ({
+                    url: `${ApiEndpoints.RECIPES}/${id}`,
+                    method: METHODS.get,
+                }),
                 async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
                     try {
                         const { data } = await queryFulfilled;
@@ -46,17 +53,19 @@ export const recipeApi = apiSlice
                             title: data.title,
                         };
                         dispatch(setRecipePageTitle(title));
+                        dispatch(setRecipe(data));
                     } catch {
                         console.log('Response error');
                     }
                 },
+                providesTags: [Tags.RECIPE_BY_ID],
             }),
             getRecipesWithParams: builder.query<RecipeResponse, RecipeParams>({
                 query: (params) => ({
                     url: ApiEndpoints.RECIPES,
                     apiGroupName: ApiGroupNames.RECIPES,
                     name: EndpointNames.GET_RECIPES_WITH_PARAMS,
-                    method: 'GET',
+                    method: METHODS.get,
                     params: params,
                 }),
                 async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
@@ -68,6 +77,25 @@ export const recipeApi = apiSlice
                         console.log('Response error');
                     }
                 },
+                providesTags: [Tags.RECIPES],
+            }),
+            likeRecipe: builder.mutation<Recipe, string>({
+                query: (id) => ({
+                    url: ApiEndpoints.RECIPES + `/${id}` + ApiEndpoints.LIKE,
+                    method: METHODS.post,
+                    credentials: 'include',
+                    apiGroupName: ApiGroupNames.RECIPES,
+                }),
+                invalidatesTags: [Tags.RECIPES, Tags.RECIPE_BY_ID],
+            }),
+            bookmarkRecipe: builder.mutation<Recipe, string>({
+                query: (id) => ({
+                    url: ApiEndpoints.RECIPES + `/${id}` + ApiEndpoints.BOOKMARK,
+                    method: METHODS.post,
+                    credentials: 'include',
+                    apiGroupName: ApiGroupNames.RECIPES,
+                }),
+                invalidatesTags: [Tags.RECIPES, Tags.RECIPE_BY_ID],
             }),
         }),
     });
@@ -77,4 +105,6 @@ export const {
     useGetRecipeByCategoryQuery,
     useLazyGetRecipesWithParamsQuery,
     useGetRecipeByIdQuery,
+    useBookmarkRecipeMutation,
+    useLikeRecipeMutation,
 } = recipeApi;

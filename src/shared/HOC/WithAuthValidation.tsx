@@ -1,15 +1,37 @@
+import { jwtDecode } from 'jwt-decode';
 import { Navigate, Outlet } from 'react-router';
 
+import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
+import { useRefreshTokenQuery } from '~/query/services/auth';
+import { jwtDecodedType } from '~/query/types/types';
 import { APP_PATHS } from '~/shared/constants/pathes';
-import { isLoginSelector } from '~/store/app-slice';
-import { useAppSelector } from '~/store/hooks';
+import { setUserId, userIdSelector } from '~/store/app-slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 export const WithAuthValidation = () => {
-    const isAuthenticated = useAppSelector(isLoginSelector);
+    const userId = useAppSelector(userIdSelector);
 
-    if (!isAuthenticated) {
+    const dispatch = useAppDispatch();
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    if (jwtToken) {
+        const jwtDecoded = jwtDecode(jwtToken) as jwtDecodedType;
+        dispatch(setUserId(jwtDecoded.userId));
+    }
+
+    const { isLoading: refreshTokenLoading } = useRefreshTokenQuery();
+
+    if (userId === 'forbidden403') {
         return <Navigate to={APP_PATHS.login} replace />;
     }
 
-    return <Outlet />;
+    if (!userId && !refreshTokenLoading) {
+        return <Navigate to={APP_PATHS.login} replace />;
+    }
+
+    if (userId && !refreshTokenLoading) {
+        return <Outlet />;
+    }
+
+    return <FullScreenSpinner />;
 };

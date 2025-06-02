@@ -3,7 +3,12 @@ import { Button, Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
+import { useBookmarkRecipeMutation } from '~/query/services/recipes';
+import { ErrorResponse } from '~/query/types/types';
+import { NEW_RECIPE_ALERTS } from '~/shared/constants/newRecipeAlerts';
+import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import { Recipe } from '~/shared/types/recipeTypes';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
@@ -81,6 +86,20 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
             ),
         );
 
+    const [bookmark] = useBookmarkRecipeMutation();
+    const errorAlert = useAlertToast();
+
+    const onBookmarkHandle = async () => {
+        try {
+            await bookmark(recipe._id).unwrap();
+        } catch (error) {
+            const responseError = error as ErrorResponse;
+            if (responseError?.status === 500) {
+                errorAlert(NEW_RECIPE_ALERTS.serverError, false);
+            }
+        }
+    };
+
     return (
         <Card
             data-test-id={`food-card-${index}`}
@@ -100,7 +119,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                 width={sizes[screenSize].imgWidth}
                 height='100%'
                 backgroundSize='100% 100%'
-                backgroundImage={'https://training-api.clevertec.ru' + recipe.image}
+                backgroundImage={getImageUrl(recipe.image)}
                 alignItems={!isTabletMobile ? 'flex-end' : 'flex-start'}
                 padding={sizes[screenSize].padding}
             >
@@ -161,6 +180,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                 </Flex>
                 <Flex justifyContent='flex-end' gap='8px'>
                     <Button
+                        onClick={onBookmarkHandle}
                         display='flex'
                         padding={isTabletMobile ? '6px 0 6px 6px' : ''}
                         leftIcon={<Image src={BookmarkIcon} />}

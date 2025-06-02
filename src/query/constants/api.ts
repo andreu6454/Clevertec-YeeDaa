@@ -7,4 +7,18 @@ export enum ApiEndpoints {
     FORGOT_PASSWORD = '/auth/forgot-password',
     VERIFY_OTP = '/auth/verify-otp',
     RESET_PASSWORD = '/auth/reset-password',
+    UPLOAD_IMAGE = '/file/upload',
+    MEASURE_UNITS = '/measure-units',
+    CHECK_AUTH = '/auth/check-auth',
+    REFRESH_TOKEN = '/auth/refresh',
+    LIKE = '/like',
+    BOOKMARK = '/bookmark',
+    RECIPE_DRAFT = '/recipe/draft',
 }
+
+export const METHODS = {
+    get: 'GET',
+    post: 'POST',
+    patch: 'PATCH',
+    delete: 'DELETE',
+};

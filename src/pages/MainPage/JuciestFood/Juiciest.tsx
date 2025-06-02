@@ -70,6 +70,7 @@ export const Juiciest = () => {
     if (error) {
         dispatch(setAppError('error'));
     }
+
     if (isLoading) return <FullScreenSpinner />;
     return (
         <Flex direction='column' gap={gap[screenSize]} width='100%'>

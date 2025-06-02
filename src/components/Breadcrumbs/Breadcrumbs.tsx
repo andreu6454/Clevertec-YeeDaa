@@ -16,7 +16,10 @@ interface SmartBreadcrumbsProps {
 export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
     ({ pathNames, homeElement = 'Главная' }) => {
         const location = useLocation();
-        const pathnames = location.pathname.split('/').filter(Boolean);
+        const pathnames = location.pathname
+            .split('/')
+            .filter(Boolean)
+            .filter((path) => path !== 'edit-recipe');
         const dispatch = useAppDispatch();
         const pageTitle = useAppSelector(recipePageTitleSelector);
 
@@ -37,11 +40,19 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
 
             if (path === 'the-juiciest') {
                 displayName = 'Самое сочное';
-            } // для "самое сочное"
+            }
+
+            if (path === 'new-recipe') {
+                displayName = 'Новый рецепт';
+            }
 
             if (path === 'not-found') {
                 displayName = 'Страница не существует';
-            } // для "404"
+            }
+
+            if (path === 'edit-recipe') {
+                return null;
+            }
 
             return (
                 <Box display='flex' alignItems='center' key={displayName}>

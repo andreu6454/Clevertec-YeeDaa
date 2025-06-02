@@ -17,7 +17,7 @@ import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { AuthLayout } from '~/shared/layouts/AuthLayout/AuthLayout';
 import { signInSchema } from '~/shared/types/validationSchemas/loginSchema';
 import { emailVerifiedSelector } from '~/store/app-slice';
-import { setIsLogin } from '~/store/app-slice';
+import { setUserId } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 export type LoginFormDataType = {
@@ -58,7 +58,7 @@ export const LoginPage = memo(() => {
     const onSubmitHandler = handleSubmit(async (data) => {
         try {
             await login(data).unwrap();
-            dispatch(setIsLogin(true));
+            dispatch(setUserId('123123'));
             navigate(APP_PATHS.root);
         } catch (error) {
             const responseError = error as ErrorResponse;

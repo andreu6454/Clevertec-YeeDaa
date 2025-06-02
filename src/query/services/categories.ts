@@ -1,4 +1,4 @@
-import { ApiEndpoints } from '~/query/constants/api';
+import { ApiEndpoints, METHODS } from '~/query/constants/api';
 import { ApiGroupNames } from '~/query/constants/api-group-names';
 import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
@@ -16,7 +16,7 @@ export const categoriesApi = apiSlice
             getCategories: builder.query<CategoryResponse, void>({
                 query: () => ({
                     url: ApiEndpoints.CATEGORIES,
-                    method: 'GET',
+                    method: METHODS.get,
                     apiGroupName: ApiGroupNames.CATEGORIES,
                     name: EndpointNames.GET_CATEGORIES,
                 }),

@@ -1,5 +1,5 @@
 import { CategoryType, SubCategoryType } from '~/shared/types/categoryTypes';
-import { Recipe } from '~/shared/types/recipeTypes';
+import { NullableNewRecipesDataType, Recipe } from '~/shared/types/recipeTypes';
 
 export type Meta = {
     total: number;
@@ -67,3 +67,25 @@ export type ResetPasswordParams = {
     passwordConfirm: string;
     email: string;
 };
+
+export type ImageUploadResponse = {
+    name: string;
+    url: string;
+    _id: string;
+};
+
+export type MeasureUnit = {
+    _id: string;
+    name: string;
+};
+
+export type MeasureUnitsResponse = MeasureUnit[];
+
+export type jwtDecodedType = {
+    userId: string;
+    login: string;
+    exp: number;
+    iat: number;
+};
+
+export type UpdateRecipeParams = { id: string; recipe: NullableNewRecipesDataType };

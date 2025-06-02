@@ -3,12 +3,21 @@ import { Flex, Tag, Text } from '@chakra-ui/react';
 interface TagsProps {
     elements: string[];
     trim?: boolean;
+    width?: string;
+    cutOn?: number;
 }
 
 export const Tags = (props: TagsProps) => {
-    const { elements, trim } = props;
+    const { elements, trim, width = '200px', cutOn } = props;
 
-    const mappedTags = elements.map((el) => (
+    let elementForMap = elements;
+
+    if (cutOn && elements?.length - cutOn >= 1) {
+        const restNumber = `+${elements.length - cutOn}`;
+        elementForMap = [...elements.slice(0, cutOn), restNumber];
+    }
+
+    const mappedTags = elementForMap?.map((el) => (
         <Tag
             key={el + 'tag'}
             color='#2db100'
@@ -25,7 +34,7 @@ export const Tags = (props: TagsProps) => {
     ));
 
     return (
-        <Flex width='200px' gap='8px' flexWrap='wrap'>
+        <Flex width={width} gap='8px' flexWrap='wrap'>
             {mappedTags}
         </Flex>
     );

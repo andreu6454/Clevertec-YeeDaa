@@ -4,11 +4,12 @@ import { memo } from 'react';
 import { Link as ReactLink, useNavigate } from 'react-router';
 
 import { Breadcrumbs } from '~/components/Breadcrumbs/Breadcrumbs';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
-import { isBurgerOpenSelector, isLoginSelector } from '~/store/app-slice';
+import { isBurgerOpenSelector, userIdSelector } from '~/store/app-slice';
 import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
 
@@ -20,7 +21,7 @@ export const HeaderDesktop = memo(() => {
     const navigate = useNavigate();
 
     const { isDesktopLaptop } = useScreenSize();
-    const isLogin = useAppSelector(isLoginSelector);
+    const isLogin = useAppSelector(userIdSelector);
     const isBurgerOpen = useAppSelector(isBurgerOpenSelector);
     const allCategories = useAppSelector(allCategoriesSelector);
 
@@ -38,7 +39,13 @@ export const HeaderDesktop = memo(() => {
             backgroundColor='#ffffd3'
             height='80px'
         >
-            <Link paddingLeft='54px' width='280px' onClick={handleClick} flexShrink={0}>
+            <Link
+                data-test-id={DATA_TEST_IDS.headerLogo}
+                paddingLeft='54px'
+                width='280px'
+                onClick={handleClick}
+                flexShrink={0}
+            >
                 <Image width='135.2px' height='32px' src={LogoLarge} alt='yee-daa' />
             </Link>
             {!isBurgerOpen && (
