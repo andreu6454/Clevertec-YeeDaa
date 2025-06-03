@@ -1,8 +1,9 @@
-import { Image } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 
-import SubscribeIcon from '~/assets/svg/subscribe.svg';
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
+import { SubscribeButton } from '~/shared/ui/SubscribeButton/SubscribeButton';
 
 type CardWithAvatarButtonsProps = {
     isBlogsPage?: boolean;
@@ -10,10 +11,18 @@ type CardWithAvatarButtonsProps = {
     onSubscribeHandler?: () => void;
     bookmarks?: number;
     subscribers?: number;
+    bloggerId?: string;
 };
 
 export const CardWithAvatarButtons = (props: CardWithAvatarButtonsProps) => {
-    const { isBlogsPage, isFavorite, onSubscribeHandler, subscribers, bookmarks } = props;
+    const { isBlogsPage, isFavorite, onSubscribeHandler, subscribers, bookmarks, bloggerId } =
+        props;
+
+    const navigate = useNavigate();
+
+    const onReadClick = () => {
+        navigate(`${APP_PATHS.blogs}/${bloggerId}`);
+    };
 
     if (!isBlogsPage) return null;
     return (
@@ -30,19 +39,10 @@ export const CardWithAvatarButtons = (props: CardWithAvatarButtonsProps) => {
                         Рецепты
                     </Button>
                 ) : (
-                    <Button
-                        backgroundColor='#000'
-                        color='#fff'
-                        size='sm'
-                        padding='0 12px'
-                        height='24px'
-                        leftIcon={<Image src={SubscribeIcon} />}
-                        onClick={onSubscribeHandler}
-                    >
-                        Подписаться
-                    </Button>
+                    <SubscribeButton onSubscribeHandler={onSubscribeHandler} />
                 )}
                 <Button
+                    onClick={onReadClick}
                     variant='outlined'
                     border='1px solid #2db100'
                     color='#2db100'

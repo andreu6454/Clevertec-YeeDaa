@@ -3,7 +3,12 @@ import { ApiGroupNames } from '~/query/constants/api-group-names';
 import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
-import { BloggersParams, BloggersResponse, bloggerSubscriptionParams } from '~/query/types/types';
+import {
+    BloggerResponse,
+    BloggersParams,
+    BloggersResponse,
+    bloggerSubscriptionParams,
+} from '~/query/types/types';
 
 export const bloggersApi = apiSlice
     .enhanceEndpoints({
@@ -32,7 +37,18 @@ export const bloggersApi = apiSlice
                 }),
                 invalidatesTags: [Tags.BLOGGERS],
             }),
+            getBloggerById: builder.query<BloggerResponse, bloggerSubscriptionParams>({
+                query: ({ bloggerId, userId }) => ({
+                    url: `${ApiEndpoints.BLOGGERS}/${bloggerId}`,
+                    method: METHODS.get,
+                    params: { bloggerId: bloggerId, currentUserId: userId },
+                    apiGroupName: ApiGroupNames.BLOGGERS,
+                    name: EndpointNames.GET_BLOGGER_BY_ID,
+                }),
+                providesTags: [Tags.BLOGGERS],
+            }),
         }),
     });
 
-export const { useGetBloggersQuery, useToggleSubscriptionMutation } = bloggersApi;
+export const { useGetBloggersQuery, useToggleSubscriptionMutation, useGetBloggerByIdQuery } =
+    bloggersApi;

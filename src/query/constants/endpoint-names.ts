@@ -15,4 +15,6 @@ export enum EndpointNames {
     UPDATE_RECIPE = 'updateRecipe',
     GET_BLOGGERS = 'getBloggers',
     SUBSCRIBE_BLOGGER = 'SUBSCRIBE_BLOGGER',
+    GET_BLOGGER_BY_ID = 'GET_BLOGGER_BY_ID',
+    GET_USER_RECIPES = 'GET_USER_RECIPES',
 }

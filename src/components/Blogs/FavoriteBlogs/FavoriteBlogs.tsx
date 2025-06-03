@@ -18,6 +18,7 @@ export const FavoriteBlogs = ({ blogs }: FavoriteBlogsProps) => {
             subscribers={el.subscribersCount}
             bookmarks={el.bookmarksCount}
             newRecipesCount={el.newRecipesCount}
+            bloggerId={el._id}
         />
     ));
 

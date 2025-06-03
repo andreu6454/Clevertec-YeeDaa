@@ -1,4 +1,4 @@
-import { BloggerType } from '~/shared/types/bloggersTypes';
+import { BloggerInfoType, BloggerNoteType, BloggerType } from '~/shared/types/bloggersTypes';
 import { CategoryType, SubCategoryType } from '~/shared/types/categoryTypes';
 import { NullableNewRecipesDataType, Recipe } from '~/shared/types/recipeTypes';
 
@@ -101,4 +101,19 @@ export type BloggersResponse = {
     others: BloggerType[];
 };
 
+export type BloggerResponse = {
+    bloggerInfo: BloggerInfoType;
+    isFavorite: boolean;
+    totalBookmarks: number;
+    totalSubscriptions: number;
+};
+
 export type bloggerSubscriptionParams = { bloggerId: string; userId: string };
+
+export type UserRecipesResponse = {
+    notes: BloggerNoteType;
+    recipes: Recipe[];
+    totalBookmarks: number;
+    totalSubscribers: number;
+    userId: string;
+};

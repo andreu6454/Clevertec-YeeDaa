@@ -1,11 +1,13 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, Image } from '@chakra-ui/react';
 import { useState } from 'react';
 
+import ArrowRightIcon from '~/assets/svg/BsArrowRight.svg';
 import { CardWithAvatar } from '~/components/CardWithAvatar/CardWithAvatar';
 import { useToggleSubscriptionMutation } from '~/query/services/bloggers';
 import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { BloggerType } from '~/shared/types/bloggersTypes';
+import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { userIdSelector } from '~/store/app-slice';
 import { useAppSelector } from '~/store/hooks';
 
@@ -27,6 +29,7 @@ export const OtherBlogs = ({ blogs }: OtherBlogsProps) => {
             toggleSubscribe({ bloggerId: el._id, userId: userId });
         };
 
+        console.log(el);
         return (
             <CardWithAvatar
                 name={`${el.firstName} ${el.lastName}`}
@@ -38,6 +41,7 @@ export const OtherBlogs = ({ blogs }: OtherBlogsProps) => {
                 newRecipesCount={el.newRecipesCount}
                 isLoading={isLoading && currentBlogId === el._id}
                 onSubscribeHandler={onToggleSubscribe}
+                bloggerId={el._id}
             />
         );
     });
@@ -51,10 +55,20 @@ export const OtherBlogs = ({ blogs }: OtherBlogsProps) => {
             backgroundColor='rgba(0, 0, 0, 0.04)'
             borderRadius='16px'
             padding={{ base: '16px', xl: '24px' }}
-            flexWrap='wrap'
-            gap='16px'
+            flexDirection='column'
+            alignItems='center'
+            gap='24px'
         >
-            {blogsForRender}
+            <Flex width='100%' flexWrap='wrap' gap='16px'>
+                {blogsForRender}
+            </Flex>
+
+            <Flex gap='8px' alignItems='center'>
+                <Typography Size={TypographySizes.md} fontWeight='600'>
+                    Все авторы
+                </Typography>
+                <Image src={ArrowRightIcon} />
+            </Flex>
         </Flex>
     );
 };

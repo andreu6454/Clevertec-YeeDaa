@@ -1,3 +1,5 @@
+import { NullableNewRecipesDataType } from '~/shared/types/recipeTypes';
+
 export type BloggerNoteType = {
     date: string;
     text: string;
@@ -13,4 +15,17 @@ export type BloggerType = {
     isFavorite: boolean;
     notes: BloggerNoteType[];
     newRecipesCount: number;
+};
+
+export type BloggerInfoType = {
+    _id: string;
+    drafts: NullableNewRecipesDataType[];
+    email: string;
+    firstName: string;
+    lastName: string;
+    login: string;
+    notes: BloggerNoteType[];
+    recipesIds: string[];
+    subscribers: string[];
+    subscriptions: string[];
 };

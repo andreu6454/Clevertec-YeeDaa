@@ -12,6 +12,7 @@ interface CardWithAvatarProps {
     name: string;
     username: string;
     text: string;
+    bloggerId?: string;
     isLoading?: boolean;
     isBlogsPage?: boolean;
     bookmarks?: number;
@@ -32,6 +33,7 @@ export const CardWithAvatar = memo((props: CardWithAvatarProps) => {
         isFavorite,
         newRecipesCount,
         onSubscribeHandler,
+        bloggerId,
         isLoading,
     } = props;
     const { isDesktopLaptop } = useScreenSize();
@@ -99,7 +101,7 @@ export const CardWithAvatar = memo((props: CardWithAvatarProps) => {
                     />
                 </Flex>
                 <Typography
-                    height={isFavorite ? '64px' : ''}
+                    height={isFavorite ? '64px' : 'max-content'}
                     Size={TypographySizes.sm}
                     overflow='hidden'
                     textOverflow='ellipsis'
@@ -108,6 +110,7 @@ export const CardWithAvatar = memo((props: CardWithAvatarProps) => {
                     {text}
                 </Typography>
                 <CardWithAvatarButtons
+                    bloggerId={bloggerId}
                     isBlogsPage={isBlogsPage}
                     isFavorite={isFavorite}
                     onSubscribeHandler={onSubscribeHandler}
