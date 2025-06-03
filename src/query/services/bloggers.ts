@@ -1,0 +1,38 @@
+import { ApiEndpoints, METHODS } from '~/query/constants/api';
+import { ApiGroupNames } from '~/query/constants/api-group-names';
+import { EndpointNames } from '~/query/constants/endpoint-names';
+import { Tags } from '~/query/constants/tags';
+import { apiSlice } from '~/query/create-api';
+import { BloggersParams, BloggersResponse, bloggerSubscriptionParams } from '~/query/types/types';
+
+export const bloggersApi = apiSlice
+    .enhanceEndpoints({
+        addTagTypes: [Tags.BLOGGERS],
+    })
+    .injectEndpoints({
+        endpoints: (builder) => ({
+            getBloggers: builder.query<BloggersResponse, BloggersParams>({
+                query: (params) => ({
+                    url: ApiEndpoints.BLOGGERS,
+                    method: METHODS.get,
+                    params: params,
+                    apiGroupName: ApiGroupNames.BLOGGERS,
+                    name: EndpointNames.GET_BLOGGERS,
+                }),
+                providesTags: [Tags.BLOGGERS],
+            }),
+            toggleSubscription: builder.mutation<BloggersResponse, bloggerSubscriptionParams>({
+                query: ({ bloggerId, userId }) => ({
+                    url: ApiEndpoints.BLOGGERS_SUBSCRIPTION,
+                    method: METHODS.patch,
+                    body: { toUserId: bloggerId, fromUserId: userId },
+                    credentials: 'include',
+                    apiGroupName: ApiGroupNames.BLOGGERS,
+                    name: EndpointNames.SUBSCRIBE_BLOGGER,
+                }),
+                invalidatesTags: [Tags.BLOGGERS],
+            }),
+        }),
+    });
+
+export const { useGetBloggersQuery, useToggleSubscriptionMutation } = bloggersApi;

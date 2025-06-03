@@ -1,3 +1,4 @@
+import { BloggerType } from '~/shared/types/bloggersTypes';
 import { CategoryType, SubCategoryType } from '~/shared/types/categoryTypes';
 import { NullableNewRecipesDataType, Recipe } from '~/shared/types/recipeTypes';
 
@@ -89,3 +90,15 @@ export type jwtDecodedType = {
 };
 
 export type UpdateRecipeParams = { id: string; recipe: NullableNewRecipesDataType };
+
+export type BloggersParams = {
+    limit: string;
+    currentUserId: string;
+};
+
+export type BloggersResponse = {
+    favorites: BloggerType[];
+    others: BloggerType[];
+};
+
+export type bloggerSubscriptionParams = { bloggerId: string; userId: string };

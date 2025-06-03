@@ -10,7 +10,7 @@ import { LoginModalError } from '~/pages/LoginPage/LoginModalError/LoginModalErr
 import { PasswordRecovery } from '~/pages/LoginPage/PasswordRecovery/PasswordRecovery';
 import { useLoginMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';
-import { AUTH_LOGIN_STATUSES } from '~/shared/constants/authStatuses';
+import { AUTH_LOGIN_STATUSES } from '~/shared/constants/alertStatuses/authStatuses';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';

@@ -9,7 +9,7 @@ import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { DeleteAndEditButtons } from '~/pages/RecipePage/RecipeTitle/DeleteAndEditButtons';
 import { useBookmarkRecipeMutation, useLikeRecipeMutation } from '~/query/services/recipes';
 import { ErrorResponse } from '~/query/types/types';
-import { NEW_RECIPE_ALERTS } from '~/shared/constants/newRecipeAlerts';
+import { NEW_RECIPE_ALERTS } from '~/shared/constants/alertStatuses/newRecipeAlerts';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';

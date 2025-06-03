@@ -15,7 +15,7 @@ import { FirstStepInputs } from '~/pages/RegistrationPage/Steps/FirstStepInputs/
 import { SecondStepInputs } from '~/pages/RegistrationPage/Steps/SecondStepInputs/SecondStepInputs';
 import { useSignUpMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';
-import { EMAIL_EXISTS, LOGIN_EXISTS } from '~/shared/constants/authStatuses';
+import { EMAIL_EXISTS, LOGIN_EXISTS } from '~/shared/constants/alertStatuses/authStatuses';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';

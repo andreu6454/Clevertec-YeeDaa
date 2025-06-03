@@ -6,7 +6,7 @@ import { categoriesSelector, subCategoriesSelector } from '~/store/categories-sl
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { setCategoriesFilter, setCurrentPageCategory } from '~/store/recipesListPage-slice';
 
-export const WithCategoryAndAuthValidation = () => {
+export const WithCategoryValidation = () => {
     const dispatch = useAppDispatch();
     const { category, subcategory } = useParams();
 

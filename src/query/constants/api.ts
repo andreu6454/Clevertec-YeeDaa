@@ -14,6 +14,8 @@ export enum ApiEndpoints {
     LIKE = '/like',
     BOOKMARK = '/bookmark',
     RECIPE_DRAFT = '/recipe/draft',
+    BLOGGERS = '/bloggers',
+    BLOGGERS_SUBSCRIPTION = '/users/toggle-subscription',
 }
 
 export const METHODS = {

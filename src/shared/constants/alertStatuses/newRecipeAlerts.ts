@@ -1,3 +1,5 @@
+import { statusType } from './defaultAlert';
+
 export const NEW_RECIPE_MESSAGES = {
     serverError: 'Ошибка сервера',
     error: 'Ошибка',
@@ -10,8 +12,6 @@ export const NEW_RECIPE_MESSAGES = {
     deleteError: 'Не удалось удалить рецепт',
     deleteSuccess: 'Рецепт успешно удален',
 };
-
-type statusType = 'error' | 'info' | 'warning' | 'success' | 'loading' | undefined;
 
 export const NEW_RECIPE_ALERTS = {
     serverError: {

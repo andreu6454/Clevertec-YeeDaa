@@ -46,6 +46,10 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
                 displayName = 'Новый рецепт';
             }
 
+            if (path === 'blogs') {
+                displayName = 'Блоги';
+            }
+
             if (path === 'not-found') {
                 displayName = 'Страница не существует';
             }

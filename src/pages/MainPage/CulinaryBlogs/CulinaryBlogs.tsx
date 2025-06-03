@@ -1,18 +1,38 @@
-import { Flex, Image, Link, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { memo } from 'react';
-import { Link as ReactRouterLink } from 'react-router';
 
-import ArrowRightIcon from '~/assets/svg/BsArrowRight.svg';
 import { CardWithAvatar } from '~/components/CardWithAvatar/CardWithAvatar';
+import { AllBlogsLink } from '~/pages/MainPage/CulinaryBlogs/AllBlogsLink';
+import { useGetBloggersQuery } from '~/query/services/bloggers';
+import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
+import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-
-import Avatar1 from '../../../assets/images/elenaAvatar.png';
+import { userIdSelector } from '~/store/app-slice';
+import { useAppSelector } from '~/store/hooks';
 
 export const CulinaryBlogs = memo(() => {
-    const { isMobile, isTablet, screenSize } = useScreenSize();
+    const { isDesktopLaptop } = useScreenSize();
 
-    const direction = isMobile ? 'column' : 'row';
+    const userId = useAppSelector(userIdSelector);
+    const { data: BloggersData, isError } = useGetBloggersQuery({
+        limit: '3',
+        currentUserId: userId,
+    });
+    const alert = useAlertToast();
 
+    const bloggersForRender = BloggersData?.others?.map((el) => (
+        <CardWithAvatar
+            name={`${el.firstName} ${el.lastName}`}
+            username={`@${el.login}`}
+            text={el.notes[0]?.text}
+        />
+    ));
+
+    if (isError) {
+        alert(defaultAlert, false);
+        return null;
+    }
+    if (!BloggersData) return null;
     return (
         <Flex
             borderRadius='16px'
@@ -26,57 +46,20 @@ export const CulinaryBlogs = memo(() => {
                 <Text fontWeight='500' fontSize='30px' lineHeight='120%'>
                     Кулинарные блоги
                 </Text>
-
-                {!(isMobile || isTablet) && (
-                    <Link padding='8px 16px' as={ReactRouterLink} to='/blogs'>
-                        <Flex gap='8px' alignItems='center'>
-                            <Text fontWeight='600' fontSize='16px' lineHeight='150%'>
-                                Все авторы
-                            </Text>
-                            <Image src={ArrowRightIcon} />
-                        </Flex>
-                    </Link>
-                )}
+                {isDesktopLaptop && <AllBlogsLink />}
             </Flex>
             <Flex
                 alignItems='center'
                 justifyContent='center'
-                direction={direction}
+                direction={{ base: 'column', md: 'row' }}
                 gap='16px'
                 width='100%'
             >
-                <CardWithAvatar
-                    avatar={Avatar1}
-                    name='Елена Высоцкая'
-                    size={screenSize}
-                    username='@elenapovar'
-                    text='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                />
-                <CardWithAvatar
-                    avatar={Avatar1}
-                    name='Alex Cook'
-                    size={screenSize}
-                    username='@funtasticooking'
-                    text='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                />
-                <CardWithAvatar
-                    avatar={Avatar1}
-                    name='Екатерина Константинопольская'
-                    size={screenSize}
-                    username='@bake_and_pie'
-                    text='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                />
+                {bloggersForRender}
             </Flex>
-            {(isMobile || isTablet) && (
+            {!isDesktopLaptop && (
                 <Flex width='100%' justifyContent='center'>
-                    <Link padding='8px 16px' as={ReactRouterLink} to='/blogs'>
-                        <Flex gap='8px' alignItems='center'>
-                            <Text fontWeight='600' fontSize='16px' lineHeight='150%'>
-                                Все авторы
-                            </Text>
-                            <Image src={ArrowRightIcon} />
-                        </Flex>
-                    </Link>
+                    <AllBlogsLink />
                 </Flex>
             )}
         </Flex>

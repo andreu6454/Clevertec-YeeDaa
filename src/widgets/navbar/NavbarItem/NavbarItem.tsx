@@ -18,10 +18,10 @@ export const NavbarItem = memo((props: NavbarItemProps) => {
     const { title, icon, general, links, isDesktopLaptop } = props;
     const navigate = useNavigate();
 
-    const mappedLinks = links.map((link, index) => (
+    const mappedLinks = links.map((link) => (
         <AccordionLink
+            key={`${general}-${link.category} + NavbarItem +${link._id}`}
             title={link.title}
-            key={`${general}-${link.category}${index} + NavbarItem`}
             link={`${general}/${link.category}`}
             linkforTest={link.category}
         />
