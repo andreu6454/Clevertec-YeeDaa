@@ -1,8 +1,8 @@
 import { Tags } from '~/shared/ui/Tags/Tags';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
-import { categoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
-import { categoryIdsSelector } from '~/store/recipesListPage-slice';
+import { categoriesSelector } from '~/store/slices/categories-slice';
+import { categoryIdsSelector } from '~/store/slices/recipesListPage-slice';
 
 export const CategoryFilterHeader = () => {
     const categories = useAppSelector(categoryIdsSelector);

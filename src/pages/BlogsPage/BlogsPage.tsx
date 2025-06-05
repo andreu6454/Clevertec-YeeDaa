@@ -1,24 +1,47 @@
 import { Flex, Text } from '@chakra-ui/react';
+import { useState } from 'react';
 
 import { FavoriteBlogs } from '~/components/Blogs/FavoriteBlogs/FavoriteBlogs';
 import { OtherBlogs } from '~/components/Blogs/OtherBlogs/OtherBlogs';
 import { useGetBloggersQuery } from '~/query/services/bloggers';
 import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
-import { userIdSelector } from '~/store/app-slice';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { useAppSelector } from '~/store/hooks';
+import { userIdSelector } from '~/store/slices/app-slice';
 import { NewRecipes } from '~/widgets/NewRecipes/NewRecipes';
 
 export const BlogsPage = () => {
     const alert = useAlertToast();
     const userId = useAppSelector(userIdSelector);
-    const { data: BloggersData, isError } = useGetBloggersQuery({
-        limit: '9',
+
+    const { isDesktop } = useScreenSize();
+
+    const defaultLimit = isDesktop ? '9' : '8';
+    const [limit, setLimit] = useState(defaultLimit);
+
+    const {
+        data: BloggersData,
+        refetch,
+        isError,
+    } = useGetBloggersQuery({
+        limit: limit,
         currentUserId: userId,
     });
 
     const favoriteBlogs = BloggersData?.favorites;
     const otherBlogs = BloggersData?.others;
+
+    const onChangeLimit = () => {
+        if (limit === 'all') {
+            setLimit(defaultLimit);
+            refetch();
+            return;
+        }
+        setLimit('all');
+        refetch();
+        return;
+    };
 
     if (isError) {
         alert(defaultAlert, false);
@@ -43,7 +66,9 @@ export const BlogsPage = () => {
                 Кулинарные блоги
             </Text>
             {!!favoriteBlogs?.length && <FavoriteBlogs blogs={favoriteBlogs} />}
-            {!!otherBlogs?.length && <OtherBlogs blogs={otherBlogs} />}
+            {!!otherBlogs?.length && (
+                <OtherBlogs limit={limit} onChangeLimit={onChangeLimit} blogs={otherBlogs} />
+            )}
             <NewRecipes />
         </Flex>
     );

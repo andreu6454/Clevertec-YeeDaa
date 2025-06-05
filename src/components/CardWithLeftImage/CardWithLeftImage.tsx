@@ -13,7 +13,7 @@ import { Recipe } from '~/shared/types/recipeTypes';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppSelector } from '~/store/hooks';
-import { searchInputSelector } from '~/store/recipesListPage-slice';
+import { searchInputSelector } from '~/store/slices/recipesListPage-slice';
 
 import BookmarkIcon from '../../assets/svg/bookmark.svg';
 

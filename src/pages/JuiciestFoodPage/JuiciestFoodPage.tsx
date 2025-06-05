@@ -4,8 +4,8 @@ import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpin
 import { useGetRecipesQuery } from '~/query/services/recipes';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
 import { Recipe } from '~/shared/types/recipeTypes';
-import { setAppError } from '~/store/app-slice';
 import { useAppDispatch } from '~/store/hooks';
+import { setAppError } from '~/store/slices/app-slice';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
 export const JuiciestFoodPage = memo(() => {

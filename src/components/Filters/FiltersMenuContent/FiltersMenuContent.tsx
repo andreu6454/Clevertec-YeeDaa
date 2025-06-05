@@ -11,8 +11,8 @@ import { SideDishFilter } from '~/components/Filters/FiltersMenuContent/SideDish
 import { useLazyGetRecipesWithParamsQuery } from '~/query/services/recipes';
 import { useGetQueryParams } from '~/shared/hooks/useGetQueryParams';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-import { closeFilters } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { closeFilters } from '~/store/slices/app-slice';
 import {
     allergensSelector,
     categoryIdsSelector,
@@ -20,7 +20,7 @@ import {
     setClearFilters,
     setCurrentPageCategories,
     sideDishFiltersSelector,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 
 import CloseIcon from '../../../assets/svg/close.svg';
 

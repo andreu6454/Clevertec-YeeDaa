@@ -3,8 +3,8 @@ import { AlertTitle, CloseButton, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-import { appErrorSelector, setAppError } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { appErrorSelector, setAppError } from '~/store/slices/app-slice';
 
 import AlertIcon from '../../assets/svg/AlertIcon.svg';
 

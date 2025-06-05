@@ -14,7 +14,7 @@ import {
     searchAllergenFilterOnSelector,
     setAllergens,
     setIsSearchAllergenFilterOn,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 
 export const SearchAllergens = memo(() => {
     const dispatch = useAppDispatch();

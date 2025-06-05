@@ -9,6 +9,7 @@ import {
     BloggersResponse,
     bloggerSubscriptionParams,
 } from '~/query/types/types';
+import { setPageTitle } from '~/store/slices/breadcrumbs-slice';
 
 export const bloggersApi = apiSlice
     .enhanceEndpoints({
@@ -45,6 +46,20 @@ export const bloggersApi = apiSlice
                     apiGroupName: ApiGroupNames.BLOGGERS,
                     name: EndpointNames.GET_BLOGGER_BY_ID,
                 }),
+                async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                    try {
+                        const { data } = await queryFulfilled;
+                        const userFullName = `${data.bloggerInfo.firstName} ${data.bloggerInfo.lastName}`;
+                        const userLogin = `(@${data.bloggerInfo.login})`;
+                        const title = {
+                            _id: data.bloggerInfo._id,
+                            title: `${userFullName} ${userLogin}`,
+                        };
+                        dispatch(setPageTitle(title));
+                    } catch {
+                        console.log('Response error');
+                    }
+                },
                 providesTags: [Tags.BLOGGERS],
             }),
         }),

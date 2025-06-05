@@ -5,8 +5,9 @@ import { Link, useLocation } from 'react-router';
 
 import { CategoryResponse } from '~/query/types/types';
 import { APP_PATHS } from '~/shared/constants/pathes';
-import { closeBurgerMenu, recipePageTitleSelector } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { closeBurgerMenu } from '~/store/slices/app-slice';
+import { pageTitleSelector } from '~/store/slices/breadcrumbs-slice';
 
 interface SmartBreadcrumbsProps {
     pathNames: CategoryResponse;
@@ -21,7 +22,7 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
             .filter(Boolean)
             .filter((path) => path !== 'edit-recipe');
         const dispatch = useAppDispatch();
-        const pageTitle = useAppSelector(recipePageTitleSelector);
+        const pageTitle = useAppSelector(pageTitleSelector);
 
         const closeMenuHandler = () => {
             dispatch(closeBurgerMenu());
@@ -36,7 +37,7 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
 
             if (pageTitle && pageTitle._id === path) {
                 displayName = pageTitle.title;
-            } // для названий рецептов
+            }
 
             if (path === 'the-juiciest') {
                 displayName = 'Самое сочное';

@@ -5,8 +5,8 @@ import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpin
 import { useRefreshTokenQuery } from '~/query/services/auth';
 import { jwtDecodedType } from '~/query/types/types';
 import { APP_PATHS } from '~/shared/constants/pathes';
-import { setUserId, userIdSelector } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { setUserId, userIdSelector } from '~/store/slices/app-slice';
 
 export const WithAuthValidation = () => {
     const userId = useAppSelector(userIdSelector);

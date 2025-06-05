@@ -1,4 +1,4 @@
-import { Flex, Image } from '@chakra-ui/react';
+import { Button, Flex, Image } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import ArrowRightIcon from '~/assets/svg/BsArrowRight.svg';
@@ -7,15 +7,16 @@ import { useToggleSubscriptionMutation } from '~/query/services/bloggers';
 import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { BloggerType } from '~/shared/types/bloggersTypes';
-import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
-import { userIdSelector } from '~/store/app-slice';
 import { useAppSelector } from '~/store/hooks';
+import { userIdSelector } from '~/store/slices/app-slice';
 
 type OtherBlogsProps = {
     blogs: BloggerType[];
+    onChangeLimit: () => void;
+    limit: string;
 };
 
-export const OtherBlogs = ({ blogs }: OtherBlogsProps) => {
+export const OtherBlogs = ({ blogs, onChangeLimit, limit }: OtherBlogsProps) => {
     const alert = useAlertToast();
 
     const userId = useAppSelector(userIdSelector);
@@ -29,7 +30,6 @@ export const OtherBlogs = ({ blogs }: OtherBlogsProps) => {
             toggleSubscribe({ bloggerId: el._id, userId: userId });
         };
 
-        console.log(el);
         return (
             <CardWithAvatar
                 name={`${el.firstName} ${el.lastName}`}
@@ -63,12 +63,18 @@ export const OtherBlogs = ({ blogs }: OtherBlogsProps) => {
                 {blogsForRender}
             </Flex>
 
-            <Flex gap='8px' alignItems='center'>
-                <Typography Size={TypographySizes.md} fontWeight='600'>
-                    Все авторы
-                </Typography>
-                <Image src={ArrowRightIcon} />
-            </Flex>
+            <Button
+                onClick={onChangeLimit}
+                leftIcon={
+                    limit === 'all' ? (
+                        <Image transform='rotate(180deg)' src={ArrowRightIcon} />
+                    ) : undefined
+                }
+                rightIcon={limit === 'all' ? undefined : <Image src={ArrowRightIcon} />}
+                variant='ghost'
+            >
+                {limit === 'all' ? 'Свернуть' : 'Все авторы'}
+            </Button>
         </Flex>
     );
 };

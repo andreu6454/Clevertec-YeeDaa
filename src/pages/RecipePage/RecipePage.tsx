@@ -10,9 +10,9 @@ import { RecipeTitle } from '~/pages/RecipePage/RecipeTitle/RecipeTitle';
 import { useGetRecipeByIdQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
-import { setAppError } from '~/store/app-slice';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { setAppError } from '~/store/slices/app-slice';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 import { NewRecipes } from '~/widgets/NewRecipes/NewRecipes';
 
 const paddings = {

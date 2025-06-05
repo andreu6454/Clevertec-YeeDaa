@@ -1,8 +1,8 @@
 import { Avatar, Badge, Flex, Image, Text } from '@chakra-ui/react';
 
 import { getImageUrl } from '~/shared/services/getImageUrl';
-import { categoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
+import { categoriesSelector } from '~/store/slices/categories-slice';
 
 interface DishTypeBadgeProps {
     type: 'dishType' | 'recommendation';

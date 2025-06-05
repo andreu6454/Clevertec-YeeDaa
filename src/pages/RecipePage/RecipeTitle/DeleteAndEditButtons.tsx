@@ -10,8 +10,8 @@ import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 
 type DeleteAndEditButtonsProps = {
     recipeId: string;

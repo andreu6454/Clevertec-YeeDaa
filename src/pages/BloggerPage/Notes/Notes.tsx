@@ -1,21 +1,32 @@
-import { Flex, HStack, Text, VStack } from '@chakra-ui/react';
+import { Button, Flex, HStack, Text, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
 
-import { NoteItem } from '~/pages/BloggerPage/Notes/NoteItem';
-import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { CardNote } from '~/components/CardNote/CardNote';
 import { BloggerNoteType } from '~/shared/types/bloggersTypes';
-import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 type NoteProps = {
     notes: BloggerNoteType[] | undefined;
 };
 
 export const Notes = ({ notes }: NoteProps) => {
-    const { isDesktopLaptop } = useScreenSize();
+    const [isCollapsed, setIsCollapsed] = useState(true);
+    const [notesData, setNotesData] = useState(notes);
 
-    if (!notes) return null;
+    if (!notes || !notesData) return null;
 
-    const notesForRender = notes.map((el, index) => (
-        <NoteItem key={el.date + index} text={el.text} date={el.date} />
+    const onClickHandler = () => {
+        if (isCollapsed) {
+            setNotesData(notes);
+            setIsCollapsed(false);
+            return;
+        }
+        setNotesData(notes.slice(0, 3));
+        setIsCollapsed(true);
+        return;
+    };
+
+    const notesForRender = notesData.map((el, index) => (
+        <CardNote key={el.date + index} text={el.text} date={el.date} />
     ));
 
     return (
@@ -49,18 +60,18 @@ export const Notes = ({ notes }: NoteProps) => {
                 width='100%'
                 justifyContent='space-between'
                 gap={{ base: '12px', md: '' }}
+                flexWrap='wrap'
             >
                 {notesForRender}
             </Flex>
 
-            <Flex width='100%' justifyContent='center'>
-                <Typography
-                    Size={isDesktopLaptop ? TypographySizes.sm : TypographySizes.xs}
-                    fontWeight={600}
-                >
-                    Показать больше
-                </Typography>
-            </Flex>
+            {notes.length > 3 && (
+                <Flex width='100%' justifyContent='center'>
+                    <Button onClick={onClickHandler} variant='ghost'>
+                        {isCollapsed ? 'Показать больше' : 'Свернуть'}
+                    </Button>
+                </Flex>
+            )}
         </VStack>
     );
 };

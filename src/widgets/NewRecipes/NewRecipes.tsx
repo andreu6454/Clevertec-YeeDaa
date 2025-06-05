@@ -10,9 +10,9 @@ import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { Carousel } from '~/shared/ui/Carousel/Carousel';
 import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
-import { setAppError } from '~/store/app-slice';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { setAppError } from '~/store/slices/app-slice';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 
 const width = {
     Desktop: 1360,

@@ -20,6 +20,7 @@ interface CardWithAvatarProps {
     isFavorite?: boolean;
     newRecipesCount?: number;
     onSubscribeHandler?: () => void;
+    onCardClick?: () => void;
 }
 
 export const CardWithAvatar = memo((props: CardWithAvatarProps) => {
@@ -35,6 +36,7 @@ export const CardWithAvatar = memo((props: CardWithAvatarProps) => {
         onSubscribeHandler,
         bloggerId,
         isLoading,
+        onCardClick,
     } = props;
     const { isDesktopLaptop } = useScreenSize();
 
@@ -66,6 +68,8 @@ export const CardWithAvatar = memo((props: CardWithAvatarProps) => {
             flexShrink={0}
             width={cardWidth}
             height={cardHeight}
+            onClick={onCardClick}
+            cursor='pointer'
         >
             <Flex
                 width='100%'

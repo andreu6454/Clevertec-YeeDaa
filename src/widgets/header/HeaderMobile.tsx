@@ -6,8 +6,8 @@ import LogoLarge from '~/assets/svg/LogoLarge.svg';
 import LogoSmall from '~/assets/svg/LogoSmall.svg';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
-import { closeBurgerMenu, isBurgerOpenSelector, openBurgerMenu } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { closeBurgerMenu, isBurgerOpenSelector, openBurgerMenu } from '~/store/slices/app-slice';
 import { ReactionsBar } from '~/widgets/ReactionsBar/ReactionsBar';
 
 export const HeaderMobile = () => {

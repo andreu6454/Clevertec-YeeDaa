@@ -15,7 +15,7 @@ import {
     SignUpParams,
     VerifyOtpParams,
 } from '~/query/types/types';
-import { setAccessToken, setUserId } from '~/store/app-slice';
+import { setAccessToken, setUserId } from '~/store/slices/app-slice';
 
 export const authApi = apiSlice
     .enhanceEndpoints({

@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 
 import { useRouteSegments } from '~/shared/hooks/useRouteSegments';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 import {
     setClearFilters,
     setCurrentPageCategory,
     setCurrentPageSubCategory,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 
 export const ScrollToTop = () => {
     const { pathname } = useLocation();

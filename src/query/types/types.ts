@@ -105,7 +105,7 @@ export type BloggerResponse = {
     bloggerInfo: BloggerInfoType;
     isFavorite: boolean;
     totalBookmarks: number;
-    totalSubscriptions: number;
+    totalSubscribers: number;
 };
 
 export type bloggerSubscriptionParams = { bloggerId: string; userId: string };

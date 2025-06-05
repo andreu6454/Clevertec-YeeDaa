@@ -10,10 +10,6 @@ const initialState = {
     emailVerified: null as boolean | null,
     token: '',
     userId: '',
-    pageTitle: {
-        _id: '',
-        title: '',
-    },
 };
 export const appSlice = createSlice({
     name: 'app',
@@ -43,12 +39,7 @@ export const appSlice = createSlice({
         closeFilters(state: AppState) {
             state.isFiltersOpen = false;
         },
-        setRecipePageTitle(
-            state: AppState,
-            { payload: pageTitle }: PayloadAction<{ _id: string; title: string }>,
-        ) {
-            state.pageTitle = pageTitle;
-        },
+
         setAccessToken(state: AppState, { payload: token }: PayloadAction<string>) {
             state.token = token;
         },
@@ -59,7 +50,7 @@ export const appSlice = createSlice({
         isBurgerOpenSelector: (state) => state.isBurgerOpen,
         userIdSelector: (state) => state.userId,
         isFiltersOpenSelector: (state) => state.isFiltersOpen,
-        recipePageTitleSelector: (state) => state.pageTitle,
+
         emailVerifiedSelector: (state) => state.emailVerified,
     },
 });
@@ -74,7 +65,6 @@ export const {
     openFilters,
     closeFilters,
     setAccessToken,
-    setRecipePageTitle,
 } = appSlice.actions;
 
 export const {
@@ -83,7 +73,6 @@ export const {
     appLoaderSelector,
     userIdSelector,
     isFiltersOpenSelector,
-    recipePageTitleSelector,
     emailVerifiedSelector,
 } = appSlice.selectors;
 

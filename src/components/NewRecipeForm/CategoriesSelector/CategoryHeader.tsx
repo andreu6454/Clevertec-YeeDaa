@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Tags } from '~/shared/ui/Tags/Tags';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
-import { subCategoriesSelector } from '~/store/categories-slice';
+import { subCategoriesSelector } from '~/store/slices/categories-slice';
 
 type CategoryHeaderProps = {
     categoriesIds: string[];

@@ -2,7 +2,7 @@ import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
 import { memo } from 'react';
 
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { allergensSelector, setAllergens } from '~/store/recipesListPage-slice';
+import { allergensSelector, setAllergens } from '~/store/slices/recipesListPage-slice';
 
 export const ChosenAllergens = memo(() => {
     const allergens = useAppSelector(allergensSelector);

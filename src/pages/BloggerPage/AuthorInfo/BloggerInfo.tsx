@@ -54,7 +54,7 @@ export const BloggerInfo = ({ bloggerData, bloggerId, userId }: AuthorInfoProps)
                             <ReactionCount
                                 size='small'
                                 variant='people'
-                                count={bloggerData.totalSubscriptions || 0}
+                                count={bloggerData.totalSubscribers || 0}
                             />
                         </Flex>
                     </HStack>

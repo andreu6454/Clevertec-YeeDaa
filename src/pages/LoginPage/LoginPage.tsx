@@ -16,9 +16,9 @@ import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { AuthLayout } from '~/shared/layouts/AuthLayout/AuthLayout';
 import { signInSchema } from '~/shared/types/validationSchemas/loginSchema';
-import { emailVerifiedSelector } from '~/store/app-slice';
-import { setUserId } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { emailVerifiedSelector } from '~/store/slices/app-slice';
+import { setUserId } from '~/store/slices/app-slice';
 
 export type LoginFormDataType = {
     login: string;

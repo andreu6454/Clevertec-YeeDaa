@@ -8,8 +8,8 @@ import { useGetBloggerByIdQuery } from '~/query/services/bloggers';
 import { useGetUserRecipesByIdQuery } from '~/query/services/recipes';
 import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
-import { userIdSelector } from '~/store/app-slice';
 import { useAppSelector } from '~/store/hooks';
+import { userIdSelector } from '~/store/slices/app-slice';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
 export const BloggerPage = () => {

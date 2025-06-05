@@ -5,7 +5,7 @@ import { meatFilters } from '~/shared/constants/recipeFilters';
 import { CustomCheckbox } from '~/shared/ui/Checkbox/Checkbox';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { meatFiltersSelector, setMeatFilters } from '~/store/recipesListPage-slice';
+import { meatFiltersSelector, setMeatFilters } from '~/store/slices/recipesListPage-slice';
 
 export const MeatFilter = memo(() => {
     const dispatch = useAppDispatch();

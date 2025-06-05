@@ -11,7 +11,7 @@ import {
     searchErrorSelector,
     searchInputSelector,
     setSearchInputValue,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 
 interface SearchProps {
     setFocus: () => void;

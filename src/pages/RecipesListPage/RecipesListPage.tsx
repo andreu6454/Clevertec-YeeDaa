@@ -10,14 +10,14 @@ import { useGetQueryParams } from '~/shared/hooks/useGetQueryParams';
 import { useRouteSegments } from '~/shared/hooks/useRouteSegments';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
-import { setAppError } from '~/store/app-slice';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { setAppError } from '~/store/slices/app-slice';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 import {
     inputLoadingSelector,
     recipesDataSelector,
     subCategoriesIdsSelector,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
 const RecipesListPage = memo(() => {

@@ -9,15 +9,15 @@ import { SearchLoader } from '~/components/SearchBlock/SearchLoader/SearchLoader
 import { SearchEmptyTitle } from '~/components/SearchBlock/SearchTitle/SearchEmptyTitle';
 import { SearchTitle } from '~/components/SearchBlock/SearchTitle/SearchTitle';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-import { openFilters } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { openFilters } from '~/store/slices/app-slice';
 import {
     allergensSelector,
     inputLoadingSelector,
     resultEmptySelector,
     setClearFilters,
     setCurrentPageCategories,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 
 const Sizes = {
     Desktop: {

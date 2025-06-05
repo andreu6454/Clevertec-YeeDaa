@@ -6,8 +6,8 @@ import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { Recipe } from '~/shared/types/recipeTypes';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 
 interface RecipesContainerProps {
     data: Recipe[];

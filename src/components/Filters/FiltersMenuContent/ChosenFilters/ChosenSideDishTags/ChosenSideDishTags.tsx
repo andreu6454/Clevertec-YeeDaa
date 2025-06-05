@@ -3,7 +3,7 @@ import { memo } from 'react';
 
 import { sideDishFilters } from '~/shared/constants/recipeFilters';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { setSideDishFilters, sideDishFiltersSelector } from '~/store/recipesListPage-slice';
+import { setSideDishFilters, sideDishFiltersSelector } from '~/store/slices/recipesListPage-slice';
 
 export const ChosenSideDishTags = memo(() => {
     const sideDishFiltersData = useAppSelector(sideDishFiltersSelector);

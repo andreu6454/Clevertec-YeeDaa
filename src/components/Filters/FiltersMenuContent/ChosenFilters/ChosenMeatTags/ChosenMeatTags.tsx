@@ -3,7 +3,7 @@ import { memo } from 'react';
 
 import { meatFilters } from '~/shared/constants/recipeFilters';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { meatFiltersSelector, setMeatFilters } from '~/store/recipesListPage-slice';
+import { meatFiltersSelector, setMeatFilters } from '~/store/slices/recipesListPage-slice';
 
 export const ChosenMeatTags = memo(() => {
     const meatFiltersData = useAppSelector(meatFiltersSelector);

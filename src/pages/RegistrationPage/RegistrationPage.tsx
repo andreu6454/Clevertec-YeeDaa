@@ -22,8 +22,8 @@ import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { AuthLayout } from '~/shared/layouts/AuthLayout/AuthLayout';
 import { userDataSchema, userPasswordSchema } from '~/shared/types/validationSchemas/signUpSchema';
 import { getValidatedCount } from '~/shared/utils/getValidatedCount';
-import { emailVerifiedSelector } from '~/store/app-slice';
 import { useAppSelector } from '~/store/hooks';
+import { emailVerifiedSelector } from '~/store/slices/app-slice';
 
 export type RegisterFormDataType = {
     firstName: string;

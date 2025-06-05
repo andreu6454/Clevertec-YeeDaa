@@ -1,14 +1,16 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { memo } from 'react';
+import { useNavigate } from 'react-router';
 
 import { CardWithAvatar } from '~/components/CardWithAvatar/CardWithAvatar';
 import { AllBlogsLink } from '~/pages/MainPage/CulinaryBlogs/AllBlogsLink';
 import { useGetBloggersQuery } from '~/query/services/bloggers';
 import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
+import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-import { userIdSelector } from '~/store/app-slice';
 import { useAppSelector } from '~/store/hooks';
+import { userIdSelector } from '~/store/slices/app-slice';
 
 export const CulinaryBlogs = memo(() => {
     const { isDesktopLaptop } = useScreenSize();
@@ -18,15 +20,24 @@ export const CulinaryBlogs = memo(() => {
         limit: '3',
         currentUserId: userId,
     });
-    const alert = useAlertToast();
 
-    const bloggersForRender = BloggersData?.others?.map((el) => (
-        <CardWithAvatar
-            name={`${el.firstName} ${el.lastName}`}
-            username={`@${el.login}`}
-            text={el.notes[0]?.text}
-        />
-    ));
+    const alert = useAlertToast();
+    const navigate = useNavigate();
+
+    const bloggersForRender = BloggersData?.others?.map((el) => {
+        const onClickHandler = () => {
+            navigate(`${APP_PATHS.blogs}/${el._id}`);
+        };
+
+        return (
+            <CardWithAvatar
+                name={`${el.firstName} ${el.lastName}`}
+                username={`@${el.login}`}
+                text={el.notes[0]?.text}
+                onCardClick={onClickHandler}
+            />
+        );
+    });
 
     if (isError) {
         alert(defaultAlert, false);

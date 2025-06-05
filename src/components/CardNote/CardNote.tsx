@@ -7,7 +7,7 @@ type NoteItemProps = {
     text: string;
 };
 
-export const NoteItem = ({ date, text }: NoteItemProps) => {
+export const CardNote = ({ date, text }: NoteItemProps) => {
     const dateObj = new Date(date);
 
     const day = dateObj.getDate();
@@ -32,9 +32,10 @@ export const NoteItem = ({ date, text }: NoteItemProps) => {
     return (
         <Card
             padding='24px 24px 20px 24px'
-            width={{ base: '296px', md: '224px', xl: '266px', '2xl': '426px' }}
             height={{ base: '204px', md: '244px', xl: '204px', '2xl': '164px' }}
             gap='16px'
+            width={{ base: '100%', md: 'calc(33.333% - 12px)' }}
+            flexGrow={1}
         >
             <Typography Size={TypographySizes.sm} color='#2db100'>
                 {`${day} ${months[monthIndex]} ${hours}:${minutes}`}

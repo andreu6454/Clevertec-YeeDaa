@@ -17,8 +17,8 @@ import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { Recipe } from '~/shared/types/recipeTypes';
 import { replaceEmptyStringsWithNull } from '~/shared/utils/replaceEmptyStringsWithNull';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 
 export type onSubmitArgsType = {
     data: NewRecipeDataType;

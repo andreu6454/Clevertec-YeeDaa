@@ -4,8 +4,8 @@ import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
 import { CategoryResponse } from '~/query/types/types';
-import { setAppError } from '~/store/app-slice';
-import { setCategories } from '~/store/categories-slice';
+import { setAppError } from '~/store/slices/app-slice';
+import { setCategories } from '~/store/slices/categories-slice';
 
 export const categoriesApi = apiSlice
     .enhanceEndpoints({
