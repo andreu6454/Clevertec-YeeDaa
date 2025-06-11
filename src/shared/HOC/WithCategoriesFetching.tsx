@@ -6,8 +6,17 @@ import { useAppDispatch } from '~/store/hooks';
 import { setAppError } from '~/store/slices/app-slice';
 
 export const WithCategoriesFetching = () => {
-    const { isLoading, isError } = useGetCategoriesQuery();
+    // const categories = useAppSelector(allCategoriesSelector);
     const dispatch = useAppDispatch();
+
+    // const categoriesLocalStorage = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.categories) || 'null');
+
+    const { isLoading, isError } = useGetCategoriesQuery();
+
+    // if (categoriesLocalStorage ) {
+    //     dispatch(setCategories(categories));
+    //     return <Outlet/>;
+    // }
 
     if (isLoading) {
         return <FullScreenSpinner />;

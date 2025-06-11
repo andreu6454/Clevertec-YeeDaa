@@ -5,13 +5,14 @@ import ArrowRightIcon from '~/assets/svg/BsArrowRight.svg';
 import { CardWithAvatar } from '~/components/CardWithAvatar/CardWithAvatar';
 import { useToggleSubscriptionMutation } from '~/query/services/bloggers';
 import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { BloggerType } from '~/shared/types/bloggersTypes';
 import { useAppSelector } from '~/store/hooks';
 import { userIdSelector } from '~/store/slices/app-slice';
 
 type OtherBlogsProps = {
-    blogs: BloggerType[];
+    blogs: BloggerType[] | undefined;
     onChangeLimit: () => void;
     limit: string;
 };
@@ -52,14 +53,21 @@ export const OtherBlogs = ({ blogs, onChangeLimit, limit }: OtherBlogsProps) => 
     }
     return (
         <Flex
+            data-test-id={DATA_TEST_IDS.blogsOtherBox}
             backgroundColor='rgba(0, 0, 0, 0.04)'
             borderRadius='16px'
             padding={{ base: '16px', xl: '24px' }}
             flexDirection='column'
             alignItems='center'
             gap='24px'
+            width='100%'
         >
-            <Flex width='100%' flexWrap='wrap' gap='16px'>
+            <Flex
+                data-test-id={DATA_TEST_IDS.blogsOtherGrid}
+                width='100%'
+                flexWrap='wrap'
+                gap='16px'
+            >
                 {blogsForRender}
             </Flex>
 
@@ -73,7 +81,9 @@ export const OtherBlogs = ({ blogs, onChangeLimit, limit }: OtherBlogsProps) => 
                 rightIcon={limit === 'all' ? undefined : <Image src={ArrowRightIcon} />}
                 variant='ghost'
             >
-                {limit === 'all' ? 'Свернуть' : 'Все авторы'}
+                <span data-test-id={DATA_TEST_IDS.blogsOtherButton}>
+                    {limit === 'all' ? 'Свернуть' : 'Все авторы'}
+                </span>
             </Button>
         </Flex>
     );

@@ -2,10 +2,11 @@ import { Flex, Text } from '@chakra-ui/react';
 import { memo } from 'react';
 import { useNavigate } from 'react-router';
 
+import { AllBlogsLink } from '~/components/AllBlogsLink/AllBlogsLink';
 import { CardWithAvatar } from '~/components/CardWithAvatar/CardWithAvatar';
-import { AllBlogsLink } from '~/pages/MainPage/CulinaryBlogs/AllBlogsLink';
 import { useGetBloggersQuery } from '~/query/services/bloggers';
 import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
@@ -17,14 +18,14 @@ export const CulinaryBlogs = memo(() => {
 
     const userId = useAppSelector(userIdSelector);
     const { data: BloggersData, isError } = useGetBloggersQuery({
-        limit: '3',
         currentUserId: userId,
+        limit: '',
     });
 
     const alert = useAlertToast();
     const navigate = useNavigate();
 
-    const bloggersForRender = BloggersData?.others?.map((el) => {
+    const bloggersForRender = BloggersData?.others?.slice(0, 3).map((el) => {
         const onClickHandler = () => {
             navigate(`${APP_PATHS.blogs}/${el._id}`);
         };
@@ -46,6 +47,7 @@ export const CulinaryBlogs = memo(() => {
     if (!BloggersData) return null;
     return (
         <Flex
+            data-test-id={DATA_TEST_IDS.mainPageBlogsBox}
             borderRadius='16px'
             direction='column'
             gap='16px'
@@ -57,9 +59,10 @@ export const CulinaryBlogs = memo(() => {
                 <Text fontWeight='500' fontSize='30px' lineHeight='120%'>
                     Кулинарные блоги
                 </Text>
-                {isDesktopLaptop && <AllBlogsLink />}
+                {isDesktopLaptop && <AllBlogsLink dataTestId={DATA_TEST_IDS.mainPageBlogsButton} />}
             </Flex>
             <Flex
+                data-test-id={DATA_TEST_IDS.mainPageBlogsGrid}
                 alignItems='center'
                 justifyContent='center'
                 direction={{ base: 'column', md: 'row' }}
@@ -70,7 +73,7 @@ export const CulinaryBlogs = memo(() => {
             </Flex>
             {!isDesktopLaptop && (
                 <Flex width='100%' justifyContent='center'>
-                    <AllBlogsLink />
+                    <AllBlogsLink dataTestId={DATA_TEST_IDS.mainPageBlogsButton} />
                 </Flex>
             )}
         </Flex>

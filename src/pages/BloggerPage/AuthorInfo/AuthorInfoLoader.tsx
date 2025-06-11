@@ -1,7 +1,10 @@
 import { Flex, Spinner } from '@chakra-ui/react';
 
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+
 export const AuthorInfoLoader = () => (
     <Flex
+        data-test-id={DATA_TEST_IDS.mobileLoader}
         alignItems='center'
         justifyContent='center'
         width={{ base: '150px' }}

@@ -4,6 +4,7 @@ import { FC, memo, ReactNode } from 'react';
 import { Link, useLocation } from 'react-router';
 
 import { CategoryResponse } from '~/query/types/types';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { closeBurgerMenu } from '~/store/slices/app-slice';
@@ -59,8 +60,15 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
                 return null;
             }
 
+            const dataTestId =
+                path === 'blogs'
+                    ? DATA_TEST_IDS.bloggerUserBreadcrumbName
+                    : pageTitle
+                      ? DATA_TEST_IDS.bloggerUserBreadcrumbSection
+                      : '';
+
             return (
-                <Box display='flex' alignItems='center' key={displayName}>
+                <Box data-test-id={dataTestId} display='flex' alignItems='center' key={displayName}>
                     {isLast ? (
                         <Text color='black'>{displayName}</Text>
                     ) : (

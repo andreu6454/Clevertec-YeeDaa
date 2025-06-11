@@ -19,9 +19,9 @@ export const bloggersApi = apiSlice
         endpoints: (builder) => ({
             getBloggers: builder.query<BloggersResponse, BloggersParams>({
                 query: (params) => ({
-                    url: ApiEndpoints.BLOGGERS,
+                    url: `${ApiEndpoints.BLOGGERS}?currentUserId=${params.currentUserId}&limit=${params.limit}`,
                     method: METHODS.get,
-                    params: params,
+                    // params: params,
                     apiGroupName: ApiGroupNames.BLOGGERS,
                     name: EndpointNames.GET_BLOGGERS,
                 }),
@@ -40,9 +40,9 @@ export const bloggersApi = apiSlice
             }),
             getBloggerById: builder.query<BloggerResponse, bloggerSubscriptionParams>({
                 query: ({ bloggerId, userId }) => ({
-                    url: `${ApiEndpoints.BLOGGERS}/${bloggerId}`,
+                    url: `${ApiEndpoints.BLOGGERS}/${bloggerId}?currentUserId=${userId}`,
                     method: METHODS.get,
-                    params: { bloggerId: bloggerId, currentUserId: userId },
+                    // params: { bloggerId: bloggerId, currentUserId: userId },
                     apiGroupName: ApiGroupNames.BLOGGERS,
                     name: EndpointNames.GET_BLOGGER_BY_ID,
                 }),

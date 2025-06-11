@@ -1,12 +1,16 @@
 import { Flex, Spinner } from '@chakra-ui/react';
 
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+
 type CardWithAvatarLoaderProps = {
     isLoading?: boolean;
-    width: {
-        base: string;
-        xl: string;
-        '2xl'?: string;
-    };
+    width:
+        | {
+              base: string;
+              xl: string;
+              '2xl'?: string;
+          }
+        | string;
     height: {
         base: string;
         xl: string;
@@ -18,6 +22,7 @@ export const CardWithAvatarLoader = ({ isLoading, width, height }: CardWithAvata
     if (!isLoading) return null;
     return (
         <Flex
+            data-test-id={DATA_TEST_IDS.mobileLoader}
             alignItems='center'
             justifyContent='center'
             width={width}

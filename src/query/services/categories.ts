@@ -4,6 +4,7 @@ import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
 import { CategoryResponse } from '~/query/types/types';
+import { LOCAL_STORAGE_KEYS } from '~/shared/constants/localStorage';
 import { setAppError } from '~/store/slices/app-slice';
 import { setCategories } from '~/store/slices/categories-slice';
 
@@ -24,6 +25,7 @@ export const categoriesApi = apiSlice
                     try {
                         const { data } = await queryFulfilled;
                         dispatch(setCategories(data));
+                        localStorage.setItem(LOCAL_STORAGE_KEYS.categories, JSON.stringify(data));
                     } catch {
                         dispatch(setAppError('categoriesError'));
                         console.log('Categories response error');
