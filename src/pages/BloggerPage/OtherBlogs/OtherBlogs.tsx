@@ -17,9 +17,9 @@ export const OtherBlogs = ({ blogs }: OtherBlogsProps) => {
 
     const blogsForMap = blogs
         .slice(0, 3)
-        .map((blog) => (
+        .map((blog, index) => (
             <CardWithAvatar
-                key={blog._id + 'otherBlogs'}
+                key={blog._id + 'otherBlogs' + index}
                 name={`${blog.firstName} ${blog.lastName}`}
                 username={blog.login}
                 text={blog.notes[0]?.text}

@@ -49,21 +49,20 @@ export const CardNote = ({
             flexGrow={1}
             visibility={visibility}
         >
-            <Typography
-                visibility={visibility}
-                data-test-id={DATA_TEST_IDS.notesCardDate}
-                Size={TypographySizes.sm}
-                color='#2db100'
-            >
-                {`${day} ${months[monthIndex]} ${hours}:${minutes}`}
-            </Typography>
-            <Typography
-                visibility={visibility}
-                data-test-id={DATA_TEST_IDS.notesCardText}
-                Size={TypographySizes.sm}
-            >
-                {text}
-            </Typography>
+            {visibility === 'visible' && (
+                <Typography
+                    data-test-id={DATA_TEST_IDS.notesCardDate}
+                    Size={TypographySizes.sm}
+                    color='#2db100'
+                >
+                    {`${day} ${months[monthIndex]} ${hours}:${minutes}`}
+                </Typography>
+            )}
+            {visibility === 'visible' && (
+                <Typography data-test-id={DATA_TEST_IDS.notesCardText} Size={TypographySizes.sm}>
+                    {text}
+                </Typography>
+            )}
         </Card>
     );
 };

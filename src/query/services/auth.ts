@@ -7,7 +7,6 @@ import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
 import {
     AuthSuccessResponse,
-    ErrorResponse,
     ForgotPasswordParams,
     jwtDecodedType,
     LoginParams,
@@ -113,8 +112,9 @@ export const authApi = apiSlice
                         dispatch(setAccessToken(jwtToken));
                         dispatch(setUserId(jwtDecoded.userId));
                     } catch (error) {
-                        const responseError = error as ErrorResponse;
-                        if (responseError.status === 403) {
+                        const responseError = error as { error: { status: number } };
+                        if (responseError.error.status === 403) {
+                            console.log(123);
                             dispatch(setUserId('forbidden403'));
                         }
                         console.log(error);

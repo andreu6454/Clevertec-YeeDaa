@@ -15,7 +15,7 @@ export const WithAuthValidation = () => {
     const dispatch = useAppDispatch();
     const jwtToken = localStorage.getItem(LOCAL_STORAGE_KEYS.jwtToken);
 
-    if (jwtToken) {
+    if (jwtToken && !userId) {
         const jwtDecoded = jwtDecode(jwtToken) as jwtDecodedType;
         dispatch(setUserId(jwtDecoded.userId));
     }

@@ -41,6 +41,8 @@ export const BloggerInfo = ({ bloggerData, bloggerId, userId }: AuthorInfoProps)
                         fontWeight='700'
                         fontSize='48px'
                         lineHeight='100%'
+                        textOverflow='ellipsis'
+                        noOfLines={1}
                     >
                         {bloggerName}
                     </Text>

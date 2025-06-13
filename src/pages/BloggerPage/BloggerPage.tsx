@@ -77,6 +77,8 @@ export const BloggerPage = () => {
         navigate(APP_PATHS.root);
     }
 
+    const isLastPage = recipesData.length >= (RecipesData?.recipes?.length || 0);
+
     if (isLoading || isRecipesDataLoading) return <FullScreenSpinner />;
     if (!RecipesData || !bloggerId) return null;
     return (
@@ -88,7 +90,11 @@ export const BloggerPage = () => {
             gap='40px'
         >
             <BloggerInfo bloggerData={bloggerData} bloggerId={bloggerId} userId={userId} />
-            <RecipesContainer data={recipesData} onClickHandler={onClickHandler} />
+            <RecipesContainer
+                data={recipesData}
+                onClickHandler={onClickHandler}
+                isLastPage={isLastPage}
+            />
             <Notes notes={bloggerData?.bloggerInfo?.notes} />
             <OtherBlogs blogs={OtherBlogsData?.others} />
         </VStack>

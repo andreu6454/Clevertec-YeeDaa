@@ -7,6 +7,7 @@ import { useToggleSubscriptionMutation } from '~/query/services/bloggers';
 import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { BloggerType } from '~/shared/types/bloggersTypes';
 import { useAppSelector } from '~/store/hooks';
 import { userIdSelector } from '~/store/slices/app-slice';
@@ -21,6 +22,7 @@ export const OtherBlogs = ({ blogs, onChangeLimit, limit }: OtherBlogsProps) => 
     const alert = useAlertToast();
 
     const userId = useAppSelector(userIdSelector);
+    const { isMobile } = useScreenSize();
 
     const [currentBlogId, setCurrentBlogId] = useState('');
     const [toggleSubscribe, { isLoading, isError }] = useToggleSubscriptionMutation();
@@ -33,6 +35,7 @@ export const OtherBlogs = ({ blogs, onChangeLimit, limit }: OtherBlogsProps) => 
 
         return (
             <CardWithAvatar
+                key={el._id + 'other_blogs'}
                 name={`${el.firstName} ${el.lastName}`}
                 username={`@${el.login}`}
                 text={el.notes[0]?.text}
@@ -43,6 +46,7 @@ export const OtherBlogs = ({ blogs, onChangeLimit, limit }: OtherBlogsProps) => 
                 isLoading={isLoading && currentBlogId === el._id}
                 onSubscribeHandler={onToggleSubscribe}
                 bloggerId={el._id}
+                isButtonsRow={!isMobile}
             />
         );
     });

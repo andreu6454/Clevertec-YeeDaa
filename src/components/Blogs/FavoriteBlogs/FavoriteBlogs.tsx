@@ -2,6 +2,7 @@ import { Flex, Text } from '@chakra-ui/react';
 
 import { CardWithAvatar } from '~/components/CardWithAvatar/CardWithAvatar';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { BloggerType } from '~/shared/types/bloggersTypes';
 
 type FavoriteBlogsProps = {
@@ -9,8 +10,11 @@ type FavoriteBlogsProps = {
 };
 
 export const FavoriteBlogs = ({ blogs }: FavoriteBlogsProps) => {
+    const { isMobile } = useScreenSize();
+
     const blogsForRender = blogs?.map((el) => (
         <CardWithAvatar
+            key={el._id + 'favorite_blogs'}
             name={`${el.firstName} ${el.lastName}`}
             username={`@${el.login}`}
             text={el.notes[0]?.text}
@@ -20,6 +24,7 @@ export const FavoriteBlogs = ({ blogs }: FavoriteBlogsProps) => {
             bookmarks={el.bookmarksCount}
             newRecipesCount={el.newRecipesCount}
             bloggerId={el._id}
+            isButtonsRow={!isMobile}
         />
     ));
 

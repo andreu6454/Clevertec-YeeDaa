@@ -9,28 +9,29 @@ type NoteProps = {
     notes: BloggerNoteType[] | undefined;
 };
 
-// const collapsedCount = 3;
+const collapsedCount = 3;
 
 export const Notes = ({ notes }: NoteProps) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
-    // const [notesData, setNotesData] = useState(notes);
 
     const onClickHandler = () => {
         if (isCollapsed) {
-            // setNotesData(notes);
             setIsCollapsed(false);
             return;
         }
-        // setNotesData(notes?.slice(0, collapsedCount));
         setIsCollapsed(true);
         return;
     };
 
     const notesForRender = notes?.map((el, index) => (
         <CardNote
-            width={isCollapsed && index > 2 ? '0' : { base: '100%', md: 'calc(33.333% - 12px)' }}
+            width={
+                isCollapsed && index > collapsedCount - 1
+                    ? '0'
+                    : { base: '100%', md: 'calc(33.333% - 12px)' }
+            }
             height={
-                isCollapsed && index > 2
+                isCollapsed && index > collapsedCount - 1
                     ? '0'
                     : { base: '204px', md: '244px', xl: '204px', '2xl': '164px' }
             }
@@ -46,6 +47,7 @@ export const Notes = ({ notes }: NoteProps) => {
             data-test-id={DATA_TEST_IDS.blogNotesBox}
             align='flex-start'
             width='100%'
+            height='max-content'
             borderRadius='16px'
             backgroundColor='rgba(0, 0, 0, 0.04)'
             padding={{ base: '16px', md: '24px 24px 16px 24px' }}
@@ -80,7 +82,7 @@ export const Notes = ({ notes }: NoteProps) => {
                 {notesForRender}
             </Flex>
 
-            {notes?.length && notes?.length > 3 && (
+            {notes?.length && notes?.length > collapsedCount && (
                 <Flex width='100%' justifyContent='center'>
                     <Button
                         data-test-id={DATA_TEST_IDS.bloggerUserNotesButton}
