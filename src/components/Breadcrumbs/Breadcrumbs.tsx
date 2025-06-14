@@ -4,9 +4,11 @@ import { FC, memo, ReactNode } from 'react';
 import { Link, useLocation } from 'react-router';
 
 import { CategoryResponse } from '~/query/types/types';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
-import { closeBurgerMenu, recipePageTitleSelector } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { closeBurgerMenu } from '~/store/slices/app-slice';
+import { pageTitleSelector } from '~/store/slices/breadcrumbs-slice';
 
 interface SmartBreadcrumbsProps {
     pathNames: CategoryResponse;
@@ -21,7 +23,7 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
             .filter(Boolean)
             .filter((path) => path !== 'edit-recipe');
         const dispatch = useAppDispatch();
-        const pageTitle = useAppSelector(recipePageTitleSelector);
+        const pageTitle = useAppSelector(pageTitleSelector);
 
         const closeMenuHandler = () => {
             dispatch(closeBurgerMenu());
@@ -36,7 +38,7 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
 
             if (pageTitle && pageTitle._id === path) {
                 displayName = pageTitle.title;
-            } // для названий рецептов
+            }
 
             if (path === 'the-juiciest') {
                 displayName = 'Самое сочное';
@@ -44,6 +46,10 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
 
             if (path === 'new-recipe') {
                 displayName = 'Новый рецепт';
+            }
+
+            if (path === 'blogs') {
+                displayName = 'Блоги';
             }
 
             if (path === 'not-found') {
@@ -54,8 +60,15 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
                 return null;
             }
 
+            const dataTestId =
+                path === 'blogs'
+                    ? DATA_TEST_IDS.bloggerUserBreadcrumbName
+                    : pageTitle
+                      ? DATA_TEST_IDS.bloggerUserBreadcrumbSection
+                      : '';
+
             return (
-                <Box display='flex' alignItems='center' key={displayName}>
+                <Box data-test-id={dataTestId} display='flex' alignItems='center' key={displayName}>
                     {isLast ? (
                         <Text color='black'>{displayName}</Text>
                     ) : (

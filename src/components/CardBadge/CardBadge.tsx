@@ -1,7 +1,8 @@
 import { Avatar, Badge, Flex, Image, Text } from '@chakra-ui/react';
 
-import { categoriesSelector } from '~/store/categories-slice';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import { useAppSelector } from '~/store/hooks';
+import { categoriesSelector } from '~/store/slices/categories-slice';
 
 interface DishTypeBadgeProps {
     type: 'dishType' | 'recommendation';
@@ -67,12 +68,7 @@ export const CardBadge = (props: DishTypeBadgeProps) => {
             height='24px'
         >
             <Flex height='24px' gap={gap[size]} alignItems='center'>
-                <Image
-                    width='16px'
-                    height='16px'
-                    src={'https://training-api.clevertec.ru' + dishTypes?.icon}
-                    alt=''
-                />
+                <Image width='16px' height='16px' src={getImageUrl(dishTypes?.icon)} alt='' />
                 <Text fontWeight='400' fontSize='14px' lineHeight='143%'>
                     {dishTypes?.title}
                 </Text>

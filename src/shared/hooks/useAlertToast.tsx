@@ -49,8 +49,16 @@ export const useAlertToast = () => {
                     <AlertIcon color='white' />
 
                     <Box>
-                        <AlertTitle>{title}</AlertTitle>
-                        {description && <AlertDescription>{description}</AlertDescription>}
+                        <AlertTitle data-test-id={DATA_TEST_IDS.errorNotificationTitle}>
+                            {title}
+                        </AlertTitle>
+                        {description && (
+                            <AlertDescription
+                                data-test-id={DATA_TEST_IDS.errorNotificationDescription}
+                            >
+                                {description}
+                            </AlertDescription>
+                        )}
                     </Box>
 
                     <CloseButton

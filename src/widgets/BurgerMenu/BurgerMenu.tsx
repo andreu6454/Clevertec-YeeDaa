@@ -4,8 +4,8 @@ import { memo } from 'react';
 import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { useScrollLock } from '~/shared/hooks/useScrollLock';
-import { closeBurgerMenu, isBurgerOpenSelector } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { closeBurgerMenu, isBurgerOpenSelector } from '~/store/slices/app-slice';
 import { BurgerMenuContent } from '~/widgets/BurgerMenu/BurgerMenuContent/BurgerMenuContent';
 
 export const BurgerMenu = memo(() => {

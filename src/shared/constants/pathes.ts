@@ -10,4 +10,6 @@ export const APP_PATHS = {
     signUp: '/register',
     newRecipe: '/new-recipe',
     editRecipe: '/edit-recipe/:category/:subcategory/:recipeId',
+    blogs: '/blogs',
+    bloggerPage: '/blogs/:bloggerId',
 };

@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { Navigate, Outlet, useParams } from 'react-router';
 
 import { APP_PATHS } from '~/shared/constants/pathes';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { setCategoriesFilter, setCurrentPageCategory } from '~/store/recipesListPage-slice';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
+import { setCategoriesFilter, setCurrentPageCategory } from '~/store/slices/recipesListPage-slice';
 
-export const WithCategoryAndAuthValidation = () => {
+export const WithCategoryValidation = () => {
     const dispatch = useAppDispatch();
     const { category, subcategory } = useParams();
 

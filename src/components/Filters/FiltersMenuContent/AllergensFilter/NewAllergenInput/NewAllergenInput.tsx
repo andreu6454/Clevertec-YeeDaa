@@ -8,7 +8,7 @@ import {
     allergenFilterOnSelector,
     allergensSelector,
     setAllergens,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 
 export const NewAllergenInput = () => {
     const [value, setValue] = useState('');

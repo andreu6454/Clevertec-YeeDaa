@@ -13,7 +13,7 @@ import {
     allergensSelector,
     setAllergens,
     setIsAllergenFilterOn,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 
 export const AllergensFilter = memo(() => {
     const dispatch = useAppDispatch();

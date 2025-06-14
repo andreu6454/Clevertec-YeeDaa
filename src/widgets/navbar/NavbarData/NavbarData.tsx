@@ -5,8 +5,8 @@ import { useLocation } from 'react-router';
 
 import LeaveIcon from '~/assets/svg/leaveIcon.svg';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-import { categoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
+import { categoriesSelector } from '~/store/slices/categories-slice';
 import { NavbarItem } from '~/widgets/navbar/NavbarItem/NavbarItem';
 
 export const NavbarData = memo(() => {

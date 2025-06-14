@@ -9,9 +9,9 @@ import { APP_PATHS } from '~/shared/constants/pathes';
 import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
-import { isBurgerOpenSelector, userIdSelector } from '~/store/app-slice';
-import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
+import { isBurgerOpenSelector, userIdSelector } from '~/store/slices/app-slice';
+import { allCategoriesSelector } from '~/store/slices/categories-slice';
 
 import AvatarDesktop from '../../assets/AvatarDesktop.png';
 import LoginIcon from '../../assets/svg/login.svg';

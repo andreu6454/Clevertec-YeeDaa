@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { apiSlice } from '~/query/create-api';
-import categoriesReducer, { categoriesSlice } from '~/store/categories-slice';
-import recipeReducer, { recipeSlice } from '~/store/recipe-slice';
-import recipesListPageReducer, { recipesListPageSlice } from '~/store/recipesListPage-slice';
+import breadcrumbsReducer, { breadcrumbsSlice } from '~/store/slices/breadcrumbs-slice';
+import categoriesReducer, { categoriesSlice } from '~/store/slices/categories-slice';
+import recipeReducer, { recipeSlice } from '~/store/slices/recipe-slice';
+import recipesListPageReducer, { recipesListPageSlice } from '~/store/slices/recipesListPage-slice';
 
-import appReducer, { appSlice } from './app-slice';
+import appReducer, { appSlice } from './slices/app-slice';
 
 const isProduction = false;
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     [apiSlice.reducerPath]: apiSlice.reducer,
     [categoriesSlice.reducerPath]: categoriesReducer,
     [recipeSlice.reducerPath]: recipeReducer,
+    [breadcrumbsSlice.reducerPath]: breadcrumbsReducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;

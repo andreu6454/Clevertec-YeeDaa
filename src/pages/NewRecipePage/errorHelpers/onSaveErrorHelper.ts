@@ -1,7 +1,7 @@
 import { UseToastOptions } from '@chakra-ui/react';
 
 import { ErrorResponse } from '~/query/types/types';
-import { NEW_RECIPE_ALERTS } from '~/shared/constants/newRecipeAlerts';
+import { NEW_RECIPE_ALERTS } from '~/shared/constants/alertStatuses/newRecipeAlerts';
 
 export const onSaveErrorHelper = (
     error: ErrorResponse,

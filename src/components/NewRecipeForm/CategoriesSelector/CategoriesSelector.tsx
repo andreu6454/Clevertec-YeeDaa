@@ -9,7 +9,7 @@ import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTitle';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
-import { subCategoriesSelector } from '~/store/categories-slice';
+import { subCategoriesSelector } from '~/store/slices/categories-slice';
 
 import { NewRecipeDataType } from '../NewRecipeForm';
 

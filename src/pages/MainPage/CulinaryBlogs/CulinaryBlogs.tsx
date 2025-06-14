@@ -1,20 +1,53 @@
-import { Flex, Image, Link, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { memo } from 'react';
-import { Link as ReactRouterLink } from 'react-router';
+import { useNavigate } from 'react-router';
 
-import ArrowRightIcon from '~/assets/svg/BsArrowRight.svg';
+import { AllBlogsLink } from '~/components/AllBlogsLink/AllBlogsLink';
 import { CardWithAvatar } from '~/components/CardWithAvatar/CardWithAvatar';
+import { useGetBloggersQuery } from '~/query/services/bloggers';
+import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+import { APP_PATHS } from '~/shared/constants/pathes';
+import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-
-import Avatar1 from '../../../assets/images/elenaAvatar.png';
+import { useAppSelector } from '~/store/hooks';
+import { userIdSelector } from '~/store/slices/app-slice';
 
 export const CulinaryBlogs = memo(() => {
-    const { isMobile, isTablet, screenSize } = useScreenSize();
+    const { isDesktopLaptop } = useScreenSize();
 
-    const direction = isMobile ? 'column' : 'row';
+    const userId = useAppSelector(userIdSelector);
+    const { data: BloggersData, isError } = useGetBloggersQuery({
+        currentUserId: userId,
+        limit: '',
+    });
 
+    const alert = useAlertToast();
+    const navigate = useNavigate();
+
+    const bloggersForRender = BloggersData?.others?.slice(0, 3).map((el) => {
+        const onClickHandler = () => {
+            navigate(`${APP_PATHS.blogs}/${el._id}`);
+        };
+
+        return (
+            <CardWithAvatar
+                name={`${el.firstName} ${el.lastName}`}
+                username={`@${el.login}`}
+                text={el.notes[0]?.text}
+                onCardClick={onClickHandler}
+            />
+        );
+    });
+
+    if (isError) {
+        alert(defaultAlert, false);
+        return null;
+    }
+    if (!BloggersData) return null;
     return (
         <Flex
+            data-test-id={DATA_TEST_IDS.mainPageBlogsBox}
             borderRadius='16px'
             direction='column'
             gap='16px'
@@ -26,57 +59,21 @@ export const CulinaryBlogs = memo(() => {
                 <Text fontWeight='500' fontSize='30px' lineHeight='120%'>
                     Кулинарные блоги
                 </Text>
-
-                {!(isMobile || isTablet) && (
-                    <Link padding='8px 16px' as={ReactRouterLink} to='/blogs'>
-                        <Flex gap='8px' alignItems='center'>
-                            <Text fontWeight='600' fontSize='16px' lineHeight='150%'>
-                                Все авторы
-                            </Text>
-                            <Image src={ArrowRightIcon} />
-                        </Flex>
-                    </Link>
-                )}
+                {isDesktopLaptop && <AllBlogsLink dataTestId={DATA_TEST_IDS.mainPageBlogsButton} />}
             </Flex>
             <Flex
+                data-test-id={DATA_TEST_IDS.mainPageBlogsGrid}
                 alignItems='center'
                 justifyContent='center'
-                direction={direction}
+                direction={{ base: 'column', md: 'row' }}
                 gap='16px'
                 width='100%'
             >
-                <CardWithAvatar
-                    avatar={Avatar1}
-                    name='Елена Высоцкая'
-                    size={screenSize}
-                    username='@elenapovar'
-                    text='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                />
-                <CardWithAvatar
-                    avatar={Avatar1}
-                    name='Alex Cook'
-                    size={screenSize}
-                    username='@funtasticooking'
-                    text='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                />
-                <CardWithAvatar
-                    avatar={Avatar1}
-                    name='Екатерина Константинопольская'
-                    size={screenSize}
-                    username='@bake_and_pie'
-                    text='Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.'
-                />
+                {bloggersForRender}
             </Flex>
-            {(isMobile || isTablet) && (
+            {!isDesktopLaptop && (
                 <Flex width='100%' justifyContent='center'>
-                    <Link padding='8px 16px' as={ReactRouterLink} to='/blogs'>
-                        <Flex gap='8px' alignItems='center'>
-                            <Text fontWeight='600' fontSize='16px' lineHeight='150%'>
-                                Все авторы
-                            </Text>
-                            <Image src={ArrowRightIcon} />
-                        </Flex>
-                    </Link>
+                    <AllBlogsLink dataTestId={DATA_TEST_IDS.mainPageBlogsButton} />
                 </Flex>
             )}
         </Flex>

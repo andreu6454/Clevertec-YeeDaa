@@ -5,7 +5,7 @@ import { sideDishFilters } from '~/shared/constants/recipeFilters';
 import { CustomCheckbox } from '~/shared/ui/Checkbox/Checkbox';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { setSideDishFilters, sideDishFiltersSelector } from '~/store/recipesListPage-slice';
+import { setSideDishFilters, sideDishFiltersSelector } from '~/store/slices/recipesListPage-slice';
 
 export const SideDishFilter = memo(() => {
     const dispatch = useAppDispatch();

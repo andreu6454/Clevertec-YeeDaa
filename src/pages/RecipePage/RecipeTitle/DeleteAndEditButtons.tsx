@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router';
 import SaveNotes from '~/assets/svg/saveNote.svg';
 import { useDeleteRecipeMutation } from '~/query/services/newRecipe';
 import { ErrorResponse } from '~/query/types/types';
+import { NEW_RECIPE_ALERTS } from '~/shared/constants/alertStatuses/newRecipeAlerts';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
-import { NEW_RECIPE_ALERTS } from '~/shared/constants/newRecipeAlerts';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 
 type DeleteAndEditButtonsProps = {
     recipeId: string;

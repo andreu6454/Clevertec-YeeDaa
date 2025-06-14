@@ -2,12 +2,13 @@ import { Button, Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { Recipe } from '~/shared/types/recipeTypes';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 
 interface RecipesContainerProps {
     data: Recipe[];
@@ -76,6 +77,7 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
             marginBottom={marginBottom[screenSize]}
         >
             <Flex
+                data-test-id={DATA_TEST_IDS.recipeCardList}
                 gap={gap[screenSize]}
                 width='100%'
                 wrap='wrap'

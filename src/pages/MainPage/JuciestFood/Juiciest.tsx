@@ -9,9 +9,9 @@ import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { PageBlockTitle } from '~/shared/ui/PageBlockTitle/PageBlockTitle';
-import { setAppError } from '~/store/app-slice';
-import { categoriesSelector, subCategoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { setAppError } from '~/store/slices/app-slice';
+import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 
 import ArrowRightIcon from '../../../assets/svg/BsArrowRight.svg';
 

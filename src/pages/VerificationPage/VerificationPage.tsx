@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 
 import { APP_PATHS } from '~/shared/constants/pathes';
-import { setEmailVerification } from '~/store/app-slice';
 import { useAppDispatch } from '~/store/hooks';
+import { setEmailVerification } from '~/store/slices/app-slice';
 
 export const VerificationPage = () => {
     const navigate = useNavigate();

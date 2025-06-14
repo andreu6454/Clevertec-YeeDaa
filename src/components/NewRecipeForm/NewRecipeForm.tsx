@@ -23,7 +23,7 @@ import { useBlockerWithModal } from '~/shared/hooks/useBrokerWithModal';
 import { newRecipeSchema } from '~/shared/types/validationSchemas/newRecipeSchema';
 import { checkFormErrors } from '~/shared/utils/checkFormErrors';
 import { useAppSelector } from '~/store/hooks';
-import { recipeSelector } from '~/store/recipe-slice';
+import { recipeSelector } from '~/store/slices/recipe-slice';
 
 export type NewRecipeDataType = {
     title: string;

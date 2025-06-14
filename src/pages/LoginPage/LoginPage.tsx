@@ -10,15 +10,15 @@ import { LoginModalError } from '~/pages/LoginPage/LoginModalError/LoginModalErr
 import { PasswordRecovery } from '~/pages/LoginPage/PasswordRecovery/PasswordRecovery';
 import { useLoginMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';
-import { AUTH_LOGIN_STATUSES } from '~/shared/constants/authStatuses';
+import { AUTH_LOGIN_STATUSES } from '~/shared/constants/alertStatuses/authStatuses';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { AuthLayout } from '~/shared/layouts/AuthLayout/AuthLayout';
 import { signInSchema } from '~/shared/types/validationSchemas/loginSchema';
-import { emailVerifiedSelector } from '~/store/app-slice';
-import { setUserId } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { emailVerifiedSelector } from '~/store/slices/app-slice';
+import { setUserId } from '~/store/slices/app-slice';
 
 export type LoginFormDataType = {
     login: string;

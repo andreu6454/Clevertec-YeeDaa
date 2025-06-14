@@ -8,7 +8,7 @@ import {
     searchInputSelector,
     sideDishFiltersSelector,
     subCategoriesIdsSelector,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 
 export const useGetQueryParams = (
     page?: number,

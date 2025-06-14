@@ -4,4 +4,5 @@ export enum ApiGroupNames {
     SIGNUP = 'signup',
     LOGIN = 'login',
     Recovery = 'recovery',
+    BLOGGERS = 'bloggers',
 }

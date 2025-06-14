@@ -1,7 +1,7 @@
 import { Tags } from '~/shared/ui/Tags/Tags';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppSelector } from '~/store/hooks';
-import { allergensSelector } from '~/store/recipesListPage-slice';
+import { allergensSelector } from '~/store/slices/recipesListPage-slice';
 
 export const SearchAllergensHeader = () => {
     const allergens = useAppSelector(allergensSelector);

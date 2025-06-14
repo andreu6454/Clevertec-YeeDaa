@@ -5,7 +5,7 @@ import { memo } from 'react';
 import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { useBookmarkRecipeMutation } from '~/query/services/recipes';
 import { ErrorResponse } from '~/query/types/types';
-import { NEW_RECIPE_ALERTS } from '~/shared/constants/newRecipeAlerts';
+import { NEW_RECIPE_ALERTS } from '~/shared/constants/alertStatuses/newRecipeAlerts';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';
@@ -13,7 +13,7 @@ import { Recipe } from '~/shared/types/recipeTypes';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppSelector } from '~/store/hooks';
-import { searchInputSelector } from '~/store/recipesListPage-slice';
+import { searchInputSelector } from '~/store/slices/recipesListPage-slice';
 
 import BookmarkIcon from '../../assets/svg/bookmark.svg';
 

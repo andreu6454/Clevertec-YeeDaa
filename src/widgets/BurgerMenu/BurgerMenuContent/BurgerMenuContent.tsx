@@ -2,8 +2,8 @@ import { Box } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
 
 import { Breadcrumbs } from '~/components/Breadcrumbs/Breadcrumbs';
-import { allCategoriesSelector } from '~/store/categories-slice';
 import { useAppSelector } from '~/store/hooks';
+import { allCategoriesSelector } from '~/store/slices/categories-slice';
 import { NavbarData } from '~/widgets/navbar/NavbarData/NavbarData';
 
 export const BurgerMenuContent = () => {

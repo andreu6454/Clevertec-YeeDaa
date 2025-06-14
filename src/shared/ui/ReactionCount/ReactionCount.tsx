@@ -9,10 +9,11 @@ interface ReactionCountProps {
     variant: 'bookmark' | 'people' | 'emoji';
     count: number;
     size: 'small' | 'large';
+    dataTestId?: string;
 }
 
 export const ReactionCount = (props: ReactionCountProps) => {
-    const { variant, count, size } = props;
+    const { variant, count, size, dataTestId } = props;
 
     const image = {
         bookmark: Bookmark,
@@ -58,6 +59,7 @@ export const ReactionCount = (props: ReactionCountProps) => {
                 src={image[variant]}
             />
             <Text
+                data-test-id={dataTestId}
                 fontWeight={sizes[size].fWeight}
                 fontSize={sizes[size].fSize}
                 lineHeight={sizes[size].lHeight}

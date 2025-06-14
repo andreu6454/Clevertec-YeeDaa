@@ -3,8 +3,8 @@ import { DrawerContent, DrawerOverlay } from '@chakra-ui/react';
 
 import { FiltersMenuContent } from '~/components/Filters/FiltersMenuContent/FiltersMenuContent';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
-import { closeFilters, isFiltersOpenSelector } from '~/store/app-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { closeFilters, isFiltersOpenSelector } from '~/store/slices/app-slice';
 
 export const Filters = () => {
     const { isDesktopLaptop } = useScreenSize();

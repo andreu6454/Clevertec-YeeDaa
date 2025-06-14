@@ -4,13 +4,13 @@ import { memo } from 'react';
 
 import { CategoryFilterHeader } from '~/components/Filters/FiltersMenuContent/CategoryFilter/CategoryFilterHeader/CategoryFilterHeader';
 import { CheckboxWithTitle } from '~/shared/ui/CheckboxWithTitle/CheckboxWithTitle';
-import { categoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { categoriesSelector } from '~/store/slices/categories-slice';
 import {
     categoryIdsSelector,
     setCategoriesFilter,
     subCategoriesIdsSelector,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 
 export const CategoryFilter = memo(() => {
     const dispatch = useAppDispatch();

@@ -1,13 +1,13 @@
 import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { categoriesSelector } from '~/store/categories-slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { categoriesSelector } from '~/store/slices/categories-slice';
 import {
     categoryIdsSelector,
     setCategoriesFilter,
     subCategoriesIdsSelector,
-} from '~/store/recipesListPage-slice';
+} from '~/store/slices/recipesListPage-slice';
 
 export const ChosenCategories = memo(() => {
     const categories = useAppSelector(categoryIdsSelector);

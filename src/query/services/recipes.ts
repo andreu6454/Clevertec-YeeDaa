@@ -3,11 +3,11 @@ import { ApiGroupNames } from '~/query/constants/api-group-names';
 import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
-import { RecipeParams, RecipeResponse } from '~/query/types/types';
+import { RecipeParams, RecipeResponse, UserRecipesResponse } from '~/query/types/types';
 import { Recipe } from '~/shared/types/recipeTypes';
-import { setRecipePageTitle } from '~/store/app-slice';
-import { setRecipe } from '~/store/recipe-slice';
-import { setInputLoading, setRecipesData } from '~/store/recipesListPage-slice';
+import { setPageTitle } from '~/store/slices/breadcrumbs-slice';
+import { setRecipe } from '~/store/slices/recipe-slice';
+import { setInputLoading, setRecipesData } from '~/store/slices/recipesListPage-slice';
 
 export const recipeApi = apiSlice
     .enhanceEndpoints({
@@ -52,7 +52,7 @@ export const recipeApi = apiSlice
                             _id: data._id,
                             title: data.title,
                         };
-                        dispatch(setRecipePageTitle(title));
+                        dispatch(setPageTitle(title));
                         dispatch(setRecipe(data));
                     } catch {
                         console.log('Response error');
@@ -97,6 +97,15 @@ export const recipeApi = apiSlice
                 }),
                 invalidatesTags: [Tags.RECIPES, Tags.RECIPE_BY_ID],
             }),
+            getUserRecipesById: builder.query<UserRecipesResponse, string>({
+                query: (id) => ({
+                    url: ApiEndpoints.USER_RECIPES + id,
+                    apiGroupName: ApiGroupNames.RECIPES,
+                    name: EndpointNames.GET_USER_RECIPES,
+                    method: METHODS.get,
+                }),
+                providesTags: [Tags.RECIPES],
+            }),
         }),
     });
 
@@ -107,4 +116,5 @@ export const {
     useGetRecipeByIdQuery,
     useBookmarkRecipeMutation,
     useLikeRecipeMutation,
+    useGetUserRecipesByIdQuery,
 } = recipeApi;

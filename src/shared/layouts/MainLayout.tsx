@@ -32,7 +32,7 @@ export const MainLayout = (props: MainLayoutProps) => {
                 padding={{
                     base: '64px 16px 100px 16px',
                     md: '64px 12px 100px 20px',
-                    xl: '80px 208px 0 280px',
+                    xl: '80px 208px 20px 280px',
                 }}
                 min-height='100vh'
                 width='100%'
