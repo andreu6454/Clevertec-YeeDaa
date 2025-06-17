@@ -4,9 +4,10 @@ import { Image, Text } from '@chakra-ui/react';
 import Bookmark from '../../../assets/svg/bookmark.svg';
 import Emoji from '../../../assets/svg/emojiHeartEyes.svg';
 import Peoples from '../../../assets/svg/peoples.svg';
+import PeoplesUnfilled from '../../../assets/svg/peoplesUnfilled.svg';
 
 interface ReactionCountProps {
-    variant: 'bookmark' | 'people' | 'emoji';
+    variant: 'bookmark' | 'people' | 'emoji' | 'peopleUnfilled';
     count: number;
     size: 'small' | 'large';
     dataTestId?: string;
@@ -17,6 +18,7 @@ export const ReactionCount = (props: ReactionCountProps) => {
 
     const image = {
         bookmark: Bookmark,
+        peopleUnfilled: PeoplesUnfilled,
         people: Peoples,
         emoji: Emoji,
     };

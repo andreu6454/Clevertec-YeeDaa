@@ -12,4 +12,6 @@ export const APP_PATHS = {
     editRecipe: '/edit-recipe/:category/:subcategory/:recipeId',
     blogs: '/blogs',
     bloggerPage: '/blogs/:bloggerId',
+    profile: '/profile',
+    settings: '/profile/settings',
 };

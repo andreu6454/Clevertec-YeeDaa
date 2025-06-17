@@ -21,7 +21,8 @@ interface CardWithLeftImageProps {
     recipe: Recipe;
     onClickHandler?: () => void;
     index: number;
-    categoryTitle: string;
+    categoryTitle?: string;
+    isDraft?: boolean;
 }
 
 const sizes = {
@@ -36,7 +37,7 @@ const sizes = {
         textTitleSize: TypographySizes.xl,
     },
     Laptop: {
-        width: '880px',
+        width: '100%',
         height: '244px',
         imgWidth: '346px',
         textWidth: '486px',
@@ -68,7 +69,7 @@ const sizes = {
 };
 
 export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
-    const { onClickHandler, index, recipe, categoryTitle } = props;
+    const { onClickHandler, index, recipe, categoryTitle, isDraft = false } = props;
 
     const { screenSize, isTabletMobile } = useScreenSize();
 
@@ -139,20 +140,32 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                 height='100%'
                 padding={sizes[screenSize].padding}
             >
-                <Flex height='24px' justifyContent='space-between' alignItems='center'>
-                    {!isTabletMobile && (
-                        <CardBadge
-                            size='medium'
-                            type='dishType'
-                            bgColor='yellow'
-                            dishType={categoryTitle}
-                        />
-                    )}
-                    <Flex>
-                        <ReactionCount size='small' variant='bookmark' count={recipe.bookmarks} />
-                        <ReactionCount size='small' variant='emoji' count={recipe.likes} />
+                {isDraft && <></>}
+                {!isDraft && (
+                    <Flex height='24px' justifyContent='space-between' alignItems='center'>
+                        {!isTabletMobile && (
+                            <CardBadge
+                                size='medium'
+                                type='dishType'
+                                bgColor='yellow'
+                                dishType={categoryTitle}
+                            />
+                        )}
+                        <Flex>
+                            <ReactionCount
+                                size='small'
+                                variant='bookmark'
+                                count={recipe?.bookmarks || 0}
+                            />
+                            <ReactionCount
+                                size='small'
+                                variant='emoji'
+                                count={recipe?.likes || 0}
+                            />
+                        </Flex>
                     </Flex>
-                </Flex>
+                )}
+
                 <Flex
                     direction='column'
                     width={sizes[screenSize].textWidth}

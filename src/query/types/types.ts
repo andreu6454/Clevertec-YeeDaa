@@ -1,6 +1,7 @@
 import { BloggerInfoType, BloggerNoteType, BloggerType } from '~/shared/types/bloggersTypes';
 import { CategoryType, SubCategoryType } from '~/shared/types/categoryTypes';
 import { NullableNewRecipesDataType, Recipe } from '~/shared/types/recipeTypes';
+import { ReactionType } from '~/shared/types/usersTypes';
 
 export type Meta = {
     total: number;
@@ -116,4 +117,23 @@ export type UserRecipesResponse = {
     totalBookmarks: number;
     totalSubscribers: number;
     userId: string;
+};
+
+export type GetProfileResponse = {
+    drafts: NullableNewRecipesDataType[];
+    email: string;
+    firstName: string;
+    lastName: string;
+    login: string;
+    notes: BloggerNoteType[];
+    recipesIds: string[];
+    subscribers: string[];
+    subscriptions: string[];
+    _id: string;
+};
+
+export type GetStatisticsResponse = {
+    likes: ReactionType[];
+    bookmarks: ReactionType[];
+    recommendationsCount: number;
 };

@@ -59,6 +59,9 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
             if (path === 'edit-recipe') {
                 return null;
             }
+            if (path === 'profile') {
+                displayName = 'Мой профиль';
+            }
 
             const dataTestId =
                 path === 'blogs'
