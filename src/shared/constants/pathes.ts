@@ -14,4 +14,5 @@ export const APP_PATHS = {
     bloggerPage: '/blogs/:bloggerId',
     profile: '/profile',
     settings: '/profile/settings',
+    editDraft: '/edit-draft/:draftId',
 };

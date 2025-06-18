@@ -4,6 +4,7 @@ import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
 import { GetProfileResponse, GetStatisticsResponse } from '~/query/types/types';
+import { CreateNoteResponse } from '~/shared/types/bloggersTypes';
 
 export const usersApi = apiSlice
     .enhanceEndpoints({
@@ -27,7 +28,17 @@ export const usersApi = apiSlice
                     name: EndpointNames.GET_STATISTIC,
                 }),
             }),
+            createNote: builder.mutation<CreateNoteResponse, string>({
+                query: (note) => ({
+                    url: ApiEndpoints.USERS_NOTE,
+                    method: METHODS.post,
+                    body: {
+                        text: note,
+                    },
+                    name: EndpointNames.CREATE_NOTE,
+                }),
+            }),
         }),
     });
 
-export const { useGetProfileQuery, useGetStatisticQuery } = usersApi;
+export const { useGetProfileQuery, useGetStatisticQuery, useCreateNoteMutation } = usersApi;

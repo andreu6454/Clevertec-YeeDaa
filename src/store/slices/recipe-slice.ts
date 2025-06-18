@@ -1,22 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Recipe } from '~/shared/types/recipeTypes';
+import { DraftType, Recipe } from '~/shared/types/recipeTypes';
 
 const initialState = {
     isLoading: false,
     error: '' as string | null,
-    recipe: {} as Recipe,
+    recipe: {} as Recipe | DraftType,
+    draft: {} as DraftType,
 };
 export const recipeSlice = createSlice({
     name: 'recipeSlice',
     initialState,
     reducers: {
-        setRecipe(state, { payload: recipe }: PayloadAction<Recipe>) {
+        setRecipe(state, { payload: recipe }: PayloadAction<Recipe | DraftType>) {
             state.recipe = recipe;
         },
+        // setDraft(state, { payload: draft }: PayloadAction<DraftType>) {
+        //     state.draft = draft;
+        // },
     },
     selectors: {
         recipeSelector: (state) => state.recipe,
+        // draftSelector: (state) => state.draft,
     },
 });
 

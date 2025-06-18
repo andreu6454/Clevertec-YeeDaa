@@ -29,3 +29,7 @@ export type BloggerInfoType = {
     subscribers: string[];
     subscriptions: string[];
 };
+
+export type CreateNoteResponse = {
+    _id: string;
+} & BloggerNoteType;

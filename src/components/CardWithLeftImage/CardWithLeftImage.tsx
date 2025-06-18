@@ -1,77 +1,42 @@
-import { Box, Card, Image } from '@chakra-ui/icons';
-import { Button, Flex } from '@chakra-ui/react';
+import { Box, Card } from '@chakra-ui/icons';
+import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
-import { useBookmarkRecipeMutation } from '~/query/services/recipes';
-import { ErrorResponse } from '~/query/types/types';
-import { NEW_RECIPE_ALERTS } from '~/shared/constants/alertStatuses/newRecipeAlerts';
-import { useAlertToast } from '~/shared/hooks/useAlertToast';
+import { DraftBadge } from '~/components/CardWithLeftImage/DraftBadge/DraftBadge';
+import { EditButton } from '~/components/CardWithLeftImage/EditButton/EditButton';
+import { RecipeBadgeAndReactions } from '~/components/CardWithLeftImage/RecipeBadgeAndReactions/RecipeBadgeAndReactions';
+import { SaveAndBookmarkButtons } from '~/components/CardWithLeftImage/SaveAndBookmarkButtons/SaveAndBookmarkButtons';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';
-import { Recipe } from '~/shared/types/recipeTypes';
-import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
+import { DraftType, Recipe } from '~/shared/types/recipeTypes';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import UploadImage from '~/shared/ui/UploadImage/UploadImage';
 import { useAppSelector } from '~/store/hooks';
 import { searchInputSelector } from '~/store/slices/recipesListPage-slice';
 
-import BookmarkIcon from '../../assets/svg/bookmark.svg';
-
 interface CardWithLeftImageProps {
-    recipe: Recipe;
+    recipe: Recipe | DraftType;
+    index?: number;
     onClickHandler?: () => void;
-    index: number;
     categoryTitle?: string;
     isDraft?: boolean;
+    isAuthor?: boolean;
+    isBookmarked?: boolean;
 }
 
-const sizes = {
-    Desktop: {
-        width: '668px',
-        height: '244px',
-        imgWidth: '346px',
-        textWidth: '274px',
-        padding: '20px 24px',
-        containerWidth: '322px',
-        gap: '24px',
-        textTitleSize: TypographySizes.xl,
-    },
-    Laptop: {
-        width: '100%',
-        height: '244px',
-        imgWidth: '346px',
-        textWidth: '486px',
-        padding: '20px 24px',
-        containerWidth: '534px',
-        gap: '24px',
-        textTitleSize: TypographySizes.xl,
-    },
-    Tablet: {
-        width: '356px',
-        height: '128px',
-        imgWidth: '158px',
-        textWidth: '182px',
-        padding: '8px',
-        containerWidth: '198px',
-        gap: '0',
-        textTitleSize: TypographySizes.md,
-    },
-    Mobile: {
-        width: '328px',
-        height: '128px',
-        imgWidth: '158px',
-        textWidth: '154px',
-        padding: '8px',
-        containerWidth: '170px',
-        gap: '0',
-        textTitleSize: TypographySizes.md,
-    },
-};
-
 export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
-    const { onClickHandler, index, recipe, categoryTitle, isDraft = false } = props;
+    const {
+        onClickHandler,
+        index,
+        recipe,
+        categoryTitle,
+        isDraft = false,
+        isAuthor = false,
+        isBookmarked = false,
+    } = props;
 
-    const { screenSize, isTabletMobile } = useScreenSize();
+    const { isTabletMobile } = useScreenSize();
 
     const searchInputValue = useAppSelector(searchInputSelector);
 
@@ -87,20 +52,6 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
             ),
         );
 
-    const [bookmark] = useBookmarkRecipeMutation();
-    const errorAlert = useAlertToast();
-
-    const onBookmarkHandle = async () => {
-        try {
-            await bookmark(recipe._id).unwrap();
-        } catch (error) {
-            const responseError = error as ErrorResponse;
-            if (responseError?.status === 500) {
-                errorAlert(NEW_RECIPE_ALERTS.serverError, false);
-            }
-        }
-    };
-
     return (
         <Card
             data-test-id={`food-card-${index}`}
@@ -109,71 +60,61 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                     '0 4px 8px -2px rgba(32, 126, 0, 0.1), 0 6px 12px -2px rgba(32, 126, 0, 0.15)',
                 transition: 'all 0.3s ease',
             }}
-            width={sizes[screenSize].width}
-            height={sizes[screenSize].height}
+            width={{ base: '100%', md: '356px', xl: '100%', '2xl': '668px' }}
+            height={{ base: '128px', xl: '244px' }}
             direction='row'
             flexShrink={0}
             borderRadius='8px'
         >
-            <Flex
-                borderLeftRadius='8px'
-                width={sizes[screenSize].imgWidth}
-                height='100%'
-                backgroundSize='100% 100%'
-                backgroundImage={getImageUrl(recipe.image)}
-                alignItems={!isTabletMobile ? 'flex-end' : 'flex-start'}
-                padding={sizes[screenSize].padding}
-            >
-                {isTabletMobile && (
-                    <CardBadge
-                        size='small'
-                        type='dishType'
-                        bgColor='yellow'
-                        dishType={categoryTitle}
-                    />
-                )}
-            </Flex>
+            {recipe?.image ? (
+                <Flex
+                    backgroundImage={getImageUrl(recipe?.image)}
+                    height='100%'
+                    backgroundSize='100% 100%'
+                    width={{ base: '158px', xl: '346px' }}
+                    padding={{ base: '8px', xl: '20px 24px' }}
+                    alignItems={!isTabletMobile ? 'flex-end' : 'flex-start'}
+                    borderLeftRadius='8px'
+                    flexShrink={0}
+                >
+                    {isTabletMobile && (
+                        <CardBadge
+                            size='small'
+                            type='dishType'
+                            bgColor='yellow'
+                            dishType={categoryTitle}
+                        />
+                    )}
+                </Flex>
+            ) : (
+                <UploadImage height='100%' width={{ base: '158px', xl: '346px' }} flexShrink={0} />
+            )}
+
             <Flex
                 direction='column'
-                gap={sizes[screenSize].gap}
-                width={sizes[screenSize].containerWidth}
+                gap={{ base: 0, xl: '24px' }}
+                width='100%'
                 height='100%'
-                padding={sizes[screenSize].padding}
+                padding={{ base: '8px', xl: '20px 24px' }}
+                justifyContent='space-between'
             >
-                {isDraft && <></>}
-                {!isDraft && (
-                    <Flex height='24px' justifyContent='space-between' alignItems='center'>
-                        {!isTabletMobile && (
-                            <CardBadge
-                                size='medium'
-                                type='dishType'
-                                bgColor='yellow'
-                                dishType={categoryTitle}
-                            />
-                        )}
-                        <Flex>
-                            <ReactionCount
-                                size='small'
-                                variant='bookmark'
-                                count={recipe?.bookmarks || 0}
-                            />
-                            <ReactionCount
-                                size='small'
-                                variant='emoji'
-                                count={recipe?.likes || 0}
-                            />
-                        </Flex>
-                    </Flex>
+                {isDraft && <DraftBadge />}
+                {'bookmarks' in recipe && !isDraft && (
+                    <RecipeBadgeAndReactions
+                        categoryTitle={categoryTitle}
+                        bookmarks={recipe?.bookmarks}
+                        likes={recipe?.likes}
+                    />
                 )}
 
                 <Flex
                     direction='column'
-                    width={sizes[screenSize].textWidth}
+                    width={{ base: '154px', md: '182px', xl: '486px', '2xl': '274px' }}
                     height='100px'
                     gap='8px'
                 >
                     <Typography
-                        Size={sizes[screenSize].textTitleSize}
+                        Size={isTabletMobile ? TypographySizes.md : TypographySizes.xl}
                         overflow='hidden'
                         textOverflow='ellipsis'
                         noOfLines={isTabletMobile ? 2 : 1}
@@ -187,34 +128,21 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                             textOverflow='ellipsis'
                             noOfLines={3}
                         >
-                            {recipe.description}
+                            {recipe.description ? recipe.description : '...'}
                         </Typography>
                     )}
                 </Flex>
-                <Flex justifyContent='flex-end' gap='8px'>
-                    <Button
-                        onClick={onBookmarkHandle}
-                        display='flex'
-                        padding={isTabletMobile ? '6px 0 6px 6px' : ''}
-                        leftIcon={<Image src={BookmarkIcon} />}
-                        size={!isTabletMobile ? 'sm' : 'xs'}
-                        variant='outline'
-                        colorScheme='black'
-                        alignItems='center'
-                        justifyContent='center'
-                    >
-                        {!isTabletMobile && 'Сохранить'}
-                    </Button>
-                    <Button
-                        data-test-id={`card-link-${index}`}
-                        onClick={onClickHandler}
-                        size={!isTabletMobile ? 'sm' : 'xs'}
-                        backgroundColor='#000'
-                        color='#fff'
-                    >
-                        Готовить
-                    </Button>
-                </Flex>
+                {!isAuthor && (
+                    <SaveAndBookmarkButtons
+                        index={index}
+                        onClickHandler={onClickHandler}
+                        id={recipe._id}
+                        isBookmarked={isBookmarked}
+                    />
+                )}
+                {isAuthor && (
+                    <EditButton id={recipe._id} onEditHandler={onClickHandler} isDraft={isDraft} />
+                )}
             </Flex>
         </Card>
     );

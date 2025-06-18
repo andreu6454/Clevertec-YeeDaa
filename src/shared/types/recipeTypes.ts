@@ -59,3 +59,7 @@ export type NullableNewRecipesDataType = {
     steps: NullableStepType[];
     ingredients: NullableIngredientDataType[];
 };
+
+export type DraftType = {
+    _id: string;
+} & NullableNewRecipesDataType;

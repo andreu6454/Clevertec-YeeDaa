@@ -56,7 +56,7 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
                 displayName = 'Страница не существует';
             }
 
-            if (path === 'edit-recipe') {
+            if (path === 'edit-recipe' || path === 'edit-draft') {
                 return null;
             }
             if (path === 'profile') {

@@ -37,6 +37,7 @@ export const AppRouter = createBrowserRouter(
                         <Route path={APP_PATHS.theJuiciest} element={<JuiciestFoodPage />} />
                         <Route path={APP_PATHS.newRecipe} element={<NewRecipePage />} />
                         <Route path={APP_PATHS.editRecipe} element={<NewRecipePage />} />
+                        <Route path={APP_PATHS.editDraft} element={<NewRecipePage />} />
                         <Route path={APP_PATHS.blogs} element={<BlogsPage />} />
                         <Route path={APP_PATHS.bloggerPage} element={<BloggerPage />} />
                         <Route path={APP_PATHS.profile} element={<ProfilePage />} />
