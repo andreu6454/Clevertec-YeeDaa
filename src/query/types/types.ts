@@ -1,4 +1,4 @@
-import { BloggerInfoType, BloggerNoteType, BloggerType } from '~/shared/types/bloggersTypes';
+import { BloggerInfoType, BloggerType, NoteType } from '~/shared/types/bloggersTypes';
 import { CategoryType, SubCategoryType } from '~/shared/types/categoryTypes';
 import { DraftType, NullableNewRecipesDataType, Recipe } from '~/shared/types/recipeTypes';
 import { ReactionType } from '~/shared/types/usersTypes';
@@ -112,7 +112,7 @@ export type BloggerResponse = {
 export type bloggerSubscriptionParams = { bloggerId: string; userId: string };
 
 export type UserRecipesResponse = {
-    notes: BloggerNoteType;
+    notes: NoteType[];
     myBookmarks: Recipe[];
     recipes: Recipe[];
     totalBookmarks: number;
@@ -126,7 +126,7 @@ export type GetProfileResponse = {
     firstName: string;
     lastName: string;
     login: string;
-    notes: BloggerNoteType[];
+    notes: NoteType[];
     recipesIds: string[];
     subscribers: string[];
     subscriptions: string[];

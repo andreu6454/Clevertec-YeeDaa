@@ -8,4 +8,6 @@ export enum Tags {
     NEW_RECIPES = 'new-recipe',
     BLOGGERS = 'bloggers',
     USERS = 'users',
+    RECIPES_BY_USERID = 'recipes_by_user_id',
+    NOTES_BY_USERID = 'notes_by_user_id',
 }

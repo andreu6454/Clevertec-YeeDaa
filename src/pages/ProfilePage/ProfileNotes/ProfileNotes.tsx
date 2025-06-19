@@ -3,20 +3,51 @@ import { Button, Flex, Image, useDisclosure } from '@chakra-ui/react';
 import PenIcon from '~/assets/svg/penIcon.svg';
 import { CardNote } from '~/components/CardNote/CardNote';
 import { CreateNoteDrawer } from '~/components/CreateNoteDrawer/CreateNoteDrawer';
-import { BloggerNoteType } from '~/shared/types/bloggersTypes';
+import { useDeleteNoteMutation } from '~/query/services/users';
+import { ALERT_STATUSES, defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
+import { USERS_ALERTS } from '~/shared/constants/alertStatuses/usersAlerts';
+import { useAlertToast } from '~/shared/hooks/useAlertToast';
+import { NoteType } from '~/shared/types/bloggersTypes';
 import TextWithCount from '~/shared/ui/TextWithCount/TextWithCount';
 
 type ProfileNotesProps = {
-    notes: BloggerNoteType[];
+    notes: NoteType[];
 };
 
 export const ProfileNotes = ({ notes }: ProfileNotesProps) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
+    const [deleteNote] = useDeleteNoteMutation();
+
+    const alert = useAlertToast();
+
     const notesCount = notes.length;
-    const notesForRender = notes.map((el) => (
-        <CardNote key={el.text} date={el.date} text={el.text} />
-    ));
+    const notesForRender = notes.map((el) => {
+        const onDeleteHandler = async () => {
+            try {
+                await deleteNote(el._id);
+                alert(
+                    {
+                        status: ALERT_STATUSES.success,
+                        title: USERS_ALERTS.deleteNote,
+                    },
+                    false,
+                );
+            } catch {
+                alert(defaultAlert, false);
+            }
+        };
+
+        return (
+            <CardNote
+                key={el.text}
+                date={el.date}
+                text={el.text}
+                isAuthor
+                onDeleteHandler={onDeleteHandler}
+            />
+        );
+    });
 
     const onClickHandler = () => {
         onOpen();

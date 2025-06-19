@@ -11,7 +11,7 @@ import { setInputLoading, setRecipesData } from '~/store/slices/recipesListPage-
 
 export const recipeApi = apiSlice
     .enhanceEndpoints({
-        addTagTypes: [Tags.RECIPES, Tags.RECIPE_BY_ID],
+        addTagTypes: [Tags.RECIPES, Tags.RECIPE_BY_ID, Tags.RECIPES_BY_USERID],
     })
     .injectEndpoints({
         endpoints: (builder) => ({
@@ -104,7 +104,7 @@ export const recipeApi = apiSlice
                     name: EndpointNames.GET_USER_RECIPES,
                     method: METHODS.get,
                 }),
-                providesTags: [Tags.RECIPES],
+                providesTags: [Tags.RECIPES_BY_USERID],
             }),
         }),
     });

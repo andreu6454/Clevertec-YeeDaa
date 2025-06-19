@@ -33,3 +33,7 @@ export type BloggerInfoType = {
 export type CreateNoteResponse = {
     _id: string;
 } & BloggerNoteType;
+
+export type NoteType = {
+    _id: string;
+} & BloggerNoteType;
