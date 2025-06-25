@@ -6,11 +6,22 @@ import { AuthPasswordInputProps } from '~/shared/ui/AuthPasswordInput/AuthPasswo
 
 type AuthFormInputProps = AuthPasswordInputProps & {
     setValue: SetFieldValue<FieldValues>;
+    isDisabled?: boolean;
 };
 
 export const AuthFormInput = (props: AuthFormInputProps) => {
-    const { register, hint, error, label, placeholder, setValue, isInvalid, dataTestId, width } =
-        props;
+    const {
+        register,
+        hint,
+        error,
+        label,
+        placeholder,
+        setValue,
+        isInvalid,
+        dataTestId,
+        width,
+        isDisabled,
+    } = props;
 
     const { name: fieldName } = register;
 
@@ -41,6 +52,12 @@ export const AuthFormInput = (props: AuthFormInputProps) => {
                     color: '#134b00',
                     opacity: 1,
                 }}
+                _disabled={{
+                    borderColor: 'transparent',
+                    backgroundColor: 'transparent',
+                    opacity: 0.4,
+                }}
+                isDisabled={isDisabled}
             />
             {hint && <FormHelperText marginTop='4px'>{hint}</FormHelperText>}
             {error && <FormErrorMessage position='absolute'>{error}</FormErrorMessage>}

@@ -13,6 +13,6 @@ export const APP_PATHS = {
     blogs: '/blogs',
     bloggerPage: '/blogs/:bloggerId',
     profile: '/profile',
-    settings: '/profile/settings',
+    profileSettings: '/profile/settings',
     editDraft: '/edit-draft/:draftId',
 };

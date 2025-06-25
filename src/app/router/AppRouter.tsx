@@ -42,7 +42,7 @@ export const AppRouter = createBrowserRouter(
                         <Route path={APP_PATHS.blogs} element={<BlogsPage />} />
                         <Route path={APP_PATHS.bloggerPage} element={<BloggerPage />} />
                         <Route path={APP_PATHS.profile} element={<ProfilePage />} />
-                        <Route path={APP_PATHS.settings} element={<ProfileSettingsPage />} />
+                        <Route path={APP_PATHS.profileSettings} element={<ProfileSettingsPage />} />
                         <Route element={<WithCategoryValidation />}>
                             <Route path={APP_PATHS.category} element={<RecipesListPage />} />
                             <Route path={APP_PATHS.subcategory} element={<RecipesListPage />} />

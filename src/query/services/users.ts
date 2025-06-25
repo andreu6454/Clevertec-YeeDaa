@@ -3,12 +3,17 @@ import { ApiGroupNames } from '~/query/constants/api-group-names';
 import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
-import { GetProfileResponse, GetStatisticsResponse } from '~/query/types/types';
+import {
+    GetProfileResponse,
+    GetStatisticsResponse,
+    UpdatePasswordType,
+    UpdateProfileType,
+} from '~/query/types/types';
 import { CreateNoteResponse } from '~/shared/types/bloggersTypes';
 
 export const usersApi = apiSlice
     .enhanceEndpoints({
-        addTagTypes: [Tags.USERS, Tags.NOTES_BY_USERID],
+        addTagTypes: [Tags.USERS, Tags.NOTES_BY_USERID, Tags.PROFILE_INFO],
     })
     .injectEndpoints({
         endpoints: (builder) => ({
@@ -19,7 +24,7 @@ export const usersApi = apiSlice
                     apiGroupName: ApiGroupNames.USERS,
                     name: EndpointNames.GET_PROFILE,
                 }),
-                providesTags: [Tags.NOTES_BY_USERID],
+                providesTags: [Tags.NOTES_BY_USERID, Tags.PROFILE_INFO],
             }),
             getStatistic: builder.query<GetStatisticsResponse, void>({
                 query: () => ({
@@ -48,6 +53,23 @@ export const usersApi = apiSlice
                 }),
                 invalidatesTags: [Tags.NOTES_BY_USERID],
             }),
+            updateInfo: builder.mutation<UpdateProfileType, UpdateProfileType>({
+                query: (data) => ({
+                    url: ApiEndpoints.UPDATE_PROFILE_INFO,
+                    method: METHODS.patch,
+                    body: data,
+                    name: EndpointNames.UPDATE_INFO,
+                }),
+                invalidatesTags: [Tags.PROFILE_INFO],
+            }),
+            updatePassword: builder.mutation<void, UpdatePasswordType>({
+                query: (data) => ({
+                    url: ApiEndpoints.UPDATE_PASSWORD,
+                    method: METHODS.patch,
+                    body: data,
+                    name: EndpointNames.UPDATE_PASSWORD,
+                }),
+            }),
         }),
     });
 
@@ -56,4 +78,6 @@ export const {
     useGetStatisticQuery,
     useCreateNoteMutation,
     useDeleteNoteMutation,
+    useUpdateInfoMutation,
+    useUpdatePasswordMutation,
 } = usersApi;

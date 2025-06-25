@@ -1,4 +1,8 @@
 export const USERS_ALERTS = {
     createNote: 'Заметка опубликована',
     deleteNote: 'Заметка удалена.',
+    updateInfoSuccess: 'Изменения сохранены',
+    updatePasswordSuccess: 'Пароль успешно сохранен',
+    updatePasswordError: 'Неверный старый пароль',
+    tryAgain: 'Попробуйте снова',
 };

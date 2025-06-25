@@ -1,4 +1,11 @@
-import { CloseButton, Modal, ModalContent, ModalOverlay } from '@chakra-ui/react';
+import {
+    CloseButton,
+    Modal,
+    ModalContent,
+    ModalOverlay,
+    ResponsiveObject,
+    ResponsiveValue,
+} from '@chakra-ui/react';
 import { ReactNode } from 'react';
 
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
@@ -8,7 +15,7 @@ type CustomModalProps = {
     onClose: () => void;
     children: ReactNode | ReactNode[];
     testID?: string;
-    width?: string;
+    width?: ResponsiveValue<string | number> | ResponsiveObject<string | number> | string;
     dataTestId?: string;
 };
 

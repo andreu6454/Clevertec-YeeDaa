@@ -21,4 +21,6 @@ export enum EndpointNames {
     GET_STATISTIC = 'GET_STATISTIC',
     CREATE_NOTE = 'CREATE_NOTE',
     DELETE_NOTE = 'DELETE_NOTE',
+    UPDATE_INFO = 'update_info',
+    UPDATE_PASSWORD = 'update_password',
 }

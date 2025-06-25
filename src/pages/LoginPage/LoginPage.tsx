@@ -16,9 +16,8 @@ import { APP_PATHS } from '~/shared/constants/pathes';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { AuthLayout } from '~/shared/layouts/AuthLayout/AuthLayout';
 import { signInSchema } from '~/shared/types/validationSchemas/loginSchema';
-import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { useAppSelector } from '~/store/hooks';
 import { emailVerifiedSelector } from '~/store/slices/app-slice';
-import { setUserId } from '~/store/slices/app-slice';
 
 export type LoginFormDataType = {
     login: string;
@@ -37,7 +36,6 @@ export const LoginPage = memo(() => {
     });
 
     const isEmailVerified = useAppSelector(emailVerifiedSelector);
-    const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
     const alertToast = useAlertToast();
@@ -58,7 +56,6 @@ export const LoginPage = memo(() => {
     const onSubmitHandler = handleSubmit(async (data) => {
         try {
             await login(data).unwrap();
-            dispatch(setUserId('123123'));
             navigate(APP_PATHS.root);
         } catch (error) {
             const responseError = error as ErrorResponse;

@@ -121,6 +121,7 @@ export type UserRecipesResponse = {
 };
 
 export type GetProfileResponse = {
+    avatar: string;
     drafts: DraftType[];
     email: string;
     firstName: string;
@@ -137,4 +138,14 @@ export type GetStatisticsResponse = {
     likes: ReactionType[];
     bookmarks: ReactionType[];
     recommendationsCount: number;
+};
+
+export type UpdateProfileType = {
+    firstName: string;
+    lastName: string;
+};
+
+export type UpdatePasswordType = {
+    password: string;
+    newPassword: string;
 };

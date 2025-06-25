@@ -11,7 +11,7 @@ const descriptionMessages = {
 };
 
 export const defaultAlert = {
-    status: 'error' as statusType,
+    status: ALERT_STATUSES.error,
     title: NEW_RECIPE_MESSAGES.serverError,
     description: descriptionMessages.tryLater,
 };

@@ -20,6 +20,8 @@ export enum ApiEndpoints {
     GET_PROFILE = '/users/me',
     USERS_NOTE = '/users/me/note',
     GET_STATISTIC = '/statistic',
+    UPDATE_PROFILE_INFO = '/users/me/update-info',
+    UPDATE_PASSWORD = '/users/me/update-password',
 }
 
 export const METHODS = {
