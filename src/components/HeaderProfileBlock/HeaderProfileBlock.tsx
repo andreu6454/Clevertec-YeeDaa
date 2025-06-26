@@ -5,6 +5,7 @@ import { Link as ReactLink } from 'react-router';
 import LoginIcon from '~/assets/svg/login.svg';
 import { useGetProfileQuery } from '~/query/services/users';
 import { APP_PATHS } from '~/shared/constants/pathes';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 import { useAppSelector } from '~/store/hooks';
 import { userIdSelector } from '~/store/slices/app-slice';
@@ -38,7 +39,10 @@ export const HeaderProfileBlock = () => {
             height='48px'
         >
             <Link as={ReactLink} to={APP_PATHS.profile}>
-                <Avatar name={`${data?.firstName} ${data?.lastName}`} />
+                <Avatar
+                    name={`${data?.firstName} ${data?.lastName}`}
+                    src={getImageUrl(data?.photoLink)}
+                />
             </Link>
             <Link as={ReactLink} to={APP_PATHS.profile}>
                 <Box height='48px'>

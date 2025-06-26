@@ -1,6 +1,6 @@
 import { Button, Flex, Image, Text } from '@chakra-ui/react';
 
-import ModalImage from '~/assets/loginError.png';
+import ModalImage from '~/assets/breakfast.png';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CustomModal } from '~/shared/ui/CustomModal/CustomModal';

@@ -89,7 +89,7 @@ export const Steps = ({ control, register, hasError, getValues }: StepsProps) =>
         updateStepField(stepId, 'image', '');
     };
 
-    const mappedSteps = fields.map((field, index) => {
+    const mappedSteps = fields?.map((field, index) => {
         const isLast = index === fields.length - 1;
 
         const onOpenHandler = () => {

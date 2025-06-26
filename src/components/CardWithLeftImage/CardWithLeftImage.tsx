@@ -60,7 +60,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                     '0 4px 8px -2px rgba(32, 126, 0, 0.1), 0 6px 12px -2px rgba(32, 126, 0, 0.15)',
                 transition: 'all 0.3s ease',
             }}
-            width={{ base: '100%', md: '356px', xl: '100%', '2xl': '668px' }}
+            width={{ base: '100%', md: '48%', xl: '100%', '2xl': '49%' }}
             height={{ base: '128px', xl: '244px' }}
             direction='row'
             flexShrink={0}

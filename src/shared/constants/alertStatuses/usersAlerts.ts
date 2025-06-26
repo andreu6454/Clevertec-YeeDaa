@@ -5,4 +5,5 @@ export const USERS_ALERTS = {
     updatePasswordSuccess: 'Пароль успешно сохранен',
     updatePasswordError: 'Неверный старый пароль',
     tryAgain: 'Попробуйте снова',
+    deleteAccountSuccess: 'Аккаунт успешно удален',
 };

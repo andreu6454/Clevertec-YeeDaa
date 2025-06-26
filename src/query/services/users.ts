@@ -8,6 +8,7 @@ import {
     GetStatisticsResponse,
     UpdatePasswordType,
     UpdateProfileType,
+    UploadImageResponseType,
 } from '~/query/types/types';
 import { CreateNoteResponse } from '~/shared/types/bloggersTypes';
 
@@ -70,6 +71,22 @@ export const usersApi = apiSlice
                     name: EndpointNames.UPDATE_PASSWORD,
                 }),
             }),
+            deleteProfile: builder.mutation<void, void>({
+                query: () => ({
+                    url: ApiEndpoints.PROFILE,
+                    method: METHODS.delete,
+                    name: EndpointNames.DELETE_PROFILE,
+                }),
+            }),
+            uploadProfilePhoto: builder.mutation<UploadImageResponseType, FormData>({
+                query: (formData) => ({
+                    url: ApiEndpoints.UPLOAD_PHOTO,
+                    method: METHODS.post,
+                    body: formData,
+                    name: EndpointNames.UPLOAD_PHOTO,
+                }),
+                invalidatesTags: [Tags.PROFILE_INFO],
+            }),
         }),
     });
 
@@ -80,4 +97,6 @@ export const {
     useDeleteNoteMutation,
     useUpdateInfoMutation,
     useUpdatePasswordMutation,
+    useDeleteProfileMutation,
+    useUploadProfilePhotoMutation,
 } = usersApi;

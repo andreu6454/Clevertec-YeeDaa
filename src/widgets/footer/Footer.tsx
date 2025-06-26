@@ -1,19 +1,23 @@
 import { Avatar, Box, IconButton } from '@chakra-ui/icons';
 import { memo } from 'react';
 
+import { useGetProfileQuery } from '~/query/services/users';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import FooterButton from '~/widgets/footer/FooterButton/FooterButton';
 import { FooterIcon } from '~/widgets/footer/FooterIcon/FooterIcon';
 
-import AvatarIcon from '../../assets/AvatarMobile.png';
 import EditIcon from '../../assets/svg/EditIcon.svg';
 import HomeIcon from '../../assets/svg/HomeIcon.svg';
 import SearchIcon from '../../assets/svg/searchIcon.svg';
 
 const Footer = memo(() => {
     const { isMobile, isTablet } = useScreenSize();
+
+    const { data: ProfileData } = useGetProfileQuery();
+
     return (
         <footer data-test-id='footer'>
             <Box
@@ -48,9 +52,14 @@ const Footer = memo(() => {
                     title='Мой профиль'
                     icon={
                         <IconButton variant='ghost' aria-label='Главная'>
-                            <Avatar marginY='4px' boxSize='40px' src={AvatarIcon} />
+                            <Avatar
+                                marginY='4px'
+                                boxSize='40px'
+                                src={getImageUrl(ProfileData?.photoLink)}
+                            />
                         </IconButton>
                     }
+                    path={APP_PATHS.profile}
                 />
             </Box>
         </footer>

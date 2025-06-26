@@ -15,7 +15,7 @@ export const AuthorizationAndPersonalisation = () => {
             <Typography Size={TypographySizes.xl} fontWeight={700}>
                 Авторизация и персонализация
             </Typography>
-            <AvatarInput avatar={ProfileData?.avatar} />
+            <AvatarInput avatar={ProfileData?.photoLink} />
             <UpdateProfileInfo
                 firstName={ProfileData?.firstName}
                 lastName={ProfileData?.lastName}

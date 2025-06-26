@@ -23,4 +23,6 @@ export enum EndpointNames {
     DELETE_NOTE = 'DELETE_NOTE',
     UPDATE_INFO = 'update_info',
     UPDATE_PASSWORD = 'update_password',
+    DELETE_PROFILE = 'delete_profile',
+    UPLOAD_PHOTO = 'upload_photo',
 }

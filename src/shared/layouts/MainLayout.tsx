@@ -40,6 +40,7 @@ export const MainLayout = (props: MainLayoutProps) => {
                 display='flex'
                 justifyContent='space-between'
                 alignItems='center'
+                overflowX='hidden'
             >
                 {isDesktopLaptop && navbar}
                 {content}

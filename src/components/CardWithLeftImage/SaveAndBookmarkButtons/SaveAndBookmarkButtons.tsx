@@ -21,7 +21,7 @@ export const SaveAndBookmarkButtons = ({
     id,
     isBookmarked,
 }: SaveAndBookmarkButtonsProps) => {
-    const { isTabletMobile } = useScreenSize();
+    const { isTabletMobile, isMobile } = useScreenSize();
 
     const [bookmark] = useBookmarkRecipeMutation();
     const errorAlert = useAlertToast();
@@ -43,7 +43,7 @@ export const SaveAndBookmarkButtons = ({
                 <Button
                     onClick={onBookmarkHandle}
                     padding={{ base: '6px 0 6px 6px', xl: '' }}
-                    leftIcon={<Image src={BookmarkIcon} />}
+                    leftIcon={isMobile ? undefined : <Image src={BookmarkIcon} />}
                     size={{ base: 'xs', xl: 'sm' }}
                     variant='outline'
                     colorScheme='black'

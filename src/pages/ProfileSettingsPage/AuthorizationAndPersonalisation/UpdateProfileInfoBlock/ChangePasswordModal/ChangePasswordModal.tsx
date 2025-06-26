@@ -13,7 +13,7 @@ import { CustomModal } from '~/shared/ui/CustomModal/CustomModal';
 
 type ChangePasswordModalProps = {
     isOpen: boolean;
-    onCLose: () => void;
+    onClose: () => void;
 };
 export type ChangePasswordDataType = {
     oldPassword: string;
@@ -21,7 +21,7 @@ export type ChangePasswordDataType = {
     passwordConfirm: string;
 };
 
-export const ChangePasswordModal = ({ isOpen, onCLose }: ChangePasswordModalProps) => {
+export const ChangePasswordModal = ({ isOpen, onClose }: ChangePasswordModalProps) => {
     const {
         register,
         handleSubmit,
@@ -52,7 +52,7 @@ export const ChangePasswordModal = ({ isOpen, onCLose }: ChangePasswordModalProp
                 false,
             );
             reset();
-            onCLose();
+            onClose();
         } catch (error) {
             const responseError = error as ErrorResponse;
             const statusCode = Number(responseError.status);
@@ -74,7 +74,7 @@ export const ChangePasswordModal = ({ isOpen, onCLose }: ChangePasswordModalProp
     });
 
     return (
-        <CustomModal onClose={onCLose} isOpen={isOpen} width={{ base: '316px', xl: '396px' }}>
+        <CustomModal onClose={onClose} isOpen={isOpen} width={{ base: '316px', xl: '396px' }}>
             <form onSubmit={onSubmitHandler}>
                 <VStack width='100%' padding='32px' alignItems='center' gap='24px'>
                     <Text fontWeight='700' fontSize='24px' lineHeight='133%' textAlign='center'>

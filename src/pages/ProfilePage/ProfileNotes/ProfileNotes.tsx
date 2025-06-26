@@ -74,7 +74,7 @@ export const ProfileNotes = ({ notes }: ProfileNotesProps) => {
                     Новая заметка
                 </Button>
             </Flex>
-            <Flex gap='16px' flexWrap='wrap'>
+            <Flex gap='16px' flexWrap='wrap' alignItems='center'>
                 {notesForRender}
             </Flex>
             <CreateNoteDrawer isOpen={isOpen} onClose={onClose} />

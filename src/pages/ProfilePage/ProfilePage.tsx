@@ -15,6 +15,7 @@ const ProfilePage = () => {
         <VStack alignItems='flex-start' gap='40px' width='100%'>
             <VStack gap='24px' alignItems='flex-start' width='100%'>
                 <ProfileTitle
+                    photoLink={ProfileData.photoLink}
                     firstName={ProfileData.firstName}
                     lastName={ProfileData.lastName}
                     login={ProfileData.login}

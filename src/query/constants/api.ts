@@ -22,6 +22,8 @@ export enum ApiEndpoints {
     GET_STATISTIC = '/statistic',
     UPDATE_PROFILE_INFO = '/users/me/update-info',
     UPDATE_PASSWORD = '/users/me/update-password',
+    PROFILE = '/profile',
+    UPLOAD_PHOTO = '/users/me/photo',
 }
 
 export const METHODS = {

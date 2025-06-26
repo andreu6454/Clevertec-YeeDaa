@@ -81,7 +81,7 @@ export const UpdateProfileInfo = (props: UserInputDataType) => {
                 >
                     Сохранить изменения
                 </Button>
-                <ChangePasswordModal isOpen={isOpen} onCLose={onClose} />
+                <ChangePasswordModal isOpen={isOpen} onClose={onClose} />
             </Flex>
         </form>
     );

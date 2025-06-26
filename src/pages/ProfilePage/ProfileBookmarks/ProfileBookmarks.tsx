@@ -34,7 +34,7 @@ export const ProfileBookmarks = ({ userId }: ProfileBookmarksProps) => {
     return (
         <Flex direction='column' gap='16px'>
             <TextWithCount text='Мои закладки' count={bookmarks?.length || 0} />
-            <Flex gap='16px' flexWrap='wrap'>
+            <Flex gap='16px' flexWrap='wrap' width='100%'>
                 {bookmarksForRender}
             </Flex>
         </Flex>

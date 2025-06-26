@@ -39,7 +39,7 @@ export const Ingredients = ({
         append({ title: '', count: 0, measureUnit: '' });
     };
 
-    const mappedFields = fields.map((field, index) => {
+    const mappedFields = fields?.map((field, index) => {
         const isLast = index === fields.length - 1;
 
         return (

@@ -121,7 +121,7 @@ export type UserRecipesResponse = {
 };
 
 export type GetProfileResponse = {
-    avatar: string;
+    photoLink: string;
     drafts: DraftType[];
     email: string;
     firstName: string;
@@ -148,4 +148,8 @@ export type UpdateProfileType = {
 export type UpdatePasswordType = {
     password: string;
     newPassword: string;
+};
+
+export type UploadImageResponseType = {
+    photoLink: string;
 };
