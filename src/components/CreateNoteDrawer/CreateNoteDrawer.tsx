@@ -14,6 +14,7 @@ type CreateNoteDrawerProps = {
 
 export const CreateNoteDrawer = ({ isOpen, onClose }: CreateNoteDrawerProps) => {
     const [note, setNote] = useState('');
+    const [error, setError] = useState(false);
     const [createNote] = useCreateNoteMutation();
 
     const alert = useAlertToast();
@@ -24,10 +25,11 @@ export const CreateNoteDrawer = ({ isOpen, onClose }: CreateNoteDrawerProps) => 
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setNote(e.currentTarget.value);
+        setError(false);
     };
 
     const onCreateNote = async () => {
-        if (note.length > 30 && note.length < 500) {
+        if (note.length > 10 && note.length < 160) {
             try {
                 await createNote(note);
                 alert(
@@ -37,11 +39,14 @@ export const CreateNoteDrawer = ({ isOpen, onClose }: CreateNoteDrawerProps) => 
                     },
                     false,
                 );
+                setNote('');
                 onClose();
             } catch {
                 alert(defaultAlert, false);
             }
+            return;
         }
+        setError(true);
     };
 
     return (
@@ -61,6 +66,7 @@ export const CreateNoteDrawer = ({ isOpen, onClose }: CreateNoteDrawerProps) => 
                 </Flex>
                 <Flex flexDirection='column' justify='space-between' height='100%'>
                     <Textarea
+                        borderColor={error ? '#e53e3e' : '#e2e8f0'}
                         value={note}
                         onChange={onChangeHandler}
                         placeholder='Максимально 160 символов'

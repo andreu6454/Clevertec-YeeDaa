@@ -19,6 +19,7 @@ export type BloggerType = {
 
 export type BloggerInfoType = {
     _id: string;
+    photoLink: string;
     drafts: NullableNewRecipesDataType[];
     email: string;
     firstName: string;

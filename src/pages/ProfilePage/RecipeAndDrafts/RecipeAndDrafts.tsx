@@ -94,7 +94,7 @@ export const RecipeAndDrafts = ({ drafts, userId }: RecipeAndDraftsProps) => {
             <Flex gap='16px' flexWrap='wrap'>
                 {[...draftsForRender, ...recipesForRender].slice(0, limit)}
             </Flex>
-            {limit === 8 && (
+            {limit === 8 && !!recipes?.length && (
                 <Flex width='100%' justifyContent='center'>
                     <Button
                         width='149px'

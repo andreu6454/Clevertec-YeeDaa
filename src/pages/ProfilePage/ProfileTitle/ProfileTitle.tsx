@@ -12,15 +12,21 @@ type ProfileTitleProps = {
     firstName: string;
     lastName: string;
     login: string;
+    subscribersCount: number;
     photoLink?: string;
 };
 
-export const ProfileTitle = ({ firstName, lastName, login, photoLink }: ProfileTitleProps) => {
+export const ProfileTitle = ({
+    firstName,
+    lastName,
+    login,
+    photoLink,
+    subscribersCount,
+}: ProfileTitleProps) => {
     const { data: StatisticData } = useGetStatisticQuery();
 
     const navigate = useNavigate();
 
-    const likes = StatisticData?.likes?.reduce((acc, item) => acc + item.count, 0);
     const bookmarks = StatisticData?.bookmarks?.reduce((acc, item) => acc + item.count, 0);
 
     const onClickHandler = () => {
@@ -55,7 +61,11 @@ export const ProfileTitle = ({ firstName, lastName, login, photoLink }: ProfileT
                 </Typography>
                 <HStack>
                     <ReactionCount count={bookmarks || 0} size='small' variant='bookmark' />
-                    <ReactionCount count={likes || 0} size='small' variant='peopleUnfilled' />
+                    <ReactionCount
+                        count={subscribersCount || 0}
+                        size='small'
+                        variant='peopleUnfilled'
+                    />
                 </HStack>
             </VStack>
         </Flex>

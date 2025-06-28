@@ -4,6 +4,7 @@ import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
 import {
+    AllUsersResponse,
     GetProfileResponse,
     GetStatisticsResponse,
     UpdatePasswordType,
@@ -87,6 +88,14 @@ export const usersApi = apiSlice
                 }),
                 invalidatesTags: [Tags.PROFILE_INFO],
             }),
+            getAllUsers: builder.query<AllUsersResponse, void>({
+                query: () => ({
+                    url: ApiEndpoints.GET_USERS,
+                    method: METHODS.get,
+                    apiGroupName: ApiGroupNames.USERS,
+                    name: EndpointNames.GET_USERS,
+                }),
+            }),
         }),
     });
 
@@ -99,4 +108,5 @@ export const {
     useUpdatePasswordMutation,
     useDeleteProfileMutation,
     useUploadProfilePhotoMutation,
+    useGetAllUsersQuery,
 } = usersApi;

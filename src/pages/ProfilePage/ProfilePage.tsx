@@ -19,6 +19,7 @@ const ProfilePage = () => {
                     firstName={ProfileData.firstName}
                     lastName={ProfileData.lastName}
                     login={ProfileData.login}
+                    subscribersCount={ProfileData?.subscribers?.length}
                 />
                 <RecipeAndDrafts drafts={ProfileData.drafts} userId={ProfileData._id} />
             </VStack>

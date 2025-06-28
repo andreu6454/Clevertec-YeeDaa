@@ -8,6 +8,7 @@ import { RecipeIngredients } from '~/pages/RecipePage/RecipeIngredients/RecipeIn
 import { RecipeSteps } from '~/pages/RecipePage/RecipeSteps/RecipeSteps';
 import { RecipeTitle } from '~/pages/RecipePage/RecipeTitle/RecipeTitle';
 import { useGetRecipeByIdQuery } from '~/query/services/recipes';
+import { useGetAllUsersQuery } from '~/query/services/users';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
@@ -15,24 +16,10 @@ import { setAppError } from '~/store/slices/app-slice';
 import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 import { NewRecipes } from '~/widgets/NewRecipes/NewRecipes';
 
-const paddings = {
-    Desktop: '56px',
-    Laptop: '56px',
-    Tablet: '16px',
-    Mobile: '16px',
-};
-
-const gaps = {
-    Desktop: '40px',
-    Laptop: '40px',
-    Tablet: '24px',
-    Mobile: '24px',
-};
-
 const RecipePage = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { screenSize, isMobile } = useScreenSize();
+    const { screenSize } = useScreenSize();
 
     const { recipeId } = useParams();
     const categories = useAppSelector(categoriesSelector);
@@ -41,6 +28,9 @@ const RecipePage = () => {
     const { data, isLoading, isError } = useGetRecipeByIdQuery(recipeId || '', {
         skip: !recipeId,
     });
+
+    const { data: AllUsers } = useGetAllUsersQuery();
+    const recipeAuthor = AllUsers?.filter((el) => el.id === data?.authorId)[0];
 
     const categoriesForRender = Array.from(
         new Set(
@@ -52,7 +42,7 @@ const RecipePage = () => {
 
     if (isLoading) return <FullScreenSpinner />;
 
-    if (!data) return null;
+    if (!data || !recipeAuthor) return null;
     if (isError) {
         dispatch(setAppError('error'));
         navigate(-1);
@@ -60,11 +50,11 @@ const RecipePage = () => {
 
     return (
         <Flex
-            paddingTop={paddings[screenSize]}
+            paddingTop={{ base: '16px', xl: '56px' }}
             width='100%'
             direction='column'
             alignItems='center'
-            gap={gaps[screenSize]}
+            gap={{ base: '24px', xl: '40px' }}
         >
             <RecipeTitle
                 subCategoryId={data?.categoriesIds[0]}
@@ -78,14 +68,19 @@ const RecipePage = () => {
                 image={data.image}
                 category={categoriesForRender}
             />
-            <RecipeCalories screenSize={screenSize} nutritionValue={data.nutritionValue} />
+            <RecipeCalories nutritionValue={data.nutritionValue} />
             <RecipeIngredients
                 portions={Number(data.portions)}
                 screenSize={screenSize}
                 ingredients={data.ingredients}
             />
             <RecipeSteps screenSize={screenSize} steps={data.steps} />
-            <RecipeAuthor isMobile={isMobile} screenSize={screenSize} />
+            <RecipeAuthor
+                fullName={`${recipeAuthor?.firstName} ${recipeAuthor?.lastName}`}
+                login={recipeAuthor?.login}
+                avatar={recipeAuthor?.photo}
+                id={recipeAuthor?.id}
+            />
             <NewRecipes />
         </Flex>
     );

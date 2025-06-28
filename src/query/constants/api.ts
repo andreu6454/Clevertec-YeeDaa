@@ -24,6 +24,7 @@ export enum ApiEndpoints {
     UPDATE_PASSWORD = '/users/me/update-password',
     PROFILE = '/profile',
     UPLOAD_PHOTO = '/users/me/photo',
+    GET_USERS = '/users/all',
 }
 
 export const METHODS = {

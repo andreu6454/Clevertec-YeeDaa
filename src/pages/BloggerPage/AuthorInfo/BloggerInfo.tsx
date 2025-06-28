@@ -4,6 +4,7 @@ import { AuthorInfoLoader } from '~/pages/BloggerPage/AuthorInfo/AuthorInfoLoade
 import { useToggleSubscriptionMutation } from '~/query/services/bloggers';
 import { BloggerResponse } from '~/query/types/types';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { SubscribeButton } from '~/shared/ui/SubscribeButton/SubscribeButton';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
@@ -34,7 +35,11 @@ export const BloggerInfo = ({ bloggerData, bloggerId, userId }: AuthorInfoProps)
             flexDirection='column'
         >
             <Flex gap='24px' flexDirection={{ base: 'column', md: 'row' }} alignItems='center'>
-                <Avatar name={bloggerName} size={{ base: 'xl', xl: '2xl' }} />
+                <Avatar
+                    name={bloggerName}
+                    size={{ base: 'xl', xl: '2xl' }}
+                    src={getImageUrl(bloggerData?.bloggerInfo?.photoLink)}
+                />
                 <VStack alignItems={{ base: 'center', md: 'flex-start' }} gap='12px'>
                     <Text
                         data-test-id={DATA_TEST_IDS.bloggerUserInfoName}

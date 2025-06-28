@@ -1,7 +1,7 @@
 import { BloggerInfoType, BloggerType, NoteType } from '~/shared/types/bloggersTypes';
 import { CategoryType, SubCategoryType } from '~/shared/types/categoryTypes';
-import { DraftType, NullableNewRecipesDataType, Recipe } from '~/shared/types/recipeTypes';
-import { ReactionType } from '~/shared/types/usersTypes';
+import { NullableNewRecipesDataType, Recipe } from '~/shared/types/recipeTypes';
+import { ProfileType, ReactionType, UserType } from '~/shared/types/usersTypes';
 
 export type Meta = {
     total: number;
@@ -120,24 +120,13 @@ export type UserRecipesResponse = {
     userId: string;
 };
 
-export type GetProfileResponse = {
-    photoLink: string;
-    drafts: DraftType[];
-    email: string;
-    firstName: string;
-    lastName: string;
-    login: string;
-    notes: NoteType[];
-    recipesIds: string[];
-    subscribers: string[];
-    subscriptions: string[];
-    _id: string;
-};
+export type GetProfileResponse = ProfileType;
 
 export type GetStatisticsResponse = {
     likes: ReactionType[];
     bookmarks: ReactionType[];
     recommendationsCount: number;
+    recipesWithRecommendations: string[];
 };
 
 export type UpdateProfileType = {
@@ -153,3 +142,5 @@ export type UpdatePasswordType = {
 export type UploadImageResponseType = {
     photoLink: string;
 };
+
+export type AllUsersResponse = UserType[];

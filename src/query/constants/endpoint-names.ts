@@ -25,4 +25,5 @@ export enum EndpointNames {
     UPDATE_PASSWORD = 'update_password',
     DELETE_PROFILE = 'delete_profile',
     UPLOAD_PHOTO = 'upload_photo',
+    GET_USERS = 'get_users',
 }

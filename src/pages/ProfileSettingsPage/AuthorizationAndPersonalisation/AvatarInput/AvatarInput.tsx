@@ -38,7 +38,7 @@ export const AvatarInput = ({ avatar }: AvatarInputProps) => {
     };
 
     return (
-        <>
+        <Flex justifyContent={{ base: 'center', xl: 'flex-start' }}>
             <Avatar size='2xl' src={avatarSrc} backgroundColor='rgba(0, 0, 0, 0.24)'>
                 <Input
                     type='file'
@@ -82,6 +82,6 @@ export const AvatarInput = ({ avatar }: AvatarInputProps) => {
                 isOpen={isOpen}
                 onClose={onCloseHandler}
             />
-        </>
+        </Flex>
     );
 };
