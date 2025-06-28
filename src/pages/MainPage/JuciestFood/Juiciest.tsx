@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
 import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
 import { useGetRecipesQuery } from '~/query/services/recipes';
+import { useGetAllUsersQuery } from '~/query/services/users';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
@@ -32,6 +33,7 @@ export const Juiciest = () => {
         page: 1,
         limit: 8,
     });
+    const { data: allUsers } = useGetAllUsersQuery();
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 
@@ -46,6 +48,9 @@ export const Juiciest = () => {
     const mappedRecipes = data?.data.map((recipe, index) => {
         const category = getCategoryById(categories, subCategories, recipe.categoriesIds[0]);
 
+        let recommendedBy;
+        let recommendedByAvatar;
+
         const onClickHandler = () => {
             navigate(
                 getNavigateLinkToRecipe(
@@ -56,6 +61,13 @@ export const Juiciest = () => {
                 ),
             );
         };
+
+        if (recipe?.recommendedByUserId?.length) {
+            const user = allUsers?.filter((el) => el.id === recipe.recommendedByUserId[0])[0];
+            if (!user) return;
+            recommendedBy = `${user?.firstName} ${user?.lastName}`;
+            recommendedByAvatar = user.photo;
+        }
         return (
             <CardWithLeftImage
                 index={index}
@@ -63,6 +75,8 @@ export const Juiciest = () => {
                 key={recipe.title + index}
                 recipe={recipe}
                 categoryTitle={category?.category || ''}
+                recommendedBy={recommendedBy}
+                recommendedByAvatar={recommendedByAvatar}
             />
         );
     });

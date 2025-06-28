@@ -25,6 +25,7 @@ export enum ApiEndpoints {
     PROFILE = '/profile',
     UPLOAD_PHOTO = '/users/me/photo',
     GET_USERS = '/users/all',
+    RECOMMEND_RECIPE = '/recipe/recommend/',
 }
 
 export const METHODS = {

@@ -106,6 +106,15 @@ export const recipeApi = apiSlice
                 }),
                 providesTags: [Tags.RECIPES_BY_USERID],
             }),
+            recommendRecipe: builder.mutation<void, string>({
+                query: (id) => ({
+                    url: ApiEndpoints.RECOMMEND_RECIPE + id,
+                    method: METHODS.post,
+                    credentials: 'include',
+                    apiGroupName: ApiGroupNames.RECIPES,
+                }),
+                invalidatesTags: [Tags.RECIPE_BY_ID],
+            }),
         }),
     });
 
@@ -117,4 +126,5 @@ export const {
     useBookmarkRecipeMutation,
     useLikeRecipeMutation,
     useGetUserRecipesByIdQuery,
+    useRecommendRecipeMutation,
 } = recipeApi;

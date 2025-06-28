@@ -126,7 +126,7 @@ export type GetStatisticsResponse = {
     likes: ReactionType[];
     bookmarks: ReactionType[];
     recommendationsCount: number;
-    recipesWithRecommendations: string[];
+    recipesWithRecommendations: Recipe[];
 };
 
 export type UpdateProfileType = {

@@ -4,14 +4,14 @@ import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { ReactionType } from '~/shared/types/usersTypes';
 import { StatisticCount } from '~/shared/ui/StatisticCount/StatisticCount';
 import { getGroupByWeekStats } from '~/shared/utils/getGroupByWeekStats';
+import { getReactionCount } from '~/shared/utils/getReactionCount';
 
 type LikesStatsProps = {
     likes: ReactionType[];
 };
 
 export const LikesStats = ({ likes }: LikesStatsProps) => {
-    const likesCount = likes?.reduce((acc, item) => acc + item.count, 0);
-
+    const likesCount = getReactionCount(likes);
     const gropedData = getGroupByWeekStats(likes);
 
     return (

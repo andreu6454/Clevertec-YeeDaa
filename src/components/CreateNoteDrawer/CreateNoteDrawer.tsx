@@ -5,6 +5,7 @@ import { ChangeEvent, useState } from 'react';
 import CloseIcon from '~/assets/svg/close.svg';
 import { useCreateNoteMutation } from '~/query/services/users';
 import { defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 
 type CreateNoteDrawerProps = {
@@ -50,7 +51,12 @@ export const CreateNoteDrawer = ({ isOpen, onClose }: CreateNoteDrawerProps) => 
     };
 
     return (
-        <Drawer size={{ base: 'xs', xl: 'sm' }} isOpen={isOpen} onClose={onClose}>
+        <Drawer
+            data-test-id={DATA_TEST_IDS.filterDrawer}
+            size={{ base: 'xs', xl: 'sm' }}
+            isOpen={isOpen}
+            onClose={onClose}
+        >
             <DrawerOverlay />
             <DrawerContent padding='32px' gap='16px'>
                 <Flex paddingBottom='16px' justifyContent='space-between' alignItems='center'>

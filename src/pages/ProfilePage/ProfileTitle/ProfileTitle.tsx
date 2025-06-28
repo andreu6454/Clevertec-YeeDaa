@@ -3,6 +3,7 @@ import { Avatar, Flex, HStack, Text, VStack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 import { useGetStatisticQuery } from '~/query/services/users';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
@@ -35,6 +36,7 @@ export const ProfileTitle = ({
 
     return (
         <Flex
+            data-test-id={DATA_TEST_IDS.userProfileBox}
             flexDirection={{ base: 'column', md: 'row' }}
             alignItems='center'
             paddingY='16px'
@@ -43,6 +45,7 @@ export const ProfileTitle = ({
         >
             <Avatar size='2xl' name={`${firstName} ${lastName}`} src={getImageUrl(photoLink)} />
             <IconButton
+                data-test-id={DATA_TEST_IDS.settingsButton}
                 size='lg'
                 top={{ base: 20, xl: 24 }}
                 right={{ base: 4, xl: 200 }}
@@ -53,10 +56,20 @@ export const ProfileTitle = ({
                 position='absolute'
             />
             <VStack alignItems={{ base: 'center', md: 'flex-start' }} gap='12px' width='100%'>
-                <Text textAlign='center' fontWeight='700' fontSize='48px' lineHeight='100%'>
+                <Text
+                    data-test-id={DATA_TEST_IDS.userProfileName}
+                    textAlign='center'
+                    fontWeight='700'
+                    fontSize='48px'
+                    lineHeight='100%'
+                >
                     {`${firstName} ${lastName}`}
                 </Text>
-                <Typography Size={TypographySizes.sm} color='rgba(0, 0, 0, 0.64)'>
+                <Typography
+                    data-test-id={DATA_TEST_IDS.userProfileLogin}
+                    Size={TypographySizes.sm}
+                    color='rgba(0, 0, 0, 0.64)'
+                >
                     {`@${login}`}
                 </Typography>
                 <HStack>

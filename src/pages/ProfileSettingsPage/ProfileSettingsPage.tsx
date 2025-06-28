@@ -4,13 +4,16 @@ import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpin
 import { AboutProject } from '~/pages/ProfileSettingsPage/AboutProject/AboutProject';
 import { AuthorizationAndPersonalisation } from '~/pages/ProfileSettingsPage/AuthorizationAndPersonalisation/AuthorizationAndPersonalisation';
 import { DeleteAccount } from '~/pages/ProfileSettingsPage/DeleteAccount/DeleteAccount';
+import { Recommendations } from '~/pages/ProfileSettingsPage/Recommendations/Recommendations';
 import { Statistic } from '~/pages/ProfileSettingsPage/Statistic/Statistic';
-import { useGetProfileQuery } from '~/query/services/users';
+import { useGetProfileQuery, useGetStatisticQuery } from '~/query/services/users';
 
 const ProfileSettingsPage = () => {
     const { data: ProfileData, isLoading } = useGetProfileQuery();
+    const { data: StatisticData, isLoading: StatisticLoading } = useGetStatisticQuery();
 
-    if (isLoading || !ProfileData) return <FullScreenSpinner />;
+    if (isLoading || !ProfileData || !StatisticData || StatisticLoading)
+        return <FullScreenSpinner />;
 
     return (
         <Flex
@@ -20,7 +23,8 @@ const ProfileSettingsPage = () => {
             width='100%'
         >
             <AuthorizationAndPersonalisation ProfileData={ProfileData} />
-            <Statistic subscribers={ProfileData?.subscribers} />
+            <Statistic subscribers={ProfileData?.subscribers} statistic={StatisticData} />
+            <Recommendations statistic={StatisticData} subscribersCount={101} />
             <AboutProject />
             <DeleteAccount />
         </Flex>

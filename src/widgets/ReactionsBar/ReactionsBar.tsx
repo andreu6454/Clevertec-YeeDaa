@@ -1,9 +1,11 @@
 import { Box } from '@chakra-ui/icons';
 
 import { useGetProfileQuery, useGetStatisticQuery } from '~/query/services/users';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { checkEnableRecommendation } from '~/shared/utils/checkEnableRecommendation';
+import { getReactionCount } from '~/shared/utils/getReactionCount';
 
 export const ReactionsBar = () => {
     const { isDesktop, isTablet, isLaptop } = useScreenSize();
@@ -12,8 +14,8 @@ export const ReactionsBar = () => {
     const { data: StatisticData } = useGetStatisticQuery();
     const { data: ProfileData } = useGetProfileQuery();
 
-    const bookmarks = StatisticData?.bookmarks?.reduce((acc, item) => acc + item.count, 0) || 0;
-    const likes = StatisticData?.likes?.reduce((acc, item) => acc + item.count, 0) || 0;
+    const bookmarks = getReactionCount(StatisticData?.bookmarks || []);
+    const likes = getReactionCount(StatisticData?.likes || []);
     const subscribersCount = ProfileData?.subscribers?.length || 0;
     const enableRecommendation = checkEnableRecommendation(subscribersCount, bookmarks);
 
@@ -42,7 +44,11 @@ export const ReactionsBar = () => {
     }
 
     return (
-        <Box display='flex' padding={paddingsReactionBox}>
+        <Box
+            data-test-id={DATA_TEST_IDS.userStatsBlock}
+            display='flex'
+            padding={paddingsReactionBox}
+        >
             {enableRecommendation && (
                 <ReactionCount
                     size='small'

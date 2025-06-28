@@ -2,6 +2,7 @@ import { Flex } from '@chakra-ui/react';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
 import { useGetUserRecipesByIdQuery } from '~/query/services/recipes';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import TextWithCount from '~/shared/ui/TextWithCount/TextWithCount';
 import { useAppSelector } from '~/store/hooks';
@@ -32,7 +33,7 @@ export const ProfileBookmarks = ({ userId }: ProfileBookmarksProps) => {
     });
 
     return (
-        <Flex direction='column' gap='16px'>
+        <Flex data-test-id={DATA_TEST_IDS.userProfileBookmarks} direction='column' gap='16px'>
             <TextWithCount text='Мои закладки' count={bookmarks?.length || 0} />
             <Flex gap='16px' flexWrap='wrap' width='100%'>
                 {bookmarksForRender}

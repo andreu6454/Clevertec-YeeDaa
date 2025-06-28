@@ -3,6 +3,8 @@ import { Link } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { Link as ReactLink } from 'react-router';
 
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+
 interface FooterButtonProps {
     icon: ReactNode;
     title: string;
@@ -34,6 +36,7 @@ const FooterButton = (props: FooterButtonProps) => {
             </Box>
             {isActive ? (
                 <Link
+                    data-test-id={DATA_TEST_IDS.footerProfileButton}
                     as={ReactLink}
                     to={path}
                     fontWeight={500}
@@ -46,6 +49,7 @@ const FooterButton = (props: FooterButtonProps) => {
                 </Link>
             ) : (
                 <Link
+                    data-test-id={DATA_TEST_IDS.footerProfileButton}
                     as={ReactLink}
                     to={path}
                     fontWeight={400}

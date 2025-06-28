@@ -5,6 +5,7 @@ export type Recipe = {
     image: string;
     authorId: string;
     categoriesIds: string[];
+    recommendedByUserId: string[];
     steps: StepType[];
     nutritionValue: NutritionValueType;
     ingredients: IngredientType[];

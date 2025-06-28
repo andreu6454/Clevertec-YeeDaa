@@ -7,6 +7,7 @@ import { RecipeCalories } from '~/pages/RecipePage/RecipeCalories/RecipeCalories
 import { RecipeIngredients } from '~/pages/RecipePage/RecipeIngredients/RecipeIngredients';
 import { RecipeSteps } from '~/pages/RecipePage/RecipeSteps/RecipeSteps';
 import { RecipeTitle } from '~/pages/RecipePage/RecipeTitle/RecipeTitle';
+import { RecommendationButton } from '~/pages/RecipePage/RecommendationButton/RecommendationButton';
 import { useGetRecipeByIdQuery } from '~/query/services/recipes';
 import { useGetAllUsersQuery } from '~/query/services/users';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
@@ -30,6 +31,7 @@ const RecipePage = () => {
     });
 
     const { data: AllUsers } = useGetAllUsersQuery();
+
     const recipeAuthor = AllUsers?.filter((el) => el.id === data?.authorId)[0];
 
     const categoriesForRender = Array.from(
@@ -80,6 +82,10 @@ const RecipePage = () => {
                 login={recipeAuthor?.login}
                 avatar={recipeAuthor?.photo}
                 id={recipeAuthor?.id}
+            />
+            <RecommendationButton
+                recipeId={data?._id}
+                recommendedByUserId={data?.recommendedByUserId}
             />
             <NewRecipes />
         </Flex>

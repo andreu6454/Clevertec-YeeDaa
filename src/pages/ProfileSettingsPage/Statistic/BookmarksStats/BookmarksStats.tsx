@@ -4,12 +4,13 @@ import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { ReactionType } from '~/shared/types/usersTypes';
 import { StatisticCount } from '~/shared/ui/StatisticCount/StatisticCount';
 import { getGroupByWeekStats } from '~/shared/utils/getGroupByWeekStats';
+import { getReactionCount } from '~/shared/utils/getReactionCount';
 
 type BookmarksStatsProps = {
     bookmarks: ReactionType[];
 };
 export const BookmarksStats = ({ bookmarks }: BookmarksStatsProps) => {
-    const bookmarksCount = bookmarks?.reduce((acc, item) => acc + item.count, 0);
+    const bookmarksCount = getReactionCount(bookmarks);
     const gropedData = getGroupByWeekStats(bookmarks);
 
     return (

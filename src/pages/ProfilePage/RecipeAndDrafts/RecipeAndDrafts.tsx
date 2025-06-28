@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
 import { useGetUserRecipesByIdQuery } from '~/query/services/recipes';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { DraftType } from '~/shared/types/recipeTypes';
@@ -86,7 +87,12 @@ export const RecipeAndDrafts = ({ drafts, userId }: RecipeAndDraftsProps) => {
 
     if (!recipes) return null;
     return (
-        <Flex flexDirection='column' gap='16px' width='100%'>
+        <Flex
+            data-test-id={DATA_TEST_IDS.userProfileRecipes}
+            flexDirection='column'
+            gap='16px'
+            width='100%'
+        >
             <HStack gap='32px'>
                 <TextWithCount text='Мои рецепты' count={recipesCount || 0} />
                 <TextWithCount text='Черновики' count={draftsCount} />

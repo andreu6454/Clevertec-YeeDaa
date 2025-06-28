@@ -1,5 +1,7 @@
 import { Button, Flex } from '@chakra-ui/react';
 
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
+
 type DraftEditButtonProps = {
     isDraft: boolean;
     id: string;
@@ -14,6 +16,7 @@ export const EditButton = ({ isDraft, onEditHandler }: DraftEditButtonProps) => 
     return (
         <Flex justifyContent='flex-end'>
             <Button
+                data-test-id={DATA_TEST_IDS.profileEditButton}
                 onClick={onClickHandler}
                 size={{ base: 'xs', xl: 'sm' }}
                 variant={isDraft ? 'solid' : 'outline'}

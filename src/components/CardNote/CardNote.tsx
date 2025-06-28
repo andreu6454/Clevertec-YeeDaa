@@ -68,8 +68,8 @@ export const CardNote = (props: NoteItemProps) => {
                     </Typography>
                     {isAuthor && (
                         <IconButton
-                            // data-test-id={`recipe-steps-remove-button-${index}`}
-                            aria-label='Удалить ингредиент'
+                            data-test-id={DATA_TEST_IDS.noteDeleteButton}
+                            aria-label='Удалить заметку'
                             icon={<Image src={TrashBucketIcon} />}
                             onClick={onDeleteHandler}
                             colorScheme='transparent'

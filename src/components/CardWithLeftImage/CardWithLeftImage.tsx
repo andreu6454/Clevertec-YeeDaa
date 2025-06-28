@@ -7,6 +7,7 @@ import { DraftBadge } from '~/components/CardWithLeftImage/DraftBadge/DraftBadge
 import { EditButton } from '~/components/CardWithLeftImage/EditButton/EditButton';
 import { RecipeBadgeAndReactions } from '~/components/CardWithLeftImage/RecipeBadgeAndReactions/RecipeBadgeAndReactions';
 import { SaveAndBookmarkButtons } from '~/components/CardWithLeftImage/SaveAndBookmarkButtons/SaveAndBookmarkButtons';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import { DraftType, Recipe } from '~/shared/types/recipeTypes';
@@ -23,6 +24,8 @@ interface CardWithLeftImageProps {
     isDraft?: boolean;
     isAuthor?: boolean;
     isBookmarked?: boolean;
+    recommendedBy?: string;
+    recommendedByAvatar?: string;
 }
 
 export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
@@ -34,6 +37,8 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
         isDraft = false,
         isAuthor = false,
         isBookmarked = false,
+        recommendedBy,
+        recommendedByAvatar,
     } = props;
 
     const { isTabletMobile } = useScreenSize();
@@ -54,7 +59,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
 
     return (
         <Card
-            data-test-id={`food-card-${index}`}
+            data-test-id={`${DATA_TEST_IDS.foodCard}${index}`}
             _hover={{
                 boxShadow:
                     '0 4px 8px -2px rgba(32, 126, 0, 0.1), 0 6px 12px -2px rgba(32, 126, 0, 0.15)',
@@ -77,6 +82,15 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                     borderLeftRadius='8px'
                     flexShrink={0}
                 >
+                    {!isTabletMobile && recommendedBy && (
+                        <CardBadge
+                            size='medium'
+                            type='recommendation'
+                            bgColor='green'
+                            avatar={getImageUrl(recommendedByAvatar)}
+                            name={recommendedBy}
+                        />
+                    )}
                     {isTabletMobile && (
                         <CardBadge
                             size='small'

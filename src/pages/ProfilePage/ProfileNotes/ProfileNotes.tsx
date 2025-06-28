@@ -6,6 +6,7 @@ import { CreateNoteDrawer } from '~/components/CreateNoteDrawer/CreateNoteDrawer
 import { useDeleteNoteMutation } from '~/query/services/users';
 import { ALERT_STATUSES, defaultAlert } from '~/shared/constants/alertStatuses/defaultAlert';
 import { USERS_ALERTS } from '~/shared/constants/alertStatuses/usersAlerts';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { NoteType } from '~/shared/types/bloggersTypes';
 import TextWithCount from '~/shared/ui/TextWithCount/TextWithCount';
@@ -55,6 +56,7 @@ export const ProfileNotes = ({ notes }: ProfileNotesProps) => {
 
     return (
         <Flex
+            data-test-id={DATA_TEST_IDS.blogNotesBox}
             direction='column'
             borderRadius='16px'
             backgroundColor='rgba(0, 0, 0, 0.04)'
@@ -74,7 +76,12 @@ export const ProfileNotes = ({ notes }: ProfileNotesProps) => {
                     Новая заметка
                 </Button>
             </Flex>
-            <Flex gap='16px' flexWrap='wrap' alignItems='center'>
+            <Flex
+                data-test-id={DATA_TEST_IDS.bloggerUserNotesGrid}
+                gap='16px'
+                flexWrap='wrap'
+                alignItems='center'
+            >
                 {notesForRender}
             </Flex>
             <CreateNoteDrawer isOpen={isOpen} onClose={onClose} />

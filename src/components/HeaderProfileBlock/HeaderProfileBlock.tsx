@@ -4,6 +4,7 @@ import { Link as ReactLink } from 'react-router';
 
 import LoginIcon from '~/assets/svg/login.svg';
 import { useGetProfileQuery } from '~/query/services/users';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
@@ -44,7 +45,11 @@ export const HeaderProfileBlock = () => {
                     src={getImageUrl(data?.photoLink)}
                 />
             </Link>
-            <Link as={ReactLink} to={APP_PATHS.profile}>
+            <Link
+                data-test-id={DATA_TEST_IDS.headerProfileButton}
+                as={ReactLink}
+                to={APP_PATHS.profile}
+            >
                 <Box height='48px'>
                     <Text fontWeight={500} fontSize='18px' lineHeight='156%' color='black'>
                         {`${data?.firstName} ${data?.lastName}`}
