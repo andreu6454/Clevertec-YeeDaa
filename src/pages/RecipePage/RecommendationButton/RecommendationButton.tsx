@@ -1,4 +1,5 @@
 import { Button, Image } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
 import RecommendationIcon from '~/assets/svg/recommendation.svg';
 import RecommendationYellowIcon from '~/assets/svg/recommendationYellow.svg';
@@ -18,10 +19,20 @@ export const RecommendationButton = ({
     recipeId,
     recommendedByUserId,
 }: RecommendationButtonProps) => {
-    const { data: ProfileData } = useGetProfileQuery();
-    const { data: StatisticData } = useGetStatisticQuery();
+    const [isRecommended, setIsRecommended] = useState(false);
+
+    const { data: ProfileData, isLoading: isLoadingProfileData } = useGetProfileQuery();
+    const { data: StatisticData, isLoading: isLoadingStatisticData } = useGetStatisticQuery();
     const [recommend] = useRecommendRecipeMutation();
     const userId = useAppSelector(userIdSelector);
+
+    useEffect(() => {
+        if (recommendedByUserId?.includes(userId)) {
+            setIsRecommended(true);
+        }
+    }, [recommendedByUserId]);
+
+    if (isLoadingProfileData || isLoadingStatisticData) return null;
 
     const bookmarksCount = getReactionCount(StatisticData?.bookmarks || []);
 
@@ -33,6 +44,7 @@ export const RecommendationButton = ({
     const onRecommendHandler = async () => {
         try {
             await recommend(recipeId).unwrap();
+            setIsRecommended((prev) => !prev);
         } catch {
             console.log('ошибка');
         }
@@ -40,7 +52,7 @@ export const RecommendationButton = ({
 
     if (!isRecommendationsEnable) return null;
 
-    if (recommendedByUserId?.includes(userId))
+    if (isRecommended)
         return (
             <Button
                 onClick={onRecommendHandler}

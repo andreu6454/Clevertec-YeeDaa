@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
 import { FullScreenSpinner } from '~/components/FullScreenSpinner/FullScreenSpinner';
-import { useGetRecipesQuery } from '~/query/services/recipes';
+import { useBookmarkRecipeMutation, useGetRecipesQuery } from '~/query/services/recipes';
 import { useGetAllUsersQuery } from '~/query/services/users';
+import { ErrorResponse } from '~/query/types/types';
+import { NEW_RECIPE_ALERTS } from '~/shared/constants/alertStatuses/newRecipeAlerts';
 import { APP_PATHS } from '~/shared/constants/pathes';
+import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
@@ -34,6 +37,10 @@ export const Juiciest = () => {
         limit: 8,
     });
     const { data: allUsers } = useGetAllUsersQuery();
+
+    const [bookmark] = useBookmarkRecipeMutation();
+    const errorAlert = useAlertToast();
+
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 
@@ -62,6 +69,18 @@ export const Juiciest = () => {
             );
         };
 
+        const onBookmarkHandler = async () => {
+            if (!recipe._id) return;
+            try {
+                await bookmark(recipe._id).unwrap();
+            } catch (error) {
+                const responseError = error as ErrorResponse;
+                if (responseError?.status === 500) {
+                    errorAlert(NEW_RECIPE_ALERTS.serverError, false);
+                }
+            }
+        };
+
         if (recipe?.recommendedByUserId?.length) {
             const user = allUsers?.filter((el) => el.id === recipe.recommendedByUserId[0])[0];
             if (!user) return;
@@ -77,6 +96,7 @@ export const Juiciest = () => {
                 categoryTitle={category?.category || ''}
                 recommendedBy={recommendedBy}
                 recommendedByAvatar={recommendedByAvatar}
+                onBookmarkHandler={onBookmarkHandler}
             />
         );
     });

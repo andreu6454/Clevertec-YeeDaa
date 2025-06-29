@@ -6,4 +6,6 @@ export const USERS_ALERTS = {
     updatePasswordError: 'Неверный старый пароль',
     tryAgain: 'Попробуйте снова',
     deleteAccountSuccess: 'Аккаунт успешно удален',
+    tryLater: 'Попробуйте позже.',
+    serverError: 'Ошибка сервера',
 };

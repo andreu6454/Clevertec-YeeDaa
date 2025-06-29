@@ -16,7 +16,7 @@ export const StatisticCount = ({ type, count }: StatisticCountProps) => {
         subscribes: 'подписчиков',
         bookmarks: 'сохранений',
         likes: 'лайков',
-        recommendation: 'рекомендованных рецепта',
+        recommendation: 'рекомендованных рецептов',
     };
 
     const images = {

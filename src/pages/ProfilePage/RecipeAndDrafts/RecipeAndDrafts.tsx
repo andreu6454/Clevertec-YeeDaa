@@ -20,7 +20,7 @@ type RecipeAndDraftsProps = {
 };
 
 export const RecipeAndDrafts = ({ drafts, userId }: RecipeAndDraftsProps) => {
-    const { data } = useGetUserRecipesByIdQuery(userId);
+    const { data, isLoading } = useGetUserRecipesByIdQuery(userId);
     const recipes = data?.recipes;
 
     const [limit, setLimit] = useState(8);
@@ -82,10 +82,10 @@ export const RecipeAndDrafts = ({ drafts, userId }: RecipeAndDraftsProps) => {
     });
 
     const onLoadMore = () => {
-        setLimit([...draftsForRender, ...recipesForRender].length);
+        setLimit([...draftsForRender, ...recipesForRender]?.length);
     };
 
-    if (!recipes) return null;
+    if (!recipes || isLoading) return null;
     return (
         <Flex
             data-test-id={DATA_TEST_IDS.userProfileRecipes}
@@ -95,10 +95,10 @@ export const RecipeAndDrafts = ({ drafts, userId }: RecipeAndDraftsProps) => {
         >
             <HStack gap='32px'>
                 <TextWithCount text='Мои рецепты' count={recipesCount || 0} />
-                <TextWithCount text='Черновики' count={draftsCount} />
+                {!!draftsCount && <TextWithCount text='Черновики' count={draftsCount} />}
             </HStack>
             <Flex gap='16px' flexWrap='wrap'>
-                {[...draftsForRender, ...recipesForRender].slice(0, limit)}
+                {[...draftsForRender, ...recipesForRender]?.slice(0, limit)}
             </Flex>
             {limit === 8 && !!recipes?.length && (
                 <Flex width='100%' justifyContent='center'>
@@ -110,7 +110,7 @@ export const RecipeAndDrafts = ({ drafts, userId }: RecipeAndDraftsProps) => {
                         color='#000'
                         size='md'
                     >
-                        Загрузить еще
+                        загрузить ещё
                     </Button>
                 </Flex>
             )}

@@ -2,53 +2,35 @@ import { Image } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
 
 import BookmarkIcon from '~/assets/svg/bookmark.svg';
-import { useBookmarkRecipeMutation } from '~/query/services/recipes';
-import { ErrorResponse } from '~/query/types/types';
-import { NEW_RECIPE_ALERTS } from '~/shared/constants/alertStatuses/newRecipeAlerts';
-import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
 type SaveAndBookmarkButtonsProps = {
     onClickHandler?: () => void;
+    onBookmarkHandler?: () => void;
     index?: number;
-    id?: string;
     isBookmarked?: boolean;
 };
 
 export const SaveAndBookmarkButtons = ({
+    onBookmarkHandler,
     onClickHandler,
     index,
-    id,
     isBookmarked,
 }: SaveAndBookmarkButtonsProps) => {
     const { isTabletMobile, isMobile } = useScreenSize();
 
-    const [bookmark] = useBookmarkRecipeMutation();
-    const errorAlert = useAlertToast();
-
-    const onBookmarkHandle = async () => {
-        if (!id) return;
-        try {
-            await bookmark(id).unwrap();
-        } catch (error) {
-            const responseError = error as ErrorResponse;
-            if (responseError?.status === 500) {
-                errorAlert(NEW_RECIPE_ALERTS.serverError, false);
-            }
-        }
-    };
     if (isBookmarked) {
         return (
             <Flex justifyContent='flex-end' gap='8px'>
                 <Button
-                    onClick={onBookmarkHandle}
+                    onClick={onBookmarkHandler}
                     padding={{ base: '6px 0 6px 6px', xl: '' }}
                     leftIcon={isMobile ? undefined : <Image src={BookmarkIcon} />}
                     size={{ base: 'xs', xl: 'sm' }}
                     variant='outline'
                     colorScheme='black'
                 >
-                    Убрать из сохраненных
+                    Убрать из сохранённых
                 </Button>
             </Flex>
         );
@@ -57,7 +39,7 @@ export const SaveAndBookmarkButtons = ({
     return (
         <Flex justifyContent='flex-end' gap='8px'>
             <Button
-                onClick={onBookmarkHandle}
+                onClick={onBookmarkHandler}
                 display='flex'
                 padding={{ base: '6px 0 6px 6px', xl: '' }}
                 leftIcon={<Image src={BookmarkIcon} />}

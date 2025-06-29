@@ -21,3 +21,10 @@ export const updatePasswordSchema = z
         message: validationErrors.matchPasswords,
         path: ['passwordConfirm'],
     });
+
+export const cardNoteSchema = z.object({
+    note: z
+        .string()
+        .min(10, { message: validationErrors.firstNameEmpty })
+        .max(160, { message: validationErrors.maxLength }),
+});

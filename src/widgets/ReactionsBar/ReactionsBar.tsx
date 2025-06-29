@@ -22,6 +22,7 @@ export const ReactionsBar = () => {
     if (isDesktop || isLaptop) {
         return (
             <Box
+                data-test-id={DATA_TEST_IDS.userStatsBlock}
                 width='208px'
                 height='200px'
                 display='flex'

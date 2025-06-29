@@ -8,6 +8,7 @@ import { APP_PATHS } from '~/shared/constants/pathes';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { getReactionCount } from '~/shared/utils/getReactionCount';
 
 type ProfileTitleProps = {
     firstName: string;
@@ -28,7 +29,7 @@ export const ProfileTitle = ({
 
     const navigate = useNavigate();
 
-    const bookmarks = StatisticData?.bookmarks?.reduce((acc, item) => acc + item.count, 0);
+    const bookmarks = getReactionCount(StatisticData?.bookmarks || []);
 
     const onClickHandler = () => {
         navigate(APP_PATHS.profileSettings);
@@ -72,7 +73,7 @@ export const ProfileTitle = ({
                 >
                     {`@${login}`}
                 </Typography>
-                <HStack>
+                <HStack data-test-id={DATA_TEST_IDS.userProfileStatsBlock}>
                     <ReactionCount count={bookmarks || 0} size='small' variant='bookmark' />
                     <ReactionCount
                         count={subscribersCount || 0}

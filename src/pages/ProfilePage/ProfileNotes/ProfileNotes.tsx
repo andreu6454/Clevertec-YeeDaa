@@ -1,4 +1,6 @@
+import { Box } from '@chakra-ui/icons';
 import { Button, Flex, Image, useDisclosure } from '@chakra-ui/react';
+import { useState } from 'react';
 
 import PenIcon from '~/assets/svg/penIcon.svg';
 import { CardNote } from '~/components/CardNote/CardNote';
@@ -18,15 +20,18 @@ type ProfileNotesProps = {
 export const ProfileNotes = ({ notes }: ProfileNotesProps) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
+    const [allNotes, setAllNotes] = useState<NoteType[]>(notes);
+
     const [deleteNote] = useDeleteNoteMutation();
 
     const alert = useAlertToast();
 
-    const notesCount = notes.length;
-    const notesForRender = notes.map((el) => {
+    const notesCount = allNotes.length;
+    const notesForRender = allNotes.map((el) => {
         const onDeleteHandler = async () => {
             try {
-                await deleteNote(el._id);
+                await deleteNote(el._id).unwrap();
+                setAllNotes(notes.filter((note) => note._id !== el._id));
                 alert(
                     {
                         status: ALERT_STATUSES.success,
@@ -82,9 +87,12 @@ export const ProfileNotes = ({ notes }: ProfileNotesProps) => {
                 flexWrap='wrap'
                 alignItems='center'
             >
+                <Box width={0} height={0} visibility='hidden'>
+                    ...
+                </Box>
                 {notesForRender}
             </Flex>
-            <CreateNoteDrawer isOpen={isOpen} onClose={onClose} />
+            <CreateNoteDrawer setAllNotes={setAllNotes} isOpen={isOpen} onClose={onClose} />
         </Flex>
     );
 };

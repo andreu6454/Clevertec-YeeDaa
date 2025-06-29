@@ -31,9 +31,7 @@ export type BloggerInfoType = {
     subscriptions: string[];
 };
 
-export type CreateNoteResponse = {
-    _id: string;
-} & BloggerNoteType;
+export type CreateNoteResponse = NoteType;
 
 export type NoteType = {
     _id: string;

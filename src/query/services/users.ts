@@ -45,7 +45,6 @@ export const usersApi = apiSlice
                     },
                     name: EndpointNames.CREATE_NOTE,
                 }),
-                invalidatesTags: [Tags.NOTES_BY_USERID],
             }),
             deleteNote: builder.mutation<{ _id: string }, string>({
                 query: (id) => ({

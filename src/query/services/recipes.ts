@@ -4,7 +4,7 @@ import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
 import { RecipeParams, RecipeResponse, UserRecipesResponse } from '~/query/types/types';
-import { Recipe } from '~/shared/types/recipeTypes';
+import { BookmarkResponseType, Recipe } from '~/shared/types/recipeTypes';
 import { setPageTitle } from '~/store/slices/breadcrumbs-slice';
 import { setRecipe } from '~/store/slices/recipe-slice';
 import { setInputLoading, setRecipesData } from '~/store/slices/recipesListPage-slice';
@@ -88,7 +88,7 @@ export const recipeApi = apiSlice
                 }),
                 invalidatesTags: [Tags.RECIPES, Tags.RECIPE_BY_ID],
             }),
-            bookmarkRecipe: builder.mutation<Recipe, string>({
+            bookmarkRecipe: builder.mutation<BookmarkResponseType, string>({
                 query: (id) => ({
                     url: ApiEndpoints.RECIPES + `/${id}` + ApiEndpoints.BOOKMARK,
                     method: METHODS.post,

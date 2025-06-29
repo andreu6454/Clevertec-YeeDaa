@@ -2,6 +2,7 @@ import { Avatar, Box, IconButton } from '@chakra-ui/icons';
 import { memo } from 'react';
 
 import { useGetProfileQuery } from '~/query/services/users';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { ZIndex } from '~/shared/constants/style/zIndex';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
@@ -51,7 +52,7 @@ const Footer = memo(() => {
                 <FooterButton
                     title='Мой профиль'
                     icon={
-                        <IconButton variant='ghost' aria-label='Главная'>
+                        <IconButton variant='ghost' aria-label='Мой профиль'>
                             <Avatar
                                 marginY='4px'
                                 boxSize='40px'
@@ -60,6 +61,7 @@ const Footer = memo(() => {
                         </IconButton>
                     }
                     path={APP_PATHS.profile}
+                    dataTestId={DATA_TEST_IDS.footerProfileButton}
                 />
             </Box>
         </footer>

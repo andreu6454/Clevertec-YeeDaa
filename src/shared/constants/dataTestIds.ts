@@ -84,6 +84,7 @@ export const DATA_TEST_IDS = {
     userProfileBox: 'user-profile-box',
     userProfileName: 'user-profile-name',
     userProfileLogin: 'user-profile-login',
+    userProfileStatsBlock: 'user-profile-stats-block',
     settingsButton: 'settings-button',
     userProfileRecipes: 'user-profile-recipes',
     userProfileBookmarks: 'user-profile-bookmarks',

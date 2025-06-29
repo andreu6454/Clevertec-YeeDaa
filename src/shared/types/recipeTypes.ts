@@ -64,3 +64,8 @@ export type NullableNewRecipesDataType = {
 export type DraftType = {
     _id: string;
 } & NullableNewRecipesDataType;
+
+export type BookmarkResponseType = {
+    message: string;
+    bookmarks: number;
+};

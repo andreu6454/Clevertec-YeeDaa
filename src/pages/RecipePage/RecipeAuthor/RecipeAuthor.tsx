@@ -3,6 +3,7 @@ import { Avatar, Button, Flex, Text } from '@chakra-ui/react';
 import { memo } from 'react';
 
 import { useToggleSubscriptionMutation } from '~/query/services/bloggers';
+import { useGetAllUsersQuery } from '~/query/services/users';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
@@ -13,22 +14,25 @@ import { userIdSelector } from '~/store/slices/app-slice';
 import SubscribeIcon from '../../../assets/svg/subscribe.svg';
 
 interface RecipeAuthorProps {
-    fullName: string;
-    login: string;
-    avatar: string;
-    id: string;
+    authorId: string;
 }
 
 export const RecipeAuthor = memo((props: RecipeAuthorProps) => {
-    const { fullName, login, avatar, id } = props;
-
+    const { authorId } = props;
     const { isMobile } = useScreenSize();
+
+    const { data: AllUsers, isLoading } = useGetAllUsersQuery();
+
+    const recipeAuthor = AllUsers?.filter((el) => el.id === authorId)[0];
+    const fullName = `${recipeAuthor?.firstName} ${recipeAuthor?.lastName}`;
 
     const userId = useAppSelector(userIdSelector);
     const [toggleSubscribe] = useToggleSubscriptionMutation();
 
+    if (!AllUsers || isLoading || !recipeAuthor) return null;
+
     const onToggleSubscribe = () => {
-        toggleSubscribe({ bloggerId: id, userId: userId });
+        toggleSubscribe({ bloggerId: recipeAuthor.id, userId: userId });
     };
 
     return (
@@ -41,7 +45,7 @@ export const RecipeAuthor = memo((props: RecipeAuthorProps) => {
             gap='16px'
             alignItems='center'
         >
-            <Avatar name={fullName} src={getImageUrl(avatar)} size='xl' />
+            <Avatar name={fullName} src={getImageUrl(recipeAuthor?.photo)} size='xl' />
             <Flex height='100%' width='100%' direction='column' justifyContent='space-between'>
                 <Flex width='100%' direction='column'>
                     {isMobile && (
@@ -60,7 +64,7 @@ export const RecipeAuthor = memo((props: RecipeAuthorProps) => {
                                 {fullName}
                             </Text>
                             <Typography Size={TypographySizes.sm} color='rgba(0, 0, 0, 0.64)'>
-                                {`@${login}`}
+                                {`@${recipeAuthor?.login}`}
                             </Typography>
                         </Flex>
                         {!isMobile && (

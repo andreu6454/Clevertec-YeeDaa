@@ -31,6 +31,7 @@ export const HeaderProfileBlock = () => {
         );
     return (
         <Flex
+            data-test-id={DATA_TEST_IDS.headerProfileButton}
             marginRight='56px'
             flexShrink={0}
             padding='0 24px 0 53px'
@@ -45,11 +46,7 @@ export const HeaderProfileBlock = () => {
                     src={getImageUrl(data?.photoLink)}
                 />
             </Link>
-            <Link
-                data-test-id={DATA_TEST_IDS.headerProfileButton}
-                as={ReactLink}
-                to={APP_PATHS.profile}
-            >
+            <Link as={ReactLink} to={APP_PATHS.profile}>
                 <Box height='48px'>
                     <Text fontWeight={500} fontSize='18px' lineHeight='156%' color='black'>
                         {`${data?.firstName} ${data?.lastName}`}
@@ -60,7 +57,7 @@ export const HeaderProfileBlock = () => {
                         lineHeight='143%'
                         color='rgba(0, 0, 0, 0.64)'
                     >
-                        {data?.login}
+                        {`@${data?.login}`}
                     </Text>
                 </Box>
             </Link>

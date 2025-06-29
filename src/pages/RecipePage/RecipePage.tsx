@@ -9,7 +9,6 @@ import { RecipeSteps } from '~/pages/RecipePage/RecipeSteps/RecipeSteps';
 import { RecipeTitle } from '~/pages/RecipePage/RecipeTitle/RecipeTitle';
 import { RecommendationButton } from '~/pages/RecipePage/RecommendationButton/RecommendationButton';
 import { useGetRecipeByIdQuery } from '~/query/services/recipes';
-import { useGetAllUsersQuery } from '~/query/services/users';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
@@ -30,10 +29,6 @@ const RecipePage = () => {
         skip: !recipeId,
     });
 
-    const { data: AllUsers } = useGetAllUsersQuery();
-
-    const recipeAuthor = AllUsers?.filter((el) => el.id === data?.authorId)[0];
-
     const categoriesForRender = Array.from(
         new Set(
             data?.categoriesIds.map(
@@ -44,7 +39,7 @@ const RecipePage = () => {
 
     if (isLoading) return <FullScreenSpinner />;
 
-    if (!data || !recipeAuthor) return null;
+    if (!data) return null;
     if (isError) {
         dispatch(setAppError('error'));
         navigate(-1);
@@ -77,12 +72,7 @@ const RecipePage = () => {
                 ingredients={data.ingredients}
             />
             <RecipeSteps screenSize={screenSize} steps={data.steps} />
-            <RecipeAuthor
-                fullName={`${recipeAuthor?.firstName} ${recipeAuthor?.lastName}`}
-                login={recipeAuthor?.login}
-                avatar={recipeAuthor?.photo}
-                id={recipeAuthor?.id}
-            />
+            <RecipeAuthor authorId={data?.authorId} />
             <RecommendationButton
                 recipeId={data?._id}
                 recommendedByUserId={data?.recommendedByUserId}
