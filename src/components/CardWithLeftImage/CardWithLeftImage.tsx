@@ -26,6 +26,7 @@ interface CardWithLeftImageProps {
     isBookmarked?: boolean;
     recommendedBy?: string;
     recommendedByAvatar?: string;
+    onBookmarkHandler?: () => void;
 }
 
 export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
@@ -39,6 +40,7 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
         isBookmarked = false,
         recommendedBy,
         recommendedByAvatar,
+        onBookmarkHandler,
     } = props;
 
     const { isTabletMobile } = useScreenSize();
@@ -150,8 +152,8 @@ export const CardWithLeftImage = memo((props: CardWithLeftImageProps) => {
                     <SaveAndBookmarkButtons
                         index={index}
                         onClickHandler={onClickHandler}
-                        id={recipe._id}
                         isBookmarked={isBookmarked}
+                        onBookmarkHandler={onBookmarkHandler}
                     />
                 )}
                 {isAuthor && (

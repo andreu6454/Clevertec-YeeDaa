@@ -7,50 +7,15 @@ import { CardWithoutImage } from '~/components/CardWithoutImage/CardWithoutImage
 import { useGetRecipeByCategoryQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { CategoryType } from '~/shared/types/categoryTypes';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { setAppError } from '~/store/slices/app-slice';
 import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 
-const sizes = {
-    Desktop: {
-        width: '668px',
-        gap: '24px',
-        fTitleSize: '48px',
-        lTitleHeight: '100%',
-        fDescSize: '16px',
-        lDescHeight: '150%',
-    },
-    Laptop: {
-        width: '578px',
-        gap: '24px',
-        fTitleSize: '48px',
-        lTitleHeight: '100%',
-        fDescSize: '16px',
-        lDescHeight: '150%',
-    },
-    Tablet: {
-        width: '100%',
-        gap: '16px',
-        fTitleSize: '24px',
-        lTitleHeight: '133%',
-        fDescSize: '14px',
-        lDescHeight: '143%',
-    },
-    Mobile: {
-        width: '100%',
-        gap: '16px',
-        fTitleSize: '24px',
-        lTitleHeight: '133%',
-        fDescSize: '14px',
-        lDescHeight: '143%',
-    },
-};
-
 export const RecommendationBlock = memo(() => {
-    const { screenSize, isLaptop } = useScreenSize();
-    const direction = screenSize === 'Mobile' || screenSize === 'Tablet' ? 'column' : 'row';
+    const { isLaptop } = useScreenSize();
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -74,7 +39,7 @@ export const RecommendationBlock = memo(() => {
                 category: foundCategory as CategoryType,
             });
         }
-    }, [categories, subCategories]); // Добавляем зависимости
+    }, [categories, subCategories]);
 
     const { data, error } = useGetRecipeByCategoryQuery(
         { subcategoryId: randomCategory?.id || '', limit: 5 },
@@ -87,8 +52,6 @@ export const RecommendationBlock = memo(() => {
 
     const length = recipes?.length || 0;
 
-    // if (isLoading) return <FullScreenSpinner />;
-
     if (error) {
         dispatch(setAppError('error'));
     }
@@ -99,39 +62,35 @@ export const RecommendationBlock = memo(() => {
             borderTop='1px solid rgba(0, 0, 0, 0.08)'
             width='100%'
             direction='column'
-            gap={sizes[screenSize].gap}
+            gap={{ base: '16px', xl: '24px' }}
             paddingTop='24px'
         >
             <Flex
-                gap={screenSize === 'Mobile' || screenSize === 'Tablet' ? '12px' : ''}
+                gap={{ base: '12px', xl: '' }}
                 width='100%'
                 justifyContent='space-between'
-                direction={direction}
+                direction={{ base: 'column', xl: 'row' }}
             >
                 <Text
                     width={isLaptop ? '270px' : ''}
                     fontWeight='500'
-                    fontSize={sizes[screenSize].fTitleSize}
-                    lineHeight={sizes[screenSize].lTitleHeight}
+                    fontSize={{ base: '24px', xl: '48px' }}
+                    lineHeight={{ base: '133', xl: '100%' }}
                     whiteSpace='pre-line'
                 >
                     {randomCategory?.category.title}
                 </Text>
                 <Text
-                    width={sizes[screenSize].width}
+                    width={{ base: '100%', xl: '578px', '2xl': '668px' }}
                     fontWeight='500'
-                    fontSize={sizes[screenSize].fDescSize}
-                    lineHeight={sizes[screenSize].lDescHeight}
+                    fontSize={{ base: '14px', xl: '16px' }}
+                    lineHeight={{ base: '143', xl: '150%' }}
                     color='rgba(0, 0, 0, 0.64)'
                 >
                     {randomCategory?.category.description}
                 </Text>
             </Flex>
-            <Flex
-                gap='16px'
-                direction={screenSize === 'Mobile' ? 'column' : 'row'}
-                alignItems='center'
-            >
+            <Flex gap='16px' direction={{ base: 'column', md: 'row' }} alignItems='center'>
                 {length > 0 && (
                     <CardWithoutImage
                         onClick={() => {
@@ -144,7 +103,6 @@ export const RecommendationBlock = memo(() => {
                                 ),
                             );
                         }}
-                        size={screenSize}
                         title={recipes[0].title}
                         description={recipes[0].description}
                         dishType={
@@ -165,7 +123,6 @@ export const RecommendationBlock = memo(() => {
                                 ),
                             );
                         }}
-                        size={screenSize}
                         title={recipes[1].title}
                         description={recipes[1].description}
                         dishType={
@@ -187,14 +144,14 @@ export const RecommendationBlock = memo(() => {
                                     ),
                                 );
                             }}
-                            size={screenSize}
                             icon={
-                                'https://training-api.clevertec.ru' +
+                                getImageUrl(
                                     getCategoryById(
                                         categories,
                                         subCategories,
                                         recipes[2].categoriesIds[0],
-                                    )?.icon || ''
+                                    )?.icon,
+                                ) || ''
                             }
                             title={recipes[2].title}
                         />
@@ -211,14 +168,14 @@ export const RecommendationBlock = memo(() => {
                                     ),
                                 );
                             }}
-                            size={screenSize}
                             icon={
-                                'https://training-api.clevertec.ru' +
+                                getImageUrl(
                                     getCategoryById(
                                         categories,
                                         subCategories,
                                         recipes[3].categoriesIds[0],
-                                    )?.icon || ''
+                                    )?.icon,
+                                ) || ''
                             }
                             title={recipes[3].title}
                         />
@@ -235,14 +192,14 @@ export const RecommendationBlock = memo(() => {
                                     ),
                                 );
                             }}
-                            size={screenSize}
                             icon={
-                                'https://training-api.clevertec.ru' +
+                                getImageUrl(
                                     getCategoryById(
                                         categories,
                                         subCategories,
                                         recipes[4].categoriesIds[0],
-                                    )?.icon || ''
+                                    )?.icon,
+                                ) || ''
                             }
                             title={recipes[4].title}
                         />

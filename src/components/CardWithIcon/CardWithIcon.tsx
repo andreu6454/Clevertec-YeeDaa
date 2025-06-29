@@ -1,38 +1,14 @@
 import { Card } from '@chakra-ui/icons';
 import { Button, HStack, Image, Text } from '@chakra-ui/react';
 
-const sizes = {
-    Desktop: {
-        width: '668px',
-        height: '56px',
-        textWidth: '525px',
-    },
-    Laptop: {
-        width: '283px',
-        height: '52px',
-        textWidth: '160px',
-    },
-    Tablet: {
-        width: '232px',
-        height: '48px',
-        textWidth: '112px',
-    },
-    Mobile: {
-        width: '328px',
-        height: '52px',
-        textWidth: '208px',
-    },
-};
-
 interface CardWithIconProps {
     icon: string;
     title: string;
-    size: 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile';
     onClick?: () => void;
 }
 
 export const CardWithIcon = (props: CardWithIconProps) => {
-    const { icon, title, size, onClick } = props;
+    const { icon, title, onClick } = props;
 
     return (
         <Card
@@ -47,12 +23,12 @@ export const CardWithIcon = (props: CardWithIconProps) => {
             padding='12px'
             direction='row'
             alignItems='center'
-            width={sizes[size].width}
-            height={sizes[size].height}
+            width={{ base: '100%', md: '232px', xl: '283px', '2xl': '668px' }}
+            height={{ base: '52px', md: '48px', xl: '52px', '2xl': '56px' }}
             gap='8px'
             justifyContent='space-between'
         >
-            <HStack gap='8px' width={sizes[size].textWidth}>
+            <HStack gap='8px' width={{ base: '208px', md: '112px', xl: '160px', '2xl': '525px' }}>
                 <Image src={icon} />
                 <Text whiteSpace='nowrap' overflow='hidden' textOverflow='ellipsis'>
                     {title}

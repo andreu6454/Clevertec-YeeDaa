@@ -71,7 +71,7 @@ const RecipePage = () => {
                 screenSize={screenSize}
                 ingredients={data.ingredients}
             />
-            <RecipeSteps screenSize={screenSize} steps={data.steps} />
+            <RecipeSteps steps={data.steps} />
             <RecipeAuthor authorId={data?.authorId} />
             <RecommendationButton
                 recipeId={data?._id}
