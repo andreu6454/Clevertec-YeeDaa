@@ -8,35 +8,8 @@ import { useScreenSize } from '~/shared/hooks/useScreenSize';
 
 import ErrorPageImage from '../../assets/errorPageImage.png';
 
-const sizes = {
-    Desktop: {
-        width: '396px',
-        height: '374px',
-        imgSize: '206px',
-        textWidth: '396px',
-    },
-    Laptop: {
-        width: '396px',
-        height: '374px',
-        imgSize: '206px',
-        textWidth: '396px',
-    },
-    Tablet: {
-        width: '396px',
-        height: '374px',
-        imgSize: '108px',
-        textWidth: '230px',
-    },
-    Mobile: {
-        width: '396px',
-        height: '374px',
-        imgSize: '108px',
-        textWidth: '230px',
-    },
-};
-
 export const NotFoundPage = memo(() => {
-    const { screenSize, isDesktopLaptop } = useScreenSize();
+    const { isDesktopLaptop } = useScreenSize();
 
     return (
         <Flex
@@ -48,20 +21,20 @@ export const NotFoundPage = memo(() => {
             <Flex
                 padding='32px'
                 direction='column'
-                width={sizes[screenSize].width}
-                height={sizes[screenSize].height}
+                width={{ base: '396px' }}
+                height='374px'
                 alignItems='center'
                 gap='32px'
             >
                 <Image
-                    width={sizes[screenSize].imgSize}
-                    height={sizes[screenSize].imgSize}
+                    width={{ base: '108px', xl: '206px' }}
+                    height={{ base: '108px', xl: '206px' }}
                     src={ErrorPageImage}
                     alt='404'
                 />
                 <Flex direction='column' gap='16px'>
                     <Flex
-                        width={sizes[screenSize].textWidth}
+                        width={{ base: ' 230px', xl: '396px' }}
                         fontWeight='700'
                         fontSize='24px'
                         lineHeight='133%'
@@ -77,7 +50,7 @@ export const NotFoundPage = memo(() => {
                         </h1>
                     </Flex>
                     <Text
-                        width={sizes[screenSize].textWidth}
+                        width={{ base: ' 230px', xl: '396px' }}
                         fontWeight='400'
                         fontSize='16px'
                         lineHeight='150%'

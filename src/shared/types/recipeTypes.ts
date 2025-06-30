@@ -5,6 +5,7 @@ export type Recipe = {
     image: string;
     authorId: string;
     categoriesIds: string[];
+    recommendedByUserId: string[];
     steps: StepType[];
     nutritionValue: NutritionValueType;
     ingredients: IngredientType[];
@@ -58,4 +59,13 @@ export type NullableNewRecipesDataType = {
     image: string | null;
     steps: NullableStepType[];
     ingredients: NullableIngredientDataType[];
+};
+
+export type DraftType = {
+    _id: string;
+} & NullableNewRecipesDataType;
+
+export type BookmarkResponseType = {
+    message: string;
+    bookmarks: number;
 };

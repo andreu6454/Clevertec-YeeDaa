@@ -4,14 +4,14 @@ import { EndpointNames } from '~/query/constants/endpoint-names';
 import { Tags } from '~/query/constants/tags';
 import { apiSlice } from '~/query/create-api';
 import { RecipeParams, RecipeResponse, UserRecipesResponse } from '~/query/types/types';
-import { Recipe } from '~/shared/types/recipeTypes';
+import { BookmarkResponseType, Recipe } from '~/shared/types/recipeTypes';
 import { setPageTitle } from '~/store/slices/breadcrumbs-slice';
 import { setRecipe } from '~/store/slices/recipe-slice';
 import { setInputLoading, setRecipesData } from '~/store/slices/recipesListPage-slice';
 
 export const recipeApi = apiSlice
     .enhanceEndpoints({
-        addTagTypes: [Tags.RECIPES, Tags.RECIPE_BY_ID],
+        addTagTypes: [Tags.RECIPES, Tags.RECIPE_BY_ID, Tags.RECIPES_BY_USERID],
     })
     .injectEndpoints({
         endpoints: (builder) => ({
@@ -88,7 +88,7 @@ export const recipeApi = apiSlice
                 }),
                 invalidatesTags: [Tags.RECIPES, Tags.RECIPE_BY_ID],
             }),
-            bookmarkRecipe: builder.mutation<Recipe, string>({
+            bookmarkRecipe: builder.mutation<BookmarkResponseType, string>({
                 query: (id) => ({
                     url: ApiEndpoints.RECIPES + `/${id}` + ApiEndpoints.BOOKMARK,
                     method: METHODS.post,
@@ -104,7 +104,16 @@ export const recipeApi = apiSlice
                     name: EndpointNames.GET_USER_RECIPES,
                     method: METHODS.get,
                 }),
-                providesTags: [Tags.RECIPES],
+                providesTags: [Tags.RECIPES_BY_USERID],
+            }),
+            recommendRecipe: builder.mutation<void, string>({
+                query: (id) => ({
+                    url: ApiEndpoints.RECOMMEND_RECIPE + id,
+                    method: METHODS.post,
+                    credentials: 'include',
+                    apiGroupName: ApiGroupNames.RECIPES,
+                }),
+                invalidatesTags: [Tags.RECIPE_BY_ID],
             }),
         }),
     });
@@ -117,4 +126,5 @@ export const {
     useBookmarkRecipeMutation,
     useLikeRecipeMutation,
     useGetUserRecipesByIdQuery,
+    useRecommendRecipeMutation,
 } = recipeApi;

@@ -17,4 +17,13 @@ export enum EndpointNames {
     SUBSCRIBE_BLOGGER = 'SUBSCRIBE_BLOGGER',
     GET_BLOGGER_BY_ID = 'GET_BLOGGER_BY_ID',
     GET_USER_RECIPES = 'GET_USER_RECIPES',
+    GET_PROFILE = 'GET_PROFILE',
+    GET_STATISTIC = 'GET_STATISTIC',
+    CREATE_NOTE = 'CREATE_NOTE',
+    DELETE_NOTE = 'DELETE_NOTE',
+    UPDATE_INFO = 'update_info',
+    UPDATE_PASSWORD = 'update_password',
+    DELETE_PROFILE = 'delete_profile',
+    UPLOAD_PHOTO = 'upload_photo',
+    GET_USERS = 'get_users',
 }

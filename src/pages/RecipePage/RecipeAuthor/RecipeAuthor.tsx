@@ -2,50 +2,50 @@ import { Image } from '@chakra-ui/icons';
 import { Avatar, Button, Flex, Text } from '@chakra-ui/react';
 import { memo } from 'react';
 
+import { useToggleSubscriptionMutation } from '~/query/services/bloggers';
+import { useGetAllUsersQuery } from '~/query/services/users';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
+import { useAppSelector } from '~/store/hooks';
+import { userIdSelector } from '~/store/slices/app-slice';
 
-import SergeyAvatar from '../../../assets/avatars/sergey.png';
-import SubcsribeIcon from '../../../assets/svg/subscribe.svg';
+import SubscribeIcon from '../../../assets/svg/subscribe.svg';
 
 interface RecipeAuthorProps {
-    screenSize: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
-    isMobile: boolean;
+    authorId: string;
 }
 
-const sizes = {
-    Desktop: {
-        width: '668px',
-        padding: '24px',
-    },
-    Laptop: {
-        width: '578px',
-        padding: '24px',
-    },
-    Tablet: {
-        width: '604px',
-        padding: '12px',
-    },
-    Mobile: {
-        width: '328px',
-        padding: '8px 8px 12px 12px',
-    },
-};
-
 export const RecipeAuthor = memo((props: RecipeAuthorProps) => {
-    const { screenSize, isMobile } = props;
+    const { authorId } = props;
+    const { isMobile } = useScreenSize();
+
+    const { data: AllUsers, isLoading } = useGetAllUsersQuery();
+
+    const recipeAuthor = AllUsers?.filter((el) => el.id === authorId)[0];
+    const fullName = `${recipeAuthor?.firstName} ${recipeAuthor?.lastName}`;
+
+    const userId = useAppSelector(userIdSelector);
+    const [toggleSubscribe] = useToggleSubscriptionMutation();
+
+    if (!AllUsers || isLoading || !recipeAuthor) return null;
+
+    const onToggleSubscribe = () => {
+        toggleSubscribe({ bloggerId: recipeAuthor.id, userId: userId });
+    };
 
     return (
         <Flex
             backgroundColor='#c4ff61'
             borderRadius='8px'
-            padding={sizes[screenSize].padding}
-            width={sizes[screenSize].width}
-            height={isMobile ? '120px' : '144px'}
+            padding={{ base: '8px 8px 12px 12px', md: '12px', xl: '24px' }}
+            width={{ base: '100%', md: '604px', xl: '578px', '2xl': '668px' }}
+            height={{ base: '120px', md: '144px' }}
             gap='16px'
             alignItems='center'
         >
-            <Avatar src={SergeyAvatar} size='xl' />
+            <Avatar name={fullName} src={getImageUrl(recipeAuthor?.photo)} size='xl' />
             <Flex height='100%' width='100%' direction='column' justifyContent='space-between'>
                 <Flex width='100%' direction='column'>
                     {isMobile && (
@@ -56,15 +56,15 @@ export const RecipeAuthor = memo((props: RecipeAuthorProps) => {
                     <Flex width='100%' justifyContent='space-between'>
                         <Flex gap={isMobile ? '' : '4px'} direction='column'>
                             <Text
-                                fontWeight={isMobile ? '600' : '700'}
-                                fontSize={isMobile ? '18px' : '24px'}
-                                lineHeight={isMobile ? '156%' : '133%'}
+                                fontWeight={{ base: '600', md: '700' }}
+                                fontSize={{ base: '18px', md: '24px' }}
+                                lineHeight={{ base: '156%', md: '133%' }}
                                 textAlign='center'
                             >
-                                Сергей Разумов
+                                {fullName}
                             </Text>
                             <Typography Size={TypographySizes.sm} color='rgba(0, 0, 0, 0.64)'>
-                                @serge25
+                                {`@${recipeAuthor?.login}`}
                             </Typography>
                         </Flex>
                         {!isMobile && (
@@ -74,10 +74,11 @@ export const RecipeAuthor = memo((props: RecipeAuthorProps) => {
                 </Flex>
                 <Flex justifyContent='space-between'>
                     <Button
+                        onClick={onToggleSubscribe}
                         size='xs'
                         border='1px solid rgba(0, 0, 0, 0.08)'
                         backgroundColor='rgba(0, 0, 0, 0.92)'
-                        leftIcon={<Image src={SubcsribeIcon} width='12px' height='12px' />}
+                        leftIcon={<Image src={SubscribeIcon} width='12px' height='12px' />}
                         color='#fff'
                     >
                         Подписаться

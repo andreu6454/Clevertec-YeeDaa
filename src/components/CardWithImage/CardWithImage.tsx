@@ -4,6 +4,7 @@ import { memo } from 'react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import { Recipe } from '~/shared/types/recipeTypes';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
@@ -14,53 +15,10 @@ interface CardWithImageProps {
     onClickHandler?: () => void;
 }
 
-const sizes = {
-    Mobile: {
-        width: '158px',
-        height: '220px',
-        imgHeight: '128px',
-        padding: '8px',
-        pdImage: '8px',
-        textTitleSize: TypographySizes.md,
-        textWidth: '142px',
-        textHeight: '48px',
-    },
-    Tablet: {
-        width: '158px',
-        height: '220px',
-        imgHeight: '128px',
-        padding: '8px',
-        pdImage: '8px',
-        textTitleSize: TypographySizes.md,
-        textWidth: '142px',
-        textHeight: '48px',
-    },
-    Laptop: {
-        width: '277px',
-        height: '402px',
-        imgHeight: '230px',
-        padding: '12px',
-        pdImage: '20px 24px',
-        textTitleSize: TypographySizes.xl,
-        textWidth: '253px',
-        textHeight: '100px',
-    },
-    Desktop: {
-        width: '322px',
-        height: '414px',
-        imgHeight: '230px',
-        padding: '12px',
-        pdImage: '20px 24px',
-        textTitleSize: TypographySizes.xl,
-        textWidth: '274px',
-        textHeight: '100px',
-    },
-};
-
 export const CardWithImage = memo((props: CardWithImageProps) => {
     const { onClickHandler, recipe, categoryTitle } = props;
 
-    const { screenSize, isDesktopLaptop, isTabletMobile } = useScreenSize();
+    const { isDesktopLaptop, isTabletMobile } = useScreenSize();
 
     return (
         <Card
@@ -72,17 +30,17 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                 transition: 'all 0.3s ease',
             }}
             flexShrink={0}
-            width={sizes[screenSize].width}
-            height={sizes[screenSize].height}
+            width={{ base: '158px', xl: '277px', '2xl': '322px' }}
+            height={{ base: '220px', xl: '414px' }}
             borderRadius='8px'
         >
             <Box
                 borderTopRadius='8px'
                 width='100%'
-                height={sizes[screenSize].imgHeight}
+                height={{ base: '128px', xl: '230px' }}
                 backgroundSize='100% 100%'
-                backgroundImage={'https://training-api.clevertec.ru' + recipe.image}
-                padding={sizes[screenSize].pdImage}
+                backgroundImage={getImageUrl(recipe.image)}
+                padding={{ base: '8px', xl: '20px 24px' }}
             >
                 {isTabletMobile && (
                     <CardBadge
@@ -93,17 +51,17 @@ export const CardWithImage = memo((props: CardWithImageProps) => {
                     />
                 )}
             </Box>
-            <Box padding={sizes[screenSize].padding}>
+            <Box padding={{ base: '8px', xl: '12px' }}>
                 <Box
-                    width={sizes[screenSize].textWidth}
-                    height={sizes[screenSize].textHeight}
+                    width={{ base: '142px', xl: '253px', '2xl': '274px' }}
+                    height={{ base: '48px', xl: '100px' }}
                     marginBottom='24px'
                 >
                     <Typography
                         overflow='hidden'
                         textOverflow='ellipsis'
                         noOfLines={2}
-                        Size={sizes[screenSize].textTitleSize}
+                        Size={isTabletMobile ? TypographySizes.md : TypographySizes.xl}
                         overflowWrap='break-word'
                     >
                         {recipe.title}

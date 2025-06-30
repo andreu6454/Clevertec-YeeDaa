@@ -2,8 +2,11 @@ import { Button, Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 import { CardWithLeftImage } from '~/components/CardWithLeftImage/CardWithLeftImage';
+import { useBookmarkRecipeMutation } from '~/query/services/recipes';
+import { ErrorResponse } from '~/query/types/types';
+import { NEW_RECIPE_ALERTS } from '~/shared/constants/alertStatuses/newRecipeAlerts';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
-import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { useAlertToast } from '~/shared/hooks/useAlertToast';
 import { getCategoryById } from '~/shared/services/getCategoryById';
 import { getNavigateLinkToRecipe } from '~/shared/services/getNavigateLinkToRecipe';
 import { Recipe } from '~/shared/types/recipeTypes';
@@ -23,7 +26,9 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
     const categories = useAppSelector(categoriesSelector);
     const subCategories = useAppSelector(subCategoriesSelector);
 
-    const { screenSize, isTablet, isDesktop } = useScreenSize();
+    const [bookmark] = useBookmarkRecipeMutation();
+    const errorAlert = useAlertToast();
+
     const navigate = useNavigate();
 
     const mappedCards = data.map((recipe, index) => {
@@ -39,6 +44,18 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
             );
         };
 
+        const onBookmarkHandler = async () => {
+            if (!recipe._id) return;
+            try {
+                await bookmark(recipe._id).unwrap();
+            } catch (error) {
+                const responseError = error as ErrorResponse;
+                if (responseError?.status === 500) {
+                    errorAlert(NEW_RECIPE_ALERTS.serverError, false);
+                }
+            }
+        };
+
         return (
             <CardWithLeftImage
                 index={index}
@@ -46,42 +63,27 @@ export const RecipesContainer = (props: RecipesContainerProps) => {
                 key={recipe.title + index}
                 recipe={recipe}
                 categoryTitle={category?.category || ''}
+                onBookmarkHandler={onBookmarkHandler}
             />
         );
     });
 
-    const direction = isDesktop || isTablet ? 'row' : 'column';
-
-    const gap = {
-        Desktop: '24px',
-        Laptop: '24px',
-        Tablet: '16px',
-        Mobile: '16px',
-    };
-
-    const marginBottom = {
-        Desktop: '40px',
-        Laptop: '40px',
-        Tablet: '32px',
-        Mobile: '32px',
-    };
-
     return (
         <Flex
-            gap={gap[screenSize]}
+            gap={{ base: '16px', xl: '24px' }}
             width='100%'
             wrap='wrap'
             direction='column'
             alignItems='center'
             justifyContent='center'
-            marginBottom={marginBottom[screenSize]}
+            marginBottom={{ base: '32px', xl: '40px' }}
         >
             <Flex
                 data-test-id={DATA_TEST_IDS.recipeCardList}
-                gap={gap[screenSize]}
+                gap={{ base: '16px', xl: '24px' }}
                 width='100%'
                 wrap='wrap'
-                direction={direction}
+                direction={{ base: 'column', md: 'row', xl: 'column', '2xl': 'row' }}
                 alignItems='center'
                 justifyContent='center'
             >

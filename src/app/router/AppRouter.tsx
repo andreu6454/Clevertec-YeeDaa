@@ -7,6 +7,8 @@ import { JuiciestFoodPage } from '~/pages/JuiciestFoodPage/JuiciestFoodPage';
 import { LoginPage } from '~/pages/LoginPage/LoginPage';
 import { MainPage } from '~/pages/MainPage/MainPage.tsx';
 import { NewRecipePage } from '~/pages/NewRecipePage/NewRecipePage';
+import ProfilePage from '~/pages/ProfilePage/ProfilePage';
+import ProfileSettingsPage from '~/pages/ProfileSettingsPage/ProfileSettingsPage';
 import RecipePage from '~/pages/RecipePage/RecipePage';
 import RecipesListPage from '~/pages/RecipesListPage/RecipesListPage';
 import { RegistrationPage } from '~/pages/RegistrationPage/RegistrationPage';
@@ -28,16 +30,19 @@ export const AppRouter = createBrowserRouter(
                 <Route path={APP_PATHS.notFound} element={<NotFoundPage />} />
             </Route>
 
-            <Route element={<WithCategoriesFetching />}>
-                <Route element={<WithMainLayout />}>
-                    <Route element={<WithAuthValidation />}>
+            <Route element={<WithAuthValidation />}>
+                <Route element={<WithCategoriesFetching />}>
+                    <Route element={<WithMainLayout />}>
                         <Route index element={<MainPage />} />
                         <Route path={APP_PATHS.recipePage} element={<RecipePage />} />
                         <Route path={APP_PATHS.theJuiciest} element={<JuiciestFoodPage />} />
                         <Route path={APP_PATHS.newRecipe} element={<NewRecipePage />} />
                         <Route path={APP_PATHS.editRecipe} element={<NewRecipePage />} />
+                        <Route path={APP_PATHS.editDraft} element={<NewRecipePage />} />
                         <Route path={APP_PATHS.blogs} element={<BlogsPage />} />
                         <Route path={APP_PATHS.bloggerPage} element={<BloggerPage />} />
+                        <Route path={APP_PATHS.profile} element={<ProfilePage />} />
+                        <Route path={APP_PATHS.profileSettings} element={<ProfileSettingsPage />} />
                         <Route element={<WithCategoryValidation />}>
                             <Route path={APP_PATHS.category} element={<RecipesListPage />} />
                             <Route path={APP_PATHS.subcategory} element={<RecipesListPage />} />

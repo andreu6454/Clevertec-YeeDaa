@@ -22,6 +22,7 @@ import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { useBlockerWithModal } from '~/shared/hooks/useBrokerWithModal';
 import { newRecipeSchema } from '~/shared/types/validationSchemas/newRecipeSchema';
 import { checkFormErrors } from '~/shared/utils/checkFormErrors';
+import { replaceNullFieldsWithUndefined } from '~/shared/utils/replaceNullFieldsWithUndefined';
 import { useAppSelector } from '~/store/hooks';
 import { recipeSelector } from '~/store/slices/recipe-slice';
 
@@ -81,10 +82,11 @@ export const NewRecipeForm = (props: NewRecipeFormProps) => {
     const recipe = useAppSelector(recipeSelector);
 
     useEffect(() => {
-        const recipeForReset = {
+        const recipeForReset = replaceNullFieldsWithUndefined({
             ...recipe,
+            portions: recipe.portions ?? 4,
             time: Number(recipe.time),
-        };
+        });
         if (!isNewRecipePage && recipe && !isLoading) {
             reset(recipeForReset);
         }

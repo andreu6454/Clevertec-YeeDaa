@@ -13,6 +13,7 @@ export const enum TypographySizes {
     md = 'md',
     lg = 'lg',
     xl = 'xl',
+    '2xl' = '2xl',
 }
 
 const Sizes = {
@@ -40,6 +41,11 @@ const Sizes = {
         fontWeight: '500',
         fontSize: '20px',
         lineHeight: '140%',
+    },
+    '2xl': {
+        fontWeight: '700',
+        fontSize: '24px',
+        lineHeight: '133%',
     },
 };
 

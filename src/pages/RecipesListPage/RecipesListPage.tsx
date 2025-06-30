@@ -8,7 +8,6 @@ import {
 } from '~/query/services/recipes';
 import { useGetQueryParams } from '~/shared/hooks/useGetQueryParams';
 import { useRouteSegments } from '~/shared/hooks/useRouteSegments';
-import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CuisinePageLayout } from '~/shared/layouts/CuisinePageLayout';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { setAppError } from '~/store/slices/app-slice';
@@ -21,8 +20,6 @@ import {
 import { RecipesContainer } from '~/widgets/RecipesContainer/RecipesContainer';
 
 const RecipesListPage = memo(() => {
-    const { screenSize } = useScreenSize();
-
     const dispatch = useAppDispatch();
     const subCategories = useAppSelector(subCategoriesSelector);
     const categories = useAppSelector(categoriesSelector);
@@ -85,7 +82,7 @@ const RecipesListPage = memo(() => {
             searchTitle={title}
             searchDescription={description}
         >
-            <LinksCarousel category={category} size={screenSize} links={links} />
+            <LinksCarousel category={category} links={links} />
             <RecipesContainer
                 isLastPage={isLastPage}
                 data={searchRecipes?.data ? searchRecipes.data : data?.data || []}

@@ -1,6 +1,6 @@
 import { FieldErrors } from 'react-hook-form';
 
-import { NewRecipeDataType } from '~/pages/NewRecipePage/NewRecipePage';
+import { NewRecipeDataType } from '~/components/NewRecipeForm/NewRecipeForm';
 
 export const checkFormErrors = (errors: FieldErrors<NewRecipeDataType>): boolean =>
     !!errors?.title ||

@@ -32,6 +32,7 @@ export const CulinaryBlogs = memo(() => {
 
         return (
             <CardWithAvatar
+                key={el._id + 'CulinaryBlogs'}
                 name={`${el.firstName} ${el.lastName}`}
                 username={`@${el.login}`}
                 text={el.notes[0]?.text}

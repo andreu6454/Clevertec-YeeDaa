@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { Control, useFieldArray, UseFormGetValues, UseFormRegister } from 'react-hook-form';
 
 import BlackPlusIcon from '~/assets/svg/blackPlusIcon.svg';
+import { UploadImageModal } from '~/components/Modals/UploadImageModal/UploadImageModal';
 import { IngredientDataType } from '~/components/NewRecipeForm/Ingredients/Ingredients';
 import { useUploadImageMutation } from '~/query/services/newRecipe';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
-import { UploadImageModal } from '~/shared/ui/UploadImageModal/UploadImageModal';
 
 import { NewRecipeDataType } from '../NewRecipeForm';
 import { Step } from './Step';
@@ -89,7 +89,7 @@ export const Steps = ({ control, register, hasError, getValues }: StepsProps) =>
         updateStepField(stepId, 'image', '');
     };
 
-    const mappedSteps = fields.map((field, index) => {
+    const mappedSteps = fields?.map((field, index) => {
         const isLast = index === fields.length - 1;
 
         const onOpenHandler = () => {

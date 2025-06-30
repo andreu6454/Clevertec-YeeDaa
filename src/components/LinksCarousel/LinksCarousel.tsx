@@ -7,34 +7,11 @@ import { SubCategoryType } from '~/shared/types/categoryTypes';
 
 interface LinksCarouselProps {
     links: SubCategoryType[];
-    size: 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile';
     category: string;
 }
 
-const sizes = {
-    Desktop: {
-        padding: '8px 16px',
-        fontSize: '16px',
-        lineHeight: '150%',
-    },
-    Laptop: {
-        padding: '8px 16px',
-        fontSize: '16px',
-        lineHeight: '150%',
-    },
-    Tablet: {
-        padding: '4px 16px',
-        fontSize: '14px',
-        lineHeight: '143%',
-    },
-    Mobile: {
-        padding: '4px 16px',
-        fontSize: '14px',
-        lineHeight: '143%',
-    },
-};
 export const LinksCarousel = (props: LinksCarouselProps) => {
-    const { links, size, category } = props;
+    const { links, category } = props;
 
     const [activeIndex, setActiveIndex] = useState<number>();
     const [tabIndex, setTabIndex] = useState(activeIndex);
@@ -69,7 +46,7 @@ export const LinksCarousel = (props: LinksCarouselProps) => {
             borderBottom='1px solid rgba(0, 0, 0, 0.08)'
             mb='12px'
             onChange={handleTabsChange}
-            alignItems={size === 'Desktop' || size === 'Laptop' ? 'center' : 'flex-start'}
+            alignItems={{ base: 'flex-start', xl: 'center' }}
         >
             <TabList>
                 {links.map((link, index) => {
@@ -83,12 +60,12 @@ export const LinksCarousel = (props: LinksCarouselProps) => {
                             }}
                             key={link.category}
                             whiteSpace='nowrap'
-                            padding={sizes[size].padding}
+                            padding={{ base: '4px 16px', xl: '8px 16px' }}
                             borderBottom={isActive ? '2px solid #' : ''}
                             color='#134b00'
                             fontWeight='500'
-                            fontSize={sizes[size].fontSize}
-                            lineHeight={sizes[size].lineHeight}
+                            fontSize={{ base: '14px', xl: '16px' }}
+                            lineHeight={{ base: '143%', xl: '150%' }}
                         >
                             {link.title}
                         </Tab>

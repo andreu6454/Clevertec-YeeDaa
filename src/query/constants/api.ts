@@ -17,6 +17,15 @@ export enum ApiEndpoints {
     BLOGGERS = '/bloggers',
     BLOGGERS_SUBSCRIPTION = '/users/toggle-subscription',
     USER_RECIPES = '/recipe/user/',
+    GET_PROFILE = '/users/me',
+    USERS_NOTE = '/users/me/note',
+    GET_STATISTIC = '/statistic',
+    UPDATE_PROFILE_INFO = '/users/me/update-info',
+    UPDATE_PASSWORD = '/users/me/update-password',
+    PROFILE = '/profile',
+    UPLOAD_PHOTO = '/users/me/photo',
+    GET_USERS = '/users/all',
+    RECOMMEND_RECIPE = '/recipe/recommend/',
 }
 
 export const METHODS = {

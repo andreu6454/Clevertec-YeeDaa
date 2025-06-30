@@ -1,65 +1,35 @@
 import { Box, Card, Image } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
 
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
 interface StepCardProps {
     stepNumber: number;
     description: string;
     image: string;
-    screenSize: 'Desktop' | 'Mobile' | 'Laptop' | 'Tablet';
 }
 
-const sizes = {
-    Desktop: {
-        width: '668px',
-        imgWidth: '346px',
-        imgHeight: '244px',
-        padding: '20px 24px',
-        gap: '16px',
-        ofLines: 8,
-    },
-    Laptop: {
-        width: '578px',
-        imgWidth: '346px',
-        imgHeight: '244px',
-        padding: '20px 24px',
-        gap: '16px',
-        ofLines: 8,
-    },
-    Tablet: {
-        width: '604px',
-        imgWidth: '158px',
-        imgHeight: '128px',
-        padding: '8px',
-        gap: '12px',
-        ofLines: 4,
-    },
-    Mobile: {
-        width: '328px',
-        imgWidth: '158px',
-        imgHeight: '128px',
-        padding: '8px 8px 0 8px',
-        gap: '12px',
-        ofLines: 4,
-    },
-};
-
 const StepCard = (props: StepCardProps) => {
-    const { stepNumber, description, image, screenSize } = props;
+    const { stepNumber, description, image } = props;
     return (
-        <Card direction='row' width={sizes[screenSize].width} border-radius='8px' overflow='hidden'>
+        <Card
+            direction='row'
+            width={{ base: '100%', md: '604px', xl: '578px', '2xl': '668px' }}
+            border-radius='8px'
+            overflow='hidden'
+        >
             {image && (
                 <Image
-                    height={sizes[screenSize].imgHeight}
-                    width={sizes[screenSize].imgWidth}
-                    src={'https://training-api.clevertec.ru' + image}
+                    height={{ base: '158px', xl: '346px' }}
+                    width={{ base: '128px', xl: '244px' }}
+                    src={getImageUrl(image)}
                 />
             )}
             <Flex
-                padding={sizes[screenSize].padding}
+                padding={{ base: '8px 8px 0 8px', md: '8px', xl: '20px 24px' }}
                 direction='column'
-                gap={sizes[screenSize].gap}
+                gap={{ base: '12px', xl: '16px' }}
             >
                 <Box
                     padding='2px 8px'
@@ -70,7 +40,7 @@ const StepCard = (props: StepCardProps) => {
                     <Typography Size={TypographySizes.sm}>{`Шаг ${stepNumber}`}</Typography>
                 </Box>
                 <Typography
-                    maxHeight={screenSize === 'Mobile' ? '80px' : ''}
+                    maxHeight={{ base: '80px', md: '' }}
                     Size={TypographySizes.sm}
                     overflow='hidden'
                     noOfLines={9}

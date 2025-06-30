@@ -44,7 +44,7 @@ export const AuthPasswordInput = (props: AuthPasswordInputProps) => {
                     data-test-id={dataTestId}
                     variant='outlined'
                     width='100%'
-                    border='1px solid #d7ff94'
+                    border={isInvalid ? '1px solid #e53e3e' : '1px solid #d7ff94'}
                     color='#134b00'
                     border-radius='6px'
                     _placeholder={{

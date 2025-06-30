@@ -2,6 +2,7 @@ import { Card } from '@chakra-ui/icons';
 import { Flex } from '@chakra-ui/react';
 
 import { CardBadge } from '~/components/CardBadge/CardBadge';
+import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { ReactionCount } from '~/shared/ui/ReactionCount/ReactionCount';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
@@ -9,39 +10,14 @@ interface CardWithoutImageProps {
     title: string;
     description: string;
     dishType: string;
-    size: 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile';
     onClick?: () => void;
 }
 
-const sizes = {
-    Desktop: {
-        width: '322px',
-        height: '192px',
-        padding: '24px 24px 20px 24px',
-        textTitleSize: TypographySizes.xl,
-    },
-    Laptop: {
-        width: '282px',
-        height: '180px',
-        padding: '16px 16px 16px 16px',
-        textTitleSize: TypographySizes.xl,
-    },
-    Tablet: {
-        width: '232px',
-        height: '168px',
-        padding: '16px 16px 16px 16px',
-        textTitleSize: TypographySizes.md,
-    },
-    Mobile: {
-        width: '328px',
-        height: '168px',
-        padding: '16px 16px 16px 16px',
-        textTitleSize: TypographySizes.md,
-    },
-};
-
 export const CardWithoutImage = (props: CardWithoutImageProps) => {
-    const { title, description, dishType, size, onClick } = props;
+    const { title, description, dishType, onClick } = props;
+
+    const { isTabletMobile } = useScreenSize();
+
     return (
         <Card
             cursor='pointer'
@@ -52,14 +28,14 @@ export const CardWithoutImage = (props: CardWithoutImageProps) => {
                 transition: 'all 0.3s ease',
             }}
             flexShrink={0}
-            width={sizes[size].width}
-            height={sizes[size].height}
-            padding={sizes[size].padding}
+            width={{ base: '100%', md: '232px', xl: '282px', '2xl': '322px' }}
+            height={{ base: '168px', xl: '180px', '2xl': '192px' }}
+            padding={{ base: '24px 24px 20px 24px', md: '16px' }}
             justifyContent='space-between'
         >
             <Flex direction='column' gap='8px' minWidth={0}>
                 <Typography
-                    Size={sizes[size].textTitleSize}
+                    Size={isTabletMobile ? TypographySizes.md : TypographySizes.xl}
                     whiteSpace='nowrap'
                     overflow='hidden'
                     textOverflow='ellipsis'

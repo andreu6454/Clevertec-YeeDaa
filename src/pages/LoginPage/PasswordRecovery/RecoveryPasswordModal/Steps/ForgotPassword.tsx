@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import RecoveryImage from '~/assets/loginError.png';
+import RecoveryImage from '~/assets/breakfast.png';
 import { PasswordRecovery } from '~/pages/LoginPage/PasswordRecovery/PasswordRecovery';
 import { useForgotPasswordMutation } from '~/query/services/auth';
 import { ErrorResponse } from '~/query/types/types';

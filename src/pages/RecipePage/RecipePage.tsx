@@ -7,6 +7,7 @@ import { RecipeCalories } from '~/pages/RecipePage/RecipeCalories/RecipeCalories
 import { RecipeIngredients } from '~/pages/RecipePage/RecipeIngredients/RecipeIngredients';
 import { RecipeSteps } from '~/pages/RecipePage/RecipeSteps/RecipeSteps';
 import { RecipeTitle } from '~/pages/RecipePage/RecipeTitle/RecipeTitle';
+import { RecommendationButton } from '~/pages/RecipePage/RecommendationButton/RecommendationButton';
 import { useGetRecipeByIdQuery } from '~/query/services/recipes';
 import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { getCategoryById } from '~/shared/services/getCategoryById';
@@ -15,24 +16,10 @@ import { setAppError } from '~/store/slices/app-slice';
 import { categoriesSelector, subCategoriesSelector } from '~/store/slices/categories-slice';
 import { NewRecipes } from '~/widgets/NewRecipes/NewRecipes';
 
-const paddings = {
-    Desktop: '56px',
-    Laptop: '56px',
-    Tablet: '16px',
-    Mobile: '16px',
-};
-
-const gaps = {
-    Desktop: '40px',
-    Laptop: '40px',
-    Tablet: '24px',
-    Mobile: '24px',
-};
-
 const RecipePage = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { screenSize, isMobile } = useScreenSize();
+    const { screenSize } = useScreenSize();
 
     const { recipeId } = useParams();
     const categories = useAppSelector(categoriesSelector);
@@ -60,11 +47,11 @@ const RecipePage = () => {
 
     return (
         <Flex
-            paddingTop={paddings[screenSize]}
+            paddingTop={{ base: '16px', xl: '56px' }}
             width='100%'
             direction='column'
             alignItems='center'
-            gap={gaps[screenSize]}
+            gap={{ base: '24px', xl: '40px' }}
         >
             <RecipeTitle
                 subCategoryId={data?.categoriesIds[0]}
@@ -78,14 +65,18 @@ const RecipePage = () => {
                 image={data.image}
                 category={categoriesForRender}
             />
-            <RecipeCalories screenSize={screenSize} nutritionValue={data.nutritionValue} />
+            <RecipeCalories nutritionValue={data.nutritionValue} />
             <RecipeIngredients
                 portions={Number(data.portions)}
                 screenSize={screenSize}
                 ingredients={data.ingredients}
             />
-            <RecipeSteps screenSize={screenSize} steps={data.steps} />
-            <RecipeAuthor isMobile={isMobile} screenSize={screenSize} />
+            <RecipeSteps steps={data.steps} />
+            <RecipeAuthor authorId={data?.authorId} />
+            <RecommendationButton
+                recipeId={data?._id}
+                recommendedByUserId={data?.recommendedByUserId}
+            />
             <NewRecipes />
         </Flex>
     );

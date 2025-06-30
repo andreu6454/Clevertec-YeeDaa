@@ -8,10 +8,11 @@ interface FooterButtonProps {
     title: string;
     isActive?: boolean;
     path?: string;
+    dataTestId?: string;
 }
 
 const FooterButton = (props: FooterButtonProps) => {
-    const { icon, title, isActive, path } = props;
+    const { icon, title, isActive, path, dataTestId } = props;
 
     const backgroundGradient = isActive
         ? {
@@ -21,6 +22,7 @@ const FooterButton = (props: FooterButtonProps) => {
         : '';
     return (
         <Box
+            data-test-id={dataTestId}
             sx={backgroundGradient}
             height='80px'
             width='90px'

@@ -2,11 +2,11 @@ import { Image } from '@chakra-ui/icons';
 import { Flex, useDisclosure } from '@chakra-ui/react';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 
+import { UploadImageModal } from '~/components/Modals/UploadImageModal/UploadImageModal';
 import { useUploadImageMutation } from '~/query/services/newRecipe';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { getImageUrl } from '~/shared/services/getImageUrl';
 import UploadImage from '~/shared/ui/UploadImage/UploadImage';
-import { UploadImageModal } from '~/shared/ui/UploadImageModal/UploadImageModal';
 
 import { NewRecipeDataType } from '../NewRecipeForm';
 

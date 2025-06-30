@@ -1,25 +1,27 @@
 import { Avatar, Box, IconButton } from '@chakra-ui/icons';
 import { memo } from 'react';
 
+import { useGetProfileQuery } from '~/query/services/users';
+import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
 import { ZIndex } from '~/shared/constants/style/zIndex';
-import { useScreenSize } from '~/shared/hooks/useScreenSize';
+import { getImageUrl } from '~/shared/services/getImageUrl';
 import FooterButton from '~/widgets/footer/FooterButton/FooterButton';
 import { FooterIcon } from '~/widgets/footer/FooterIcon/FooterIcon';
 
-import AvatarIcon from '../../assets/AvatarMobile.png';
 import EditIcon from '../../assets/svg/EditIcon.svg';
 import HomeIcon from '../../assets/svg/HomeIcon.svg';
 import SearchIcon from '../../assets/svg/searchIcon.svg';
 
 const Footer = memo(() => {
-    const { isMobile, isTablet } = useScreenSize();
+    const { data: ProfileData } = useGetProfileQuery();
+
     return (
         <footer data-test-id='footer'>
             <Box
-                position={isMobile || isTablet ? 'fixed' : 'absolute'}
-                width={isMobile || isTablet ? '100%' : '0'}
-                visibility={isMobile || isTablet ? 'visible' : 'hidden'}
+                position={{ base: 'fixed', xl: 'absolute' }}
+                width={{ base: '100%', xl: '0' }}
+                visibility={{ base: 'visible', xl: 'hidden' }}
                 zIndex={ZIndex.footer}
                 display='flex'
                 alignItems='center'
@@ -47,10 +49,16 @@ const Footer = memo(() => {
                 <FooterButton
                     title='Мой профиль'
                     icon={
-                        <IconButton variant='ghost' aria-label='Главная'>
-                            <Avatar marginY='4px' boxSize='40px' src={AvatarIcon} />
+                        <IconButton variant='ghost' aria-label='Мой профиль'>
+                            <Avatar
+                                marginY='4px'
+                                boxSize='40px'
+                                src={getImageUrl(ProfileData?.photoLink)}
+                            />
                         </IconButton>
                     }
+                    path={APP_PATHS.profile}
+                    dataTestId={DATA_TEST_IDS.footerProfileButton}
                 />
             </Box>
         </footer>

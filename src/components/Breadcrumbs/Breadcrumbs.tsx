@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router';
 import { CategoryResponse } from '~/query/types/types';
 import { DATA_TEST_IDS } from '~/shared/constants/dataTestIds';
 import { APP_PATHS } from '~/shared/constants/pathes';
+import { getBreadCrumbTranslation } from '~/shared/utils/getBreadcrumbsTranslation';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { closeBurgerMenu } from '~/store/slices/app-slice';
 import { pageTitleSelector } from '~/store/slices/breadcrumbs-slice';
@@ -22,6 +23,7 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
             .split('/')
             .filter(Boolean)
             .filter((path) => path !== 'edit-recipe');
+
         const dispatch = useAppDispatch();
         const pageTitle = useAppSelector(pageTitleSelector);
 
@@ -34,29 +36,17 @@ export const Breadcrumbs: FC<SmartBreadcrumbsProps> = memo(
             const isLast = index === pathnames.length - 1;
 
             let displayName = pathNames.find((el) => el.category === path)?.title || path;
-            //  для все категорий и сабКатегорий
+            const translation = getBreadCrumbTranslation(path);
+
+            if (translation !== path) {
+                displayName = translation;
+            }
 
             if (pageTitle && pageTitle._id === path) {
                 displayName = pageTitle.title;
             }
 
-            if (path === 'the-juiciest') {
-                displayName = 'Самое сочное';
-            }
-
-            if (path === 'new-recipe') {
-                displayName = 'Новый рецепт';
-            }
-
-            if (path === 'blogs') {
-                displayName = 'Блоги';
-            }
-
-            if (path === 'not-found') {
-                displayName = 'Страница не существует';
-            }
-
-            if (path === 'edit-recipe') {
+            if (path === 'edit-recipe' || path === 'edit-draft') {
                 return null;
             }
 

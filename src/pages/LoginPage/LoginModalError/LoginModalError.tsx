@@ -5,7 +5,7 @@ import { useScreenSize } from '~/shared/hooks/useScreenSize';
 import { CustomModal } from '~/shared/ui/CustomModal/CustomModal';
 import { Typography, TypographySizes } from '~/shared/ui/Typography/Typography';
 
-import LoginError from '../../../assets/loginError.png';
+import LoginError from '../../../assets/breakfast.png';
 
 type LoginModalErrorProps = {
     isOpen: boolean;
