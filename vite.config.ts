@@ -9,6 +9,9 @@ export default defineConfig(() => ({
         host: true,
         port: 3000,
     },
+    preview: {
+        port: 3000,
+    },
     resolve: {
         alias: {
             '~': resolve(__dirname, 'src'),
