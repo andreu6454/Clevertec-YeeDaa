@@ -54,4 +54,7 @@ export const AppRouter = createBrowserRouter(
             <Route path='*' element={<Navigate to={APP_PATHS.notFound} />} />
         </Route>,
     ),
+    {
+        basename: '/Clevertec-YeeDaa',
+    },
 );
